@@ -1,0 +1,15 @@
+# Claude Code 開發工具
+.claude/
+CLAUDE.md
+
+# 開發規劃文件
+plan.md
+plan.md.test
+extract_logs.py
+
+# 編輯器設定
+book/.obsidian/
+
+# 外部文件（docx、獨立 md 草稿）
+*.docx
+補章編_六章_2026.md

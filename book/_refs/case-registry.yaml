@@ -1,0 +1,654 @@
+# Case Registry — 全書案例註冊
+#
+# 所有章節案例必須先在此註冊才能在內文使用。
+# 政策:純虛構公司名/產品名/數字,但商業邏輯與技術細節必須真實可驗證。
+# ID 格式:CASE-{DOMAIN}-{NNN}
+# DOMAIN 代碼:FIN(fintech)/ ECM(ecommerce)/ HCR(healthcare)/ SAS(saas)/ ENR(energy)
+
+cases:
+  # ========== Ch 1 ==========
+  - id: CASE-FIN-001
+    title: "PayLoop 的 18 天 MVP / 180 天崩潰"
+    domain: fintech
+    chapters: [ch-01]
+    anonymized: true
+    summary: |
+      虛構新創 PayLoop:3 名工程師 + Cursor + Claude Code,18 天上線
+      跨境匯款 MVP。180 天後在新加坡端 SGD 流動性事件觸發對帳失敗,
+      無人能解釋系統當前的決策邏輯——所有上下文只存在於早期會話中。
+      用於展示「沒有 SA/SD 不是省時間,是把時間延後爆炸」。
+
+  - id: CASE-ECM-001
+    title: "MeshFirst 電商的微服務反向遷移"
+    domain: ecommerce
+    chapters: [ch-01, ch-20]
+    anonymized: true
+    summary: |
+      虛構電商 MeshFirst:2022 年從單體拆成 47 個微服務,2025 年回收
+      至 6 個模組化單體 + 3 個邊緣服務。用於展示「設計決策必須跟隨
+      組織能力與業務階段」。
+
+  # ========== Ch 2 ==========
+  - id: CASE-ECM-002
+    title: "ShelfMart 的半年 Release Cadence vs QuickAisle 的雙週迭代"
+    domain: ecommerce
+    chapters: [ch-02]
+    anonymized: true
+    summary: |
+      虛構電商 ShelfMart(東南亞家居用品,Magento 2 + 自製 OMS,半年
+      一次大版本)面對新進競爭者 QuickAisle(Next.js 15 + PG 17,
+      雙週迭代 + LaunchDarkly 灰度)在掃碼結帳/訂閱補貨/個人化貨架
+      三個面向被連續吃掉市佔。用於展示「SDLC 的問題不是流程選擇,
+      是 Business / Decision / Release / Feedback 四個 Tempo 的對齊」。
+
+  # ========== Ch 3 ==========
+  - id: CASE-HCR-001
+    title: "聖恩醫療體系 EMR 替換案 12 個月 PoC 失敗"
+    domain: healthcare
+    chapters: [ch-03]
+    anonymized: true
+    summary: |
+      虛構區域醫院聖恩醫療體系替換 14 年舊 EMR,選擇虛構廠商 MedCanvas
+      進行 12 個月 PoC,目標搬移急診與住院兩個科別至 HL7 v2.5 ADT +
+      FHIR R4 平台。技術側通過所有測試但被夜班護理長帶領的護理部工會
+      以「三班交班動線從 2 點擊變 7 點擊」為由擋下,沉沒成本約 NT$4,800
+      萬。用於展示啟動階段「政治可行性」與「隱性利害關係人」的決定性。
+
+  # ========== Ch 4 ==========
+  - id: CASE-SAS-001
+    title: "FlowDeck 的 30 訪談 / 218 backlog / Frankenstein 流失率"
+    domain: saas
+    chapters: [ch-04]
+    anonymized: true
+    summary: |
+      虛構 B2B SaaS 公司 FlowDeck:5 個 PM 各領 6 個重點客戶做訪談,
+      backlog 從 47 張膨脹到 218 張。半年後 NPS 從 32 跌到 19,
+      流失率從 8.4% 升到 11.2%。用於展示「需求蒐集得越仔細、沒有
+      拒絕清單,Frankenstein 就拼得越完整」。
+
+  # ========== Ch 5 ==========
+  - id: CASE-ENR-001
+    title: "AurumGrid vs VoltKnit:儲能櫃 EMS 文件實踐對照"
+    domain: energy
+    chapters: [ch-05]
+    anonymized: true
+    summary: |
+      虛構儲能新創 AurumGrid(17 人)用 Enterprise Architect 匯出
+      80 頁 11 種 UML 圖的 PDF,沒有人讀;對照組 VoltKnit(9 人)
+      用三張 Mermaid 圖(Class / State / Sequence)放在 Git,並在
+      PR 模板強制更新。台電 dReg 0.25 秒併網測試時,前者因「離網
+      切回併網的 PCS 同步順序」無人能答而延後三週,後者一次過件。
+      用於展示「被讀到一張勝過歸檔 14 張」。
+
+  # ========== Ch 6 ==========
+  - id: CASE-FIN-002
+    title: "NorthBay Pay 8.40 美元拒付的資料拓樸失蹤事件"
+    domain: fintech
+    chapters: [ch-06]
+    anonymized: true
+    summary: |
+      虛構支付公司 NorthBay Pay(140 人,Spring Boot 3 + PostgreSQL 16
+      + Kafka 3.7,跑 Visa / Mastercard 收單與跨境清算)。一筆來自馬來
+      西亞銀行的 ISO 8583 1442 拒付訊息(理由代碼 4837 / No Cardholder
+      Authorization,金額 8.40 美元),公司無法在事故會議內回答這筆交易
+      在 47 個 Kafka topic 與 7 個服務之間走過哪幾步、寫進哪些表。
+      Head of Engineering 公開承認「沒有一張圖能告訴我這 47 個 topic 在
+      哪裡產生、被誰消費、寫進哪張表」。後續以 Mermaid 補畫 Context +
+      Level 0 DFD、配套資料字典、9 張 Data Lineage Card,並用 CI Fitness
+      Function 與 OpenLineage / Schema Registry 對齊;47 個 topic 收斂
+      到 31 個,類似拒付事件可在 14 分鐘內回答。
+
+  # ========== Ch 7 ==========
+  - id: CASE-ECM-003
+    title: "DripCycle 訂閱快時尚電商:47 用例 / 18% 出包率事故"
+    domain: ecommerce
+    chapters: [ch-07]
+    anonymized: true
+    summary: |
+      虛構訂閱型快時尚電商 DripCycle(月費租穿、約 11 萬會員,Next.js 15
+      + Spring Boot 3.3 + PG 17 + Stripe)上線「冷靜期 7 天退款 + 換貨
+      + 部分退款」三條流程,Confluence 寫了 47 個用例文檔(Cockburn
+      模板齊全),上線後 18% 訂單需人工介入。根因為四張 OOA 圖(Use Case
+      / Class / Sequence / State)各畫各的,沒有對應關係。重做 OOA 後
+      用例從 47 縮為 19、類別從 38 縮為 12,並導入 Use Case Atom + 四圖
+      協同表 PR checklist。
+
+  # ========== Ch 8 ==========
+  - id: CASE-HCR-002
+    title: "MedCanvas Inpatient 的四個 patient_id 事故"
+    domain: healthcare
+    chapters: [ch-08]
+    anonymized: true
+    summary: |
+      虛構住院資訊系統廠商 MedCanvas Inpatient 接下 1,800 床醫學中心
+      合約,導入第 11 週發現出院結算單 ICD-10 主診斷碼 6.4% 對不上
+      病房紀錄。根因:四張表都有名為 patient_id 的 bigint 欄位,但語意
+      分別為預掛號 token、住院 episode ID、終身 MRN、他院 PID-3 (HL7),
+      工程師習慣性 join 後在跨院轉診病人上撞車。Schema 通過 3NF 稽核但
+      仍出事,用於展示「3NF 通過不等於 schema 是好的」。
+
+  # ========== Ch 9 ==========
+  - id: CASE-SAS-002
+    title: "LedgerPilot 訂閱計費 7-service 流程迷宮"
+    domain: saas
+    chapters: [ch-09]
+    anonymized: true
+    summary: |
+      虛構 B2B 訂閱與計費 SaaS LedgerPilot(4,200 客戶、MRR 940 萬美元、
+      工程 38 人):一筆 $42.13 的 proration 多算客訴觸發 3 小時跨 7 個
+      service 查找,發現規則散在 Subscription / Pricing / Proration /
+      Invoice / Tax / Dunning / Webhook 七處。VP 在白板嘗試畫整個流程
+      失敗,因為混合了編排層、生命週期層、規則層三件本質不同的事。
+      用於展示「BPMN / 狀態機 / 決策表三者不是替代,是不同層次」。
+      整季客服 escalation 71 件、工時 318 小時、流失 2 個續約。
+
+  # ========== Ch 10 ==========
+  - id: CASE-ENR-002
+    title: "VoltMesh Energy 的『即時告警』歧義事故"
+    domain: energy
+    chapters: [ch-10]
+    anonymized: true
+    summary: |
+      虛構工商儲能新創 VoltMesh Energy(23 人)在 1MW/2MWh 工商儲能櫃
+      + EMS 專案(合約 NT$4,800 萬,EMS 軟體佔 480 萬)中,PRD 第 3 頁
+      第 2 段寫「即時告警」⸺ 業務理解為「LINE 幾秒內」、客戶理解為
+      「< 1 秒 IEC 61850 GOOSE 等級」、工程理解為「P95 < 5 分鐘 Modbus
+      輪詢」。第 14 週紡織印染廠 SAT 驗收實測 4 分 12 秒,合約被砍 30%、
+      PCS firmware 重燒、EMS 架構分為本地 PLC 邊緣告警 + 雲端聚合兩條
+      路徑,工時超出原估 1.4 倍。用於展示「PRD / SRS / MVP 三份文件
+      壓縮三層不同歧義,錯位即代價」。
+
+  # ========== Ch 11 ==========
+  - id: CASE-FIN-003
+    title: "AxisPay FraudGuardCore 14 檔案改動半徑事故"
+    domain: fintech
+    chapters: [ch-11]
+    anonymized: true
+    summary: |
+      虛構東南亞跨境收單支付公司 AxisPay(26 人,Spring Boot 3.3 + PG 17 +
+      Kafka 3.7,跑 ISO 8583 1100/1110 授權與 0220 沖正)在 2025 Q4 把風控
+      規則引擎做成單一服務 FraudGuardCore,內建 47 條規則,並把 ISO 8583
+      解析、API gateway、資料存取、稽核事件、metrics、業務編排全綁同一服務。
+      第 14 週要新增「同卡跨 MCC 2 分鐘第三次授權強制 3DS」一條規則,改動
+      半徑為 14 個檔案 + 5 個 dashboard + 2 份 runbook。根因為 SRP / OCP /
+      DIP 同時違反。後續以 Clean Architecture 3 環重構,並導入 ArchUnit
+      fitness function 守護依賴方向,新增規則改動半徑收斂為 2 個檔案。
+
+  # ========== Ch 12 ==========
+  - id: CASE-SAS-003
+    title: "MeshConduit B2B 整合平台:30 個 GoF 包 100 行業務的 PR 事故"
+    domain: saas
+    chapters: [ch-12]
+    anonymized: true
+    summary: |
+      虛構 B2B 整合平台 MeshConduit(1,800 客戶、日均 webhook 6,200 萬筆、
+      工程 24 人):資深 RD 在「條件式重試」功能上用了 8 個 GoF 模式
+      (AbstractFactory / Builder / Decorator / Visitor / Observer / Memento
+      / CoR / Command),3,400 行包住 100 行業務邏輯,新人花兩小時看不懂
+      核心邏輯。一個 4xx 錯誤路徑被當成 5xx 重試三次,在 NetSuite 上開三張
+      同單發票。後續導入 Pattern Adoption Card,六個模式被刪除,業務邏輯
+      收斂到 220 行。展示「模式是命名,不是結構」與「先用模式再找問題」反模式。
+
+  # ========== Ch 13 ==========
+  - id: CASE-HCR-003
+    title: "CareLattice Health 從分層遷到六角:第 9 個 EMR 的轉折點"
+    domain: healthcare
+    chapters: [ch-13]
+    anonymized: true
+    summary: |
+      虛構醫院資訊系統廠商 CareLattice Health(門急診排程與用藥安全核對引擎,
+      ASP.NET Core 三層架構、SQL Server 2022)在七年內陸續對接 8 家外部 EMR
+      (Epic Bridges / Cerner Millennium / Allscripts / 自家輕量 EHR),第 9
+      個系統(自研 EMR 中型醫學中心)簽約後,團隊把核心 MedicationOrderService
+      周圍依賴方向反轉為 Hexagonal(Ports & Adapters)。七個月遷移後,第 11
+      個外部系統(InterSystems IRIS 長照機構)從簽約到 UAT 通過用 19 天,
+      對比之前 14 週。展示「四種架構風格對應四種變動方向」。
+
+  # ========== Ch 14 ==========
+  - id: CASE-ECM-004
+    title: "HarborGate 開放平台:三套 schema 對不起來的 12 萬賠款事故"
+    domain: ecommerce
+    chapters: [ch-14]
+    anonymized: true
+    summary: |
+      虛構電商開放平台 HarborGate(GMV 12 億美元 / 200+ partner,Node.js 22 +
+      Spring Boot 3.3 + PG 17 + Kafka 3.7)同時開放 REST / GraphQL / Webhook
+      三套 API,但三套 schema 各自演化:status enum 不同(paid/PAID/已付款)、
+      total 型別不同(浮點/Money 物件/字串)、order 命名不同。Webhook 無
+      idempotency-key 導致 partner 重複出貨,事故賠款新台幣 12 萬。重構為
+      v3 開放平台:統一 OpenAPI 3.1 + AsyncAPI 3.0、Idempotency-Key required、
+      HMAC 簽章、Webhook 5 次重試曲線、`_actions` HATEOAS for Agent、18 個月
+      棄用節奏。47 條 contract card 取代 200 條重複 endpoint。
+
+  # ========== Ch 15 ==========
+  - id: CASE-ENR-003
+    title: "SunLedger Energy 太陽能電廠資料平台『PG 撐不住』誤判事故"
+    domain: energy
+    chapters: [ch-15]
+    anonymized: true
+    summary: |
+      虛構太陽能電廠 EPC 後台 SunLedger Energy(320 案場、4,800 顆 inverter,
+      Modbus/SunSpec 15s 輪詢、IEC 61850 MMS 併網點)在 PG 17 上跑 7 億 row
+      telemetry。資料工程師憑直覺判斷「PG 撐不住」,跳過 workload profile,
+      直接遷移至 Cassandra(3 nodes, RF=3)。六個月後同一份月報查詢從 90 秒
+      變 4 分 12 秒。根因為「讀密集 + 二次聚合 workload」誤判為「寫密集擴展
+      問題」,未評估 TimescaleDB hypertable + continuous aggregate。展示
+      「沒做 workload profile 就換引擎」與 Storage Selection Card 的價值。
+
+  # ========== Ch 16 ==========
+  - id: CASE-FIN-004
+    title: "NeoLedger Bank 的 KYC 70% 放棄率事件"
+    domain: fintech
+    chapters: [ch-16]
+    anonymized: true
+    summary: |
+      虛構亞太數位銀行 NeoLedger Bank(SG / HK / TW 三市場、設計 11 人、
+      工程 60 人)KYC 流程 Happy Path 完成率 83% 但全段轉換率僅 41%。根因
+      為 14 種失敗情境共用三句 generic 錯誤文案,進入錯誤頁的客戶 70% 在
+      8 秒內關閉 App、30 天未回訪。重構導入 Journey ↔ State 對齊矩陣、
+      DACR 四維錯誤訊息、Interaction State Card 與 WCAG 2.2 AA 強制檢核;
+      同錯誤頁「再試」點擊率從 18% 升到 47%。展示「UX 真正的戰場是
+      unhappy path,不是 Happy Path」。
+
+  - id: CASE-HCR-004
+    title: "居家視訊看護:跌倒偵測的 SDC 多模態系統"
+    domain: healthcare
+    chapters: [chF]
+    anonymized: true
+    summary: |
+      虛構居家看護場景:長者在客廳,系統用攝影機 + 語音助理持續監看。
+      跌倒事件下,單純 BPMN 流程(攝影機告警→語音問候→判斷)會在 false
+      positive(影子/坐姿改變/寵物穿過)、長者昏迷無回應、語調顫抖卻說
+      「我沒事」等真實情境下失效。用於展示「感知→推論→決策」這一層
+      需要 Signal-Decision-Confidence(SDC)模型,而非離散流程圖。
+
+
+  # ========== Ch 17 ==========
+  - id: CASE-HCR-005
+    title: "聖維禮醫療體系:三個 BC 共用 patient 的出院結算事故"
+    domain: healthcare
+    chapters: [ch-17]
+    anonymized: true
+    summary: |
+      虛構多科別教學醫院聖維禮醫療體系(1,400 床、跨七科別、資訊科 38 人,
+      .NET Framework 4.8 HIS + SQL Server linked server 跨系統查資料)。
+      2025 年三月一週發生七次出院結算對不上臨床紀錄事故,根因為三個子系統
+      Clinical / Billing / Scheduling 都用名為 patient_id 的 bigint 欄位,
+      但 Clinical 是「就診事件主體」、Billing 是「保險被保人 + 財務責任人」、
+      Scheduling 是「未來時段佔位人」三種不同語意。團隊用 11 個月做戰略
+      設計(Subdomain 分類、Bounded Context 識別、Context Map 八種模式
+      標註),並在 Clinical 內把 Patient 重命名為 Encounter Aggregate Root。
+      事故率從每月 27 件降至第 12 個月 1.4 件。展示「DDD 真正價值在語言邊界」。
+
+  # ========== Ch 18 ==========
+  - id: CASE-SAS-004
+    title: "RenewLane 訂閱續約 Event Storming 兩日工作坊 / 兩個月零產出事故"
+    domain: saas
+    chapters: [ch-18]
+    anonymized: true
+    summary: |
+      虛構 B2B 訂閱與計費 SaaS RenewLane(1,400 客戶、ARR 4,200 萬美元、
+      工程 31 人):新團隊在重寫續約引擎前舉辦兩天 Event Storming 工作坊,
+      牆上累積 380 張七色便利貼。兩個月後沒有任何 service 寫出第一行程式,
+      根因為工作坊停在 Big Picture,沒有進入 Process Modelling 與 Software
+      Design,便利貼未對應到 endpoint / schema / Aggregate。後續導入 Event
+      Modeling 四象限 + Given-When-Then + AsyncAPI 3.0,並建立 Event Storming
+      Outcome Card 模板與 Hotspot follow-up 機制。展示「停在 Big Picture
+      不走下去」與「便利貼到 spec」斷層的代價。
+
+  # ========== Ch 19 ==========
+  - id: CASE-FIN-005
+    title: "PaySpan 募資前架構審查的 47 張投影片事故"
+    domain: fintech
+    chapters: [ch-19]
+    anonymized: true
+    summary: |
+      虛構東南亞支付平台 PaySpan(84 人,Spring Boot 3.3 + PG 17 + Kafka
+      3.7 + Redis 7,17 個微服務跑在 AWS ap-southeast-1 EKS 1.30,日均交易
+      220 萬筆)在 B 輪募資前架構審查中,47 張投影片從技術棧 logo wall
+      直跳 AuthorizationService.java 程式碼截圖,沒有 Level 1 System
+      Context、沒有 Level 2 Container 圖。Visa 顧問問「錢在系統裡走過哪
+      幾個盒子」、MAS 合規顧問問「資料離開過新加坡嗎」均無法回答,B 輪
+      估值砍兩位數百分點。後續以 Structurizr DSL 補 workspace.dsl(L1 +
+      L2 + Filtered View),導入 C4 Diagram Card 與 ADR 連動 + CI fitness
+      function。展示「跳過 Level 2 = 把投資人與新人都丟在同一份程式碼前」。
+
+  # ========== Ch 21 ==========
+  - id: CASE-ECM-005
+    title: "TideCart 黑五 inventory cascade failure 事故"
+    domain: ecommerce
+    chapters: [ch-21]
+    anonymized: true
+    summary: |
+      虛構東南亞快時尚電商 TideCart(GMV 4.8 億美元),2023 年從 Rails monolith
+      一刀拆出 32 個微服務,黑五當天 inventory-service P99 從 80ms 漲到 2.4s,
+      因 checkout 路徑上 22 次同步跨服務呼叫,七分鐘內 cart / pricing /
+      promotion / order / recommendation 共六個服務一起 cascade failure。
+      事故覆盤後改寫 checkout 為 Saga Orchestration(Temporal)+ Outbox + Kafka,
+      P99 從 47 秒降到 1.2 秒。展示「微服務不是規模化的方法,是強制購買的稅金」。
+
+  # ========== Ch 22 ==========
+  - id: CASE-FIN-006
+    title: "CardPilot Asia 三件套 EDA + CQRS + ES 上線當天 P99 從 80ms 變 320ms 事故"
+    domain: fintech
+    chapters: [ch-22]
+    anonymized: true
+    summary: |
+      虛構東南亞跨境收單與虛擬卡發行平台 CardPilot Asia(56 人,Spring Boot 3.3
+      + PG 17 + Kafka 3.7,日均授權 480 萬筆)在 2025 Q4 把 EDA + CQRS + ES
+      三件當套餐全棧採用,2026 Q1 第八週上線後授權 P99 從 80ms 變 320ms。
+      根因:ES 套用在 authorization aggregate 熱路徑、CQRS read model 延遲
+      4.7 秒、Kafka 運維沒人會。後續把 ES 限定在「對帳審計」與「合規重放」
+      冷路徑,熱路徑改回 CRUD + outbox + L2 Event-Carried State Transfer。
+      授權 P99 回到 75ms。展示「EDA / CQRS / ES 是三件不同層級的工具,不是套餐」。
+
+  # ========== Ch 23 ==========
+  - id: CASE-SAS-005
+    title: "TenantForge 12 人 SaaS 上 K8s 1.30 後 SRE 工時 8% → 35% 事故"
+    domain: saas
+    chapters: [ch-23]
+    anonymized: true
+    summary: |
+      虛構多租戶 B2B SaaS TenantForge(47 客戶、ARR 380 萬美元、12 名工程師
+      含 1 名前端轉 SRE),2025 Q3 從 Render PaaS 整批遷移至自管 EKS 1.30。
+      四個月後 SRE 工時佔比從 8% 飆到 35%、月度雲端帳單翻倍。根因為 K8s
+      採用四維判準四條皆未通過。後續以 Cloud-Native Choice Card 重新體檢,
+      將無狀態 API 搬回 Cloud Run、有狀態服務留 K8s,SRE 工時降回 12%。
+      展示「雲端原生 ≠ K8s」。
+
+  # ========== Ch 24 ==========
+  - id: CASE-ENR-004
+    title: "GridPulse Energy 電網調度 Mesh control plane 12 分鐘卡死事故"
+    domain: energy
+    chapters: [ch-24]
+    anonymized: true
+    summary: |
+      虛構電網調度公司 GridPulse Energy(台灣中部六變電所、42 饋線開關、
+      11 工商儲能站,IEC 61850 MMS 上傳遙測 + IEC 60870-5-104 下傳指令,
+      24 個內部服務、9 工程師、1 SRE)在 2024 年因「服務間 mTLS 強制需求
+      (IEC 62443)」上 Istio,2025 Q4 因 istiod 的 etcd lease 過期觸發崩潰
+      循環,sidecar fail-closed 把 24 個服務斷成 24 個孤島,事故持續 12 分鐘。
+      重構為 Kong API Gateway + Istio Ambient ztunnel-only + 按地理區域分 cell
+      三層架構。展示「Gateway / Mesh / Cell 三層尺度錯位的代價」。
+
+  - id: CASE-ENR-005
+    title: "雲原生工程師遇到 200kW/400kWh 儲能櫃 PoC 失敗"
+    domain: energy
+    chapters: [chA]
+    anonymized: true
+    summary: |
+      虛構案例:雲端架構師被指派設計結合儲能(ESS)、PV 逆變器與電網的 EMS,
+      畫了完整微服務拓樸(Kafka / PG 主從 / K8s / Grafana)。PoC 現場設備
+      工程師問「網路斷了三十秒,系統會把電池放掉嗎?」,答不上來。
+      展示「OT/IT 融合不是把 OT 雲端化,是讓兩個世界在受控邊界對話」。
+
+  # ========== Ch 25 ==========
+  - id: CASE-FIN-007
+    title: "PocketRail 數位錢包 NT$280 萬被盜事件"
+    domain: fintech
+    chapters: [ch-25]
+    anonymized: true
+    summary: |
+      虛構東南亞數位錢包 / 跨境匯款 PocketRail(120 萬 KYC 通過用戶,
+      Spring Boot 3.3 + PG 17 + Redis 7,通過 PCI DSS 4.0 / SOC 2 Type II)
+      在 2025 Q4 發生戶口被盜用案 ⸺ OAuth refresh token 流出 + 客服降級
+      流程被社交工程,單帳號 NT$280 萬轉出,共 4 戶受影響、合計 NT$1,440 萬。
+      根因:refresh token 沒做 device fingerprint 驗證、客服密碼重置流程
+      只需姓名 + 末四碼即可降階驗證、Threat Model 在合規稽核做完就歸檔。
+      展示「Security by Design = 預設值的選擇」與「Threat Modeling 不是
+      一次性檢核表」。
+
+  # ========== Ch 26 ==========
+  - id: CASE-ECM-006
+    title: "HarborPick 黑五 dashboard 全綠但結帳掉 12% 事故"
+    domain: ecommerce
+    chapters: [ch-26]
+    anonymized: true
+    summary: |
+      虛構東南亞零售平台 HarborPick(GMV 8.4 億美元、12 工程師、20 個微服務,
+      Datadog + 12 個 dashboard、月帳單 4.7 萬美元)在 2025 黑五當天結帳成功率
+      從 96% 掉到 84%,12 個 dashboard 全綠;事故 2 小時後才發現 third-party
+      物流 API 5xx 占 7% checkout 都被吞、retry 退避錯設使重試形成雪崩。根因:
+      logs 沒帶 correlation ID、metrics cardinality 限制 user_id label、所有
+      trace sampling 1% head-based(尾事件徹底丟失)。後續導入 OpenTelemetry +
+      tail-based sampling + Observability Plane Card,事故 MTTD 從 2h 降到 8min。
+      展示「可觀測性 ≠ Dashboard 多」。
+
+  # ========== Ch 27 ==========
+  - id: CASE-SAS-006
+    title: "PolicyPilot 99.95% 公開 SLO / 實際 99.62% 賠款 168K 美元事故"
+    domain: saas
+    chapters: [ch-27]
+    anonymized: true
+    summary: |
+      虛構美國 B2B 保單管理 SaaS PolicyPilot(180 客戶、ARR 4,800 萬美元、
+      工程 28 人、SRE 2 人,Spring Boot 3.3 + PG 17 + EKS 1.30)在
+      銷售合約上承諾 99.95% SLO,12 個月實際 99.62%(對應 32 小時 downtime
+      vs 承諾 4.4 小時)。最大客戶要求按合約賠款,額度 168,000 美元。根因:
+      SLO 從沒被量測過、Error Budget 機制完全不存在、SRE 一直滅火、工程
+      一直推新功能、postmortem 變找戰犯大會。後續導入 SLO Catalog +
+      Multi-window Multi-burn-rate 告警 + 季度 Error Budget 制度 + Blameless
+      Postmortem,後 6 個月達到 99.94%。展示「SRE 不是滅火隊,是把可靠度
+      量化成可協商預算的工程文化」。
+
+  # ========== Ch 28 ==========
+  - id: CASE-HCR-006
+    title: "MedNexus 七家醫院聯盟 Lakehouse 三年後仍是『更貴 SFTP』事故"
+    domain: healthcare
+    chapters: [ch-28]
+    anonymized: true
+    summary: |
+      虛構醫療資料聯盟 MedNexus Health Data Network(七家區域醫院、聯盟預算
+      1.4 億新台幣、Databricks + Delta Lake + Unity Catalog、月度雲帳單
+      28 萬美元),導入 Lakehouse 三年後七家醫院仍以週級 SFTP 丟 CSV,
+      被內部稱為「比 SFTP 貴 50 倍的 SFTP」。根因:HL7 PID-3 在七家有三種
+      語意(MRN / 健保 ID / 跨院 token)、ICD-10-CM 編碼粒度不一、無 named
+      domain owner、Unity Catalog 開了沒人填、Data Contract 寫進 Confluence
+      但沒進 CI。後續做 Data Mesh 組織轉型(每家醫院指 1 名 Data Product
+      Manager + 季度 Data Product 評審 + Data Contract 進 CI 強制檢查),
+      第 18 個月跨院查詢從 SFTP 解 CSV(週級)變 Iceberg + Postgres FDW
+      跨 federated query(分鐘級)。展示「Data Mesh / Lakehouse / Lakebase
+      是三個不同層級的問題」與「組織問題用工具解 = 工具會輸」。
+
+  - id: CASE-SAS-007
+    title: "多租戶 SaaS 跨租戶資料洩漏(共用 vector index 場景)"
+    domain: saas
+    chapters: [chE]
+    anonymized: true
+    summary: |
+      虛構 B2B SaaS 場景:某企業內部 RAG 知識庫服務多個客戶,使用單一
+      共用 vector index + tenant_id metadata,某次 query 因 metadata
+      filter 漏寫,A 客戶問題擷取到 B 客戶文件 chunk 進入 LLM context。
+      即使 LLM 最終 hedged 不直接回答,attention 已洩漏 schema 與部分
+      內容。展示「prompt 控制存取權限 = 擺設」與「四層隔離(儲存 / 計算
+      / 模型 / 遙測)的必要」。
+
+  # ========== Ch 29 ==========
+  - id: CASE-ECM-007
+    title: "HarborPick Retail Platform team 17 個工具 / 工程師仍寫 Bash + Terraform 事件"
+    domain: ecommerce
+    chapters: [ch-29]
+    anonymized: true
+    summary: |
+      虛構東南亞大型零售平台 HarborPick Retail(GMV 12 億美元、工程 220 人、
+      4 個 Stream-aligned team + 1 個 8 人 Platform team)在 2024–2026 兩年內
+      開發了 17 個內部工具,但工程師 onboarding 採用率僅 22%。根因為 Platform
+      team 沒有 PM、沒有 NPS / Retention 指標、Golden Path 採用率不被視為 KPI。
+      重新導入 Platform-as-a-Product:聘 PM、做 Quarterly DX Survey、Top 3
+      Golden Path 收斂 + Backstage 為唯一入口、DORA + SPACE 並行追蹤,
+      9 個月後 onboarding 採用率到 78%,Lead Time for Changes 從 14d → 2.5d。
+      展示「Platform Engineering 不是 DevOps 重命名,是 Platform-as-a-Product」。
+
+  # ========== Ch 30 ==========
+  - id: CASE-FIN-008
+    title: "OrbitPay 盡職調查 8 種版本事故"
+    domain: fintech
+    chapters: [ch-30]
+    anonymized: true
+    summary: |
+      虛構亞太支付平台 OrbitPay(54 人,Spring Boot 3.3 + PG 17 + Kafka 3.7 +
+      Pulsar + Cockroach,跨境 IDR 清算 + Auth0 + AWS KMS)在 2026 開春因新任
+      架構長要做技術盡職調查,8 名工程師被問同一道題得出 8 種版本。Confluence
+      ADR 倉庫 142 篇但 90% 是「待補」。後續導入三條判準(改回來成本 + 外部
+      介面 + 不可逆)+ Nygard + 2026 擴充欄位(Linked C4 / Linked Fitness Function
+      / AI Skill Hint),142 篇收斂到 47 篇活的。展示「ADR 倉庫滿不等於決策
+      被傳遞」。
+
+  # ========== Ch 31 ==========
+  - id: CASE-SAS-008
+    title: "HelixOps SaaS:ADR-0007 寫 Hexagonal、18 個月後 73% 反向依賴事故"
+    domain: saas
+    chapters: [ch-31]
+    anonymized: true
+    summary: |
+      虛構多租戶 B2B SaaS HelixOps(1,200 客戶、ARR 2,800 萬美元),2024 Q2
+      寫了 ADR-0007 規定核心 MetricService 採 Hexagonal Architecture。18 個月
+      後 architecture review 發現 73% 的 domain class 反向依賴 adapter 套件。
+      根因為 ADR 寫了但 CI 沒接 ArchUnit / Konsist 守護。後續導入五層 Fitness
+      Function(Code / API / Data / Deploy / Observe),3 個月內把反向依賴清理
+      乾淨。展示「沒 Fitness Function 守護的 ADR 是希望;Evolutionary Architecture
+      不是自然演進」。
+
+  # ========== Ch 32 ==========
+  - id: CASE-ENR-006
+    title: "AmpereLoom 儲能平台 Q3 雲帳單 84K→230K + 寫不出 SCI 報告"
+    domain: energy
+    chapters: [ch-32]
+    anonymized: true
+    summary: |
+      虛構儲能 / 太陽能平台 AmpereLoom(45 人,Next.js 15 + Spring Boot 3.3 +
+      TimescaleDB + Kafka + Redis + Anthropic Claude API)在 2025 Q3 雲帳單從
+      84,000 美元飆到 230,000 美元,主要是新上線的 AI 客服 LLM 推理沒做 Prompt
+      Caching、沒做 Batch、沒做 Model Routing。同時主要客戶要求 SCI(ISO/IEC
+      21031)碳排報告作為下一年合約條件,FinOps team 與 ESG team 各自為政,寫
+      不出來。整合導入 FinOps 三階段 + GSF 三原則 + LLM 四招(Caching → Context
+      size → Routing → Batch),Q4 帳單回到 96K、AI 推理碳排下降 62%。展示「帳單
+      與碳排是同一份 Workload Profile」。
+
+  # ========== Ch 33 ==========
+  - id: CASE-HCR-007
+    title: "NorthVale Health Network ER LLM Triage 把胸痛病人判 ESI 3 事故"
+    domain: healthcare
+    chapters: [ch-33]
+    anonymized: true
+    summary: |
+      虛構區域醫院聯盟 NorthVale Health Network(四家 ER、年急診 38 萬人次,
+      GPT-4o-class 私有部署 + Claude Sonnet 4.5 雙模型 fallback、FHIR R4 +
+      HL7 v2.5.1 ADT、OpenShift 4.16,合規 HIPAA + 台灣個資法)在 2025 Q4
+      上線「AI-First 智慧分流」,2026 Q1 第 11 週週六下午一名 58 歲胸痛病人
+      被 LLM 判 ESI 3「urgent, 30–45 分鐘候診」,42 分鐘後 collapse(STEMI),
+      door-to-balloon 從 < 90 分鐘變 144 分鐘,EF 從 55% 掉到 32%。根因:
+      宣稱 AI-Augmented 實作 AI-Native、無 HITL 強制點、無 Circuit Breaker、
+      無紅旗主訴規則表。重構後拆出確定性層(DMN 紅旗規則 + 急醫會審核)+
+      非確定性層(LLM 僅在低風險建議)+ HITL 三支柱 + LangSmith Audit Trail。
+      展示「AI-Native ≠ 多用 LLM」與「拿掉 LLM 旅程是否成立」litmus test。
+
+  # ========== Ch 34 ==========
+  - id: CASE-ECM-008
+    title: "AisleNova 三個月 2.2x 後歸零"
+    domain: ecommerce
+    chapters: [ch-34]
+    anonymized: true
+    summary: |
+      虛構電商 AisleNova(28 名工程師,台灣 + 越南 D2C)2025 Q4 全員導入
+      Cursor + Claude Code,前三個月 story point 完成數 2.2x,第六個月
+      回到原點。覆盤發現 28 位工程師各自摸索 .cursorrules、CLAUDE.md、
+      Slack pin、白板照片,沒有契約結構。後續重整為 CDE 三層
+      (Constitution / Role / Skill),onboarding 時間從 12 週縮到 5 週。
+      展示「沒有脈絡契約的 AI 導入,在第六個月會把生產力歸零」。
+
+  # ========== Ch 35 ==========
+  - id: CASE-FIN-009
+    title: "HavenAxis Bank ComplianceCopilot 跨對話失憶事故"
+    domain: fintech
+    chapters: [ch-35]
+    anonymized: true
+    summary: |
+      虛構亞太數位銀行 HavenAxis Bank(SG / HK / TW / JP 四市場、320 萬 KYC
+      通過用戶)2025 Q4 上線合規客服 Agent ComplianceCopilot(Claude Sonnet
+      4.7 + pgvector 0.8 + BM25 + Cohere Rerank v3 + LangGraph 0.2),
+      RAG 搜尋準確度 92%、retrieval P95 240ms,但 Memory 只用 LangGraph
+      MemorySaver 單 session in-memory,Tool 只 expose 知識庫沒接 KYC case
+      系統。同一客戶七天內三次打入,三次都被當新客戶,客訴重複率 32%。
+      根因為團隊把 Agent 等同於「LLM + RAG」。重做 Agent System Card 後
+      Memory 拆三層、Tool 改 task-oriented、補上 fact extraction pipeline,
+      客訴重複率第 14 週降至 6%。展示「RAG / Memory / Tool 是三個獨立子系統」。
+
+  # ========== Ch 36 ==========
+  - id: CASE-SAS-009
+    title: "Helmsworth 七 Agent 拆分事故:P95 從 8s 飆 47s"
+    domain: saas
+    chapters: [ch-36]
+    anonymized: true
+    summary: |
+      虛構 B2B SaaS 客戶運營平台 Helmsworth(月活躍租戶 3,400,Python 3.13
+      + LangGraph 0.2 + Claude Sonnet 4.5)2026 Q1 把單一 Agent 工單回覆系統
+      拆成 7 個 Multi-Agent(Intake / Triage / Sentiment / KB-Search / Drafter /
+      Escalation / Audit),上線當天 P95 從 8.2s 飆 47s,品質分數從 0.81 跌到
+      0.56。事故根因為跳過 Anthropic Workflow 四階直接拆 Multi-Agent。重整後
+      收斂為 Routing + Prompt Chaining + 2 個獨立 Subagent。展示「Multi-Agent
+      不是更多 Agent 解問題,是更窄的 Agent 解問題」。
+
+  # ========== Ch 37 ==========
+  - id: CASE-ECM-009
+    title: "CartMosaic 拆微服務後 Cursor PR 通過率從 78% 掉到 24% 事故"
+    domain: ecommerce
+    chapters: [ch-37]
+    anonymized: true
+    summary: |
+      虛構日韓跨境美妝 D2C 電商 CartMosaic(42 名工程師,Rails monolith 起家,
+      2025 Q3 全員導入 Cursor + Claude Code)在 2025 Q4 把 monolith 按 DDD
+      bounded context 拆成 9 個微服務,期望 Cursor 在更小 codebase 上表現更好,
+      結果第六週 PR 通過率掉到 24%。根因為 SA/SD artifact 留在 monolith git
+      歷史、CDE 三層沒整理、CLAUDE.md / ADR 未隨服務搬遷、命名漂移。後續以
+      六維 Agent-Friendly Codebase 體檢 + Plan-Execute / TDG 工作流分流 +
+      PR Review Bot 區分 advisory/blocking,三個月內 PR 通過率回到 71%
+      (沒換模型)。展示「AI Coding Agent 的 ROI 在 Codebase 重構成可讀的形狀」。
+
+  # ========== Ch 38 ==========
+  - id: CASE-FIN-010
+    title: "HavenAxis AMLNavigator 的 92% → 71% 半年崩壞"
+    domain: fintech
+    chapters: [ch-38]
+    anonymized: true
+    summary: |
+      虛構亞太數位銀行 HavenAxis Bank 旗下合規 AI 助手 AMLNavigator(協助
+      banker 判斷交易是否應送 STR),2025 Q3 上線時 480 題 eval set 跑出
+      92.3% accuracy,FN rate 1.6%。上線後團隊未做 Drift Monitor 與 Red Team,
+      六個月後 MAS thematic review 抽查 200 筆發現 accuracy 降至 71.4%、
+      FN rate 11.2%、19 筆漏報(其中 4 筆涉高風險 PEP)。同時 prompt injection
+      16 次測試 11 次穿透。展示「Eval / Drift / Red Team 三軸並行,少一軸事故
+      就從那條路送達」。
+
+  - id: CASE-FIN-011
+    title: "WebLogic Java EE 應用 + 5000 行 PL/SQL 業務規則的程式碼考古"
+    domain: fintech
+    chapters: [chC]
+    anonymized: true
+    summary: |
+      虛構 fintech 場景:接手一個 7 年前由某個離職資深工程師寫的 Java EE
+      應用,跑在 WebLogic 上,跟 PL/SQL 資料庫深度耦合,沒有單元測試、
+      沒有文件,業務規則散落在 5,000 行的 stored procedure 裡。原作者離職、
+      使用者只知道「按這個鈕會觸發那個流程」。展示「主大綱默認 Greenfield
+      但工程現場大概率在 Brownfield」、四層 AI 逆向工程(L1 Lexical /
+      L2 Structural / L3 Behavioral / L4 Domain)、Strangler Fig 三條黃金規則。
+
+  # ========== Ch 39 Capstone ==========
+  - id: CASE-FIN-012
+    title: "PayLoop 2.0 — 全書 SA/SD 整合案例"
+    domain: fintech
+    chapters: [ch-39]
+    anonymized: true
+    related_cases: [CASE-FIN-001]
+    summary: |
+      虛構新創跨境匯款 fintech,從 CASE-FIN-001 PayLoop 1.0(18 天 MVP /
+      180 天崩潰)演化而來。22 人團隊、月流水 USD 4,200 萬、跨 5 國,技術棧
+      Spring Boot 3.3 + PG 17 + pgvector + Kafka 3.7 + Anthropic Claude
+      Opus 4.7 + LangGraph 0.2 + K8s 1.31 cell-based。本書 Capstone 章主案例,
+      展示全書 38 主章 + 6 補章如何在一個系統中具體整合 ⸺ 從 System Charter
+      重寫(Ch 1)、Cadence Charter 對齊(Ch 2)、TELOP + 隱性否決者識別
+      (Ch 3)、Requirements Decision Log(Ch 4)、Bounded Context 重劃
+      (Ch 17)、Modular Monolith + 6 cell(Ch 20 + 24)、Workload-Aware
+      Engineering(Ch 32)、AI-Native Litmus Test(Ch 33)、CDE 三層
+      (Ch 34)、Eval / Drift / Red Team 三軸(Ch 38)到 Capstone Pack 45 份
+      artifact 完整對應全書骨架。
