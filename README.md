@@ -45,6 +45,8 @@
 
 ### ▌ Part 01：基礎
 
+> [篇導讀 →](book/part-01-foundations/00-overview.md) 詞彙層建立 / 章節依存圖 / 三條讀者路徑
+
 #### Ch 1｜為什麼系統分析與系統設計
 **核心主題**：在 AI 會寫程式的 2026 年，SA/SD 的價值從「快速交付」轉向「記錄決策脈絡與可傳遞知識」。  
 **案例**：PayLoop 18 天上線，但 180 天後無法追蹤交易路徑。  
@@ -87,6 +89,8 @@
 
 ### ▌ Part 02：分析
 
+> [篇導讀 →](book/part-02-analysis/00-overview.md) 五種分析工具的問題型別 / 章節依存圖 / 讀者入口
+
 #### Ch 6｜結構化分析
 **核心主題**：支付系統 8,400 美元差額無法溯源，根本原因是沒有維護完整的資料血緣圖（Kafka topic → 表 → owner）。  
 **案例**：TradePath 支付對帳系統的 DFD 設計缺失。  
@@ -128,6 +132,8 @@
 ---
 
 ### ▌ Part 03：設計
+
+> [篇導讀 →](book/part-03-design/00-overview.md) 六章 + 補章 F / 改動半徑到 CUX 的設計地基 / 章節依存圖
 
 #### Ch 11｜軟體架構原則
 **核心主題**：SOLID、12-Factor、Clean Architecture 不是檢查清單，是**成本估算工具**——一條規則跨 14 個檔案，就是未來每次改動的額外代價。  
@@ -179,6 +185,8 @@
 ---
 
 ### ▌ Part 04：架構
+
+> [篇導讀 →](book/part-04-architecture/00-overview.md) 八章 + 補章 A / 複雜度增長的架構工具序列 / 章節依存圖
 
 #### Ch 17｜領域驅動設計（DDD）
 **核心主題**：三個系統都叫 `Patient` 但語意各不同——Bounded Context 的價值是語言邊界，不是服務邊界。  
@@ -246,6 +254,8 @@
 
 ### ▌ Part 05：品質
 
+> [篇導讀 →](book/part-05-quality/00-overview.md) 四章 + 補章 E / 安全到合規的品質屬性依存順序 / 章節依存圖
+
 #### Ch 25｜安全設計
 **核心主題**：KYC 通過、OTP 驗證、風控規則全過，社交工程 + OAuth refresh token 缺陷讓 NT$280 萬被轉走——安全是預設值，不是清單。  
 **關鍵工具**：STRIDE Threat Model、Zero Trust 原則、OAuth 2.0 / PKCE 設計、身份驗證流程審查  
@@ -283,6 +293,8 @@
 
 ### ▌ Part 06：工程實踐
 
+> [篇導讀 →](book/part-06-engineering/00-overview.md) 四章 / 工程文化基礎設施 / IDP → ADR → Fitness → FinOps 依存圖
+
 #### Ch 29｜Platform Engineering 與 IDP
 **核心主題**：17 個內部工具交付，90 天後新人 DAU 只有 22%——Platform-as-a-Product 不是 DevOps 重命名，是讓工程師「寧願用平台」的產品設計。  
 **關鍵工具**：Paved Road 設計原則、Platform 採納率指標、Golden Path 模板  
@@ -312,6 +324,8 @@
 ---
 
 ### ▌ Part 07：AI 時代
+
+> [篇導讀 →](book/part-07-ai-era/00-overview.md) 六章 + 補章 B/C/D / 複雜度增長的 AI 工具序列 / 各讀者入口
 
 #### Ch 33｜AI-Native 架構
 **核心主題**：LLM 判成「非緊急」的胸痛病人 STEMI 發作——AI-Native 系統的設計核心是「拿掉 LLM 後系統還能跑」的 Graceful Degradation。  
@@ -377,6 +391,8 @@
 ---
 
 ### ▌ Part 08：綜合
+
+> [篇導讀 →](book/part-08-synthesis/00-overview.md) PayLoop 2.0 / 45 份 artifact 對應索引 / 你讀完能做的事
 
 #### Ch 39｜Capstone
 **核心主題**：PayLoop 兩年後被金管局再次問及「同一個錯誤六小時內能否回答」，這次 CTO 展示了完整的文件樹（Charter、ADR、C4、Fitness Functions、Data Lineage）。  

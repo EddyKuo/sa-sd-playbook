@@ -8,6 +8,7 @@
 
 ## Part 01｜基礎
 
+- [篇導讀](part-01-foundations/00-overview.md)
 - [第 1 章｜為什麼系統分析與系統設計](part-01-foundations/ch-01-why-sa-sd.md)
 - [第 2 章｜SDLC 與方法論演進](part-01-foundations/ch-02-sdlc-evolution.md)
 - [第 3 章｜專案啟動、可行性研究與利害關係人分析](part-01-foundations/ch-03-project-initiation.md)
@@ -16,6 +17,7 @@
 
 ## Part 02｜分析
 
+- [篇導讀](part-02-analysis/00-overview.md)
 - [第 6 章｜結構化分析](part-02-analysis/ch-06-dfd-structured-analysis.md)
 - [第 7 章｜物件導向分析](part-02-analysis/ch-07-object-oriented-analysis.md)
 - [第 8 章｜資料模型與正規化](part-02-analysis/ch-08-data-modeling-normalization.md)
@@ -24,6 +26,7 @@
 
 ## Part 03｜設計
 
+- [篇導讀](part-03-design/00-overview.md)
 - [第 11 章｜軟體架構原則](part-03-design/ch-11-architecture-principles.md)
 - [第 12 章｜設計模式](part-03-design/ch-12-design-patterns.md)
 - [第 13 章｜架構風格實戰](part-03-design/ch-13-architecture-styles.md)
@@ -34,6 +37,7 @@
 
 ## Part 04｜架構
 
+- [篇導讀](part-04-architecture/00-overview.md)
 - [第 17 章｜領域驅動設計（DDD）](part-04-architecture/ch-17-ddd-strategic-tactical.md)
 - [第 18 章｜Event Storming 與 Event Modeling](part-04-architecture/ch-18-event-storming-modeling.md)
 - [第 19 章｜C4 Model 與架構視覺化](part-04-architecture/ch-19-c4-model-visualization.md)
@@ -46,6 +50,7 @@
 
 ## Part 05｜品質
 
+- [篇導讀](part-05-quality/00-overview.md)
 - [第 25 章｜安全設計](part-05-quality/ch-25-security-by-design.md)
 - [第 26 章｜可觀測性](part-05-quality/ch-26-observability-otel.md)
 - [第 27 章｜SRE、SLO、Chaos Engineering](part-05-quality/ch-27-sre-slo-chaos.md)
@@ -54,6 +59,7 @@
 
 ## Part 06｜工程實踐
 
+- [篇導讀](part-06-engineering/00-overview.md)
 - [第 29 章｜Platform Engineering 與 IDP](part-06-engineering/ch-29-platform-engineering-idp.md)
 - [第 30 章｜架構決策紀錄（ADR）與架構知識管理](part-06-engineering/ch-30-adr-architecture-knowledge.md)
 - [第 31 章｜架構適應度函式](part-06-engineering/ch-31-fitness-functions.md)
@@ -61,6 +67,7 @@
 
 ## Part 07｜AI 時代
 
+- [篇導讀](part-07-ai-era/00-overview.md)
 - [第 33 章｜AI-Native 架構](part-07-ai-era/ch-33-ai-native-architecture.md)
 - [第 34 章｜Context-Driven Engineering（CDE）](part-07-ai-era/ch-34-context-driven-engineering.md)
 - [第 35 章｜RAG、Memory 與 Tool 設計](part-07-ai-era/ch-35-rag-memory-tool.md)
@@ -73,6 +80,7 @@
 
 ## Part 08｜綜合
 
+- [篇導讀](part-08-synthesis/00-overview.md)
 - [第 39 章｜Capstone](part-08-synthesis/ch-39-capstone.md)
 
 ---

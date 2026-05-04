@@ -17,6 +17,7 @@
 
 ### 第 I 篇 — 認知基礎
 
+- [**篇導讀**](part-01-foundations/00-overview.md) — 詞彙層建立 / 章節依存圖 / 三條讀者路徑
 - [Ch 1 為什麼系統分析與系統設計](part-01-foundations/ch-01-why-sa-sd.md) — 在 AI 會寫程式的 2026 年
 - [Ch 2 SDLC 與方法論演進](part-01-foundations/ch-02-sdlc-evolution.md) — 從瀑布到 Context-Driven Engineering
 - [Ch 3 專案啟動與利害關係人分析](part-01-foundations/ch-03-project-initiation.md) — 摸清誰能讓這事死掉
@@ -25,6 +26,7 @@
 
 ### 第 II 篇 — 分析
 
+- [**篇導讀**](part-02-analysis/00-overview.md) — 五種分析工具的問題型別 / 章節依存圖 / 讀者入口
 - [Ch 6 結構化分析 — DFD](part-02-analysis/ch-06-dfd-structured-analysis.md)
 - [Ch 7 物件導向分析](part-02-analysis/ch-07-object-oriented-analysis.md) — 從用例到狀態,讓四張圖一起活著
 - [Ch 8 資料模型與正規化](part-02-analysis/ch-08-data-modeling-normalization.md) — 3NF 通過 ≠ schema 是好的
@@ -33,6 +35,7 @@
 
 ### 第 III 篇 — 設計基礎
 
+- [**篇導讀**](part-03-design/00-overview.md) — 六章 + 補章 F / 改動半徑到 CUX 的設計地基 / 章節依存圖
 - [Ch 11 軟體架構原則](part-03-design/ch-11-architecture-principles.md) — SOLID / Clean / 12-Factor 是改動半徑成本估算工具
 - [Ch 12 設計模式](part-03-design/ch-12-design-patterns.md) — GoF 與 EIP,為已知問題命名的工具
 - [Ch 13 架構風格實戰](part-03-design/ch-13-architecture-styles.md) — 各擋哪一種變動
@@ -43,6 +46,7 @@
 
 ### 第 IV 篇 — 進階架構
 
+- [**篇導讀**](part-04-architecture/00-overview.md) — 八章 + 補章 A / 複雜度增長的架構工具序列 / 章節依存圖
 - [Ch 17 領域驅動設計(DDD)](part-04-architecture/ch-17-ddd-strategic-tactical.md) — 戰略 vs 戰術,真正的價值在語言邊界
 - [Ch 18 Event Storming 與 Event Modeling](part-04-architecture/ch-18-event-storming-modeling.md)
 - [Ch 19 C4 Model 與架構視覺化](part-04-architecture/ch-19-c4-model-visualization.md) — 給多種讀者看的同一份地圖
@@ -55,6 +59,7 @@
 
 ### 第 V 篇 — 品質屬性
 
+- [**篇導讀**](part-05-quality/00-overview.md) — 四章 + 補章 E / 安全到合規的品質屬性依存順序 / 章節依存圖
 - [Ch 25 Security by Design](part-05-quality/ch-25-security-by-design.md) — 不是清單,是預設值
 - **[補章 E Compliance by Design](part-05-quality/chE-compliance.md)** — AI 合規架構
 - [Ch 26 可觀測性 / OpenTelemetry](part-05-quality/ch-26-observability-otel.md) — 不該只是 Dashboard 牆
@@ -63,6 +68,7 @@
 
 ### 第 VI 篇 — 現代工程實踐
 
+- [**篇導讀**](part-06-engineering/00-overview.md) — 四章 / 工程文化基礎設施 / IDP → ADR → Fitness → FinOps 依存圖
 - [Ch 29 Platform Engineering 與 IDP](part-06-engineering/ch-29-platform-engineering-idp.md) — Platform-as-a-Product
 - [Ch 30 架構決策紀錄(ADR)](part-06-engineering/ch-30-adr-architecture-knowledge.md) — 把決策寫成「決定的化石」
 - [Ch 31 架構適應度函式](part-06-engineering/ch-31-fitness-functions.md) — 把架構規則寫成可執行的測試
@@ -70,6 +76,7 @@
 
 ### 第 VII 篇 — AI 時代的 SA/SD
 
+- [**篇導讀**](part-07-ai-era/00-overview.md) — 六章 + 補章 B/C/D / 複雜度增長的 AI 工具序列 / 各讀者入口
 - [Ch 33 AI-Native Architecture](part-07-ai-era/ch-33-ai-native-architecture.md) — 從 AI-Embedded 到 Agent-First
 - [Ch 34 Context-Driven Engineering(CDE)](part-07-ai-era/ch-34-context-driven-engineering.md)
 - [Ch 35 RAG / Memory / Tool 設計](part-07-ai-era/ch-35-rag-memory-tool.md) — 三組記憶與三種能力
@@ -82,6 +89,7 @@
 
 ### 第 VIII 篇 — 綜合 Capstone
 
+- [**篇導讀**](part-08-synthesis/00-overview.md) — PayLoop 2.0 / 45 份 artifact 對應索引 / 你讀完能做的事
 - [Ch 39 Capstone — 把 SA/SD 的劇本全部接上](part-08-synthesis/ch-39-capstone.md)
 
 ### 附錄
