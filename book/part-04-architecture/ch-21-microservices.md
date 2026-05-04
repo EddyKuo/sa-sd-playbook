@@ -148,11 +148,11 @@ Ch 20 已經把預設值定在 Modular Monolith。本章不是反過來推銷微
 
 ```mermaid
 flowchart TD
-    Start([考慮把某個模組拆成獨立服務]) --> Q1{這個模組的<br/>RPS / 擴展節奏<br/>跟主系統差 ≥ 10x?}
+    Start([考慮把某個模組拆成獨立服務]) --> Q1{"這個模組的<br/>RPS / 擴展節奏<br/>跟主系統差 ≥ 10x?"}
     Q1 -->|否| Stay[不拆<br/>留在 Modulith]:::goal
     Q1 -->|是| Q2{有一支穩定 ≥ 5 人<br/>的團隊 cradle-to-grave<br/>擁有它?}
     Q2 -->|否| Stay
-    Q2 -->|是| Q3{部署節奏 / 業務節奏<br/>跟主系統差距<br/>持續 ≥ 12 個月?}
+    Q2 -->|是| Q3{"部署節奏 / 業務節奏<br/>跟主系統差距<br/>持續 ≥ 12 個月?"}
     Q3 -->|否| Stay
     Q3 -->|是| Q4{Platform Engineering<br/>已提供完整一套<br/>K8s+Mesh+Trace+GitOps?}
     Q4 -->|否,先補| Stay

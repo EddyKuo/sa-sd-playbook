@@ -71,7 +71,7 @@ flowchart LR
       G4[identity-core<br/>Account + Auth]:::goal
       G5[finance-core<br/>Payment + Ledger]:::goal
       G6[ops-core<br/>Promotion + Marketing]:::goal
-      E1{{Edge: BFF for Web/Mobile}}:::cold
+      E1{{"Edge: BFF for Web/Mobile"}}:::cold
       E2{{Edge: Search Vector Service}}:::cold
       E3{{Edge: Webhook Fanout}}:::cold
     end

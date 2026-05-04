@@ -201,7 +201,7 @@ State of DevOps Report 系列 [^CIT-292] 從 2014 跑到 2024,核心結論一直
 ```mermaid
 flowchart TD
     Start([現在要不要成立 Platform team?]) --> Q1{工程師人數<br/>≥ 50?}
-    Q1 -->|否| TooEarly[還太早<br/>SRE / DevOps 夠用]:::cold
+    Q1 -->|否| TooEarly["還太早<br/>SRE / DevOps 夠用"]:::cold
     Q1 -->|是| Q2{Stream team 數量<br/>≥ 4 個?}
     Q2 -->|否| Distributed[認知負荷沒分散<br/>找 1–2 名 Enabling 教練]:::cold
     Q2 -->|是| Q3{已存在跨 team<br/>重複 infra 工作?}

@@ -340,25 +340,25 @@ Coding Agent([Ch 37](../part-07-ai-era/ch-37-coding-agent.md))在 22 人團隊�
 ```mermaid
 flowchart LR
     subgraph Anchor [錨定層 · 月 0]
-      Charter[Charter / Cadence / TELOP / Req Log<br/>Ch 1-4]:::goal
+      Charter["Charter / Cadence / TELOP / Req Log<br/>Ch 1-4"]:::goal
     end
     subgraph Analysis [分析層 · 月 1-3]
-      A[UML 三張 / DFD / Data Lineage<br/>Process Triage / Spec Triage<br/>Ch 5-10]:::cold
+      A["UML 三張 / DFD / Data Lineage<br/>Process Triage / Spec Triage<br/>Ch 5-10"]:::cold
     end
     subgraph Design [設計層 · 月 4-6]
-      D[Principles / Patterns / Style<br/>API Contract / Storage / UI+CUX<br/>Ch 11-16 + 補 F]:::cold
+      D["Principles / Patterns / Style<br/>API Contract / Storage / UI+CUX<br/>Ch 11-16 + 補 F"]:::cold
     end
     subgraph Architecture [架構層 · 月 7-9]
-      AR[BC / ES / C4 / Module / Micro Tax<br/>EDA / Cloud / Mesh / Cell + Edge<br/>Ch 17-24 + 補 A]:::cold
+      AR["BC / ES / C4 / Module / Micro Tax<br/>EDA / Cloud / Mesh / Cell + Edge<br/>Ch 17-24 + 補 A"]:::cold
     end
     subgraph Quality [品質層 · 月 10-12]
-      Q[Threat / Obs / SLO / Data Arch<br/>Compliance Pack<br/>Ch 25-28 + 補 E]:::cold
+      Q["Threat / Obs / SLO / Data Arch<br/>Compliance Pack<br/>Ch 25-28 + 補 E"]:::cold
     end
     subgraph Engineering [工程層 · 月 13-14]
-      E[Platform / ADR / Fitness / FinOps<br/>Ch 29-32]:::cold
+      E["Platform / ADR / Fitness / FinOps<br/>Ch 29-32"]:::cold
     end
     subgraph AI [AI 層 · 月 15-22]
-      AIL[L1-L7 / CDE / RAG / Multi-Agent<br/>Coding Agent / Eval-Drift-RT<br/>+ Agentic QA / Brownfield / Consensus<br/>Ch 33-38 + 補 B/C/D]:::hot
+      AIL["L1-L7 / CDE / RAG / Multi-Agent<br/>Coding Agent / Eval-Drift-RT<br/>+ Agentic QA / Brownfield / Consensus<br/>Ch 33-38 + 補 B/C/D"]:::hot
     end
 
     Anchor --> Analysis --> Design --> Architecture --> Quality --> Engineering --> AI
@@ -467,28 +467,28 @@ flowchart LR
       C3[TELOP]:::goal
     end
     subgraph P2 [Part II 分析 · Ch 4-10]
-      A1[Req Log / UML / DFD]:::cold
-      A2[Data Lineage / Process / Spec]:::cold
+      A1["Req Log / UML / DFD"]:::cold
+      A2["Data Lineage / Process / Spec"]:::cold
     end
     subgraph P3 [Part III 設計 · Ch 11-16 + 補 F]
-      D1[Principles / Patterns / Style]:::cold
-      D2[API / Storage / UI/UX + CUX]:::cold
+      D1["Principles / Patterns / Style"]:::cold
+      D2["API / Storage / UI/UX + CUX"]:::cold
     end
     subgraph P4 [Part IV 架構 · Ch 17-24 + 補 A]
-      AR1[DDD / ES / C4]:::cold
-      AR2[Modular Mono / Micro / EDA / Cloud / Edge]:::cold
+      AR1["DDD / ES / C4"]:::cold
+      AR2["Modular Mono / Micro / EDA / Cloud / Edge"]:::cold
     end
     subgraph P5 [Part V 品質 · Ch 25-28 + 補 E]
-      Q1[Security / Obs / SRE / Data]:::cold
+      Q1["Security / Obs / SRE / Data"]:::cold
       Q2[Compliance Pack]:::cold
     end
     subgraph P6 [Part VI 工程 · Ch 29-32]
-      E1[Platform / ADR / Fitness / FinOps]:::cold
+      E1["Platform / ADR / Fitness / FinOps"]:::cold
     end
     subgraph P7 [Part VII AI · Ch 33-38 + 補 B/C/D]
-      AI1[L1-L7 / CDE / RAG]:::hot
-      AI2[Multi-Agent / Coding / Eval]:::hot
-      AI3[Agentic QA / Brownfield / Consensus]:::hot
+      AI1["L1-L7 / CDE / RAG"]:::hot
+      AI2["Multi-Agent / Coding / Eval"]:::hot
+      AI3["Agentic QA / Brownfield / Consensus"]:::hot
     end
     subgraph P8 [Part VIII Capstone · Ch 39]
       CS[同一張地圖]:::goal

@@ -236,10 +236,10 @@ flowchart TD
     Q2 -->|否| Deny2[拒絕<br/>觸發 token 撤銷]:::hot
     Q2 -->|是| Q3{請求路徑屬於<br/>敏感操作?}
     Q3 -->|否| Q4{Rate limit<br/>未超過?}
-    Q4 -->|否| Throttle[限流 / 排隊]:::hot
+    Q4 -->|否| Throttle["限流 / 排隊"]:::hot
     Q4 -->|是| Allow1[放行<br/>記常規 log]:::goal
     Q3 -->|是,寫入/錢/權限| Q5{動態風險評分<br/>低?}
-    Q5 -->|高,異常設備/異常地理/異常時間| StepUp[要求 step-up auth<br/>MFA / WebAuthn]:::cold
+    Q5 -->|高,異常設備/異常地理/異常時間| StepUp["要求 step-up auth<br/>MFA / WebAuthn"]:::cold
     Q5 -->|低| Q6{需要 human<br/>in the loop?}
     Q6 -->|是,Agent 工具呼叫| Confirm[要求顯式 consent]:::cold
     Q6 -->|否| Allow2[放行<br/>記敏感操作 audit]:::goal

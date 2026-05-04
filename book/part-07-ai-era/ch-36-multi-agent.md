@@ -257,8 +257,8 @@ Helmsworth 後來重整時就走這條路:Role 維持七個(Intake / Triage / Se
 flowchart TD
     Start([單一 Agent 表現不好]) --> Q1{Prompt 是否<br/>結構化 + few-shot?}
     Q1 -->|否| Fix1[改寫 prompt,<br/>不需拆 Multi-Agent]:::goal
-    Q1 -->|是| Q2{Context 是否<br/>足夠 / 有 RAG?}
-    Q2 -->|否| Fix2[加 RAG / Memory<br/>Ch 35]:::goal
+    Q1 -->|是| Q2{"Context 是否<br/>足夠 / 有 RAG?"}
+    Q2 -->|否| Fix2["加 RAG / Memory<br/>Ch 35"]:::goal
     Q2 -->|是| Q3{任務能否<br/>拆成固定線性步驟?}
     Q3 -->|能| W1[Prompt Chaining]:::cold
     Q3 -->|不能,但能分類| W2[Routing]:::cold

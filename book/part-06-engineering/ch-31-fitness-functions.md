@@ -137,19 +137,19 @@ Charles Darwin 講的是物種對環境的適應度,軟體架構這裡借用的�
 flowchart TB
     subgraph PR[PR / Commit 觸發]
       direction TB
-      L1[Code 層<br/>ArchUnit / Konsist /<br/>Spring Modulith / Packwerk]:::goal
-      L2[API 層<br/>Spectral OpenAPI lint /<br/>Buf breaking change /<br/>Pact contract verify]:::goal
-      L3[Data 層<br/>Schema Registry compat /<br/>Data Contract test /<br/>dbt contract]:::goal
+      L1["Code 層<br/>ArchUnit / Konsist /<br/>Spring Modulith / Packwerk"]:::goal
+      L2["API 層<br/>Spectral OpenAPI lint /<br/>Buf breaking change /<br/>Pact contract verify"]:::goal
+      L3["Data 層<br/>Schema Registry compat /<br/>Data Contract test /<br/>dbt contract"]:::goal
     end
 
     subgraph CD[CD / Pre-Deploy 觸發]
       direction TB
-      L4[Deploy 層<br/>Trivy / Grype CVE scan /<br/>Conftest / OPA Rego policy /<br/>Kyverno]:::cold
+      L4["Deploy 層<br/>Trivy / Grype CVE scan /<br/>Conftest / OPA Rego policy /<br/>Kyverno"]:::cold
     end
 
     subgraph PROD[Production 持續觸發]
       direction TB
-      L5[Observe 層<br/>SLO multi-burn-rate alert /<br/>Prometheus + Alertmanager /<br/>error budget gate]:::hot
+      L5["Observe 層<br/>SLO multi-burn-rate alert /<br/>Prometheus + Alertmanager /<br/>error budget gate"]:::hot
     end
 
     ADR[ADR-0007<br/>Hexagonal] --> L1
@@ -207,16 +207,16 @@ Ford & Parsons 在書裡給了一組三維分類,在現場用來決定「**這�
 ```mermaid
 flowchart TD
     Start([新的 ADR 通過]) --> Q1{ADR 約束的是<br/>程式碼結構?}
-    Q1 -->|是| Code[Code 層<br/>ArchUnit / Packwerk /<br/>Spring Modulith]:::goal
+    Q1 -->|是| Code["Code 層<br/>ArchUnit / Packwerk /<br/>Spring Modulith"]:::goal
     Q1 -->|否| Q2{ADR 約束的是<br/>對外介面契約?}
-    Q2 -->|是| Q2a{是同步 REST/gRPC<br/>還是事件?}
+    Q2 -->|是| Q2a{"是同步 REST/gRPC<br/>還是事件?"}
     Q2a -->|REST/gRPC| API[API 層<br/>Spectral + Pact + Buf]:::goal
     Q2a -->|Event| Data[Data 層<br/>Schema Registry +<br/>Data Contract]:::goal
-    Q2 -->|否| Q3{ADR 約束的是<br/>資料模型 / 隔離?}
+    Q2 -->|否| Q3{"ADR 約束的是<br/>資料模型 / 隔離?"}
     Q3 -->|是| Data
-    Q3 -->|否| Q4{ADR 約束的是<br/>部署 / 鏡像 / IaC?}
-    Q4 -->|是| Deploy[Deploy 層<br/>Trivy + Conftest /<br/>Kyverno]:::cold
-    Q4 -->|否| Q5{ADR 約束的是<br/>可靠度 / 性能<br/>承諾?}
+    Q3 -->|否| Q4{"ADR 約束的是<br/>部署 / 鏡像 / IaC?"}
+    Q4 -->|是| Deploy["Deploy 層<br/>Trivy + Conftest /<br/>Kyverno"]:::cold
+    Q4 -->|否| Q5{"ADR 約束的是<br/>可靠度 / 性能<br/>承諾?"}
     Q5 -->|是| Observe[Observe 層<br/>SLO + multi-burn-rate]:::hot
     Q5 -->|否| Reject[這份 ADR 可能<br/>不該存在<br/>或屬於風格指南]:::hot
 

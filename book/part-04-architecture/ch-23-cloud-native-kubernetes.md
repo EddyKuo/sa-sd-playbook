@@ -182,13 +182,13 @@ flowchart TD
     Q1 -->|否| Fix[先做 12-Factor<br/>再選平台]:::hot
     Q1 -->|是| Q2{團隊規模<br/>≥ 50 人?}
 
-    Q2 -->|否| Q3{Workload 主要是<br/>事件 / 排程 / 短任務?}
-    Q3 -->|是| Serverless[Cloud Run / Lambda<br/>Knative 暫不考慮]:::goal
-    Q3 -->|否| PaaS[Render / Fly.io /<br/>Railway / Cloud Run]:::goal
+    Q2 -->|否| Q3{"Workload 主要是<br/>事件 / 排程 / 短任務?"}
+    Q3 -->|是| Serverless["Cloud Run / Lambda<br/>Knative 暫不考慮"]:::goal
+    Q3 -->|否| PaaS["Render / Fly.io /<br/>Railway / Cloud Run"]:::goal
 
-    Q2 -->|是| Q4{有 ≥ 2 名專職 SRE /<br/>Platform team?}
+    Q2 -->|是| Q4{"有 ≥ 2 名專職 SRE /<br/>Platform team?"}
     Q4 -->|否| BuildPlatform[先建 Platform team<br/>同時用 PaaS]:::cold
-    Q4 -->|是| Q5{有真實多雲 /<br/>合規 / 自訂排程需求?}
+    Q4 -->|是| Q5{"有真實多雲 /<br/>合規 / 自訂排程需求?"}
 
     Q5 -->|否| BigPaaS[企業級 PaaS<br/>或 K8s 但禁止自製 CRD]:::cold
     Q5 -->|是| Q6{> 500 人或<br/>多區域?}
@@ -218,7 +218,7 @@ flowchart LR
     end
 
     subgraph Pod[Pod 層]
-      P[Pod = 1+ 容器<br/>+ shared network/volume]:::goal
+      P["Pod = 1+ 容器<br/>+ shared network/volume"]:::goal
     end
 
     subgraph Config[配置層]
@@ -229,14 +229,14 @@ flowchart LR
 
     subgraph Network[網路層]
       Svc[Service<br/>叢集內]:::goal
-      Ing[Ingress / Gateway API<br/>對外]:::goal
+      Ing["Ingress / Gateway API<br/>對外"]:::goal
       NP[NetworkPolicy<br/>東西向防火牆]:::hot
     end
 
     subgraph Extension[擴展層]
       CRD[CRD<br/>自訂資源]:::cold
       Op[Operator<br/>控制邏輯]:::cold
-      Adm[Admission Webhook<br/>Mutating/Validating]:::hot
+      Adm["Admission Webhook<br/>Mutating/Validating"]:::hot
     end
 
     Deploy --> P
