@@ -229,4 +229,36 @@ PR：______  審計者：______  日期：______
 
 ---
 
-> **讀完這章你應該能做的事**：在下一個含有 AI 生成程式碼的 PR review 中，能做完三層審計，並在 PR 描述中清楚說明意圖符合性已驗證的業務規則清單。
+## 44.5 本章交付清單 Recap
+
+讀完本章，你應該已經能做到：
+
+- [ ] 說明「意圖符合性」與「技術正確性」的差距，以及 AI 程式碼 review 為何需要新增意圖符合性驗證
+- [ ] 用三步驟執行意圖符合性驗證（顯性化假設 → 逆向驗證 → 業務覆蓋率確認）
+- [ ] 完成「AI 程式碼審計三層 Checklist」，在 PR review 中覆蓋技術正確性、意圖符合性、架構符合性三層
+- [ ] 識別意圖符合性 gap，並判斷是否需要更新 CLAUDE.md 或 Failure Catalog
+
+如果先挑一項做，建議是 ⸺ **在下一個含有 AI 生成程式碼的 PR，先列出業務規則清單，再做逆向驗證**，理由是這個動作讓「意圖符合性」從抽象概念變成具體的可操作步驟，五分鐘就能有第一個輸出。
+
+---
+
+## Cross-References
+
+- **前置閱讀**：[Ch 41 有效使用 AI 輔助](./ch-41-effective-ai-assistance.md)、[Ch 31 架構適應度函式](../part-06-engineering/ch-31-fitness-functions.md)
+- **下游章節**：[補章 G 工程直覺保護手冊](./chG-engineering-intuition.md)
+- **延伸補章**：[補章 B Agentic QA](../part-07-ai-era/chB-agentic-qa.md)
+
+## 引用
+
+本章無外部文獻引用。
+
+<!-- PROPOSED-REFS
+glossary:
+  - anchor: intent-conformance
+    name: 意圖符合性（Intent Conformance）
+    body: |
+      AI 生成程式碼的審計維度之一：驗證 AI 實作的行為是否等於工程師真正想要的業務行為。
+      有別於「技術正確性」（程式碼邏輯是否無誤），意圖符合性關注的是「業務語義是否被完整
+      實現」。PortBridge 訂單狀態同步案例（Ch 44.1）是典型的意圖符合性失敗：技術上正確，
+      業務語義上不完整。
+-->
