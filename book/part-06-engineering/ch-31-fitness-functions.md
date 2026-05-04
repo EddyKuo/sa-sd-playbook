@@ -468,8 +468,8 @@ Prometheus + Sloth 都建好了,SLO catalog 寫了 14 條,multi-burn-rate alert 
 [^CIT-310]: Neal Ford, Rebecca Parsons, Patrick Kua, *Building Evolutionary Architectures*, 2nd Edition (O'Reilly, 2023)。第一版 2017,二版加入 GenAI 章節與更新案例。書中三維分類(Atomic/Holistic、Triggered/Continuous、Static/Dynamic)為本章 § 31.3.2 的依據。
 [^CIT-311]: ArchUnit Project — archunit.org / github.com/TNG/ArchUnit。Java/Kotlin bytecode 架構規則靜態分析庫,1.3 版加入 Java 21 record 支援。
 [^CIT-312]: Konsist — github.com/LemonAppDev/konsist。Kotlin-first 架構規則 DSL,2024–2025 在 Kotlin 社群快速採用,0.17 版穩定。
-[^CIT-313]: Spring Modulith Reference Documentation — docs.spring.io/spring-modulith/。同 Ch 20 [^CIT-204]。
-[^CIT-314]: Shopify Packwerk — github.com/Shopify/packwerk。同 Ch 20 [^CIT-205]。
+[^CIT-313]: Spring Modulith Reference Documentation — docs.spring.io/spring-modulith/。同 Ch 20 CIT-204。
+[^CIT-314]: Shopify Packwerk — github.com/Shopify/packwerk。同 Ch 20 CIT-205。
 [^CIT-315]: Spectral — github.com/stoplightio/spectral。Stoplight 維護的 OpenAPI / AsyncAPI / JSON Schema lint 工具,6.x 為 2024–2026 主線。
 [^CIT-316]: Buf CLI / Breaking Change Detector — buf.build/docs/breaking。Protobuf 與 OpenAPI 的破壞性變更偵測,2025 起加入 OpenAPI 支援。
 [^CIT-317]: Pact Foundation — pact.io / docs.pact.io。消費者驅動契約測試框架,Pact Broker 為協調中心,2.x 對應 v4 wire format。

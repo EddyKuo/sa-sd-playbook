@@ -21,7 +21,7 @@ word_count_target: 6500
 > **插入位置**:緊接 [補章 B Agentic QA](./chB-agentic-qa.md) 之後,接續 [Ch 38](./ch-38-ai-eval-drift-redteam.md) 之後的 AI 時代延伸
 > **前置閱讀**:[Ch 17 DDD](../part-04-architecture/ch-17-ddd-strategic-tactical.md)、[Ch 20 Modular Monolith](../part-04-architecture/ch-20-modular-monolith.md)、[Ch 34 CDE](./ch-34-context-driven-engineering.md)、[Ch 37 Coding Agent](./ch-37-coding-agent.md)
 > **下游章節**:[Ch 39 Capstone](../part-08-synthesis/ch-39-capstone.md)
-> **強連結補章**:[補章 B Agentic QA](./chB-agentic-qa.md)
+> **延伸補章**:[補章 B Agentic QA](./chB-agentic-qa.md)
 
 ---
 
@@ -210,4 +210,8 @@ Agent 看了一段沒被呼叫的程式碼說「這是 dead code 可以刪」⸺
 
 - **前置**:[Ch 17 DDD](../part-04-architecture/ch-17-ddd-strategic-tactical.md)、[Ch 20 Modular Monolith](../part-04-architecture/ch-20-modular-monolith.md)、[Ch 34 CDE](./ch-34-context-driven-engineering.md)、[Ch 37 Coding Agent](./ch-37-coding-agent.md)
 - **下游**:[Ch 39 Capstone](../part-08-synthesis/ch-39-capstone.md)
-- **強連結補章**:[補章 B Agentic QA](./chB-agentic-qa.md)
+- **延伸補章**:[補章 B Agentic QA](./chB-agentic-qa.md)
+
+## 引用
+
+本章無外部文獻引用。

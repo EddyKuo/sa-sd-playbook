@@ -20,7 +20,7 @@ word_count_target: 6500
 > **插入位置**:緊接 [Ch 24 Service Mesh / API Gateway / Cell-Based](./ch-24-service-mesh-cell-based.md) 之後
 > **前置閱讀**:[Ch 21 微服務](./ch-21-microservices.md)、[Ch 23 雲端原生 K8s](./ch-23-cloud-native-kubernetes.md)、[Ch 24](./ch-24-service-mesh-cell-based.md)
 > **下游章節**:[Ch 27 SRE / 可靠度](../part-05-quality/ch-27-sre-slo-chaos.md)、[Ch 28 資料架構](../part-05-quality/ch-28-data-architecture.md)
-> **強連結補章**:[補章 E Compliance](../part-05-quality/chE-compliance.md)、[補章 F CUX 多模態](../part-03-design/chF-cux.md)
+> **延伸補章**:[補章 E Compliance](../part-05-quality/chE-compliance.md)、[補章 F CUX 多模態](../part-03-design/chF-cux.md)
 
 ---
 
@@ -280,4 +280,4 @@ flowchart TD
 
 - **前置**:[Ch 21 微服務](./ch-21-microservices.md)、[Ch 23 K8s](./ch-23-cloud-native-kubernetes.md)、[Ch 24 Mesh / Cell](./ch-24-service-mesh-cell-based.md)
 - **下游**:[Ch 27 SRE / 可靠度](../part-05-quality/ch-27-sre-slo-chaos.md)、[Ch 28 資料架構](../part-05-quality/ch-28-data-architecture.md)
-- **強連結補章**:[補章 E Compliance](../part-05-quality/chE-compliance.md)、[補章 F CUX](../part-03-design/chF-cux.md)
+- **延伸補章**:[補章 E Compliance](../part-05-quality/chE-compliance.md)、[補章 F CUX](../part-03-design/chF-cux.md)

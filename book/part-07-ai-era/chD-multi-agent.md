@@ -20,7 +20,7 @@ word_count_target: 6500
 > **插入位置**:緊接 [Ch 36 Multi-Agent](./ch-36-multi-agent.md) 之後
 > **前置閱讀**:[Ch 21 微服務](../part-04-architecture/ch-21-microservices.md)、[Ch 22 EDA / CQRS / ES](../part-04-architecture/ch-22-event-driven-cqrs-es.md)、[Ch 36](./ch-36-multi-agent.md)
 > **下游章節**:[Ch 38 AI Eval](./ch-38-ai-eval-drift-redteam.md)
-> **強連結補章**:[補章 B Agentic QA](./chB-agentic-qa.md)
+> **延伸補章**:[補章 B Agentic QA](./chB-agentic-qa.md)
 
 ---
 
@@ -274,4 +274,8 @@ state = llm_decision  # 把狀態本身交給 LLM 決定
 
 - **前置**:[Ch 21 微服務](../part-04-architecture/ch-21-microservices.md)、[Ch 22 EDA](../part-04-architecture/ch-22-event-driven-cqrs-es.md)、[Ch 36 Multi-Agent](./ch-36-multi-agent.md)
 - **下游**:[Ch 38 AI Eval](./ch-38-ai-eval-drift-redteam.md)
-- **強連結補章**:[補章 B Agentic QA](./chB-agentic-qa.md)
+- **延伸補章**:[補章 B Agentic QA](./chB-agentic-qa.md)
+
+## 引用
+
+本章無外部文獻引用。

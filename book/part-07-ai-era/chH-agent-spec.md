@@ -20,7 +20,7 @@ word_count_target: 6500
 > **插入位置**：緊接 [補章 D Multi-Agent 共識](./chD-multi-agent.md) 之後，作為 Part VII 最後一個補章
 > **前置閱讀**：[Ch 36 Multi-Agent 系統設計](./ch-36-multi-agent.md)、[Ch 37 AI Coding Agent](./ch-37-coding-agent.md)、[補章 D](./chD-multi-agent.md)
 > **下游章節**：[Ch 39 Capstone](../part-08-synthesis/ch-39-capstone.md)
-> **強連結補章**：[補章 B Agentic QA](./chB-agentic-qa.md)、[補章 D](./chD-multi-agent.md)
+> **延伸補章**：[補章 B Agentic QA](./chB-agentic-qa.md)、[補章 D](./chD-multi-agent.md)
 
 ---
 

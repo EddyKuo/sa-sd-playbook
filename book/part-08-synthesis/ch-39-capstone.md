@@ -4,6 +4,13 @@ part: VIII
 title: Capstone — 把 SA/SD 的劇本全部接上
 slug: capstone
 agent: Orchestrator
+skills_used:
+  - sa/arch-microservice
+  - sa/arch-event-driven
+  - sa/security-architecture
+  - sa/observability
+  - shared/domain-fintech
+  - shared/compliance-pci-dss
 domain_case: CASE-FIN-012
 reviewers: [PM, SA, RD, DBA, QA, UI/UX, Orchestrator]
 status: draft
