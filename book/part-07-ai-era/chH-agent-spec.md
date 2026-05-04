@@ -417,33 +417,38 @@ Agent 設定語言正在快速演進。已知的高變動風險點：
 
 ### H.4.3 SA 的 Agent 設計審查清單
 
-在設計或審查一個 Multi-Agent 系統時，SA 應能對以下問題提供書面答案：
+**可帶走 Artifact：SA Agent 設計審查清單**
 
-**Identity 層**
+```markdown
+## SA Agent 設計審查清單
+系統：______  審查者：______  日期：______
+
+### Identity 層
 - [ ] 每個 Agent 有唯一的 `name` 和清晰的 `description`（說明何時啟動）
 - [ ] Agent 的協調角色（Manager / Worker / Router）已在設計文件中明確標注
 - [ ] Agent 的業務角色對應需求文件中的哪個 Actor 或 System Role
 
-**Capabilities 層**
+### Capabilities 層
 - [ ] 每個 Agent 的工具（Tool）清單已列出，並有對應的授權依據
 - [ ] 沒有 Agent 持有超出其業務角色所需的工具授權
 - [ ] 敏感工具（執行退款、刪除資料）的授權已獨立審查
 
-**Instruction 層**
+### Instruction 層
 - [ ] System Prompt 已採用「角色定位 → 行為規範 → 輸出規格」三段式結構
 - [ ] 業務規則條文可回溯至需求文件（SRS / PRD）的對應項目
 - [ ] Instruction 中無超過三層邏輯巢套（複雜邏輯已移至 Tool）
 - [ ] 全域規格（術語表、技術棧）已集中管理，未分散重複於各 Agent
 
-**Coordination 層**
+### Coordination 層
 - [ ] 已明確選擇 Manager Pattern 或 Handoff Pattern，並記錄選擇理由
 - [ ] 每個委派 / Handoff 的介面（觸發條件、輸入參數、輸出格式）已定義
 - [ ] Agent 間傳遞的 Payload 格式已定義並受版本控制
 - [ ] Orchestrator 的異常處理路徑（Agent 失敗、超時、拒絕服務）已設計
 
-**Progressive Disclosure**
+### Progressive Disclosure
 - [ ] 各 Agent 設定文件已區分 Layer 1 / Layer 2 / Layer 3
 - [ ] Layer 2 的 token 預估值在可接受範圍內（< 5,000 tokens / agent）
+```
 
 ---
 
