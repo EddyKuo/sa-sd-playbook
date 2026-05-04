@@ -652,3 +652,65 @@ cases:
       Engineering(Ch 32)、AI-Native Litmus Test(Ch 33)、CDE 三層
       (Ch 34)、Eval / Drift / Red Team 三軸(Ch 38)到 Capstone Pack 45 份
       artifact 完整對應全書骨架。
+
+  # ========== Part IX — 人類工程師的定位 ==========
+  - id: CASE-SAS-010
+    title: "VaultStack — AI 設計的 schema 上了 production 三週後靜默資料遺失"
+    domain: saas
+    chapters: [ch-40]
+    anonymized: true
+    summary: |
+      虛構多租戶 SaaS 平台,讓 AI 設計訂閱計費的 PostgreSQL schema。
+      AI 給出乾淨的 3NF,通過 review,上線三週後發現升降方案事件
+      未被正確記錄 — AI 優化的是模式美觀度,不是業務語義。
+
+  - id: CASE-SAS-011
+    title: "GridForge — Cursor 導入三個月生產力 2.1x,第六個月回基線"
+    domain: saas
+    chapters: [ch-41]
+    anonymized: true
+    summary: |
+      虛構 B2B SaaS 工具平台,28 人工程團隊導入 Cursor + Claude Code。
+      前三個月生產力顯著提升,第六個月回落到導入前水準。
+      根本原因:各工程師自行維護不同的 CLAUDE.md,共享脈絡零碎化。
+
+  - id: CASE-HCR-008
+    title: "PineRidge EMR — AI 建議的資料模型變更繞過了 2019 年的合規決策"
+    domain: healthcare
+    chapters: [ch-42]
+    anonymized: true
+    summary: |
+      虛構區域醫院 EMR 系統,AI 建議將藥囑紀錄欄位合併以「優化查詢」。
+      工程團隊採納,三個月後稽核發現違反醫院 2019 年與主管機關的書面
+      協議 — 這份協議從未進入 codebase 或任何 AI 可讀文件。
+
+  - id: CASE-FIN-013
+    title: "ClearVault — AI 安全審查六個月連續通過,第七個月資料外洩"
+    domain: fintech
+    chapters: [ch-43]
+    anonymized: true
+    summary: |
+      虛構數位資產託管平台,使用 LLM 輔助做每月安全審查。
+      前六個月 AI 均回報「無重大風險」,第七個月發生 API key 暴露事件。
+      事後發現 AI 的弱點在新型態的間接提示注入攻擊,訓練資料截止日前
+      此類攻擊尚未公開。
+
+  - id: CASE-ECM-010
+    title: "PortBridge — AI 寫的 PR 全過,三週後靜默訂單狀態錯誤"
+    domain: ecommerce
+    chapters: [ch-44]
+    anonymized: true
+    summary: |
+      虛構跨境電商 B2B 平台,AI 生成的訂單狀態同步 PR 通過所有測試。
+      三週後發現部分跨時區訂單狀態未正確轉移。AI 正確理解了技術邏輯,
+      但誤解了業務語義 — 「已確認」在買方系統和賣方系統意思不同。
+
+  - id: CASE-SAS-012
+    title: "NovaDeck — 資深工程師兩年 AI 全依賴後無法獨立 debug"
+    domain: saas
+    chapters: [chG]
+    anonymized: true
+    summary: |
+      虛構 SaaS 分析平台,八年資深工程師完全轉向 AI 輔助開發。
+      兩年後遭遇 AI 工具全線中斷(API outage),發現自己在六小時內
+      無法獨立定位一個原本應該三十分鐘就能解決的記憶體洩漏問題。

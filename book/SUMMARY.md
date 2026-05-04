@@ -83,6 +83,16 @@
 - [篇導讀](part-08-synthesis/00-overview.md)
 - [第 39 章｜Capstone](part-08-synthesis/ch-39-capstone.md)
 
+## Part 09｜人類工程師的定位
+
+- [篇導讀](part-09-human-engineer/00-overview.md)
+- [第 40 章｜AI 能力地圖](part-09-human-engineer/ch-40-ai-capability-map.md)
+- [第 41 章｜有效使用 AI 輔助](part-09-human-engineer/ch-41-effective-ai-assistance.md)
+- [第 42 章｜人類不能外包的邊界](part-09-human-engineer/ch-42-human-judgment-boundary.md)
+- [第 43 章｜主動研究 AI 弱點](part-09-human-engineer/ch-43-ai-weakness-research.md)
+- [第 44 章｜AI 程式碼的審計哲學](part-09-human-engineer/ch-44-ai-code-audit.md)
+- [補章 G｜工程直覺保護手冊](part-09-human-engineer/chG-engineering-intuition.md)
+
 ---
 
 ## 附錄

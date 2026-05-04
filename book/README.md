@@ -92,6 +92,16 @@
 - [**篇導讀**](part-08-synthesis/00-overview.md) — PayLoop 2.0 / 45 份 artifact 對應索引 / 你讀完能做的事
 - [Ch 39 Capstone — 把 SA/SD 的劇本全部接上](part-08-synthesis/ch-39-capstone.md)
 
+### 第 IX 篇 — 人類工程師的定位
+
+- [**篇導讀**](part-09-human-engineer/00-overview.md) — 五章 + 補章 G / AI 使用框架到直覺保護 / 各讀者入口
+- [Ch 40 AI 能力地圖](part-09-human-engineer/ch-40-ai-capability-map.md) — 知道你在用什麼
+- [Ch 41 有效使用 AI 輔助](part-09-human-engineer/ch-41-effective-ai-assistance.md) — 委派設計與 Context Engineering
+- [Ch 42 人類不能外包的邊界](part-09-human-engineer/ch-42-human-judgment-boundary.md) — 系統深度理解與判斷保留
+- [Ch 43 主動研究 AI 弱點](part-09-human-engineer/ch-43-ai-weakness-research.md) — Red Team 思維與持續校準
+- [Ch 44 AI 程式碼的審計哲學](part-09-human-engineer/ch-44-ai-code-audit.md) — 從 LGTM 到意圖符合性驗證
+- **[補章 G 工程直覺保護手冊](part-09-human-engineer/chG-engineering-intuition.md)** — 在 AI 加速下不讓判斷力退化
+
 ### 附錄
 
 - [附錄 A 未來趨勢(2026 ↔ 2030)](annex-a-future-trends.md)
@@ -129,11 +139,11 @@
 
 ## 全書統計
 
-- **總篇數**:41 篇(39 主章 + 6 補章 + Ch 39 Capstone)
-- **總字元**:約 137 萬(中文約 84 萬字)
+- **總篇數**:47 篇(44 主章 + 7 補章 + Ch 39 Capstone)
+- **總字元**:約 174 萬(中文約 107 萬字)
 - **平均每章**:~28,000 字元
-- **可帶走 artifact**:45 份(每章一頁式模板)
-- **虛構案例**:43 個(fintech / ecommerce / saas / healthcare / energy 五領域均衡)
+- **可帶走 artifact**:51 份(每章一頁式模板)
+- **虛構案例**:49 個(fintech / ecommerce / saas / healthcare / energy 五領域均衡)
 - **術語**:280+ 條([附錄 F](annex-f-glossary.md))
-- **引用**:316+ 條([附錄 G](annex-g-citations.md))
-- **Mermaid 圖**:~115 張
+- **引用**:318+ 條([附錄 G](annex-g-citations.md))
+- **Mermaid 圖**:~127 張
