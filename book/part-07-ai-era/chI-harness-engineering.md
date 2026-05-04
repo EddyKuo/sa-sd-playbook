@@ -20,7 +20,7 @@ word_count_target: 8500
 > **插入位置**：緊接 [補章 H Agent 設定語言](./chH-agent-spec.md) 之後，作為 Part VII 收束補章
 > **前置閱讀**：[Ch 35 RAG / Memory / Tool 設計](./ch-35-rag-memory-tool.md)、[Ch 36 Multi-Agent 系統設計](./ch-36-multi-agent.md)、[Ch 38 AI Eval / Drift / Red Team](./ch-38-ai-eval-drift-redteam.md)、[補章 H Agent 設定語言](./chH-agent-spec.md)
 > **下游章節**：[Ch 39 Capstone](../part-08-synthesis/ch-39-capstone.md)
-> **強連結補章**：[補章 B Agentic QA](./chB-agentic-qa.md)、[補章 D Multi-Agent 共識](./chD-multi-agent.md)
+> **延伸補章**：[補章 B Agentic QA](./chB-agentic-qa.md)、[補章 D Multi-Agent 共識](./chD-multi-agent.md)
 
 ---
 
@@ -80,29 +80,27 @@ flowchart LR
     classDef hot fill:#fee,stroke:#c33
 
     subgraph Pre["Scaffolding（第一個 prompt 之前）"]
-      direction TB
-      S1[CLAUDE.md / agent.md\n專案脈絡]:::cold
-      S2[System Prompt\n角色、規範、輸出]:::cold
-      S3[Tool Schema\nname / description / args]:::cold
-      S4[Skill / RAG corpus]:::cold
+      S1["CLAUDE.md / agent.md\n專案脈絡"]:::cold
+      S2["System Prompt\n角色、規範、輸出"]:::cold
+      S3["Tool Schema\nname / description / args"]:::cold
+      S4["Skill / RAG corpus"]:::cold
     end
 
     subgraph Run["Harness（第一個 prompt 之後）"]
-      direction TB
-      R1[Loop\n模型→解析→工具→觀察]:::goal
-      R2[Tool Dispatcher\n呼叫 / 結果裁切 / MCP]:::goal
-      R3[Context Manager\n壓縮 / 重置 / Memory]:::goal
-      R4[Control Policy\n重試 / 超時 / 沙箱]:::goal
-      R5[Observability\nTrace / Eval / 監控]:::goal
+      R1["Loop\n模型→解析→工具→觀察"]:::goal
+      R2["Tool Dispatcher\n呼叫 / 結果裁切 / MCP"]:::goal
+      R3["Context Manager\n壓縮 / 重置 / Memory"]:::goal
+      R4["Control Policy\n重試 / 超時 / 沙箱"]:::goal
+      R5["Observability\nTrace / Eval / 監控"]:::goal
     end
 
-    Pre --> Run --> Out[可用代理]:::cold
+    Pre --> Run --> Out["可用代理"]:::cold
 ```
 
 一個粗略但實用的劃線：
 
 - **Scaffolding** 是「在第一個 prompt 之前你先寫好的東西」⸺ 補章 H 整章在講這層，包括 CLAUDE.md、agent.md、tool 描述、skill。它是**靜態宣告**，可以放進 Git，可以版控，可以審查。
-- **Harness** 是「第一個 prompt 之後，跑起來會發生的事」⸺ 模型回了什麼、要不要呼叫工具、結果怎麼裁切、要不要壓縮 context、要不要重試、要不要轉手給子代理、要不要把這次互動寫進 trace 與 eval。它是**動態執行**，只在 runtime 存在。
+- **[Harness](../annex-f-glossary.md#agent-harness)** 是「第一個 prompt 之後，跑起來會發生的事」⸺ 模型回了什麼、要不要呼叫工具、結果怎麼裁切、要不要壓縮 context、要不要重試、要不要轉手給子代理、要不要把這次互動寫進 trace 與 eval。它是**動態執行**，只在 runtime 存在。
 
 兩件事的工程責任本來就不同。Scaffolding 的問題是「規格寫得對不對」，Harness 的問題是「規格被執行得對不對」。**SRS 寫得再清楚，runtime 不照著跑，東西還是壞的**。
 
@@ -133,12 +131,12 @@ flowchart TD
     classDef cold fill:#eef,stroke:#36c
     classDef goal fill:#efe,stroke:#3a3
 
-    M[模型 LLM]:::cold
-    L[Loop\n決定迴圈何時繼續、何時停]:::goal
-    TD[Tool Dispatcher\n呼叫工具、裁切結果、權限]:::goal
-    CM[Context Manager\n壓縮、重置、記憶]:::goal
-    CP[Control Policy\n重試、超時、沙箱、預算]:::goal
-    OB[Observability\nTrace、Eval、監控、回放]:::goal
+    M["模型 LLM"]:::cold
+    L["Loop\n決定迴圈何時繼續、何時停"]:::goal
+    TD["Tool Dispatcher\n呼叫工具、裁切結果、權限"]:::goal
+    CM["Context Manager\n壓縮、重置、記憶"]:::goal
+    CP["Control Policy\n重試、超時、沙箱、預算"]:::goal
+    OB["Observability\nTrace、Eval、監控、回放"]:::goal
 
     M <--> L
     L --> TD
@@ -207,14 +205,14 @@ flowchart LR
     classDef cold fill:#eef,stroke:#36c
     classDef goal fill:#efe,stroke:#3a3
 
-    A[Minimal Harness\nbash + edit + 一個 loop\nAnthropic SWE-bench]:::goal
-    B[Mid Harness\nplanner + executor + critic\nclear roles]:::cold
-    C[Heavy Orchestration\nLangGraph StateGraph\nNodes / edges / checkpoints]:::cold
+    A["Minimal Harness\nbash + edit + 一個 loop\nAnthropic SWE-bench"]:::goal
+    B["Mid Harness\nplanner + executor + critic\nclear roles"]:::cold
+    C["Heavy Orchestration\nLangGraph StateGraph\nNodes / edges / checkpoints"]:::cold
 
     A --- B --- C
 ```
 
-**Minimal harness（Anthropic SWE-bench 風格）**：兩個工具、一個迴圈、一份精心設計的 tool description。Anthropic 的話直白：「**我們把大部分力氣花在工具的描述與規格上**」[^CIT-I01]。這條路相信模型本身的規劃能力，鷹架只負責不擋路。
+**[Minimal harness](../annex-f-glossary.md#minimal-harness)（Anthropic SWE-bench 風格）**：兩個工具、一個迴圈、一份精心設計的 tool description。Anthropic 的話直白：「**我們把大部分力氣花在工具的描述與規格上**」[^CIT-I01]。這條路相信模型本身的規劃能力，鷹架只負責不擋路。
 
 **Heavy orchestration（LangGraph 風格）**：把代理拆成 StateGraph 上的 node 與 edge，每個 super-step 留 checkpoint，可以時光倒流（time-travel debug）、人在迴圈中（human-in-the-loop interrupt）、跨進程恢復。LangChain 的 `deepagents` 套件是這條路的代表，把 planner 子代理、虛擬檔案系統、middleware 全包進來。
 
@@ -228,7 +226,7 @@ flowchart LR
 
 **普遍誤區**：團隊一上來就抓 LangGraph，把所有任務都拆成 StateGraph，結果短迴圈任務的鷹架反而擋住模型的判斷。Anthropic 在 *Harness design* 文章[^CIT-I02]裡記錄了一個對照組數字：同一個「重做老遊戲」的任務，純單代理跑了 20 分鐘、燒 9 美元、做出來的東西不能玩；補上 planner / generator / evaluator 三角分工的 harness 跑了 6 小時、燒 200 美元、做出來能上架。**鷹架的成本與報酬是匹配的，不會自動更好**。
 
-### I.3.3 第二條光譜：Eval Harness 與 Inference Harness 的分離原則
+### I.3.3 第二條光譜：[Eval Harness 與 Inference Harness 的分離](../annex-f-glossary.md#eval-vs-inference-harness)原則
 
 這是 METR[^CIT-I04]那篇研究筆記的核心訊息，也是 Cresvale 故事第一層原因的學術版本。
 
@@ -264,11 +262,11 @@ flowchart TD
     classDef goal fill:#efe,stroke:#3a3
     classDef hot fill:#fee,stroke:#c33
 
-    U([使用者任務]):::cold --> Lead[Lead Researcher\nOpus 4]:::goal
-    Lead -->|寫入計畫| Mem[(Memory / 檔案系統)]:::cold
-    Lead -->|分派子任務| W1[Sub-Worker 1\nSonnet 4 獨立 context]:::goal
-    Lead -->|分派子任務| W2[Sub-Worker 2\nSonnet 4 獨立 context]:::goal
-    Lead -->|分派子任務| W3[Sub-Worker 3\nSonnet 4 獨立 context]:::goal
+    U(["使用者任務"]):::cold --> Lead["Lead Researcher\nOpus 4"]:::goal
+    Lead -->|寫入計畫| Mem[("Memory / 檔案系統")]:::cold
+    Lead -->|分派子任務| W1["Sub-Worker 1\nSonnet 4 獨立 context"]:::goal
+    Lead -->|分派子任務| W2["Sub-Worker 2\nSonnet 4 獨立 context"]:::goal
+    Lead -->|分派子任務| W3["Sub-Worker 3\nSonnet 4 獨立 context"]:::goal
     W1 -.->|產出寫入 artifact| Mem
     W2 -.->|產出寫入 artifact| Mem
     W3 -.->|產出寫入 artifact| Mem
@@ -278,7 +276,7 @@ flowchart TD
 
 幾個要素值得 SA 拿筆記：
 
-1. **Sub-agent isolation（子代理隔離）**：每個 sub-worker 有自己的 context window、自己的工具、自己的軌跡。它們不知道對方在做什麼，只知道 lead 給的任務。這個隔離把「大量 tool result 塞滿 parent」的故障路徑切斷了 ⸺ 子代理的工具結果只活在它自己的 200K window 裡，永遠不會污染 parent。
+1. **[Sub-agent isolation](../annex-f-glossary.md#sub-agent-isolation)（子代理隔離）**：每個 sub-worker 有自己的 context window、自己的工具、自己的軌跡。它們不知道對方在做什麼，只知道 lead 給的任務。這個隔離把「大量 tool result 塞滿 parent」的故障路徑切斷了 ⸺ 子代理的工具結果只活在它自己的 200K window 裡，永遠不會污染 parent。
 
 2. **Parent compaction（主代理壓縮）**：Lead 不能變成 worker，否則 parent 的 context 會被自身工作淹沒。Lead 的職責是「分派、聚合、決策」三件事，工作的實做都丟給子代理。Anthropic 的設計理由直白：「**lead 把計畫寫進 memory，因為如果 context window 超過 200,000 tokens 它會被截斷**」[^CIT-I03]。
 
@@ -296,11 +294,11 @@ flowchart TD
 flowchart LR
     classDef goal fill:#efe,stroke:#3a3
 
-    D1[Tool Interface Contract\n工具名稱、輸入、輸出、權限、結果裁切]:::goal
-    D2[Context Budget Contract\nLayer 1/2/3 預算分配、壓縮觸發、reset 政策]:::goal
-    D3[Sub-Agent Isolation Contract\n子代理邊界、artifact schema、parent 角色]:::goal
-    D4[Eval ↔ Runtime Gate Contract\n兩套 grader、共享 schema、升降規則]:::goal
-    D5[Observability Schema\nTrace 欄位、eval / monitor 分工、保留期]:::goal
+    D1["Tool Interface Contract\n工具名稱、輸入、輸出、權限、結果裁切"]:::goal
+    D2["Context Budget Contract\nLayer 1/2/3 預算分配、壓縮觸發、reset 政策"]:::goal
+    D3["Sub-Agent Isolation Contract\n子代理邊界、artifact schema、parent 角色"]:::goal
+    D4["Eval ↔ Runtime Gate Contract\n兩套 grader、共享 schema、升降規則"]:::goal
+    D5["Observability Schema\nTrace 欄位、eval / monitor 分工、保留期"]:::goal
 
     D1 --> D2 --> D3 --> D4 --> D5
 ```
@@ -481,7 +479,7 @@ Trace span 必填欄位（OTel GenAI semantic conventions 對齊）：
 - [ ] 設計 Multi-Agent Harness 時知道 sub-agent isolation、parent compaction、artifact-based return 三個必要約束
 - [ ] 完成「Harness 規格五份契約清單」，把 harness 從「工程師腦袋裡的東西」變成「可審查的 SA 交付物」
 
-如果先挑一項做，建議是 ⸺ **針對手上一個正在跑的 Agent 系統，把契約 4（Eval ↔ Runtime Gate）填一遍**，理由是它最快暴露「我們在量的事和我們真正在乎的事之間有沒有差距」。如果填完發現 eval 和 inference 共用一套 grader，那就是 Cresvale 故事正在你的系統裡發生。
+如果先挑一項做，建議是 ⸺ **針對手上一個正在跑的 Agent 系統，把契約 4（Eval ↔ Runtime Gate）填一遍**，理由是它最快讓你看見「我們在量的事和我們真正在乎的事之間有沒有差距」⸺ 而你現在已經有把這個差距結構化、量出來、推回給工程師的工具。
 
 ---
 
@@ -501,14 +499,20 @@ Trace span 必填欄位（OTel GenAI semantic conventions 對齊）：
 [^CIT-I05]: OpenAI. "Harness Engineering" (Codex 三人組 1M LOC 案例). 2026-02. https://openai.com/index/harness-engineering/ 詳見 `annex-g-citations.md#cit-i05`。
 
 <!-- PROPOSED-REFS
+# QA 注意:
+# 1. CASE-SAS-014 依賴於補章 H 的 CASE-SAS-013（Caldwell Systems）先合併進
+#    case-registry.yaml。合併順序:chH 的 CASE-SAS-013 → 本章的 CASE-SAS-014。
+# 2. glossary anchor `harness-engineering-discipline` 用以避免與本章 slug
+#    `harness-engineering` 在跨參考工具上的潛在衝突。
+
 glossary:
-  - anchor: harness-engineering
+  - anchor: harness-engineering-discipline
     name: Harness Engineering（Harness 工程）
     body: |
       設計、量測、迭代「跑模型的那一圈程式」的工程學科。Harness 指模型之外、
-      包住模型的執行層 scaffolding：迴圈控制、工具呼叫、脈絡管理、控制政策、
+      包住模型的執行層 scaffolding:迴圈控制、工具呼叫、脈絡管理、控制政策、
       觀測。在 2025–2026 之交由 Anthropic、OpenAI、METR、LangChain 各自獨立
-      確立為正式術語，與「改進模型」並列為 LLM 系統可用性的兩條獨立工程路徑。
+      確立為正式術語,與「改進模型」並列為 LLM 系統可用性的兩條獨立工程路徑。
   - anchor: agent-harness
     name: Agent Harness（代理執行鷹架）
     body: |
