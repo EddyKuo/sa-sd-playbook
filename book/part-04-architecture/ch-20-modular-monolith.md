@@ -184,7 +184,7 @@ flowchart TD
     Q2 -->|是| Q3{擁有此模組的團隊<br/>≥ 3 人,且穩定?}
     Q2 -->|否| Stay
 
-    Q3 -->|是| Q4{已具備 Platform Eng<br/>能力(K8s + Mesh +<br/>Tracing + GitOps)?}
+    Q3 -->|是| Q4{已具備 Platform Eng<br/>能力（K8s + Mesh +<br/>Tracing + GitOps）?}
     Q3 -->|否| Stay
 
     Q4 -->|是| Q5{業務節奏會持續<br/>≥ 12 個月差異化?}

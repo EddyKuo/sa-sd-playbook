@@ -406,7 +406,7 @@ flowchart TD
     Start([新 AI 功能 / 新 prompt]) --> Q1{"涉及錢、命、<br/>個資、合規?"}
     Q1 -->|是| L[L 模式<br/>三軸全做<br/>+ Constitutional Classifiers]:::hot
     Q1 -->|否| Q2{有外部用戶?}
-    Q2 -->|否| S[S 模式<br/>Eval set + 輕量 RT<br/>(內部工具夠用)]:::goal
+    Q2 -->|否| S[S 模式<br/>Eval set + 輕量 RT<br/>（內部工具夠用）]:::goal
     Q2 -->|是| Q3{"改動範圍?<br/>prompt / model / tool"}
     Q3 -->|prompt 微調| M1[M 模式<br/>CI 跑 Eval + RT 攻擊集]:::cold
     Q3 -->|model 升級| M2[M 模式<br/>+ 完整 regression<br/>+ judge 重校準]:::cold

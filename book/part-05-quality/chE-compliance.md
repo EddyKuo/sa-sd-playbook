@@ -66,9 +66,18 @@ flowchart LR
     classDef hot fill:#fee,stroke:#c33
     classDef cold fill:#eef,stroke:#36c
     classDef goal fill:#efe,stroke:#3a3
-    class S1,S2,S3,S4 cold
-    class C1,C2,C3,C4,C5 cold
-    class B1,B2,B3 goal
+    class S1 cold
+    class S2 cold
+    class S3 cold
+    class S4 cold
+    class C1 cold
+    class C2 cold
+    class C3 cold
+    class C4 cold
+    class C5 cold
+    class B1 goal
+    class B2 goal
+    class B3 goal
 ```
 
 多數團隊只做了交集,而忽略了兩側獨立的部分。
