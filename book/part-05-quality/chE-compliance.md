@@ -49,9 +49,9 @@ flowchart LR
       S4[加密 / mTLS]
     end
     subgraph Both[交集]
-      B1[存取控制]
-      B2[稽核日誌]
-      B3[事件回報]
+      Bo1[存取控制]
+      Bo2[稽核日誌]
+      Bo3[事件回報]
     end
     subgraph Comp[Compliance 防自己犯錯]
       C1[資料最小化]
@@ -75,9 +75,9 @@ flowchart LR
     class C3 cold
     class C4 cold
     class C5 cold
-    class B1 goal
-    class B2 goal
-    class B3 goal
+    class Bo1 goal
+    class Bo2 goal
+    class Bo3 goal
 ```
 
 多數團隊只做了交集,而忽略了兩側獨立的部分。
