@@ -82,16 +82,14 @@ flowchart LR
 
 ```mermaid
 flowchart TD
-    Q[Query + 使用者身份] --> Auth[從目錄服務取得 role 與屬性]
-    Auth --> ACL[建立 ACL 過濾器 metadata filter]
-    ACL --> Retrieval[向量檢索 + ACL 過濾 同時]
-    Retrieval --> Filtered[只回傳「使用者有權看的」chunk]
-    Filtered --> LLM[送進 LLM 生成回答]
+    Q[Query + 使用者身份]:::cold --> Auth[從目錄服務取得 role 與屬性]:::cold
+    Auth --> ACL[建立 ACL 過濾器 metadata filter]:::cold
+    ACL --> Retrieval[向量檢索 + ACL 過濾 同時]:::goal
+    Retrieval --> Filtered[只回傳「使用者有權看的」chunk]:::goal
+    Filtered --> LLM[送進 LLM 生成回答]:::goal
 
     classDef cold fill:#eef,stroke:#36c
     classDef goal fill:#efe,stroke:#3a3
-    class Q,Auth,ACL cold
-    class Retrieval,Filtered,LLM goal
 ```
 
 **關鍵是「同時」**。先檢索後過濾(Post-filter)會洩漏資訊(從結果數量推測存在哪些文件)。要前融合過濾(Pre-filter at index level)。
