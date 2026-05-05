@@ -77,6 +77,8 @@
 - [補章 B｜Agentic QA ⸺ 非確定性系統的品質保證](part-07-ai-era/chB-agentic-qa.md)
 - [補章 C｜遺留系統現代化與 AI 逆向工程](part-07-ai-era/chC-legacy-ai.md)
 - [補章 D｜Multi-Agent 共識、狀態與衝突解決](part-07-ai-era/chD-multi-agent.md)
+- [補章 H｜Agent 設定語言 ⸺ SA 的新交付物](part-07-ai-era/chH-agent-spec.md)
+- [補章 I｜Agent Harness 工程 ⸺ 從模型到可用代理的執行層設計](part-07-ai-era/chI-harness-engineering.md)
 
 ## Part 08｜綜合
 

@@ -99,7 +99,7 @@ Skelton & Pais 的 *Team Topologies*(2019)[^CIT-290] 提出四類團隊。在 20
 
 把 PEG 那場戲拆開:他們做了 17 個工具,但沒有一個工具有「目標客戶 persona」的 doc。「checkout team 的 staff engineer」、「catalog team 的 mid-level」、「剛加入的 grad」⸺ 這三類人對 IDP 的需求完全不同。沒有 persona,工具的設計就是「平台工程師覺得有用」,而不是「內部開發者覺得有用」。
 
-Gregor Hohpe 在 *The Software Architect Elevator* [^CIT-203] 寫過一句話:「Platform 真正的考驗是你能不能 charge 內部 team 真實的 cost ⸺ 即使他們有選擇權,他們仍然選你。」這就是 Platform-as-a-Product 的核心。換句話說,把它拆成五件事:
+Gregor Hohpe 在 *The Software Architect Elevator* [^CIT-299] 寫過一句話:「Platform 真正的考驗是你能不能 charge 內部 team 真實的 cost ⸺ 即使他們有選擇權,他們仍然選你。」這就是 Platform-as-a-Product 的核心。換句話說,把它拆成五件事:
 
 | 產品要素 | 內部 platform 對應 | HarborPick PEG 當時 |
 |---|---|---|
@@ -201,7 +201,7 @@ State of DevOps Report 系列 [^CIT-292] 從 2014 跑到 2024,核心結論一直
 ```mermaid
 flowchart TD
     Start([現在要不要成立 Platform team?]) --> Q1{工程師人數<br/>≥ 50?}
-    Q1 -->|否| TooEarly[還太早<br/>SRE / DevOps 夠用]:::cold
+    Q1 -->|否| TooEarly["還太早<br/>SRE / DevOps 夠用"]:::cold
     Q1 -->|是| Q2{Stream team 數量<br/>≥ 4 個?}
     Q2 -->|否| Distributed[認知負荷沒分散<br/>找 1–2 名 Enabling 教練]:::cold
     Q2 -->|是| Q3{已存在跨 team<br/>重複 infra 工作?}

@@ -52,7 +52,6 @@ word_count_target: 6500
 ```mermaid
 flowchart LR
     subgraph S2022[2022 — 微服務拆得太早]
-      direction TB
       M1[Order]:::hot
       M2[Payment]:::hot
       M3[Inventory]:::hot
@@ -61,20 +60,18 @@ flowchart LR
     end
 
     subgraph S2024[2024 — 痛苦中段]
-      direction TB
       X1[12 個 repo<br/>合併中]:::cold
       X2[Platform Eng<br/>20% 工時救火]:::cold
     end
 
     subgraph S2025[2025 — 回收後]
-      direction TB
       G1[ecommerce-core<br/>Order + Cart + Pricing]:::goal
       G2[fulfillment-core<br/>Inventory + Shipping]:::goal
       G3[catalog-core<br/>Product + Search 索引]:::goal
       G4[identity-core<br/>Account + Auth]:::goal
       G5[finance-core<br/>Payment + Ledger]:::goal
       G6[ops-core<br/>Promotion + Marketing]:::goal
-      E1{{Edge: BFF for Web/Mobile}}:::cold
+      E1{{"Edge: BFF for Web/Mobile"}}:::cold
       E2{{Edge: Search Vector Service}}:::cold
       E3{{Edge: Webhook Fanout}}:::cold
     end

@@ -257,8 +257,8 @@ Helmsworth 後來重整時就走這條路:Role 維持七個(Intake / Triage / Se
 flowchart TD
     Start([單一 Agent 表現不好]) --> Q1{Prompt 是否<br/>結構化 + few-shot?}
     Q1 -->|否| Fix1[改寫 prompt,<br/>不需拆 Multi-Agent]:::goal
-    Q1 -->|是| Q2{Context 是否<br/>足夠 / 有 RAG?}
-    Q2 -->|否| Fix2[加 RAG / Memory<br/>Ch 35]:::goal
+    Q1 -->|是| Q2{"Context 是否<br/>足夠 / 有 RAG?"}
+    Q2 -->|否| Fix2["加 RAG / Memory<br/>Ch 35"]:::goal
     Q2 -->|是| Q3{任務能否<br/>拆成固定線性步驟?}
     Q3 -->|能| W1[Prompt Chaining]:::cold
     Q3 -->|不能,但能分類| W2[Routing]:::cold
@@ -519,6 +519,8 @@ app = graph.compile()
 [^CIT-366]: Microsoft Research, "Magentic-One: A Generalist Multi-Agent System" (2024) — microsoft.com/research/publication/magentic-one。預訓練 Specialized Agents(WebSurfer / FileSurfer / Coder)。
 [^CIT-367]: Anthropic, "Claude Code Sub-agents" Documentation (2025–2026) — docs.anthropic.com/claude-code/subagents;同 CIT-343 但聚焦 Multi-Agent 編排面向。
 [^CIT-368]: OWASP Top 10 for LLM Applications, "Excessive Agency" (2024 / 2025) — Multi-Agent 系統失控授權的安全分類;同 CIT-339 子項。
+[^CIT-356]: Anthropic, "Claude with 1M Context Window" (2025) — anthropic.com。同 Ch 35。本章在 Long Context vs Multi-Agent 取捨處再引。
+[^CIT-357]: Google DeepMind, "Gemini 2.5 Pro: 2M Context" (2025) — deepmind.google。同 Ch 35。本章在 Long Context vs Multi-Agent 取捨處再引。
 [^CIT-369]: Park, J. et al., "Generative Agents: Interactive Simulacra of Human Behavior" (Stanford / Google, 2023) — Multi-Agent 模擬研究經典,Anthropic / AutoGen 等系統設計的學術源頭之一。
 
 ---

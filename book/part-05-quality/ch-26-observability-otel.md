@@ -170,15 +170,15 @@ flowchart LR
     end
 
     subgraph Collector["OTel Collector"]
-        R[Receivers<br/>OTLP / Prometheus / Jaeger]
-        P[Processors<br/>batch / tail-sampling /<br/>attributes / filter]
-        E[Exporters<br/>OTLP / Prometheus /<br/>Loki / Tempo]
+        R["Receivers<br/>OTLP / Prometheus / Jaeger"]
+        P["Processors<br/>batch / tail-sampling /<br/>attributes / filter"]
+        E["Exporters<br/>OTLP / Prometheus /<br/>Loki / Tempo"]
     end
 
     subgraph Backend["儲存與查詢後端"]
         B1[Prometheus<br/>Metrics]
-        B2[Loki / ELK<br/>Logs]
-        B3[Tempo / Jaeger<br/>Traces]
+        B2["Loki / ELK<br/>Logs"]
+        B3["Tempo / Jaeger<br/>Traces"]
         B4[Grafana<br/>統一查詢介面]
     end
 
@@ -336,8 +336,8 @@ flowchart TD
     Q1 -->|unknown<br/>事故才會發現| Trace[Traces<br/>+ 結構化 Logs<br/>用 trace_id 串]:::goal
 
     Q2 -->|趨勢| Q3{觀測對象是<br/>request 還是 resource?}
-    Q3 -->|request| RED[Metrics RED<br/>Rate/Errors/Duration]:::cold
-    Q3 -->|resource| USE[Metrics USE<br/>Util/Saturation/Errors]:::cold
+    Q3 -->|request| RED["Metrics RED<br/>Rate/Errors/Duration"]:::cold
+    Q3 -->|resource| USE["Metrics USE<br/>Util/Saturation/Errors"]:::cold
 
     Q2 -->|單筆事件| Q4{需要跨服務<br/>因果關係?}
     Q4 -->|是| Trace

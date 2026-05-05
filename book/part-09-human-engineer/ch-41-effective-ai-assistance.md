@@ -236,4 +236,36 @@ GridForge 是一個 B2B SaaS 工作流自動化平台，服務對象是
 
 ---
 
-> **讀完這章你應該能做的事**：為你現在的專案寫出一份 20 分鐘以內完成的 CLAUDE.md，並且能說明這份文件的每一條對應了哪個業務語義陷阱或架構決策。
+## 41.5 本章交付清單 Recap
+
+讀完本章，你應該已經能做到：
+
+- [ ] 用三層 Context 架構（持久 Context / 任務 Context / 對話 Context）設計 AI 委派的資訊結構
+- [ ] 為現有專案寫出回答四個問題的 CLAUDE.md（系統定位、技術棧、架構禁令、業務術語）
+- [ ] 在委派任務之前，用三個問題清單確認資訊完整性、驗收標準、與快速反饋機制
+- [ ] 說明為何 CLAUDE.md 應納入 Git 版控，以及個人偏好與專案設定應如何分離
+
+如果先挑一項做，建議是 ⸺ **為現在的專案寫第一版 CLAUDE.md**，只需要回答那四個問題，20 分鐘以內完成；理由是它是整個三層 Context 架構的第一層投資，每一次 AI 互動都會從中受益。
+
+---
+
+## Cross-References
+
+- **前置閱讀**：[Ch 34 Context-Driven Engineering](../part-07-ai-era/ch-34-context-driven-engineering.md)、[Ch 40 AI 能力地圖](./ch-40-ai-capability-map.md)
+- **下游章節**：[Ch 42 人類不能外包的邊界](./ch-42-human-judgment-boundary.md)、[Ch 44 AI 程式碼的審計哲學](./ch-44-ai-code-audit.md)
+- **延伸補章**：[補章 G 工程直覺保護手冊](./chG-engineering-intuition.md)
+
+## 引用
+
+本章無外部文獻引用。
+
+<!-- PROPOSED-REFS
+glossary:
+  - anchor: context-engineering
+    name: Context Engineering（上下文工程）
+    body: |
+      有意識地設計 AI 在每次互動中能取用的資訊結構，而不是每次對話從零開始描述需求。
+      分為三層：持久 Context（專案級）、任務 Context（Sprint 級）、對話 Context（即時）。
+      由 Ch 41 提出，是 CDE（Context-Driven Engineering，Ch 34）在日常工程實踐層面的具體操作方法。
+-->
+

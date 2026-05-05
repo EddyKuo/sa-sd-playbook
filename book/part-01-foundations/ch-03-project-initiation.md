@@ -47,10 +47,10 @@ word_count_target: 5800
 ```mermaid
 flowchart LR
     Kickoff([Kickoff:CIO + IT 委員會]):::cold
-    Tech[技術可行性<br/>HL7 / FHIR / 整合測試]:::cold
+    Tech["技術可行性<br/>HL7 / FHIR / 整合測試"]:::cold
     Eco[經濟可行性<br/>ROI 試算 + TCO]:::cold
-    Legal[法律可行性<br/>個資法 / HIPAA-like]:::cold
-    Ops[操作可行性<br/>訓練計畫 / 流程]:::cold
+    Legal["法律可行性<br/>個資法 / HIPAA-like"]:::cold
+    Ops["操作可行性<br/>訓練計畫 / 流程"]:::cold
     Demo[第 11 個月<br/>Staging Demo 通過]:::goal
     Block[第 12 個月<br/>夜班護理長否決]:::hot
     Dead[PoC 退回原點]:::hot
@@ -173,14 +173,14 @@ Mitchell, Agle & Wood 1997 年提出的 Salience Model(顯著性模型)補了 Po
 
 ```mermaid
 flowchart TD
-    P([Power 權力<br/>能調動資源 / 否決])
-    L([Legitimacy 合法性<br/>道德 / 法律上被認可])
-    U([Urgency 急迫性<br/>時間敏感 / 持續關注])
+    P(["Power 權力<br/>能調動資源 / 否決"])
+    L(["Legitimacy 合法性<br/>道德 / 法律上被認可"])
+    U(["Urgency 急迫性<br/>時間敏感 / 持續關注"])
 
-    P -->|+L| Dom[Dominant<br/>主導型 stakeholder<br/>院長、CIO]
-    P -->|+U| Dang[Dangerous<br/>危險型<br/>工會 / 抗議團體]
-    L -->|+U| Dep[Dependent<br/>依賴型<br/>病人 / 家屬]
-    P -->|+L+U| Def[Definitive<br/>決定型<br/>主管機關 / 衛福部]
+    P -->|+L| Dom["Dominant<br/>主導型 stakeholder<br/>院長、CIO"]
+    P -->|+U| Dang["Dangerous<br/>危險型<br/>工會 / 抗議團體"]
+    L -->|+U| Dep["Dependent<br/>依賴型<br/>病人 / 家屬"]
+    P -->|+L+U| Def["Definitive<br/>決定型<br/>主管機關 / 衛福部"]
 
     classDef hot fill:#fee,stroke:#c33
     classDef cold fill:#eef,stroke:#36c
@@ -329,7 +329,7 @@ flowchart TB
         C4[廠商 PM]:::goal
     end
     subgraph Q4["監看即可 低權力+低關注"]
-        D1[病人 / 家屬團體]
+        D1["病人 / 家屬團體"]
         D2[供應商]
     end
 

@@ -43,12 +43,10 @@ word_count_target: 6500
 ```mermaid
 flowchart LR
     subgraph 古典GUI[古典 GUI 互動]
-      direction TB
       G1[步驟 1<br/>點按鈕] --> G2[步驟 2<br/>填欄位]
       G2 --> G3[步驟 3<br/>確認] --> G4[步驟 4<br/>結果]
     end
     subgraph CUX[CUX / 多模態互動]
-      direction TB
       C1[語音流 — 連續]
       C2[視覺流 — 連續]
       C3[姿態流 — 連續]
@@ -307,4 +305,8 @@ flowchart TD
 
 - **前置**:[Ch 9 流程模型](../part-02-analysis/ch-09-process-modeling.md)、[Ch 16 UI/UX](./ch-16-uiux-system-view.md)
 - **下游**:[Ch 25 Security by Design](../part-05-quality/ch-25-security-by-design.md)
-- **強連結補章**:[補章 A 邊緣/OT-IT](../part-04-architecture/chA-edge-ot-it.md)(Edge-Inference)、[補章 E Compliance](../part-05-quality/chE-compliance.md)(視覺隱私 / DPIA)
+- **延伸補章**:[補章 A 邊緣/OT-IT](../part-04-architecture/chA-edge-ot-it.md)(Edge-Inference)、[補章 E Compliance](../part-05-quality/chE-compliance.md)(視覺隱私 / DPIA)
+
+## 引用
+
+本章無外部文獻引用。

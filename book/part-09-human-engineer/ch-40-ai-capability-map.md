@@ -206,4 +206,41 @@ Sprint: ______  日期: ______
 
 ---
 
-> **前置閱讀完成後你應該能做的事**：給一個工程任務，能在兩分鐘內判斷適合用什麼模式委派給 AI，以及用什麼標準驗收。
+## 40.5 本章交付清單 Recap
+
+讀完本章，你應該已經能做到：
+
+- [ ] 用三個維度（答案是否已大量存在、是否需要隱性業務知識、是否可自動驗收）快速評估一個任務的 AI 委派可靠性
+- [ ] 填寫 AI 任務委派可靠性評估表，為 Sprint 內的委派決策顯性化，並列出 AI 可能做的隱性假設
+- [ ] 向 AI 詢問「你在設計這個的時候做了哪些假設」，把假設顯性化後逐一驗證
+- [ ] 說明為何「可靠性地圖需要定期重新校準」，以及模型更新後應採取什麼行動
+
+如果先挑一項做，建議是 ⸺ **拿下一個準備委派給 AI 的任務，先填一行評估表**，理由是它立刻讓你看見這個委派決策背後的假設在哪裡，而不是等到 AI 輸出出問題才回頭找。
+
+---
+
+## Cross-References
+
+- **前置閱讀**：[Ch 33 AI-Native 架構](../part-07-ai-era/ch-33-ai-native-architecture.md)、[Ch 38 AI Eval / Drift / Red Team](../part-07-ai-era/ch-38-ai-eval-drift-redteam.md)
+- **下游章節**：[Ch 41 有效使用 AI 輔助](./ch-41-effective-ai-assistance.md)、[Ch 43 主動研究 AI 弱點](./ch-43-ai-weakness-research.md)
+- **延伸補章**：[補章 G 工程直覺保護手冊](./chG-engineering-intuition.md)
+
+## 引用
+
+本章無外部文獻引用。
+
+<!-- PROPOSED-REFS
+glossary:
+  - anchor: large-language-model
+    name: LLM（大型語言模型，Large Language Model）
+    body: |
+      以 Transformer 架構為基礎、在大量文字資料上訓練的生成式 AI 模型。工作機制是 token
+      預測：給定上下文，計算下一個 token 的機率分布。擅長模式補全，但無法觸及未文件化
+      的隱性約束。本書 Part IX 多章以 LLM 能力邊界作為 SA 設計判準的核心概念。
+  - anchor: mrr
+    name: MRR（月經常性收入，Monthly Recurring Revenue）
+    body: |
+      訂閱制 SaaS 公司的核心財務指標，衡量每月來自訂閱的可預期收入。
+      常用於評估 SaaS 平台規模與業務健康度。
+-->
+

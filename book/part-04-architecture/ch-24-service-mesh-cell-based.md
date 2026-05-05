@@ -185,8 +185,8 @@ flowchart TB
       Mob[現場 App]:::cold
     end
 
-    subgraph Layer1[Layer 1 - API Gateway / north-south]
-      GW[Kong Gateway<br/>auth / rate limit / BFF]:::goal
+    subgraph Layer1["Layer 1 - API Gateway / north-south"]
+      GW["Kong Gateway<br/>auth / rate limit / BFF"]:::goal
     end
 
     subgraph CellA[Cell A - 中部區域]
