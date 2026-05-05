@@ -60,8 +60,8 @@ flowchart LR
       C4[權利保留]:::cold
       C5[FRIA / DPIA]:::cold
     end
-    Sec -.--> Both
-    Comp -.--> Both
+    S4 -.-> Bo1
+    C5 -.-> Bo3
 
     classDef hot fill:#fee,stroke:#c33
     classDef cold fill:#eef,stroke:#36c
