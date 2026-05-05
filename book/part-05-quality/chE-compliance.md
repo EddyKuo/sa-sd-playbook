@@ -43,22 +43,22 @@ word_count_target: 6500
 ```mermaid
 flowchart LR
     subgraph Sec[Security 防壞人]
-      S1[Prompt Injection]
-      S2[Threat Modeling]
-      S3[Zero Trust]
-      S4[加密 / mTLS]
+      S1[Prompt Injection]:::cold
+      S2[Threat Modeling]:::cold
+      S3[Zero Trust]:::cold
+      S4[加密 / mTLS]:::cold
     end
     subgraph Both[交集]
-      Bo1[存取控制]
-      Bo2[稽核日誌]
-      Bo3[事件回報]
+      Bo1[存取控制]:::goal
+      Bo2[稽核日誌]:::goal
+      Bo3[事件回報]:::goal
     end
     subgraph Comp[Compliance 防自己犯錯]
-      C1[資料最小化]
-      C2[可解釋性]
-      C3[人類監督]
-      C4[權利保留]
-      C5[FRIA / DPIA]
+      C1[資料最小化]:::cold
+      C2[可解釋性]:::cold
+      C3[人類監督]:::cold
+      C4[權利保留]:::cold
+      C5[FRIA / DPIA]:::cold
     end
     Sec -.--> Both
     Comp -.--> Both
@@ -66,18 +66,6 @@ flowchart LR
     classDef hot fill:#fee,stroke:#c33
     classDef cold fill:#eef,stroke:#36c
     classDef goal fill:#efe,stroke:#3a3
-    class S1 cold
-    class S2 cold
-    class S3 cold
-    class S4 cold
-    class C1 cold
-    class C2 cold
-    class C3 cold
-    class C4 cold
-    class C5 cold
-    class Bo1 goal
-    class Bo2 goal
-    class Bo3 goal
 ```
 
 多數團隊只做了交集,而忽略了兩側獨立的部分。
