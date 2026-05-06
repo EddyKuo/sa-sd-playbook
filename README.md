@@ -26,9 +26,9 @@ flowchart TD
     Q1 -->|3-8 年進階| Mid[Part 01-03<br/>+ Part 04 架構<br/>+ Part 05 品質<br/>+ Part 06 工程實踐]
     Q1 -->|8 年以上資深 / 架構師| Senior[全書精讀<br/>重點 Part 04 / 06 / 07]
     Q1 -->|PM / 產品負責人| PM[Part 01 + Part 02<br/>+ Ch 14 API<br/>+ Ch 33 ADR]
-    Q1 -->|AI 系統開發者| AI[Part 07 AI 時代<br/>+ Ch 40–42 / 45–46]
+    Q1 -->|AI 系統開發者| AI[Part 07 AI 時代<br/>+ Ch 41–43 / 46–47]
 
-    New --> Cap[Ch 47 Capstone<br/>整合練習]
+    New --> Cap[Ch 48 Capstone<br/>整合練習]
     Mid --> Ext{場景補強}
     Ext -->|OT / IoT / 製造| ChA[Ch 26 邊緣 / OT-IT]
     Ext -->|金融 / 醫療 / 合規| ChE[Ch 28 Compliance]
@@ -49,11 +49,11 @@ flowchart TD
 
 | 讀者 | 建議路徑 | 預期收穫 |
 |---|---|---|
-| **新進工程師（0–2 年）** | Part 01 → 02 → 03 → Ch 47 Capstone | 完整需求拆解、模型語言、設計原則，最小可帶走 artifact 套件 |
+| **新進工程師（0–2 年）** | Part 01 → 02 → 03 → Ch 48 Capstone | 完整需求拆解、模型語言、設計原則，最小可帶走 artifact 套件 |
 | **資深工程師 / Tech Lead（3–8 年）** | 上面 + Part 04 → 05 → 06 + Ch 26（OT-IT）/ Ch 28（合規） | 進階架構、品質屬性、現代工程實踐；能設計中型系統 |
-| **架構師（8+ 年）** | 全書 + 重點 Part 04 / 06 / 07（Ch 36–46） | AI 時代 SA/SD 整合視角、可帶領團隊建立 Capstone Pack |
+| **架構師（8+ 年）** | 全書 + 重點 Part 04 / 06 / 07（Ch 37–47） | AI 時代 SA/SD 整合視角、可帶領團隊建立 Capstone Pack |
 | **PM / 產品負責人** | Part 01 → 02 → Ch 14、Ch 33 | 需求拆解、PRD/SRS/MVP 選型、ADR 決策文件 |
-| **AI 系統開發者** | Part 07（Ch 36–46） | AI-Native 架構、Multi-Agent、Eval/Drift、Agent 規格 |
+| **AI 系統開發者** | Part 07（Ch 37–47） | AI-Native 架構、Multi-Agent、Eval/Drift、Agent 規格 |
 
 ### 每章的四段節奏
 
@@ -361,44 +361,44 @@ flowchart LR
 
 ### ▌ Part 07：AI 時代
 
-> [篇導讀 →](book/part-07-ai-era/00-overview.md) 11 章（Ch 36–46）/ 複雜度增長的 AI 工具序列 / 各讀者入口
+> [篇導讀 →](book/part-07-ai-era/00-overview.md) 11 章（Ch 37–47）/ 複雜度增長的 AI 工具序列 / 各讀者入口
 
-#### Ch 36｜AI-Native 架構
+#### Ch 37｜AI-Native 架構
 **核心主題**：LLM 判成「非緊急」的胸痛病人 STEMI 發作——AI-Native 系統的設計核心是「拿掉 LLM 後系統還能跑」的 Graceful Degradation。  
 **關鍵工具**：AI 信任邊界設計、Fallback 策略、Non-AI 路徑保留、決策可審計性  
 **適用場景**：AI 輔助決策系統、醫療 / 金融 AI 系統、高可靠性 AI 應用
 
 ---
 
-#### Ch 37｜Context-Driven Engineering（CDE）
+#### Ch 38｜Context-Driven Engineering（CDE）
 **核心主題**：28 個工程師用 Cursor 前三個月生產力 2.2x，第六個月回到基線——沒有共享脈絡的 AI 工具，效益無法持續。  
 **關鍵工具**：Shared Context 設計、.cursorrules / CLAUDE.md 標準化、ADR + Spec 作為 AI 輸入  
 **適用場景**：AI 輔助開發流程設計、團隊 Prompt 標準化、Context 知識管理
 
 ---
 
-#### Ch 38｜RAG、Memory 與 Tool 設計
+#### Ch 39｜RAG、Memory 與 Tool 設計
 **核心主題**：合規客服 Agent 有 RAG 知識庫（92% accuracy）但無客戶狀態 Memory，同一客戶三通電話被當三次新客戶。  
 **關鍵工具**：RAG 架構設計（Chunking / Embedding / Retrieval）、Memory 三層模型、Tool 介面設計  
 **適用場景**：企業知識庫 Agent、客服自動化、合規問答系統
 
 ---
 
-#### Ch 39｜Multi-Agent 系統設計
+#### Ch 40｜Multi-Agent 系統設計
 **核心主題**：拆成 7 個 Agent 想提升複雜工單品質，結果 P95 從 8s 變 47s、品質從 81% 跌到 56%——不是更多 Agent 解決問題，是更窄的 Agent。  
 **關鍵工具**：Agent 拓樸設計（Sequential / Parallel / Hierarchical）、Agent 互動成本評估、Orchestrator 設計  
 **適用場景**：複雜業務流程自動化、多步驟 AI 工作流、企業 AI Agent 設計
 
 ---
 
-#### Ch 40｜Multi-Agent 共識、狀態與衝突解決
+#### Ch 41｜Multi-Agent 共識、狀態與衝突解決
 **核心主題**：兩個自主 Agent 對同一件事不同意怎麼辦？——分散式 Agent 系統的共識與衝突解決機制。  
 **關鍵工具**：分散式共識機制、Conflict Resolution 策略、State Management 設計、Saga 補償  
 **適用場景**：自主 Agent 系統設計、多 Agent 協作架構
 
 ---
 
-#### Ch 41｜Agent 設定語言 — SA 的新交付物
+#### Ch 42｜Agent 設定語言 — SA 的新交付物
 **核心主題**：四個 Agent 的 `instructions` 字串硬塞在程式碼裡、沒有版本歷史，SA 連「這個 Agent 是誰、能做什麼」都翻不出來——CLAUDE.md / agent.md / skill.md 是新世代的 SRS。  
 **案例**：Caldwell Systems ERP 整合 Agent 的規格真空。  
 **關鍵工具**：Agent Identity / Capabilities / Instruction / Handoff 四問框架、跨廠商通用設定語言、Agent 規格版本控制  
@@ -406,7 +406,7 @@ flowchart LR
 
 ---
 
-#### Ch 42｜Agent Harness 工程 — 從模型到可用代理的執行層設計
+#### Ch 43｜Agent Harness 工程 — 從模型到可用代理的執行層設計
 **核心主題**：模型從 Sonnet 4.5 升到 Opus 4.7，內部評測 +14pp、PR merge 率 0%——真正該研究的不是模型，是 harness 本身。  
 **案例**：Cresvale Engineering Cloud 的 Codex 內評跟 merge 率脫鉤事件。  
 **關鍵工具**：Harness 執行層分解（Tool Result 壓縮、Context Window 預算、Trace 接 Review）、Eval-Production Gap 量化、Harness Observability  
@@ -414,28 +414,28 @@ flowchart LR
 
 ---
 
-#### Ch 43｜AI Coding Agent / Pair Programming
+#### Ch 44｜AI Coding Agent / Pair Programming
 **核心主題**：拆成 9 個微服務後 Cursor PR 通過率從 78% 跌到 24%，因為脈絡分散了但沒有跟著分散 ADR、CLAUDE.md。  
 **關鍵工具**：AI-Friendly Codebase 設計、Context Preservation 策略、Monorepo vs Polyrepo 選型  
 **適用場景**：AI 輔助開發導入、程式庫 AI 可讀性優化、工程效率提升
 
 ---
 
-#### Ch 44｜AI 系統的 Eval、Drift 與 Red Team
+#### Ch 45｜AI 系統的 Eval、Drift 與 Red Team
 **核心主題**：AML 合規 Agent 上線 92% accuracy，六個月後只有 71%——沒有人在持續監測品質漂移。  
 **關鍵工具**：Eval Set 設計原則、Drift Monitoring 架構、LLM-as-Judge 設計、Red Team 攻擊模式  
 **適用場景**：生產環境 AI 系統監測、合規 AI 品質保證、AI 系統持續評估
 
 ---
 
-#### Ch 45｜Agentic QA — 非確定性系統的品質保證
+#### Ch 46｜Agentic QA — 非確定性系統的品質保證
 **核心主題**：「同輸入→同輸出」的假設被 LLM 打破——Agent 系統不能用傳統 LGTM review，需要 Eval + Drift Monitoring。  
 **關鍵工具**：非確定性測試策略、Eval 框架設計、Drift Detection 指標  
 **適用場景**：AI 系統 QA 流程設計、LLM 系統測試策略
 
 ---
 
-#### Ch 46｜遺留系統現代化與 AI 逆向工程
+#### Ch 47｜遺留系統現代化與 AI 逆向工程
 **核心主題**：現實大多是 7 年舊 Java EE + 5000 行 stored procedure，不是 Greenfield——用 AI Agent 逆向挖掘隱性知識。  
 **關鍵工具**：程式碼考古學方法、AI 輔助分析工具、Strangler Fig 現代化路徑、知識萃取框架  
 **適用場景**：遺留系統重構、技術債管理、系統遷移規劃
@@ -446,7 +446,7 @@ flowchart LR
 
 > [篇導讀 →](book/part-08-synthesis/00-overview.md) PayLoop 2.0 / 45 份 artifact 對應索引 / 你讀完能做的事
 
-#### Ch 47｜Capstone
+#### Ch 48｜Capstone
 **核心主題**：PayLoop 兩年後被金管局再次問及「同一個錯誤六小時內能否回答」，這次 CTO 展示了完整的文件樹（Charter、ADR、C4、Fitness Functions、Data Lineage）。  
 **關鍵工具**：完整 SA/SD 文件體系、系統可傳遞性檢查清單、全書決策框架整合  
 **適用場景**：全書總複習、開案前的完整檢查、系統知識移交
@@ -455,44 +455,44 @@ flowchart LR
 
 ### ▌ Part 09：人類工程師的定位
 
-> [篇導讀 →](book/part-09-human-engineer/00-overview.md) 五章 + Ch 53 / AI 使用框架到直覺保護 / 各讀者入口
+> [篇導讀 →](book/part-09-human-engineer/00-overview.md) 六章（Ch 49–54）/ AI 使用框架到直覺保護 / 各讀者入口
 
-#### Ch 48｜AI 能力地圖
+#### Ch 49｜AI 能力地圖
 **核心主題**：VaultStack 讓 AI 設計計費 schema，schema 漂亮，但三週後靜默資料遺失——AI 補全模式，不理解業務語義。  
 **關鍵工具**：AI 任務可靠性地圖（技術正確性 vs 業務語義 vs 隱性約束）、委派可靠性評估表  
 **適用場景**：決定哪些任務委派 AI、設計 AI 輔助工作流
 
 ---
 
-#### Ch 49｜有效使用 AI 輔助
+#### Ch 50｜有效使用 AI 輔助
 **核心主題**：GridForge 28 人導入 Cursor，生產力 2.1x 三個月後回基線——23 種不同 CLAUDE.md，共享脈絡零碎化。  
 **關鍵工具**：Context Engineering 三層架構（持久 / 任務 / 即時）、CLAUDE.md 最小有效設計、委派設計三問  
 **適用場景**：團隊 AI 工具導入、CLAUDE.md 設計、委派流程標準化
 
 ---
 
-#### Ch 50｜人類不能外包的邊界
+#### Ch 51｜人類不能外包的邊界
 **核心主題**：PineRidge EMR 讓 AI 優化 schema，AI 繞過了 2019 年一份從未進入 codebase 的書面合規協議。  
 **關鍵工具**：五個不能外包的判斷類別、人類判斷邊界確認清單  
 **適用場景**：合規設計、架構決策、遺留系統修改
 
 ---
 
-#### Ch 51｜主動研究 AI 弱點
+#### Ch 52｜主動研究 AI 弱點
 **核心主題**：ClearVault 用 AI 做安全審查，六個月連過，第七個月遭間接提示注入攻擊——AI 訓練截止日前，此攻擊案例尚不成熟。  
 **關鍵工具**：訓練截止日偏差監測、Failure Catalog、季度 Red Team 流程  
 **適用場景**：AI 輔助安全審查、季度能力校準、團隊 AI 弱點管理
 
 ---
 
-#### Ch 52｜AI 程式碼的審計哲學
+#### Ch 53｜AI 程式碼的審計哲學
 **核心主題**：PortBridge 的 AI PR 測試全過，三週後買方「已確認」沒有觸發賣方庫存驗證——技術正確，業務語義錯誤。  
 **關鍵工具**：三層 AI 程式碼審計（技術正確性 / 意圖符合性 / 架構符合性）、AI 程式碼 Review Checklist  
 **適用場景**：AI 輔助開發的 Code Review、PR 規範設計
 
 ---
 
-#### Ch 53｜工程直覺保護手冊
+#### Ch 54｜工程直覺保護手冊
 **核心主題**：NovaDeck 的 Leon，兩年 AI 全依賴後，在 API 中斷的那個下午，花六小時找一個原本三十分鐘能解決的 bug。  
 **關鍵工具**：刻意練習區設計、無 AI 能力清單、團隊工程直覺健康指標  
 **適用場景**：個人能力維護、團隊 AI 依賴度評估

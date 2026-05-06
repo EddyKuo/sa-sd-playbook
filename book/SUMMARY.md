@@ -64,36 +64,37 @@
 - [第 33 章｜架構決策紀錄（ADR）與架構知識管理](part-06-engineering/ch-33-adr-architecture-knowledge.md)
 - [第 34 章｜架構適應度函式](part-06-engineering/ch-34-fitness-functions.md)
 - [第 35 章｜FinOps、永續工程與綠色軟體](part-06-engineering/ch-35-finops-green-software.md)
+- [第 36 章｜治理架構 ⸺ 在高彈性系統中控制管理複雜度](part-06-engineering/ch-36-governance-architecture.md)
 
 ## Part 07｜AI 時代
 
 - [篇導讀](part-07-ai-era/00-overview.md)
-- [第 36 章｜AI-Native 架構](part-07-ai-era/ch-36-ai-native-architecture.md)
-- [第 37 章｜Context-Driven Engineering（CDE）](part-07-ai-era/ch-37-context-driven-engineering.md)
-- [第 38 章｜RAG、Memory 與 Tool 設計](part-07-ai-era/ch-38-rag-memory-tool.md)
-- [第 39 章｜Multi-Agent 系統設計](part-07-ai-era/ch-39-multi-agent.md)
-- [第 40 章｜Multi-Agent 共識、狀態與衝突解決](part-07-ai-era/ch-40-multi-agent-consensus.md)
-- [第 41 章｜Agent 設定語言 ⸺ SA 的新交付物](part-07-ai-era/ch-41-agent-spec.md)
-- [第 42 章｜Agent Harness 工程 ⸺ 從模型到可用代理的執行層設計](part-07-ai-era/ch-42-harness-engineering.md)
-- [第 43 章｜AI Coding Agent / Pair Programming](part-07-ai-era/ch-43-coding-agent.md)
-- [第 44 章｜AI 系統的 Eval、Drift 與 Red Team](part-07-ai-era/ch-44-ai-eval-drift-redteam.md)
-- [第 45 章｜Agentic QA ⸺ 非確定性系統的品質保證](part-07-ai-era/ch-45-agentic-qa.md)
-- [第 46 章｜遺留系統現代化與 AI 逆向工程](part-07-ai-era/ch-46-legacy-ai.md)
+- [第 37 章｜AI-Native 架構](part-07-ai-era/ch-37-ai-native-architecture.md)
+- [第 38 章｜Context-Driven Engineering（CDE）](part-07-ai-era/ch-38-context-driven-engineering.md)
+- [第 39 章｜RAG、Memory 與 Tool 設計](part-07-ai-era/ch-39-rag-memory-tool.md)
+- [第 40 章｜Multi-Agent 系統設計](part-07-ai-era/ch-40-multi-agent.md)
+- [第 41 章｜Multi-Agent 共識、狀態與衝突解決](part-07-ai-era/ch-41-multi-agent-consensus.md)
+- [第 42 章｜Agent 設定語言 ⸺ SA 的新交付物](part-07-ai-era/ch-42-agent-spec.md)
+- [第 43 章｜Agent Harness 工程 ⸺ 從模型到可用代理的執行層設計](part-07-ai-era/ch-43-harness-engineering.md)
+- [第 44 章｜AI Coding Agent / Pair Programming](part-07-ai-era/ch-44-coding-agent.md)
+- [第 45 章｜AI 系統的 Eval、Drift 與 Red Team](part-07-ai-era/ch-45-ai-eval-drift-redteam.md)
+- [第 46 章｜Agentic QA ⸺ 非確定性系統的品質保證](part-07-ai-era/ch-46-agentic-qa.md)
+- [第 47 章｜遺留系統現代化與 AI 逆向工程](part-07-ai-era/ch-47-legacy-ai.md)
 
 ## Part 08｜綜合
 
 - [篇導讀](part-08-synthesis/00-overview.md)
-- [第 47 章｜Capstone](part-08-synthesis/ch-47-capstone.md)
+- [第 48 章｜Capstone](part-08-synthesis/ch-48-capstone.md)
 
 ## Part 09｜人類工程師的定位
 
 - [篇導讀](part-09-human-engineer/00-overview.md)
-- [第 48 章｜AI 能力地圖](part-09-human-engineer/ch-48-ai-capability-map.md)
-- [第 49 章｜有效使用 AI 輔助](part-09-human-engineer/ch-49-effective-ai-assistance.md)
-- [第 50 章｜人類不能外包的邊界](part-09-human-engineer/ch-50-human-judgment-boundary.md)
-- [第 51 章｜主動研究 AI 弱點](part-09-human-engineer/ch-51-ai-weakness-research.md)
-- [第 52 章｜AI 程式碼的審計哲學](part-09-human-engineer/ch-52-ai-code-audit.md)
-- [第 53 章｜工程直覺保護手冊](part-09-human-engineer/ch-53-engineering-intuition.md)
+- [第 49 章｜AI 能力地圖](part-09-human-engineer/ch-49-ai-capability-map.md)
+- [第 50 章｜有效使用 AI 輔助](part-09-human-engineer/ch-50-effective-ai-assistance.md)
+- [第 51 章｜人類不能外包的邊界](part-09-human-engineer/ch-51-human-judgment-boundary.md)
+- [第 52 章｜主動研究 AI 弱點](part-09-human-engineer/ch-52-ai-weakness-research.md)
+- [第 53 章｜AI 程式碼的審計哲學](part-09-human-engineer/ch-53-ai-code-audit.md)
+- [第 54 章｜工程直覺保護手冊](part-09-human-engineer/ch-54-engineering-intuition.md)
 
 ---
 

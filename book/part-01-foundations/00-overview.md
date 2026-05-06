@@ -64,4 +64,4 @@ flowchart LR
 
 - **前置**:無(這是全書起點)
 - **這篇解鎖**:[第 II 篇 分析](../part-02-analysis/00-overview.md) — 你需要先有「什麼是 SA/SD 產出物」的認識,才能有效使用分析工具
-- **長距離影響**:[Ch 33 ADR](../part-06-engineering/ch-33-adr-architecture-knowledge.md)(決策紀錄的哲學來自 Ch 1)、[Ch 37 CDE](../part-07-ai-era/ch-37-context-driven-engineering.md)(Context-Driven Engineering 是 Ch 2 SDLC 演進的終點)
+- **長距離影響**:[Ch 33 ADR](../part-06-engineering/ch-33-adr-architecture-knowledge.md)(決策紀錄的哲學來自 Ch 1)、[Ch 37 CDE](../part-07-ai-era/ch-38-context-driven-engineering.md)(Context-Driven Engineering 是 Ch 2 SDLC 演進的終點)

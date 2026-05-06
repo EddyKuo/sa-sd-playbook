@@ -18,7 +18,7 @@ word_count_target: 6500
 ## ⸺ 可靠度不是天上掉下來,是用 Error Budget 換來的
 
 > **前置閱讀**:[Ch 22 微服務拆分判準](../part-04-architecture/ch-22-microservices.md)、[Ch 24 雲端原生與 Kubernetes](../part-04-architecture/ch-24-cloud-native-kubernetes.md)、[Ch 29 Observability](./ch-29-observability-otel.md)
-> **下游章節**:[Ch 35 FinOps 與 ADR 整合](../part-06-engineering/ch-35-finops-green-software.md)、[Ch 44 AI 系統的測試與評估](../part-07-ai-era/ch-44-ai-eval-drift-redteam.md)
+> **下游章節**:[Ch 35 FinOps 與 ADR 整合](../part-06-engineering/ch-35-finops-green-software.md)、[Ch 44 AI 系統的測試與評估](../part-07-ai-era/ch-45-ai-eval-drift-redteam.md)
 > **延伸補章**:[Ch 26 邊緣 / OT-IT](../part-04-architecture/ch-26-edge-ot-it.md)
 
 ---
@@ -455,7 +455,7 @@ flowchart LR
 
 - **回顧**:[Ch 22 微服務拆分判準](../part-04-architecture/ch-22-microservices.md) ⸺ 拆服務的代價之一是可靠度問題會分散,SLO 必須跟著拆;[Ch 24 雲端原生與 Kubernetes](../part-04-architecture/ch-24-cloud-native-kubernetes.md) ⸺ K8s 之上的 HPA/VPA/KEDA 是本章 § 27.3.5 的延伸;[Ch 29 Observability](./ch-29-observability-otel.md) ⸺ SLI 的訊號土壤
 - **下一階段**:[Ch 35 FinOps 與 ADR 整合](../part-06-engineering/ch-35-finops-green-software.md) ⸺ Error Budget 與成本預算的雙軌管理
-- **AI 時代延伸**:[Ch 44 AI 系統的測試與評估](../part-07-ai-era/ch-44-ai-eval-drift-redteam.md) ⸺ 非確定性系統的 SLO 與 Chaos
+- **AI 時代延伸**:[Ch 44 AI 系統的測試與評估](../part-07-ai-era/ch-45-ai-eval-drift-redteam.md) ⸺ 非確定性系統的 SLO 與 Chaos
 - **邊緣場景**:[Ch 26 邊緣 / OT-IT](../part-04-architecture/ch-26-edge-ot-it.md) ⸺ 離線自治成熟度與 SLO 的關係
 
 ## 引用

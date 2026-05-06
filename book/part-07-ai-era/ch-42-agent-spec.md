@@ -1,7 +1,7 @@
 ---
-chapter: 41
+chapter: 42
 part: VII
-title: Ch 41|Agent 設定語言 ⸺ SA 的新交付物
+title: Ch 42｜Agent 設定語言 ⸺ SA 的新交付物
 slug: agent-spec-language
 agent: SA
 skills_used:
@@ -14,12 +14,12 @@ status: draft
 word_count_target: 6500
 ---
 
-# Ch 41|Agent 設定語言 ⸺ SA 的新交付物
+# Ch 42｜Agent 設定語言 ⸺ SA 的新交付物
 ## ⸺ CLAUDE.md、agent.md、skill.md 與跨廠商通用設計框架
 
-> **前置閱讀**：[Ch 39 Multi-Agent 系統設計](./ch-39-multi-agent.md)、[Ch 43 AI Coding Agent](./ch-43-coding-agent.md)、[Ch 40](./ch-40-multi-agent-consensus.md)
-> **下游章節**：[Ch 47 Capstone](../part-08-synthesis/ch-47-capstone.md)
-> **延伸補章**：[Ch 45 Agentic QA](./ch-45-agentic-qa.md)、[Ch 40](./ch-40-multi-agent-consensus.md)
+> **前置閱讀**：[Ch 39 Multi-Agent 系統設計](./ch-40-multi-agent.md)、[Ch 43 AI Coding Agent](./ch-44-coding-agent.md)、[Ch 40](./ch-41-multi-agent-consensus.md)
+> **下游章節**：[Ch 47 Capstone](../part-08-synthesis/ch-48-capstone.md)
+> **延伸補章**：[Ch 45 Agentic QA](./ch-46-agentic-qa.md)、[Ch 40](./ch-41-multi-agent-consensus.md)
 
 ---
 
@@ -467,9 +467,9 @@ Agent 設定語言正在快速演進。已知的高變動風險點：
 
 ## Cross-References
 
-- **前置閱讀**：[Ch 39 Multi-Agent 系統設計](./ch-39-multi-agent.md)、[Ch 43 AI Coding Agent](./ch-43-coding-agent.md)、[Ch 40](./ch-40-multi-agent-consensus.md)
-- **下游章節**：[Ch 47 Capstone](../part-08-synthesis/ch-47-capstone.md)
-- **強連結**：[Ch 45 Agentic QA](./ch-45-agentic-qa.md)、[Ch 40](./ch-40-multi-agent-consensus.md)
+- **前置閱讀**：[Ch 39 Multi-Agent 系統設計](./ch-40-multi-agent.md)、[Ch 43 AI Coding Agent](./ch-44-coding-agent.md)、[Ch 40](./ch-41-multi-agent-consensus.md)
+- **下游章節**：[Ch 47 Capstone](../part-08-synthesis/ch-48-capstone.md)
+- **強連結**：[Ch 45 Agentic QA](./ch-46-agentic-qa.md)、[Ch 40](./ch-41-multi-agent-consensus.md)
 
 ## 引用
 

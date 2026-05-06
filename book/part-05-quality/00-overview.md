@@ -69,4 +69,4 @@ flowchart LR
 
 - **前置**:[第 IV 篇 進階架構](../part-04-architecture/00-overview.md)
 - **這篇解鎖**:[第 VI 篇 現代工程實踐](../part-06-engineering/00-overview.md) — 品質屬性確立之後,平台工程才能把 SLO / 安全 / 合規自動化進 IDP
-- **長距離影響**:[Ch 36 AI-Native 架構](../part-07-ai-era/ch-36-ai-native-architecture.md)(Ch 27 的安全設計原則在 AI 系統中擴大為 Human-in-the-loop 設計)、[Ch 44 AI Eval](../part-07-ai-era/ch-44-ai-eval-drift-redteam.md)(Ch 30 的 Chaos Engineering 思維延伸到 AI 系統的對抗性測試)
+- **長距離影響**:[Ch 36 AI-Native 架構](../part-07-ai-era/ch-37-ai-native-architecture.md)(Ch 27 的安全設計原則在 AI 系統中擴大為 Human-in-the-loop 設計)、[Ch 44 AI Eval](../part-07-ai-era/ch-45-ai-eval-drift-redteam.md)(Ch 30 的 Chaos Engineering 思維延伸到 AI 系統的對抗性測試)

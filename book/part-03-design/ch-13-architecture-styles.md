@@ -18,7 +18,7 @@ word_count_target: 6000
 ## ⸺ 分層、六角、洋蔥、Clean,各擋哪一種變動
 
 > **前置閱讀**:[Ch 11 設計原則(SOLID / GRASP)](./ch-11-architecture-principles.md)、[Ch 12 元件與模組化](./ch-12-design-patterns.md)
-> **下游章節**:[Ch 18 DDD 戰術設計](../part-04-architecture/ch-18-ddd-strategic-tactical.md)、[Ch 21 Modular Monolith](../part-04-architecture/ch-21-modular-monolith.md)、[Ch 36 AI-Native 架構](../part-07-ai-era/ch-36-ai-native-architecture.md)
+> **下游章節**:[Ch 18 DDD 戰術設計](../part-04-architecture/ch-18-ddd-strategic-tactical.md)、[Ch 21 Modular Monolith](../part-04-architecture/ch-21-modular-monolith.md)、[Ch 36 AI-Native 架構](../part-07-ai-era/ch-37-ai-native-architecture.md)
 > **延伸補章**:無
 
 ---
@@ -397,7 +397,7 @@ flowchart LR
 - **下一章**:[Ch 14 設計模式(GoF + 現代延伸)](./ch-12-design-patterns.md)
 - **DDD 戰術設計**:[Ch 18](../part-04-architecture/ch-18-ddd-strategic-tactical.md) ⸺ Aggregate / Repository / Domain Service 在 Hexagonal/Onion 裡的位置
 - **模組化單體**:[Ch 21](../part-04-architecture/ch-21-modular-monolith.md) ⸺ 多模組系統內部如何混用不同風格
-- **AI-Native 架構**:[Ch 36](../part-07-ai-era/ch-36-ai-native-architecture.md) ⸺ AI Agent 作為 Adapter 的進階實踐
+- **AI-Native 架構**:[Ch 36](../part-07-ai-era/ch-37-ai-native-architecture.md) ⸺ AI Agent 作為 Adapter 的進階實踐
 
 ## 引用
 

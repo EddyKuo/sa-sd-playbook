@@ -1,5 +1,5 @@
 ---
-chapter: 43
+chapter: 44
 part: VII
 title: AI Coding Agent / Pair Programming — 從 Cursor 到 Claude Code 的工程整合
 slug: coding-agent
@@ -14,12 +14,12 @@ status: draft
 word_count_target: 6500
 ---
 
-# 第 43 章|AI Coding Agent / Pair Programming
+# 第 44 章|AI Coding Agent / Pair Programming
 ## ⸺ 從 Cursor 到 Claude Code 的工程整合
 
-> **前置閱讀**:[Ch 1 為什麼 SA/SD](../part-01-foundations/ch-01-why-sa-sd.md)、[Ch 21 Modular Monolith](../part-04-architecture/ch-21-modular-monolith.md)、[Ch 33 ADR 與架構知識管理](../part-06-engineering/ch-33-adr-architecture-knowledge.md)、[Ch 37 Context-Driven Engineering](./ch-37-context-driven-engineering.md)
-> **下游章節**:[Ch 44 AI 時代的 SA 角色重構](./ch-44-ai-eval-drift-redteam.md)
-> **延伸補章**:[Ch 46 遺留現代化](./ch-46-legacy-ai.md)
+> **前置閱讀**:[Ch 1 為什麼 SA/SD](../part-01-foundations/ch-01-why-sa-sd.md)、[Ch 21 Modular Monolith](../part-04-architecture/ch-21-modular-monolith.md)、[Ch 33 ADR 與架構知識管理](../part-06-engineering/ch-33-adr-architecture-knowledge.md)、[Ch 37 Context-Driven Engineering](./ch-38-context-driven-engineering.md)
+> **下游章節**:[Ch 44 AI 時代的 SA 角色重構](./ch-45-ai-eval-drift-redteam.md)
+> **延伸補章**:[Ch 46 遺留現代化](./ch-47-legacy-ai.md)
 
 ---
 
@@ -482,9 +482,9 @@ PR Review Bot 失敗的常見模式不是「抓不到問題」,是**「抓到的
 - **回顧**:[Ch 1 §1.2 SA/SD 是製造可被傳遞的理解](../part-01-foundations/ch-01-why-sa-sd.md) ⸺ Agent-friendly Codebase 是這句話在 coding 工具層的具體形式
 - **回顧**:[Ch 21 Modular Monolith](../part-04-architecture/ch-21-modular-monolith.md) ⸺ Agent 推理的形狀就是模組化的形狀
 - **回顧**:[Ch 33 ADR](../part-06-engineering/ch-33-adr-architecture-knowledge.md) ⸺ Skill 的 Knowledge Sources 骨幹
-- **回顧**:[Ch 37 CDE](./ch-37-context-driven-engineering.md) ⸺ 本章是 CDE 在 coding agent 場景的應用層
-- **下一章**:[Ch 44 AI 時代的 SA 角色重構](./ch-44-ai-eval-drift-redteam.md) ⸺ Coding Agent 普及後 SA 的職責變化
-- **延伸補章**:[Ch 46 遺留現代化](./ch-46-legacy-ai.md) ⸺ 既有 codebase 怎麼補做 Agent-friendly
+- **回顧**:[Ch 37 CDE](./ch-38-context-driven-engineering.md) ⸺ 本章是 CDE 在 coding agent 場景的應用層
+- **下一章**:[Ch 44 AI 時代的 SA 角色重構](./ch-45-ai-eval-drift-redteam.md) ⸺ Coding Agent 普及後 SA 的職責變化
+- **延伸補章**:[Ch 46 遺留現代化](./ch-47-legacy-ai.md) ⸺ 既有 codebase 怎麼補做 Agent-friendly
 
 ## 引用
 

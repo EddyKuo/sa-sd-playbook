@@ -18,7 +18,7 @@ word_count_target: 6500
 ## ⸺ Data Mesh、Lakehouse、Lakebase 是不同層級的問題,不要混為一談
 
 > **前置閱讀**:[Ch 6 DFD 與資料血緣](../part-02-analysis/ch-06-dfd-structured-analysis.md)、[Ch 8 資料模型與正規化](../part-02-analysis/ch-08-data-modeling-normalization.md)、[Ch 15 資料儲存設計](../part-03-design/ch-15-data-storage.md)、[Ch 23 事件驅動架構](../part-04-architecture/ch-23-event-driven-cqrs-es.md)
-> **下游章節**:[Ch 36 AI-Native 架構](../part-07-ai-era/ch-36-ai-native-architecture.md)
+> **下游章節**:[Ch 36 AI-Native 架構](../part-07-ai-era/ch-37-ai-native-architecture.md)
 > **延伸補章**:[Ch 28 Compliance by Design](../part-05-quality/ch-28-compliance.md)
 
 ---
@@ -519,7 +519,7 @@ checks:
 - **回顧**:[Ch 8 資料模型與正規化](../part-02-analysis/ch-08-data-modeling-normalization.md) ⸺ patient_id 語意對齊是跨院 encounter 表的前置
 - **回顧**:[Ch 15 資料儲存設計](../part-03-design/ch-15-data-storage.md) ⸺ Workload Profile 與引擎選型,Lakebase 在那章已埋下伏筆
 - **回顧**:[Ch 23 事件驅動架構](../part-04-architecture/ch-23-event-driven-cqrs-es.md) ⸺ Streaming ETL 是 EDA 在資料層的延伸
-- **下游**:[Ch 36 AI-Native 架構](../part-07-ai-era/ch-36-ai-native-architecture.md) ⸺ AI Agent 自助查詢時,Lakebase / Data Contract / Vector Index 三件事如何整合
+- **下游**:[Ch 36 AI-Native 架構](../part-07-ai-era/ch-37-ai-native-architecture.md) ⸺ AI Agent 自助查詢時,Lakebase / Data Contract / Vector Index 三件事如何整合
 - **延伸補章**:[Ch 28 Compliance by Design](../part-05-quality/ch-28-compliance.md) ⸺ 跨院資料、PII、HIPAA / 個資法的合規路徑
 
 ## 引用

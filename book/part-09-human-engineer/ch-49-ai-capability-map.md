@@ -1,5 +1,5 @@
 ---
-chapter: 48
+chapter: 49
 part: IX
 title: AI 能力地圖 — 知道你在用什麼
 slug: ai-capability-map
@@ -14,12 +14,12 @@ status: draft
 word_count_target: 6000
 ---
 
-# 第 48 章|AI 能力地圖
+# 第 49 章|AI 能力地圖
 ## ⸺ 知道你在用什麼
 
-> **前置閱讀**：[Ch 36 AI-Native 架構](../part-07-ai-era/ch-36-ai-native-architecture.md)、[Ch 44 AI Eval / Drift / Red Team](../part-07-ai-era/ch-44-ai-eval-drift-redteam.md)
-> **下游章節**：[Ch 49 有效使用 AI 輔助](./ch-49-effective-ai-assistance.md)、[Ch 51 主動研究 AI 弱點](./ch-51-ai-weakness-research.md)
-> **延伸補章**：[Ch 53 工程直覺保護手冊](./ch-53-engineering-intuition.md)
+> **前置閱讀**：[Ch 36 AI-Native 架構](../part-07-ai-era/ch-37-ai-native-architecture.md)、[Ch 44 AI Eval / Drift / Red Team](../part-07-ai-era/ch-45-ai-eval-drift-redteam.md)
+> **下游章節**：[Ch 49 有效使用 AI 輔助](./ch-50-effective-ai-assistance.md)、[Ch 51 主動研究 AI 弱點](./ch-52-ai-weakness-research.md)
+> **延伸補章**：[Ch 53 工程直覺保護手冊](./ch-54-engineering-intuition.md)
 
 ---
 
@@ -221,9 +221,9 @@ Sprint: ______  日期: ______
 
 ## Cross-References
 
-- **前置閱讀**：[Ch 36 AI-Native 架構](../part-07-ai-era/ch-36-ai-native-architecture.md)、[Ch 44 AI Eval / Drift / Red Team](../part-07-ai-era/ch-44-ai-eval-drift-redteam.md)
-- **下游章節**：[Ch 49 有效使用 AI 輔助](./ch-49-effective-ai-assistance.md)、[Ch 51 主動研究 AI 弱點](./ch-51-ai-weakness-research.md)
-- **延伸補章**：[Ch 53 工程直覺保護手冊](./ch-53-engineering-intuition.md)
+- **前置閱讀**：[Ch 36 AI-Native 架構](../part-07-ai-era/ch-37-ai-native-architecture.md)、[Ch 44 AI Eval / Drift / Red Team](../part-07-ai-era/ch-45-ai-eval-drift-redteam.md)
+- **下游章節**：[Ch 49 有效使用 AI 輔助](./ch-50-effective-ai-assistance.md)、[Ch 51 主動研究 AI 弱點](./ch-52-ai-weakness-research.md)
+- **延伸補章**：[Ch 53 工程直覺保護手冊](./ch-54-engineering-intuition.md)
 
 ## 引用
 

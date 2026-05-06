@@ -1,7 +1,7 @@
 ---
-chapter: 42
+chapter: 43
 part: VII
-title: Ch 42｜Agent Harness 工程 ⸺ 從模型到可用代理的執行層設計
+title: Ch 43｜Agent Harness 工程 ⸺ 從模型到可用代理的執行層設計
 slug: harness-engineering
 agent: SA
 skills_used:
@@ -14,12 +14,12 @@ status: draft
 word_count_target: 8500
 ---
 
-# Ch 42｜Agent Harness 工程
+# Ch 43｜Agent Harness 工程
 ## ⸺ 從模型到可用代理的執行層設計
 
-> **前置閱讀**：[Ch 38 RAG / Memory / Tool 設計](./ch-38-rag-memory-tool.md)、[Ch 39 Multi-Agent 系統設計](./ch-39-multi-agent.md)、[Ch 44 AI Eval / Drift / Red Team](./ch-44-ai-eval-drift-redteam.md)、[Ch 41 Agent 設定語言](./ch-41-agent-spec.md)
-> **下游章節**：[Ch 47 Capstone](../part-08-synthesis/ch-47-capstone.md)
-> **延伸補章**：[Ch 45 Agentic QA](./ch-45-agentic-qa.md)、[Ch 40 Multi-Agent 共識](./ch-40-multi-agent-consensus.md)
+> **前置閱讀**：[Ch 38 RAG / Memory / Tool 設計](./ch-39-rag-memory-tool.md)、[Ch 39 Multi-Agent 系統設計](./ch-40-multi-agent.md)、[Ch 44 AI Eval / Drift / Red Team](./ch-45-ai-eval-drift-redteam.md)、[Ch 41 Agent 設定語言](./ch-42-agent-spec.md)
+> **下游章節**：[Ch 47 Capstone](../part-08-synthesis/ch-48-capstone.md)
+> **延伸補章**：[Ch 45 Agentic QA](./ch-46-agentic-qa.md)、[Ch 40 Multi-Agent 共識](./ch-41-multi-agent-consensus.md)
 
 ---
 
@@ -484,9 +484,9 @@ Trace span 必填欄位（OTel GenAI semantic conventions 對齊）：
 
 ## Cross-References
 
-- **前置閱讀**：[Ch 38 RAG / Memory / Tool 設計](./ch-38-rag-memory-tool.md)、[Ch 39 Multi-Agent 系統設計](./ch-39-multi-agent.md)、[Ch 44 AI Eval / Drift / Red Team](./ch-44-ai-eval-drift-redteam.md)、[Ch 41 Agent 設定語言](./ch-41-agent-spec.md)
-- **下游章節**：[Ch 47 Capstone](../part-08-synthesis/ch-47-capstone.md)
-- **強連結**：[Ch 45 Agentic QA](./ch-45-agentic-qa.md)、[Ch 40 Multi-Agent 共識](./ch-40-multi-agent-consensus.md)
+- **前置閱讀**：[Ch 38 RAG / Memory / Tool 設計](./ch-39-rag-memory-tool.md)、[Ch 39 Multi-Agent 系統設計](./ch-40-multi-agent.md)、[Ch 44 AI Eval / Drift / Red Team](./ch-45-ai-eval-drift-redteam.md)、[Ch 41 Agent 設定語言](./ch-42-agent-spec.md)
+- **下游章節**：[Ch 47 Capstone](../part-08-synthesis/ch-48-capstone.md)
+- **強連結**：[Ch 45 Agentic QA](./ch-46-agentic-qa.md)、[Ch 40 Multi-Agent 共識](./ch-41-multi-agent-consensus.md)
 
 ## 引用
 

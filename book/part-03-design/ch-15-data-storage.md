@@ -20,7 +20,7 @@ word_count_target: 6000
 ## ⸺ RDBMS、NoSQL、NewSQL、向量資料庫,先看 Workload 再選引擎
 
 > **前置閱讀**:[Ch 8 資料模型與正規化](../part-02-analysis/ch-08-data-modeling-normalization.md)、[Ch 13 系統與架構選型](./ch-13-architecture-styles.md)
-> **下游章節**:[Ch 23 事件驅動架構](../part-04-architecture/ch-23-event-driven-cqrs-es.md)、[Ch 31 資料治理與合規](../part-05-quality/ch-31-data-architecture.md)、[Ch 36 AI-Native 架構](../part-07-ai-era/ch-36-ai-native-architecture.md)
+> **下游章節**:[Ch 23 事件驅動架構](../part-04-architecture/ch-23-event-driven-cqrs-es.md)、[Ch 31 資料治理與合規](../part-05-quality/ch-31-data-architecture.md)、[Ch 36 AI-Native 架構](../part-07-ai-era/ch-37-ai-native-architecture.md)
 > **延伸補章**:[Ch 26 邊緣 / OT-IT 整合](../part-04-architecture/ch-26-edge-ot-it.md)
 
 ---
@@ -407,7 +407,7 @@ MongoDB 4.0 起支援 multi-document transaction,但**它不是免費的** ⸺ r
 - **下一章**:[Ch 16 UI/UX 與人機互動](./ch-16-uiux-system-view.md)
 - **事件驅動**:[Ch 23 事件驅動架構](../part-04-architecture/ch-23-event-driven-cqrs-es.md) ⸺ CQRS 讀模型如何接住反正規化
 - **資料治理**:[Ch 31 資料治理與合規](../part-05-quality/ch-31-data-architecture.md) ⸺ 不可變性、審計、retention
-- **AI 時代**:[Ch 36 AI-Native 架構](../part-07-ai-era/ch-36-ai-native-architecture.md) ⸺ embedding 第一公民與向量索引在系統設計中的位置
+- **AI 時代**:[Ch 36 AI-Native 架構](../part-07-ai-era/ch-37-ai-native-architecture.md) ⸺ embedding 第一公民與向量索引在系統設計中的位置
 - **延伸補章**:[Ch 26 邊緣 / OT-IT 整合](../part-04-architecture/ch-26-edge-ot-it.md) ⸺ 邊緣端時序資料的本地緩衝與雲端同步
 
 ## 引用

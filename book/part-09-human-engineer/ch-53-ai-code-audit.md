@@ -1,5 +1,5 @@
 ---
-chapter: 52
+chapter: 53
 part: IX
 title: AI 程式碼的審計哲學 — 從 LGTM 到意圖符合性驗證
 slug: ai-code-audit
@@ -14,12 +14,12 @@ status: draft
 word_count_target: 6000
 ---
 
-# 第 52 章|AI 程式碼的審計哲學
+# 第 53 章|AI 程式碼的審計哲學
 ## ⸺ 從 LGTM 到意圖符合性驗證
 
-> **前置閱讀**：[Ch 49 有效使用 AI 輔助](./ch-49-effective-ai-assistance.md)、[Ch 34 架構適應度函式](../part-06-engineering/ch-34-fitness-functions.md)
-> **下游章節**：[Ch 53 工程直覺保護手冊](./ch-53-engineering-intuition.md)
-> **延伸補章**：[Ch 45 Agentic QA](../part-07-ai-era/ch-45-agentic-qa.md)
+> **前置閱讀**：[Ch 49 有效使用 AI 輔助](./ch-50-effective-ai-assistance.md)、[Ch 34 架構適應度函式](../part-06-engineering/ch-34-fitness-functions.md)
+> **下游章節**：[Ch 53 工程直覺保護手冊](./ch-54-engineering-intuition.md)
+> **延伸補章**：[Ch 45 Agentic QA](../part-07-ai-era/ch-46-agentic-qa.md)
 
 ---
 
@@ -244,9 +244,9 @@ PR：______  審計者：______  日期：______
 
 ## Cross-References
 
-- **前置閱讀**：[Ch 49 有效使用 AI 輔助](./ch-49-effective-ai-assistance.md)、[Ch 34 架構適應度函式](../part-06-engineering/ch-34-fitness-functions.md)
-- **下游章節**：[Ch 53 工程直覺保護手冊](./ch-53-engineering-intuition.md)
-- **延伸補章**：[Ch 45 Agentic QA](../part-07-ai-era/ch-45-agentic-qa.md)
+- **前置閱讀**：[Ch 49 有效使用 AI 輔助](./ch-50-effective-ai-assistance.md)、[Ch 34 架構適應度函式](../part-06-engineering/ch-34-fitness-functions.md)
+- **下游章節**：[Ch 53 工程直覺保護手冊](./ch-54-engineering-intuition.md)
+- **延伸補章**：[Ch 45 Agentic QA](../part-07-ai-era/ch-46-agentic-qa.md)
 
 ## 引用
 

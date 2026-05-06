@@ -1,5 +1,5 @@
 ---
-chapter: 37
+chapter: 38
 part: VII
 title: Context-Driven Engineering(CDE)— 從 Vibe Coding 到可被傳遞的脈絡
 slug: context-driven-engineering
@@ -14,11 +14,11 @@ status: draft
 word_count_target: 6500
 ---
 
-# 第 37 章|Context-Driven Engineering(CDE)
+# 第 38 章|Context-Driven Engineering(CDE)
 ## ⸺ 從 Vibe Coding 到可被傳遞的脈絡
 
 > **前置閱讀**:[Ch 1 為什麼 SA/SD](../part-01-foundations/ch-01-why-sa-sd.md)、[Ch 33 ADR 與架構知識管理](../part-06-engineering/ch-33-adr-architecture-knowledge.md)
-> **下游章節**:[Ch 38 Skill 工程與 Subagent 設計](./ch-38-rag-memory-tool.md)、[Ch 39 AI 時代的 SA 角色重構](./ch-39-multi-agent.md)、[Ch 43 工程治理與責任邊界](./ch-43-coding-agent.md)
+> **下游章節**:[Ch 38 Skill 工程與 Subagent 設計](./ch-39-rag-memory-tool.md)、[Ch 39 AI 時代的 SA 角色重構](./ch-40-multi-agent.md)、[Ch 43 工程治理與責任邊界](./ch-44-coding-agent.md)
 > **延伸補章**:無
 
 ---
@@ -430,9 +430,9 @@ linked-adrs:
 
 - **回顧**:[Ch 1 §1.2 SA/SD 是製造可被傳遞的理解](../part-01-foundations/ch-01-why-sa-sd.md) ⸺ CDE 是這句話在 AI 時代的具體實踐形式
 - **回顧**:[Ch 33 ADR 與架構知識管理](../part-06-engineering/ch-33-adr-architecture-knowledge.md) ⸺ ADR 是 CDE Skill 的 Knowledge Source 骨幹
-- **下一章**:[Ch 38 Skill 工程與 Subagent 設計](./ch-38-rag-memory-tool.md) ⸺ 把本章的契約展開到實作層級
-- **延伸**:[Ch 39 AI 時代的 SA 角色重構](./ch-39-multi-agent.md) ⸺ SA 在 CDE 流程裡的職責變化
-- **延伸**:[Ch 43 工程治理與責任邊界](./ch-43-coding-agent.md) ⸺ Subagent 出錯時誰負責
+- **下一章**:[Ch 38 Skill 工程與 Subagent 設計](./ch-39-rag-memory-tool.md) ⸺ 把本章的契約展開到實作層級
+- **延伸**:[Ch 39 AI 時代的 SA 角色重構](./ch-40-multi-agent.md) ⸺ SA 在 CDE 流程裡的職責變化
+- **延伸**:[Ch 43 工程治理與責任邊界](./ch-44-coding-agent.md) ⸺ Subagent 出錯時誰負責
 
 ## 引用
 

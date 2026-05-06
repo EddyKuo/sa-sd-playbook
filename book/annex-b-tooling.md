@@ -1,5 +1,5 @@
 ---
-chapter: 45
+chapter: 46
 part: annex
 title: 附錄 B — 工具速查(2026)
 slug: tooling
@@ -43,7 +43,7 @@ status: published
 | 工具 | 角色 | 出現章節 |
 |---|---|---|
 | PostgreSQL 17 | 預設 RDBMS,本書多次倡議 | [Ch 8](part-02-analysis/ch-08-data-modeling-normalization.md)、[Ch 15](part-03-design/ch-15-data-storage.md) |
-| pgvector | PG 向量 extension,RAG 推薦 | Ch 15、[Ch 38](part-07-ai-era/ch-38-rag-memory-tool.md)、[Ch 28](part-05-quality/ch-28-compliance.md) |
+| pgvector | PG 向量 extension,RAG 推薦 | Ch 15、[Ch 38](part-07-ai-era/ch-39-rag-memory-tool.md)、[Ch 28](part-05-quality/ch-28-compliance.md) |
 | TimescaleDB | 時序 hypertable + continuous aggregate | Ch 15 |
 | CockroachDB / TiDB | NewSQL | Ch 15 |
 | Cassandra | 寫密集 wide column | Ch 15 |
@@ -81,7 +81,7 @@ status: published
 | OpenTelemetry 1.x | 三大支柱事實標準 | [Ch 29](part-05-quality/ch-29-observability-otel.md) |
 | Grafana LGTM Stack | Loki / Grafana / Tempo / Mimir | Ch 29 |
 | SigNoz / Honeycomb / Dash0 | APM | Ch 29 |
-| LangSmith / Langfuse / Phoenix | AI Agent observability | Ch 29、[Ch 36](part-07-ai-era/ch-36-ai-native-architecture.md)、[Ch 44](part-07-ai-era/ch-44-ai-eval-drift-redteam.md) |
+| LangSmith / Langfuse / Phoenix | AI Agent observability | Ch 29、[Ch 36](part-07-ai-era/ch-37-ai-native-architecture.md)、[Ch 44](part-07-ai-era/ch-45-ai-eval-drift-redteam.md) |
 | Prometheus 2.55 + Sloth | SLO recording rule | [Ch 30](part-05-quality/ch-30-sre-slo-chaos.md) |
 
 ## 7. 架構治理 / Fitness Function
@@ -105,14 +105,14 @@ status: published
 | 工具 | 角色 | 出現章節 |
 |---|---|---|
 | Claude Sonnet / Opus 4.x | LLM(本書多處用) | 全書 VII 篇 |
-| Anthropic Skills + Subagents | CDE 三層 | [Ch 37](part-07-ai-era/ch-37-context-driven-engineering.md)、[Ch 39](part-07-ai-era/ch-39-multi-agent.md) |
+| Anthropic Skills + Subagents | CDE 三層 | [Ch 37](part-07-ai-era/ch-38-context-driven-engineering.md)、[Ch 39](part-07-ai-era/ch-40-multi-agent.md) |
 | LangGraph | Stateful agent 編排 | Ch 36、Ch 39 |
 | Microsoft AutoGen | 對話式 Multi-Agent | Ch 39 |
 | CrewAI | Role-based Multi-Agent | Ch 39 |
 | OpenAI Agents SDK | Agent + Handoff + Guardrail | Ch 39 |
 | Microsoft Magentic-One | 預訓練 Specialized Agents | Ch 39 |
-| Cohere Rerank v3 | RAG reranking | [Ch 38](part-07-ai-era/ch-38-rag-memory-tool.md) |
-| RAGAS / TruLens / DeepEval | RAG / LLM eval | Ch 44、[Ch 45](part-07-ai-era/ch-45-agentic-qa.md) |
+| Cohere Rerank v3 | RAG reranking | [Ch 38](part-07-ai-era/ch-39-rag-memory-tool.md) |
+| RAGAS / TruLens / DeepEval | RAG / LLM eval | Ch 44、[Ch 45](part-07-ai-era/ch-46-agentic-qa.md) |
 | PyRIT / garak / Promptfoo / Lakera | Red Team | Ch 44、Ch 45 |
 | Constitutional Classifiers (Anthropic) | Prompt injection 防護 | Ch 44 |
 
@@ -120,8 +120,8 @@ status: published
 
 | 工具 | 角色 | 出現章節 |
 |---|---|---|
-| Cursor | IDE-based Agent | [Ch 37](part-07-ai-era/ch-37-context-driven-engineering.md)、[Ch 43](part-07-ai-era/ch-43-coding-agent.md) |
-| Anthropic Claude Code | Terminal Agent + Skills + Subagents | Ch 37、Ch 43、[Ch 46](part-07-ai-era/ch-46-legacy-ai.md) |
+| Cursor | IDE-based Agent | [Ch 37](part-07-ai-era/ch-38-context-driven-engineering.md)、[Ch 43](part-07-ai-era/ch-44-coding-agent.md) |
+| Anthropic Claude Code | Terminal Agent + Skills + Subagents | Ch 37、Ch 43、[Ch 46](part-07-ai-era/ch-47-legacy-ai.md) |
 | Google Antigravity | 200 萬 token 全景考古 | Ch 46 |
 | GitHub Copilot Workspace | PR 流程整合 | Ch 43 |
 | Aider | git-native | Ch 46 |

@@ -1,7 +1,7 @@
 ---
-chapter: 53
+chapter: 54
 part: IX
-title: Ch 53｜工程直覺保護手冊 — 在 AI 加速下不讓判斷力退化
+title: Ch 54｜工程直覺保護手冊 — 在 AI 加速下不讓判斷力退化
 slug: engineering-intuition
 agent: SA
 skills_used:
@@ -13,11 +13,11 @@ status: draft
 word_count_target: 7000
 ---
 
-# Ch 53｜工程直覺保護手冊
+# Ch 54｜工程直覺保護手冊
 ## ⸺ 在 AI 加速下不讓判斷力退化
 
-> **前置閱讀**：[Ch 50 人類不能外包的邊界](./ch-50-human-judgment-boundary.md)、[Ch 52 AI 程式碼的審計哲學](./ch-52-ai-code-audit.md)
-> **下游章節**：[Ch 47 Capstone](../part-08-synthesis/ch-47-capstone.md)（全書收束）
+> **前置閱讀**：[Ch 50 人類不能外包的邊界](./ch-51-human-judgment-boundary.md)、[Ch 52 AI 程式碼的審計哲學](./ch-53-ai-code-audit.md)
+> **下游章節**：[Ch 47 Capstone](../part-08-synthesis/ch-48-capstone.md)（全書收束）
 
 ---
 
@@ -314,8 +314,8 @@ flowchart LR
 
 ## Cross-References
 
-- **前置閱讀**：[Ch 50 人類不能外包的邊界](./ch-50-human-judgment-boundary.md)、[Ch 52 AI 程式碼的審計哲學](./ch-52-ai-code-audit.md)
-- **下游章節**：[Ch 47 Capstone](../part-08-synthesis/ch-47-capstone.md)（全書收束）
+- **前置閱讀**：[Ch 50 人類不能外包的邊界](./ch-51-human-judgment-boundary.md)、[Ch 52 AI 程式碼的審計哲學](./ch-53-ai-code-audit.md)
+- **下游章節**：[Ch 47 Capstone](../part-08-synthesis/ch-48-capstone.md)（全書收束）
 
 ## 引用
 

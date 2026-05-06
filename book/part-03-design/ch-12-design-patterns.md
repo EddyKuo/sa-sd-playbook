@@ -18,8 +18,8 @@ word_count_target: 6000
 ## ⸺ GoF 與整合模式 (EIP),為已知問題命名的工具
 
 > **前置閱讀**:[Ch 7 物件導向分析](../part-02-analysis/ch-07-object-oriented-analysis.md)、[Ch 11 設計原則](./ch-11-architecture-principles.md)
-> **下游章節**:[Ch 13 軟體架構樣式](./ch-13-architecture-styles.md)、[Ch 19 Event Storming](../part-04-architecture/ch-19-event-storming-modeling.md)、[Ch 23 Event-Driven 與事件溯源](../part-04-architecture/ch-23-event-driven-cqrs-es.md)、[Ch 39 Multi-Agent 系統設計](../part-07-ai-era/ch-39-multi-agent.md)
-> **延伸補章**:[Ch 40 共識/狀態/衝突](../part-07-ai-era/ch-40-multi-agent-consensus.md)
+> **下游章節**:[Ch 13 軟體架構樣式](./ch-13-architecture-styles.md)、[Ch 19 Event Storming](../part-04-architecture/ch-19-event-storming-modeling.md)、[Ch 23 Event-Driven 與事件溯源](../part-04-architecture/ch-23-event-driven-cqrs-es.md)、[Ch 39 Multi-Agent 系統設計](../part-07-ai-era/ch-40-multi-agent.md)
+> **延伸補章**:[Ch 40 共識/狀態/衝突](../part-07-ai-era/ch-41-multi-agent-consensus.md)
 
 ---
 
@@ -403,8 +403,8 @@ flowchart LR
 - **下一章**:[Ch 13 軟體架構樣式](./ch-13-architecture-styles.md) ⸺ 從模式語言往上一層,進到架構樣式
 - **領域探索**:[Ch 19 Event Storming](../part-04-architecture/ch-19-event-storming-modeling.md) ⸺ 在事件層次找到 EIP 模式的問題情境
 - **事件驅動**:[Ch 23 Event-Driven 與事件溯源](../part-04-architecture/ch-23-event-driven-cqrs-es.md) ⸺ EIP 模式真的能落地的前提
-- **Multi-Agent 模式語言**:[Ch 39 Multi-Agent 系統設計](../part-07-ai-era/ch-39-multi-agent.md) ⸺ Anthropic 五個 Agent 模式的展開
-- **Multi-Agent 共識**:[Ch 40](../part-07-ai-era/ch-40-multi-agent-consensus.md) ⸺ Agent 之間的衝突解決也走 EIP 模式語言
+- **Multi-Agent 模式語言**:[Ch 39 Multi-Agent 系統設計](../part-07-ai-era/ch-40-multi-agent.md) ⸺ Anthropic 五個 Agent 模式的展開
+- **Multi-Agent 共識**:[Ch 40](../part-07-ai-era/ch-41-multi-agent-consensus.md) ⸺ Agent 之間的衝突解決也走 EIP 模式語言
 
 ## 引用
 

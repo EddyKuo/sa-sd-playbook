@@ -1,5 +1,5 @@
 ---
-chapter: 36
+chapter: 37
 part: VII
 title: AI-Native 架構 — 從 AI-Embedded 到 Agent-First
 slug: ai-native-architecture
@@ -14,12 +14,12 @@ status: draft
 word_count_target: 6500
 ---
 
-# 第 36 章|AI-Native 架構
+# 第 37 章|AI-Native 架構
 ## ⸺ 從 AI-Embedded 到 Agent-First
 
 > **前置閱讀**:[Ch 13 架構風格與決策](../part-03-design/ch-13-architecture-styles.md)、[Ch 23 EDA / CQRS / ES](../part-04-architecture/ch-23-event-driven-cqrs-es.md)、[Ch 27 Security by Design](../part-05-quality/ch-27-security-by-design.md)
-> **下游章節**:[Ch 37 Context-Driven Engineering](./ch-37-context-driven-engineering.md)、[Ch 38 RAG 與知識架構](./ch-38-rag-memory-tool.md)、[Ch 39 Multi-Agent 系統設計](./ch-39-multi-agent.md)
-> **延伸補章**:[Ch 45 Agentic QA](./ch-45-agentic-qa.md)、[Ch 28 Compliance by Design](../part-05-quality/ch-28-compliance.md)
+> **下游章節**:[Ch 37 Context-Driven Engineering](./ch-38-context-driven-engineering.md)、[Ch 38 RAG 與知識架構](./ch-39-rag-memory-tool.md)、[Ch 39 Multi-Agent 系統設計](./ch-40-multi-agent.md)
+> **延伸補章**:[Ch 45 Agentic QA](./ch-46-agentic-qa.md)、[Ch 28 Compliance by Design](../part-05-quality/ch-28-compliance.md)
 
 ---
 
@@ -414,19 +414,19 @@ flowchart TD
 - [ ] 用 AI-Native 七層架構表 + 治理三支柱表(HITL / Circuit Breaker / Audit Trail)切出確定性層與非確定性層的邊界,並為高風險領域強制三支柱
 - [ ] 為手上規劃中的 AI 功能寫一份 AI-Native System Vision Card(放 `docs/architecture/ai-native-vision-{slug}.md`),逼自己在動手前回答八個答案
 
-四項中先挑一項做完就好,建議是最後那一項 ⸺ 把手上正在規劃的 AI 功能拉出來,補一張 Vision Card,逼自己回答 Litmus Test。本章留給你的就是「把 LLM 拿掉,旅程還能成立嗎」這條判斷線。下一章 [Ch 37 Context-Driven Engineering](./ch-37-context-driven-engineering.md) 會接著回答:**確定性那一層,要怎麼餵給 AI 才能讓它穩定產出**。
+四項中先挑一項做完就好,建議是最後那一項 ⸺ 把手上正在規劃的 AI 功能拉出來,補一張 Vision Card,逼自己回答 Litmus Test。本章留給你的就是「把 LLM 拿掉,旅程還能成立嗎」這條判斷線。下一章 [Ch 37 Context-Driven Engineering](./ch-38-context-driven-engineering.md) 會接著回答:**確定性那一層,要怎麼餵給 AI 才能讓它穩定產出**。
 
 ---
 
 ## Cross-References
 
-- **下一章**:[Ch 37 Context-Driven Engineering](./ch-37-context-driven-engineering.md) ⸺ AI 協作下的脈絡工程
+- **下一章**:[Ch 37 Context-Driven Engineering](./ch-38-context-driven-engineering.md) ⸺ AI 協作下的脈絡工程
 - **架構風格基礎**:[Ch 13 架構風格與決策](../part-03-design/ch-13-architecture-styles.md) ⸺ Hexagonal 是 Agent-as-Adapter 的母體
 - **事件流基礎**:[Ch 23 EDA / CQRS / ES](../part-04-architecture/ch-23-event-driven-cqrs-es.md) ⸺ Audit Trail 與 Agent Worker 的拓樸
 - **安全設計**:[Ch 27 Security by Design](../part-05-quality/ch-27-security-by-design.md) ⸺ Threat Model + Prompt Injection
-- **下游 RAG**:[Ch 38 RAG 與知識架構](./ch-38-rag-memory-tool.md) ⸺ L3 Memory 的展開
-- **下游 Multi-Agent**:[Ch 39 Multi-Agent 系統設計](./ch-39-multi-agent.md) ⸺ L5 Agent Orchestration 的展開
-- **延伸補章**:[Ch 45 Agentic QA](./ch-45-agentic-qa.md)、[Ch 28 Compliance by Design](../part-05-quality/ch-28-compliance.md)
+- **下游 RAG**:[Ch 38 RAG 與知識架構](./ch-39-rag-memory-tool.md) ⸺ L3 Memory 的展開
+- **下游 Multi-Agent**:[Ch 39 Multi-Agent 系統設計](./ch-40-multi-agent.md) ⸺ L5 Agent Orchestration 的展開
+- **延伸補章**:[Ch 45 Agentic QA](./ch-46-agentic-qa.md)、[Ch 28 Compliance by Design](../part-05-quality/ch-28-compliance.md)
 
 ## 引用
 
