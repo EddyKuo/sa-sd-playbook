@@ -16,28 +16,64 @@
 
 本書的每一章都從一個**真實發生過的失敗**出發，拆解它的根本原因，給出可以在會議桌上直接走完的決策框架，以及一張帶走就能用的交付清單。
 
-### 本書結構
+## 怎麼讀這本書
 
-每章遵循固定的四段節奏：
+```mermaid
+flowchart TD
+    Start([你是誰？]) --> Q1{經驗 / 角色}
 
-| 段落 | 功能 |
-|---|---|
-| **冷觀察** | 一個真實案例，描述問題發生的現場 |
-| **真問題** | 拆解根本原因，通常不是表面看到的那個 |
-| **決策框架** | 可操作的判斷工具：表格、決策樹、對比矩陣 |
-| **踩坑 / 交付清單** | 常見反模式 + 可帶走的格式與模板 |
+    Q1 -->|0-2 年新手| New[Part 01 基礎<br/>Part 02 分析<br/>Part 03 設計]
+    Q1 -->|3-8 年進階| Mid[Part 01-03<br/>+ Part 04 架構<br/>+ Part 05 品質<br/>+ Part 06 工程實踐]
+    Q1 -->|8 年以上資深 / 架構師| Senior[全書精讀<br/>重點 Part 04 / 06 / 07]
+    Q1 -->|PM / 產品負責人| PM[Part 01 + Part 02<br/>+ Ch 14 API<br/>+ Ch 30 ADR]
+    Q1 -->|AI 系統開發者| AI[Part 07 AI 時代<br/>+ 補章 B / C / D / H / I]
 
----
+    New --> Cap[Ch 39 Capstone<br/>整合練習]
+    Mid --> Ext{場景補強}
+    Ext -->|OT / IoT / 製造| ChA[補章 A 邊緣 / OT-IT]
+    Ext -->|金融 / 醫療 / 合規| ChE[補章 E Compliance]
+    Ext -->|多模態 UI| ChF[補章 F CUX]
+    Senior --> Cap
+    PM --> Out([交付 PRD / SRS / ADR])
+    AI --> Cap
 
-## 適用對象
+    classDef start fill:#fef3c7,stroke:#d97706,stroke-width:2px
+    classDef path fill:#dbeafe,stroke:#2563eb
+    classDef ext fill:#f3e8ff,stroke:#9333ea
+    classDef cap fill:#dcfce7,stroke:#16a34a,stroke-width:2px
+    class Start,Q1 start
+    class New,Mid,Senior,PM,AI path
+    class ChA,ChE,ChF ext
+    class Cap,Out cap
+```
 
-| 讀者 | 建議路徑 |
-|---|---|
-| **新進工程師** | Part 01 → Part 02 → Part 03，建立基礎概念 |
-| **資深工程師 / Tech Lead** | Part 04 → Part 06 → Part 07，深化架構判斷 |
-| **PM / 產品負責人** | Part 01 → Part 02 → Ch 14、Ch 30，掌握需求與決策文件 |
-| **架構師** | Part 04 → Part 05 → Part 06，聚焦架構品質與治理 |
-| **AI 系統開發者** | Part 07 + 補章 B、C、D，專注 AI 時代的新挑戰 |
+| 讀者 | 建議路徑 | 預期收穫 |
+|---|---|---|
+| **新進工程師（0–2 年）** | Part 01 → 02 → 03 → Ch 39 Capstone | 完整需求拆解、模型語言、設計原則，最小可帶走 artifact 套件 |
+| **資深工程師 / Tech Lead（3–8 年）** | 上面 + Part 04 → 05 → 06 + 補章 A / E | 進階架構、品質屬性、現代工程實踐；能設計中型系統 |
+| **架構師（8+ 年）** | 全書 + 重點 Part 04 / 06 / 07 + 全部補章 | AI 時代 SA/SD 整合視角、可帶領團隊建立 Capstone Pack |
+| **PM / 產品負責人** | Part 01 → 02 → Ch 14、Ch 30 | 需求拆解、PRD/SRS/MVP 選型、ADR 決策文件 |
+| **AI 系統開發者** | Part 07 + 補章 B / C / D / H / I | AI-Native 架構、Multi-Agent、Eval/Drift、Agent 規格 |
+
+### 每章的四段節奏
+
+```mermaid
+flowchart LR
+    A["冷觀察<br/>真實案例現場"] --> B["真問題<br/>拆解根本原因"]
+    B --> C["決策框架<br/>表格 / 決策樹 / 對比矩陣"]
+    C --> D["踩坑 + 交付清單<br/>反模式 + 可帶走模板"]
+
+    classDef tense fill:#fee2e2,stroke:#dc2626
+    classDef steady fill:#fef3c7,stroke:#d97706
+    classDef coach fill:#dbeafe,stroke:#2563eb
+    classDef build fill:#dcfce7,stroke:#16a34a
+    class A tense
+    class B steady
+    class C coach
+    class D build
+```
+
+四段對應四種語氣：**TENSE → STEADY → COACHING → CONSTRUCTIVE**（詳見 [voice-guide.md](book/voice-guide.md)）。
 
 ---
 
@@ -387,6 +423,22 @@
 **核心主題**：兩個自主 Agent 對同一件事不同意怎麼辦？——分散式 Agent 系統的共識與衝突解決機制。  
 **關鍵工具**：分散式共識機制、Conflict Resolution 策略、State Management 設計、Saga 補償  
 **適用場景**：自主 Agent 系統設計、多 Agent 協作架構
+
+---
+
+#### 補章 H｜Agent 設定語言 — SA 的新交付物
+**核心主題**：四個 Agent 的 `instructions` 字串硬塞在程式碼裡、沒有版本歷史，SA 連「這個 Agent 是誰、能做什麼」都翻不出來——CLAUDE.md / agent.md / skill.md 是新世代的 SRS。  
+**案例**：Caldwell Systems ERP 整合 Agent 的規格真空。  
+**關鍵工具**：Agent Identity / Capabilities / Instruction / Handoff 四問框架、跨廠商通用設定語言、Agent 規格版本控制  
+**適用場景**：Multi-Agent 系統 SA 交付、Agent 行為治理、跨團隊協作介面
+
+---
+
+#### 補章 I｜Agent Harness 工程 — 從模型到可用代理的執行層設計
+**核心主題**：模型從 Sonnet 4.5 升到 Opus 4.7，內部評測 +14pp、PR merge 率 0%——真正該研究的不是模型，是 harness 本身。  
+**案例**：Cresvale Engineering Cloud 的 Codex 內評跟 merge 率脫鉤事件。  
+**關鍵工具**：Harness 執行層分解（Tool Result 壓縮、Context Window 預算、Trace 接 Review）、Eval-Production Gap 量化、Harness Observability  
+**適用場景**：Coding Agent 平台建置、Multi-Agent 執行框架選型、AI 工具效益跟丟診斷
 
 ---
 
