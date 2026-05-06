@@ -18,14 +18,13 @@ word_count_target: 6500
 # Ch 46|遺留系統現代化與 AI 逆向工程
 ## ⸺ Brownfield Modernization with Agent-Assisted Reverse Engineering
 
-> **插入位置**:緊接 [Ch 45 Agentic QA](./ch-45-agentic-qa.md) 之後,接續 [Ch 44](./ch-44-ai-eval-drift-redteam.md) 之後的 AI 時代延伸
 > **前置閱讀**:[Ch 18 DDD](../part-04-architecture/ch-18-ddd-strategic-tactical.md)、[Ch 21 Modular Monolith](../part-04-architecture/ch-21-modular-monolith.md)、[Ch 37 CDE](./ch-37-context-driven-engineering.md)、[Ch 43 Coding Agent](./ch-43-coding-agent.md)
 > **下游章節**:[Ch 47 Capstone](../part-08-synthesis/ch-47-capstone.md)
 > **延伸補章**:[Ch 45 Agentic QA](./ch-45-agentic-qa.md)
 
 ---
 
-## C.1 冷觀察 ⸺ 主大綱默認在 Greenfield,但你大概率不在
+## 46.1 冷觀察 ⸺ 主大綱默認在 Greenfield,但你大概率不在
 
 打開主大綱重讀:[Ch 18](../part-04-architecture/ch-18-ddd-strategic-tactical.md) 談 DDD 從 Bounded Context 開始畫,[Ch 20](../part-04-architecture/ch-20-c4-model-visualization.md) C4 從 System Context 圖開始畫,[Ch 23](../part-04-architecture/ch-23-event-driven-cqrs-es.md) Event Sourcing 假設能重新設計事件流。
 
@@ -58,7 +57,7 @@ flowchart LR
     class B1,B2,B3,B4 goal
 ```
 
-## C.2 真問題 ⸺ 用 Agent 做逆向工程的四個層次
+## 46.2 真問題 ⸺ 用 Agent 做逆向工程的四個層次
 
 不要把 Agent 當成「貼進去問問題」的工具。它能做的事分四個層次,要分階段使用。
 
@@ -69,9 +68,9 @@ flowchart LR
 | **L3** | Behavioral(行為層) | 給定入口追蹤執行路徑;從 stored procedure 提取業務規則;識別「看似相同但暗藏差異」程式碼;把日誌反推回程式碼路徑 | Claude Code、Cursor、Antigravity、Codex CLI | **Agent 真正開始發光的地方**,需要長上下文與工具呼叫 |
 | **L4** | Domain(領域層) | 從程式碼推回 Ubiquitous Language;為每一個 Bounded Context 寫考古報告;對照訪談標記矛盾點(程式碼這樣寫、使用者描述不一樣 → 一定有故事) | Claude Code + 領域專家 | **必須人類主導,Agent 輔助**。Agent 可提案,人類必須驗證 |
 
-## C.3 決策框架 ⸺ IDE / Agent 工具取捨與三段式遷移
+## 46.3 決策框架 ⸺ IDE / Agent 工具取捨與三段式遷移
 
-### C.3.1 IDE / Agent 工具取捨(2026 現實)
+### 46.3.1 IDE / Agent 工具取捨(2026 現實)
 
 [Ch 37 CDE](./ch-37-context-driven-engineering.md) 與 [Ch 43 Coding Agent](./ch-43-coding-agent.md) 提到了 Context-Driven Engineering 與工具,但沒針對「逆向工程」場景做選型。這裡補上:
 
@@ -85,7 +84,7 @@ flowchart LR
 
 **一個務實的工具組合**:實務上會用兩到三套疊加 ⸺ Antigravity / Gemini 3.1 Pro 跑一次「全景考古」,生成宏觀報告後就停(**不寫回任何檔案**);Claude Code 主力編碼,跑深度逆向工程,提取業務規則,寫進文件,Skills 設計成「逆向某個 stored procedure 並產出 PRD」這類;Cursor 進入修改階段做精準 refactor,Shadow workspace 確保不污染主分支。
 
-### C.3.2 從 As-Is 到 To-Be 的安全平滑遷移
+### 46.3.2 從 As-Is 到 To-Be 的安全平滑遷移
 
 這是最容易翻車的環節。一旦提取出 As-Is 領域模型,開始畫 To-Be,**80% 的失敗在這裡發生**:To-Be 畫得太理想、跟 As-Is 不接、導致遷移路徑根本走不通。
 
@@ -97,7 +96,7 @@ flowchart LR
 | **規則二:任何 To-Be 模組必須有「並行運轉一個月」的計畫** | 新模組接管舊模組之前,讓兩者並行跑、輸出比對。Stripe、GitLab、Shopify 在大型遷移上都用這套。 |
 | **規則三:Strangler Fig 必須有「中途停下來」的設計** | 做到一半發現方向錯了,要能停在中間狀態繼續運轉,而不是「全有或全無」。舊新模組之間必須維持雙向相容。 |
 
-### C.3.3 一個典型的遷移迭代
+### 46.3.3 一個典型的遷移迭代
 
 ```mermaid
 flowchart TD
@@ -126,7 +125,7 @@ flowchart TD
 
 ---
 
-## C.4 踩坑清單
+## 46.4 踩坑清單
 
 ### 反模式 1:相信 Agent 的初次摘要
 
@@ -154,7 +153,7 @@ Agent 看了一段沒被呼叫的程式碼說「這是 dead code 可以刪」⸺
 
 ---
 
-## C.5 交付清單
+## 46.5 交付清單
 
 完成本章後,讀者應產出:
 
@@ -192,7 +191,7 @@ Agent 看了一段沒被呼叫的程式碼說「這是 dead code 可以刪」⸺
 
 ---
 
-## C.6 Recap
+## 46.6 Recap
 
 讀完本章,應該已經能做到:
 

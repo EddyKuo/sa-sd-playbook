@@ -16,14 +16,13 @@ word_count_target: 6500
 # Ch 17|多模態與對話式互動的系統分析
 ## ⸺ Multimodal & Conversational UX (CUX) Systems Analysis
 
-> **插入位置**:緊接 [Ch 16 UI/UX 與人機互動的系統觀](./ch-16-uiux-system-view.md) 之後
 > **前置閱讀**:[Ch 9 流程模型](../part-02-analysis/ch-09-process-modeling.md)、[Ch 16](./ch-16-uiux-system-view.md)
 > **下游章節**:[Ch 27 Security by Design](../part-05-quality/ch-27-security-by-design.md)
 > **延伸補章**:[Ch 26 邊緣/OT-IT](../part-04-architecture/ch-26-edge-ot-it.md)、[Ch 28 Compliance](../part-05-quality/ch-28-compliance.md)
 
 ---
 
-## F.1 冷觀察 ⸺ 古典分析語彙的破口
+## 17.1 冷觀察 ⸺ 古典分析語彙的破口
 
 [Ch 16 UI/UX](./ch-16-uiux-system-view.md) 談的 Information Architecture、Atomic Design、Generative UI,以及 [Ch 9 流程模型](../part-02-analysis/ch-09-process-modeling.md) 提到的 BPMN、活動圖、狀態機 ⸺ 這些工具的共同假設是:**互動是離散的、有先後的、可編號的**。使用者點一個按鈕、跳到下一個畫面、輸入欄位、按確定。
 
@@ -64,7 +63,7 @@ flowchart LR
     class F cold
 ```
 
-## F.2 真問題 ⸺ 為什麼 BPMN 在這裡破功
+## 17.2 真問題 ⸺ 為什麼 BPMN 在這裡破功
 
 舉一個具體的虛構案例(`CASE-HCR-004`):一個「居家視訊看護」系統 ⸺ 長者在客廳,系統用攝影機 + 語音助理持續監看。場景:**長者跌倒了**。
 
@@ -86,7 +85,7 @@ BPMN 的活動框與決策菱形,完全表達不出**「機率性訊號」「持
 
 換句話說,CUX / 多模態系統需要一套新的分析語彙 ⸺ 不是要丟掉 BPMN(它在 [Ch 9](../part-02-analysis/ch-09-process-modeling.md) 仍然好用),是要承認 BPMN 適合的層次到「業務工作流」為止,**「感知 → 推論 → 決策」這一層需要不同工具**。
 
-## F.3 決策框架 ⸺ Signal-Decision-Confidence(SDC)模型
+## 17.3 決策框架 ⸺ Signal-Decision-Confidence(SDC)模型
 
 現場好用的分析框架,從訊號處理 + 決策論借過來:**SDC 模型**(Signal-Decision-Confidence)。
 
@@ -142,7 +141,7 @@ SDC 模型對應到 SA 階段的產出物,是新的:
 | Decision with Confidence | **Confidence Decision Tree** | 不同信心區間的行動邏輯 |
 | Action with Reversibility | **Irreversible Action List** | 哪些動作必須極高信心 + 多重驗證(撥 119、扣款、發送通知給家屬) |
 
-### F.3.1 對話式介面(CUX)的特殊分析語彙
+### 17.3.1 對話式介面(CUX)的特殊分析語彙
 
 對話流不像表單,它沒有固定欄位順序。但它仍然有結構,只是這個結構是**意圖網絡(Intent Graph)** 而非流程圖。
 
@@ -174,7 +173,7 @@ SDC 模型對應到 SA 階段的產出物,是新的:
 - **多人對話**(Cocktail Party):多人同時說話,系統聽誰?這在車載與會議場景每天遇到。
 - **情緒升級**:使用者開始焦躁,系統必須能識別並降階(降速、改詞、轉人工)。
 
-### F.3.2 視覺即時串流(Camera-as-Sensor)的系統分析
+### 17.3.2 視覺即時串流(Camera-as-Sensor)的系統分析
 
 當攝影機從「拍一張照」變成「持續輸入」,SA 工件也要對應改變。下面是好用的「採樣決策圖」:
 
@@ -212,7 +211,7 @@ flowchart TD
 
 ---
 
-## F.4 踩坑清單
+## 17.4 踩坑清單
 
 下面四個常見地雷,在多模態 / CUX 系統反覆出現:
 
@@ -242,7 +241,7 @@ flowchart TD
 
 ---
 
-## F.5 交付清單 ⸺ 多模態 / CUX 系統設計 Checklist
+## 17.5 交付清單 ⸺ 多模態 / CUX 系統設計 Checklist
 
 每個多模態 / CUX 系統開工前,以下 artifact 應該齊備:
 
@@ -287,7 +286,7 @@ flowchart TD
 
 ---
 
-## F.6 Recap
+## 17.6 Recap
 
 讀完本章,應該已經能做到:
 

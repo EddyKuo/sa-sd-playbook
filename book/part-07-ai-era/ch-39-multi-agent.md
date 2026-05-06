@@ -19,7 +19,7 @@ word_count_target: 6500
 
 > **前置閱讀**:[Ch 36 AI-Native 架構](./ch-36-ai-native-architecture.md)、[Ch 37 Context-Driven Engineering](./ch-37-context-driven-engineering.md)、[Ch 38 RAG / Memory / Tool](./ch-38-rag-memory-tool.md)
 > **下游章節**:[Ch 43 工程治理與責任邊界](./ch-43-coding-agent.md)、[Ch 44 AI 時代的成本與容量規劃](./ch-44-ai-eval-drift-redteam.md)
-> **延伸補章**:[Ch 40 共識、衝突與仲裁](./ch-40-multi-agent.md)
+> **延伸補章**:[Ch 40 共識、衝突與仲裁](./ch-40-multi-agent-consensus.md)
 
 ---
 
@@ -495,7 +495,7 @@ app = graph.compile()
 
 如果四項中先挑一項做完就好,建議是最後那一項 ⸺ 把手上正在規劃或已上線的 Multi-Agent 系統拉出來,補一張 Card,逼自己回答「上一級 Workflow 試過了嗎、卡在哪」。本章留給你的就是「**先 Workflow,再 Agent**」這條紀律,以及那一頁能擋下八成倉促拆分的 Card。
 
-至於拆完之後 ⸺ 多個 Agent 之間怎麼**達成共識、處理衝突、設計仲裁機制**(投票 / 階層 / 法庭式裁決等),這已經超出本章一頁 Card 能容納的範圍,留給[Ch 40 共識、衝突與仲裁](./ch-40-multi-agent.md)展開。下一章 [Ch 43 工程治理與責任邊界](./ch-43-coding-agent.md)會接著回答另一個更早出現的問題:**當 Subagent / Multi-Agent 出錯時,誰負責?**
+至於拆完之後 ⸺ 多個 Agent 之間怎麼**達成共識、處理衝突、設計仲裁機制**(投票 / 階層 / 法庭式裁決等),這已經超出本章一頁 Card 能容納的範圍,留給[Ch 40 共識、衝突與仲裁](./ch-40-multi-agent-consensus.md)展開。下一章 [Ch 43 工程治理與責任邊界](./ch-43-coding-agent.md)會接著回答另一個更早出現的問題:**當 Subagent / Multi-Agent 出錯時,誰負責?**
 
 ---
 
@@ -506,7 +506,7 @@ app = graph.compile()
 - **回顧**:[Ch 38 RAG / Memory / Tool](./ch-38-rag-memory-tool.md) ⸺ 單 Agent 加 RAG 常常勝過 Multi-Agent
 - **下一章**:[Ch 43 工程治理與責任邊界](./ch-43-coding-agent.md) ⸺ Multi-Agent 出錯時的責任歸屬
 - **下游**:[Ch 44 AI 時代的成本與容量規劃](./ch-44-ai-eval-drift-redteam.md) ⸺ Budget Circuit Breaker 的容量視角
-- **延伸補章**:[Ch 40 共識、衝突與仲裁](./ch-40-multi-agent.md) ⸺ 投票 / 階層 / 仲裁的具體機制
+- **延伸補章**:[Ch 40 共識、衝突與仲裁](./ch-40-multi-agent-consensus.md) ⸺ 投票 / 階層 / 仲裁的具體機制
 
 ## 引用
 
