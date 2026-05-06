@@ -18,7 +18,7 @@ word_count_target: 5500
 ## ⸺ SOLID、12-Factor、Clean Architecture 不是檢查清單,是成本估算工具
 
 > **前置閱讀**:[Ch 1 為什麼 SA/SD](../part-01-foundations/ch-01-why-sa-sd.md)、[Ch 7 物件導向分析](../part-02-analysis/ch-07-object-oriented-analysis.md)
-> **下游章節**:[Ch 12 設計模式](./ch-12-design-patterns.md)、[Ch 13 API 與介面設計](./ch-13-architecture-styles.md)、[Ch 17 DDD 戰術](../part-04-architecture/ch-17-ddd-strategic-tactical.md)、[Ch 20 模組化單體](../part-04-architecture/ch-20-modular-monolith.md)
+> **下游章節**:[Ch 12 設計模式](./ch-12-design-patterns.md)、[Ch 13 API 與介面設計](./ch-13-architecture-styles.md)、[Ch 18 DDD 戰術](../part-04-architecture/ch-18-ddd-strategic-tactical.md)、[Ch 21 模組化單體](../part-04-architecture/ch-21-modular-monolith.md)
 > **延伸補章**:無
 
 ---
@@ -121,7 +121,7 @@ flowchart LR
 - **AI 寫得快,讀得也快**,但**它要驗證「我的改動有沒有破壞別處」必須讀更多程式**。耦合度高 = AI 要讀的範圍大 = context window 被佔滿 = 出錯率上升。
 - **人類已經跟不上 AI 的產出速度**,人不再是耦合度的第一線發現者。**得讓「耦合是否被控制好」變成一個可機器查驗的指標**,AI 自己才能在寫的當下就驗證。
 
-這正是 SOLID / Clean Architecture / 12-Factor 在 AI 時代反而更值錢的原因:它們是**可以被 fitness function 與 linter 自動量測的指標**(`Ch 31` 會展開)。同個方向的人有 Mark Richards / Neal Ford 在 *Building Evolutionary Architectures*[^CIT-118] 寫的 ⸺ 架構特性必須能被自動量測,否則無法防止退化。
+這正是 SOLID / Clean Architecture / 12-Factor 在 AI 時代反而更值錢的原因:它們是**可以被 fitness function 與 linter 自動量測的指標**(`Ch 34` 會展開)。同個方向的人有 Mark Richards / Neal Ford 在 *Building Evolutionary Architectures*[^CIT-118] 寫的 ⸺ 架構特性必須能被自動量測,否則無法防止退化。
 
 ### 11.2.3 這些原則之間有重疊,不需要全部都做滿
 
@@ -345,7 +345,7 @@ public class IsoAuthorizationAdapter {
 
 更糟的版本:domain 層的 entity 直接 `import javax.persistence.Entity` 與 `@ManyToOne` ⸺ JPA 註解把 ORM 框架綁進了「最內圈」,這跟 Clean Architecture 的核心訴求(依賴指向圓心、業務不認得框架)完全相反。
 
-> ✅ **修正方向**:用 fitness function 自動驗證依賴方向(`Ch 31` 展開)。**ArchUnit** [^CIT-117] 在 Java 圈是事實標準:
+> ✅ **修正方向**:用 fitness function 自動驗證依賴方向(`Ch 34` 展開)。**ArchUnit** [^CIT-117] 在 Java 圈是事實標準:
 >
 > ```java
 > @ArchTest
@@ -447,7 +447,7 @@ public class IsoAuthorizationAdapter {
 - [ ] 認得四個反模式(微類別、為 mock 抽象、4 環只做 1 環、缺 Dev/Prod Parity)並有對應修正方向
 - [ ] 為手上每個關鍵模組產出一份 Coupling Audit Card,把改動半徑與 Out of Scope 量化下來
 
-如果四項中先挑一項做完就好,建議從最後那一項 ⸺ 把目前 production 的 top 3 改動最頻繁的模組拉出來,各填一份 Coupling Audit Card,**改動半徑寫不出小於 5 的那幾個**,就是下一輪該重整的對象。本書 Ch 12 會接著談「設計模式」如何落地這些原則,Ch 13 會展開 API/介面設計,Ch 17 會在 DDD 戰術層把模組邊界推到更細的粒度。
+如果四項中先挑一項做完就好,建議從最後那一項 ⸺ 把目前 production 的 top 3 改動最頻繁的模組拉出來,各填一份 Coupling Audit Card,**改動半徑寫不出小於 5 的那幾個**,就是下一輪該重整的對象。本書 Ch 12 會接著談「設計模式」如何落地這些原則,Ch 13 會展開 API/介面設計,Ch 18 會在 DDD 戰術層把模組邊界推到更細的粒度。
 
 ---
 
@@ -456,9 +456,9 @@ public class IsoAuthorizationAdapter {
 - **回顧**:[Ch 1 為什麼 SA/SD](../part-01-foundations/ch-01-why-sa-sd.md) ⸺ 製造可被傳遞的理解
 - **下一章**:[Ch 12 設計模式](./ch-12-design-patterns.md) ⸺ GoF / 企業整合模式如何落地 SOLID
 - **介面設計**:[Ch 13 API 與介面設計](./ch-13-architecture-styles.md)
-- **戰術 DDD**:[Ch 17 DDD 戰術設計](../part-04-architecture/ch-17-ddd-strategic-tactical.md)
-- **模組化單體**:[Ch 20 Modular Monolith](../part-04-architecture/ch-20-modular-monolith.md)
-- **演化式架構**:[Ch 31 Fitness Functions](../part-06-engineering/ch-31-fitness-functions.md)
+- **戰術 DDD**:[Ch 18 DDD 戰術設計](../part-04-architecture/ch-18-ddd-strategic-tactical.md)
+- **模組化單體**:[Ch 21 Modular Monolith](../part-04-architecture/ch-21-modular-monolith.md)
+- **演化式架構**:[Ch 34 Fitness Functions](../part-06-engineering/ch-34-fitness-functions.md)
 
 ## 引用
 

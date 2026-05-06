@@ -1,5 +1,5 @@
 ---
-chapter: D
+chapter: 40
 part: annex
 title: 附錄 D — 案例索引(43 個虛構案例)
 slug: case-index
@@ -27,7 +27,7 @@ status: published
 
 ### Ch 1 — 為什麼 SA/SD
 - **CASE-FIN-001 PayLoop**(fintech)— 18 天 MVP / 180 天崩潰,跨境匯款新創因 vibe coding 缺乏脈絡持久化的事故
-- **CASE-ECM-001 MeshFirst**(ecommerce)— 47 微服務 → 6 Modular Monolith 反向遷移(亦見 Ch 20)
+- **CASE-ECM-001 MeshFirst**(ecommerce)— 47 微服務 → 6 Modular Monolith 反向遷移(亦見 Ch 21)
 
 ### Ch 2 — SDLC 演進
 - **CASE-ECM-002 ShelfMart vs QuickAisle**(ecommerce)— 半年 release vs 雙週迭代 / 四個 Tempo 對齊
@@ -74,91 +74,91 @@ status: published
 ### Ch 16 — UI/UX
 - **CASE-FIN-004 NeoLedger Bank**(fintech)— KYC 70% 放棄率 / DACR 設計復原
 
-### 補章 F — CUX
+### Ch 17 — CUX
 - **CASE-HCR-004 居家視訊看護**(healthcare)— 跌倒偵測 SDC 五層多模態
 
-### Ch 17 — DDD
+### Ch 18 — DDD
 - **CASE-HCR-005 聖維禮醫療體系**(healthcare)— 三個 BC 共用 patient 的出院結算事故
 
-### Ch 18 — Event Storming
+### Ch 19 — Event Storming
 - **CASE-SAS-004 RenewLane**(saas)— 380 張便利貼 / 兩個月零產出
 
-### Ch 19 — C4 Model
+### Ch 20 — C4 Model
 - **CASE-FIN-005 PaySpan**(fintech)— B 輪募資 47 投影片無 Level 1/2 / 估值砍兩位數百分點
 
-### Ch 20 — Modular Monolith
+### Ch 21 — Modular Monolith
 - **CASE-ECM-001 MeshFirst**(ecommerce)— 沿用 Ch 1,深入 2022→2025 演進
 
-### Ch 21 — 微服務
+### Ch 22 — 微服務
 - **CASE-ECM-005 TideCart**(ecommerce)— 黑五 inventory cascade 7 分鐘 6 服務同掛
 
-### Ch 22 — EDA / CQRS / ES
+### Ch 23 — EDA / CQRS / ES
 - **CASE-FIN-006 CardPilot Asia**(fintech)— 三件套上線 P99 80→320ms
 
-### Ch 23 — K8s / Cloud-Native
+### Ch 24 — K8s / Cloud-Native
 - **CASE-SAS-005 TenantForge**(saas)— 12 人 SaaS 上 K8s SRE 工時 8%→35%
 
-### Ch 24 — Service Mesh / Cell-Based
+### Ch 25 — Service Mesh / Cell-Based
 - **CASE-ENR-004 GridPulse Energy**(energy)— 電網調度 Mesh control plane 12 分鐘卡死
 
-### 補章 A — 邊緣 / OT-IT
+### Ch 26 — 邊緣 / OT-IT
 - **CASE-ENR-005 200kW/400kWh 儲能櫃 PoC**(energy)— 雲架構師被嗆「網路斷三十秒會放掉電池嗎」
 
-### Ch 25 — Security by Design
+### Ch 27 — Security by Design
 - **CASE-FIN-007 PocketRail**(fintech)— OAuth refresh + 客服社交工程 NT$280 萬被盜
 
-### 補章 E — Compliance
+### Ch 28 — Compliance
 - **CASE-SAS-007 多租戶 RAG 共用 vector index**(saas)— 跨租戶資料洩漏
 
-### Ch 26 — 可觀測性
+### Ch 29 — 可觀測性
 - **CASE-ECM-006 HarborPick**(ecommerce)— 黑五 12 dashboard 全綠卻掉 12%
 
-### Ch 27 — SRE / SLO / Chaos
+### Ch 30 — SRE / SLO / Chaos
 - **CASE-SAS-006 PolicyPilot**(saas)— 99.95% 承諾 / 99.62% 實際 / 168K 美元賠款
 
-### Ch 28 — Data Architecture
+### Ch 31 — Data Architecture
 - **CASE-HCR-006 MedNexus Health Data Network**(healthcare)— 七家醫院 Lakehouse 三年仍是「更貴 SFTP」
 
-### Ch 29 — Platform Engineering
+### Ch 32 — Platform Engineering
 - **CASE-ECM-007 HarborPick Retail**(ecommerce)— 17 個內部工具 / 採用率 22%
 
-### Ch 30 — ADR
+### Ch 33 — ADR
 - **CASE-FIN-008 OrbitPay**(fintech)— 盡職調查 8 名工程師 8 種版本
 
-### Ch 31 — Fitness Functions
+### Ch 34 — Fitness Functions
 - **CASE-SAS-008 HelixOps**(saas)— ADR-0007 寫 Hexagonal / 18 月後 73% 反向依賴
 
-### Ch 32 — FinOps / Green
+### Ch 35 — FinOps / Green
 - **CASE-ENR-006 AmpereLoom**(energy)— Q3 雲帳單 84K→230K + 寫不出 SCI 報告
 
-### Ch 33 — AI-Native
+### Ch 36 — AI-Native
 - **CASE-HCR-007 NorthVale Health Network**(healthcare)— ER LLM Triage 把胸痛判 ESI 3
 
-### Ch 34 — CDE
+### Ch 37 — CDE
 - **CASE-ECM-008 AisleNova**(ecommerce)— Cursor + Claude Code 三月 2.2x 第六月歸零
 
-### Ch 35 — RAG / Memory / Tool
+### Ch 38 — RAG / Memory / Tool
 - **CASE-FIN-009 HavenAxis Bank ComplianceCopilot**(fintech)— 跨對話失憶事故
 
-### Ch 36 — Multi-Agent
+### Ch 39 — Multi-Agent
 - **CASE-SAS-009 Helmsworth**(saas)— 7 Agent / P95 8s→47s
 
-### 補章 D — Multi-Agent 共識
+### Ch 40 — Multi-Agent 共識
 - 沿用 CASE-SAS-009
 
-### Ch 37 — Coding Agent
+### Ch 43 — Coding Agent
 - **CASE-ECM-009 CartMosaic**(ecommerce)— 拆微服務後 Cursor PR 通過率 78%→24%
 
-### Ch 38 — AI Eval / Drift / Red Team
+### Ch 44 — AI Eval / Drift / Red Team
 - **CASE-FIN-010 HavenAxis AMLNavigator**(fintech)— 92%→71% 半年崩壞
 
-### 補章 B — Agentic QA
+### Ch 45 — Agentic QA
 - 沿用 CASE-FIN-010
 
-### 補章 C — Brownfield + AI 逆向
+### Ch 46 — Brownfield + AI 逆向
 - **CASE-FIN-011 7 年前 WebLogic + 5000 行 PL/SQL**(fintech)— 程式碼考古學
 
-### Ch 39 — Capstone
+### Ch 47 — Capstone
 - **CASE-FIN-012 PayLoop 2.0**(fintech)— 全書整合案例,從 Ch 1 PayLoop 1.0 演化(22 人 / USD 4,200 萬月流水 / 跨 5 國)
 
 ---
@@ -188,10 +188,10 @@ CASE-ENR-001 AurumGrid vs VoltKnit · CASE-ENR-002 VoltMesh Energy · CASE-ENR-0
 
 | 案例 | 跨章節 |
 |---|---|
-| **CASE-FIN-001 PayLoop** | Ch 1 → Ch 39(演化為 PayLoop 2.0) |
-| **CASE-ECM-001 MeshFirst** | Ch 1 → Ch 20(深入演進) |
-| **CASE-FIN-010 HavenAxis AMLNavigator** | Ch 38 → 補章 B(沿用) |
-| **CASE-SAS-009 Helmsworth** | Ch 36 → 補章 D(沿用) |
+| **CASE-FIN-001 PayLoop** | Ch 1 → Ch 47(演化為 PayLoop 2.0) |
+| **CASE-ECM-001 MeshFirst** | Ch 1 → Ch 21(深入演進) |
+| **CASE-FIN-010 HavenAxis AMLNavigator** | Ch 44 → Ch 45(沿用) |
+| **CASE-SAS-009 Helmsworth** | Ch 39 → Ch 40(沿用) |
 
 ---
 

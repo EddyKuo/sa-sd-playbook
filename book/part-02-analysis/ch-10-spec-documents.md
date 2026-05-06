@@ -18,8 +18,8 @@ word_count_target: 6000
 ## ⸺ PRD、SRS、MVP 三者壓縮不同層次的歧義
 
 > **前置閱讀**:[Ch 4 需求工程基礎](../part-01-foundations/ch-04-requirements-engineering.md)、[Ch 9 用例與業務流程](./ch-09-process-modeling.md)
-> **下游章節**:[Ch 11 設計起手](../part-03-design/ch-11-architecture-principles.md)、[Ch 17 DDD 戰術設計](../part-04-architecture/ch-17-ddd-strategic-tactical.md)、[Ch 34 Context-Driven Engineering](../part-07-ai-era/ch-34-context-driven-engineering.md)
-> **延伸補章**:[補章 A 邊緣 / OT-IT 整合](../part-04-architecture/chA-edge-ot-it.md)
+> **下游章節**:[Ch 11 設計起手](../part-03-design/ch-11-architecture-principles.md)、[Ch 18 DDD 戰術設計](../part-04-architecture/ch-18-ddd-strategic-tactical.md)、[Ch 37 Context-Driven Engineering](../part-07-ai-era/ch-37-context-driven-engineering.md)
+> **延伸補章**:[Ch 26 邊緣 / OT-IT 整合](../part-04-architecture/ch-26-edge-ot-it.md)
 
 ---
 
@@ -242,7 +242,7 @@ flowchart LR
 - **SRS 要機讀**。External Interface 段落用 OpenAPI 3.1(REST)、AsyncAPI 2.6(MQTT / Kafka)、Protobuf(gRPC)直接寫,**spec 檔即是 SRS 的 §3**。Functional 段落用 Given/When/Then 寫,可被 AI 直接生成測試骨架。
 - **MVP 學習報告要有結論欄位**。`hypothesis`、`falsifier`、`outcome`、`decision`,讓接下來的 PRD 改版能引用「這個 RAT 已經驗過,結論是 X」。
 
-Anthropic 從 2024 起把這個方向稱為「spec-as-context」[^CIT-105]:同一份 Markdown,人類讀為規格,AI Agent 讀為 prompt context。它在 2026 年的工具鏈裡(Claude Code、Cursor、agents.md 規範)已經是預設假設。完整論述會在 [Ch 34](../part-07-ai-era/ch-34-context-driven-engineering.md) 展開,本章先把它當成下游伏筆。
+Anthropic 從 2024 起把這個方向稱為「spec-as-context」[^CIT-105]:同一份 Markdown,人類讀為規格,AI Agent 讀為 prompt context。它在 2026 年的工具鏈裡(Claude Code、Cursor、agents.md 規範)已經是預設假設。完整論述會在 [Ch 37](../part-07-ai-era/ch-37-context-driven-engineering.md) 展開,本章先把它當成下游伏筆。
 
 ---
 
@@ -360,9 +360,9 @@ SRS 第 5 章 Functional Requirements 寫「系統應提供良好的使用者體
 - **前置 — 需求工程基礎**:[Ch 4 需求工程](../part-01-foundations/ch-04-requirements-engineering.md) ⸺ 拒絕清單與 Decision Log
 - **前置 — 用例與流程**:[Ch 9 Use Case 與業務流程](./ch-09-process-modeling.md) ⸺ Functional Requirement 的敘事格式
 - **下一章**:[Ch 11 設計起手](../part-03-design/ch-11-architecture-principles.md) ⸺ 從 SRS 走進設計階段
-- **DDD 戰術設計**:[Ch 17 DDD Tactical](../part-04-architecture/ch-17-ddd-strategic-tactical.md) ⸺ SRS Functional 段落如何對齊到聚合根與限界脈絡
-- **AI 友善 spec 完整論述**:[Ch 34 Context-Driven Engineering](../part-07-ai-era/ch-34-context-driven-engineering.md)
-- **OT-IT 邊界對 SRS External Interface 的影響**:[補章 A 邊緣 / OT-IT 整合](../part-04-architecture/chA-edge-ot-it.md)
+- **DDD 戰術設計**:[Ch 18 DDD Tactical](../part-04-architecture/ch-18-ddd-strategic-tactical.md) ⸺ SRS Functional 段落如何對齊到聚合根與限界脈絡
+- **AI 友善 spec 完整論述**:[Ch 37 Context-Driven Engineering](../part-07-ai-era/ch-37-context-driven-engineering.md)
+- **OT-IT 邊界對 SRS External Interface 的影響**:[Ch 26 邊緣 / OT-IT 整合](../part-04-architecture/ch-26-edge-ot-it.md)
 
 ## 引用
 

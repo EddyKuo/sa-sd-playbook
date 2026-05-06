@@ -36,42 +36,42 @@ flowchart LR
       F[補 F CUX]
     end
     subgraph IV[第 IV 篇 進階架構]
-      C17[Ch 17 DDD]
-      C18[Ch 18 Event Storming]
-      C19[Ch 19 C4]
-      C20[Ch 20 Modular Monolith]
-      C21[Ch 21 微服務]
-      C22[Ch 22 EDA CQRS ES]
-      C23[Ch 23 K8s]
-      C24[Ch 24 Mesh Cell]
+      C17[Ch 18 DDD]
+      C18[Ch 19 Event Storming]
+      C19[Ch 20 C4]
+      C20[Ch 21 Modular Monolith]
+      C21[Ch 22 微服務]
+      C22[Ch 23 EDA CQRS ES]
+      C23[Ch 24 K8s]
+      C24[Ch 25 Mesh Cell]
       A[補 A 邊緣 OT-IT]
     end
     subgraph V[第 V 篇 品質屬性]
-      C25[Ch 25 Security]
+      C25[Ch 27 Security]
       E[補 E Compliance]
-      C26[Ch 26 Observability]
-      C27[Ch 27 SRE Chaos]
-      C28[Ch 28 Data Architecture]
+      C26[Ch 29 Observability]
+      C27[Ch 30 SRE Chaos]
+      C28[Ch 31 Data Architecture]
     end
     subgraph VI[第 VI 篇 現代工程]
-      C29[Ch 29 Platform IDP]
-      C30[Ch 30 ADR]
-      C31[Ch 31 Fitness Function]
-      C32[Ch 32 FinOps Green]
+      C29[Ch 32 Platform IDP]
+      C30[Ch 33 ADR]
+      C31[Ch 34 Fitness Function]
+      C32[Ch 35 FinOps Green]
     end
     subgraph VII[第 VII 篇 AI 時代]
-      C33[Ch 33 AI-Native]
-      C34[Ch 34 CDE]
-      C35[Ch 35 RAG Memory Tool]
-      C36[Ch 36 Multi-Agent]
+      C33[Ch 36 AI-Native]
+      C34[Ch 37 CDE]
+      C35[Ch 38 RAG Memory Tool]
+      C36[Ch 39 Multi-Agent]
       D[補 D 共識衝突]
-      C37[Ch 37 Coding Agent]
-      C38[Ch 38 Eval Drift]
+      C37[Ch 43 Coding Agent]
+      C38[Ch 44 Eval Drift]
       B[補 B Agentic QA]
       Cs[補 C Brownfield + AI 逆向]
     end
     subgraph VIII[第 VIII 篇 綜合]
-      C39[Ch 39 Capstone]
+      C39[Ch 47 Capstone]
     end
 
     I --> II --> III --> IV --> V --> VI --> VII --> VIII
@@ -94,57 +94,57 @@ flowchart LR
 
 ```mermaid
 flowchart LR
-    Ch1[Ch 1<br/>System Charter] --> Ch30[Ch 30 ADR]
-    Ch1 --> Ch34[Ch 34 CDE]
+    Ch1[Ch 1<br/>System Charter] --> Ch 33[Ch 33 ADR]
+    Ch1 --> Ch 37[Ch 37 CDE]
 
     Ch4[Ch 4 需求工程] --> Ch10[Ch 10 PRD/SRS/MVP]
-    Ch4 --> Ch17[Ch 17 DDD]
+    Ch4 --> Ch 18[Ch 18 DDD]
 
     Ch5[Ch 5 UML] --> Ch7[Ch 7 OOA]
-    Ch5 --> Ch19[Ch 19 C4]
+    Ch5 --> Ch 20[Ch 20 C4]
 
     Ch7[Ch 7 OOA] --> Ch9[Ch 9 流程模型]
-    Ch7 --> Ch17[Ch 17 DDD]
+    Ch7 --> Ch 18[Ch 18 DDD]
 
     Ch11[Ch 11 SOLID] --> Ch13[Ch 13 架構風格]
-    Ch11 --> Ch31[Ch 31 Fitness Function]
+    Ch11 --> Ch 34[Ch 34 Fitness Function]
 
-    Ch17[Ch 17 DDD] --> Ch18[Ch 18 Event Storming]
-    Ch17 --> Ch20[Ch 20 Modular Monolith]
-    Ch17 --> Ch22[Ch 22 EDA/ES]
+    Ch 18[Ch 18 DDD] --> Ch 19[Ch 19 Event Storming]
+    Ch 18 --> Ch 21[Ch 21 Modular Monolith]
+    Ch 18 --> Ch 23[Ch 23 EDA/ES]
 
-    Ch20 --> Ch21[Ch 21 微服務]
-    Ch21 --> Ch24[Ch 24 Mesh/Cell]
-    Ch24 --> ChA[補 A 邊緣]
+    Ch 21 --> Ch 22[Ch 22 微服務]
+    Ch 22 --> Ch 25[Ch 25 Mesh/Cell]
+    Ch 25 --> ChA[補 A 邊緣]
 
-    Ch25[Ch 25 Security] --> ChE[補 E Compliance]
-    ChE --> Ch33[Ch 33 AI-Native]
+    Ch 27[Ch 27 Security] --> ChE[補 E Compliance]
+    ChE --> Ch 36[Ch 36 AI-Native]
 
-    Ch26[Ch 26 OTel] --> Ch27[Ch 27 SRE]
-    Ch27 --> Ch31[Ch 31 Fitness Function]
-    Ch27 --> Ch38[Ch 38 AI Eval]
+    Ch 29[Ch 29 OTel] --> Ch 30[Ch 30 SRE]
+    Ch 30 --> Ch 34[Ch 34 Fitness Function]
+    Ch 30 --> Ch 44[Ch 44 AI Eval]
 
-    Ch30[Ch 30 ADR] --> Ch31
-    Ch30 --> Ch34[Ch 34 CDE]
+    Ch 33[Ch 33 ADR] --> Ch 34
+    Ch 33 --> Ch 37[Ch 37 CDE]
 
-    Ch33[Ch 33 AI-Native] --> Ch34
-    Ch33 --> Ch35[Ch 35 RAG/Memory/Tool]
-    Ch33 --> Ch36[Ch 36 Multi-Agent]
-    Ch36 --> ChD[補 D 共識]
+    Ch 36[Ch 36 AI-Native] --> Ch 37
+    Ch 36 --> Ch 38[Ch 38 RAG/Memory/Tool]
+    Ch 36 --> Ch 39[Ch 39 Multi-Agent]
+    Ch 39 --> ChD[補 D 共識]
 
-    Ch34 --> Ch37[Ch 37 Coding Agent]
-    Ch37 --> ChCs[補 C Brownfield AI]
+    Ch 37 --> Ch 43[Ch 43 Coding Agent]
+    Ch 43 --> ChCs[補 C Brownfield AI]
 
-    Ch38[Ch 38 AI Eval] --> ChB[補 B Agentic QA]
+    Ch 44[Ch 44 AI Eval] --> ChB[補 B Agentic QA]
 
-    Ch39[Ch 39 Capstone] -.整合全書.-> Ch1
+    Ch 47[Ch 47 Capstone] -.整合全書.-> Ch1
 
     classDef cold fill:#eef,stroke:#36c
     classDef hot fill:#fee,stroke:#c33
     classDef goal fill:#efe,stroke:#3a3
-    class Ch1,Ch4,Ch5,Ch7,Ch11,Ch17,Ch20,Ch25,Ch26,Ch30,Ch33 cold
+    class Ch1,Ch4,Ch5,Ch7,Ch11,Ch 18,Ch 21,Ch 27,Ch 29,Ch 33,Ch 36 cold
     class ChA,ChB,ChCs,ChD,ChE goal
-    class Ch39 hot
+    class Ch 47 hot
 ```
 
 ## 解讀
@@ -152,18 +152,18 @@ flowchart LR
 - **左到右是預設閱讀順序**(I → VIII)。
 - **跨章箭頭代表觀念依賴**(後章用到前章的工具或語彙)。
 - **6 個補章(A、B、C、D、E、F)**穿插在主章流程中,點出主大綱的 6 個盲點。
-- **Ch 39 Capstone** 不是新內容,是把全書 38 章 + 6 補章串成一個 PayLoop 2.0 故事。
+- **Ch 47 Capstone** 不是新內容,是把全書 38 章 + 6 補章串成一個 PayLoop 2.0 故事。
 
 ## 跳章策略
 
 | 你的需求 | 建議跳到 |
 |---|---|
 | 馬上要寫 PRD | Ch 4 → Ch 10 |
-| 要決定拆不拆微服務 | Ch 1 → Ch 17 → **Ch 20** → Ch 21 |
-| 接手遺留系統 | Ch 1 → **補章 C** → Ch 17 → Ch 20 |
-| 要引入 AI Agent 工具 | Ch 30 → Ch 34 → Ch 37 → **補章 B** |
-| 要做 Compliance 評估 | Ch 25 → **補章 E** → Ch 33 |
-| 想看一個整合案例 | **Ch 39 Capstone**(可從這裡開始倒讀) |
+| 要決定拆不拆微服務 | Ch 1 → Ch 18 → **Ch 21** → Ch 22 |
+| 接手遺留系統 | Ch 1 → **Ch 46** → Ch 18 → Ch 21 |
+| 要引入 AI Agent 工具 | Ch 33 → Ch 37 → Ch 43 → **Ch 45** |
+| 要做 Compliance 評估 | Ch 27 → **Ch 28** → Ch 36 |
+| 想看一個整合案例 | **Ch 47 Capstone**(可從這裡開始倒讀) |
 
 ## 章節長度概覽
 

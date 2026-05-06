@@ -20,8 +20,8 @@ word_count_target: 6000
 ## ⸺ RDBMS、NoSQL、NewSQL、向量資料庫,先看 Workload 再選引擎
 
 > **前置閱讀**:[Ch 8 資料模型與正規化](../part-02-analysis/ch-08-data-modeling-normalization.md)、[Ch 13 系統與架構選型](./ch-13-architecture-styles.md)
-> **下游章節**:[Ch 22 事件驅動架構](../part-04-architecture/ch-22-event-driven-cqrs-es.md)、[Ch 28 資料治理與合規](../part-05-quality/ch-28-data-architecture.md)、[Ch 33 AI-Native 架構](../part-07-ai-era/ch-33-ai-native-architecture.md)
-> **延伸補章**:[補章 A 邊緣 / OT-IT 整合](../part-04-architecture/chA-edge-ot-it.md)
+> **下游章節**:[Ch 23 事件驅動架構](../part-04-architecture/ch-23-event-driven-cqrs-es.md)、[Ch 31 資料治理與合規](../part-05-quality/ch-31-data-architecture.md)、[Ch 36 AI-Native 架構](../part-07-ai-era/ch-36-ai-native-architecture.md)
+> **延伸補章**:[Ch 26 邊緣 / OT-IT 整合](../part-04-architecture/ch-26-edge-ot-it.md)
 
 ---
 
@@ -329,7 +329,7 @@ MongoDB 4.0 起支援 multi-document transaction,但**它不是免費的** ⸺ r
 
 > 對應 ADR:`docs/adr/NNNN-{slug}.md`
 > 撰寫日期:YYYY-MM-DD | 擁有人:{名字}
-> 對齊章節:Ch 8 模型、Ch 15 引擎、Ch 22 事件流、Ch 28 治理
+> 對齊章節:Ch 8 模型、Ch 15 引擎、Ch 23 事件流、Ch 31 治理
 
 ## 1. Workload Profile(五維量化)
 
@@ -396,7 +396,7 @@ MongoDB 4.0 起支援 multi-document transaction,但**它不是免費的** ⸺ r
 - [ ] 在向量資料庫場景下,知道 pgvector / Qdrant / Weaviate / Milvus / ChromaDB 各自的甜蜜點,**先試 pgvector** 是 2026 年最低風險的起手式
 - [ ] 為手上的選型決定寫好一份 Storage Selection Card,把「維持現狀」也列入候選,並寫好半年後的 reassessment trigger
 
-如果四項中先挑一項做完就好,建議是最後那一項 ⸺ 把目前團隊正在討論「是不是要換資料庫」的那個決定,寫成一張 Storage Selection Card。寫到第一欄就卡住的話,**那個決定本來就還沒到該做的時候**。下一章 Ch 16 會接著談 UI/UX 與人機互動;再往後 Ch 22 事件驅動與 Ch 28 資料治理會延伸本章的反正規化讀模型與不可變性主題。
+如果四項中先挑一項做完就好,建議是最後那一項 ⸺ 把目前團隊正在討論「是不是要換資料庫」的那個決定,寫成一張 Storage Selection Card。寫到第一欄就卡住的話,**那個決定本來就還沒到該做的時候**。下一章 Ch 16 會接著談 UI/UX 與人機互動;再往後 Ch 23 事件驅動與 Ch 31 資料治理會延伸本章的反正規化讀模型與不可變性主題。
 
 ---
 
@@ -405,10 +405,10 @@ MongoDB 4.0 起支援 multi-document transaction,但**它不是免費的** ⸺ r
 - **回顧**:[Ch 8 資料模型與正規化](../part-02-analysis/ch-08-data-modeling-normalization.md) ⸺ 模型 vs schema、正規化、UUIDv7、Partition vs Shard
 - **回顧**:[Ch 13 系統與架構選型](./ch-13-architecture-styles.md) ⸺ 整體架構選型框架的一部分
 - **下一章**:[Ch 16 UI/UX 與人機互動](./ch-16-uiux-system-view.md)
-- **事件驅動**:[Ch 22 事件驅動架構](../part-04-architecture/ch-22-event-driven-cqrs-es.md) ⸺ CQRS 讀模型如何接住反正規化
-- **資料治理**:[Ch 28 資料治理與合規](../part-05-quality/ch-28-data-architecture.md) ⸺ 不可變性、審計、retention
-- **AI 時代**:[Ch 33 AI-Native 架構](../part-07-ai-era/ch-33-ai-native-architecture.md) ⸺ embedding 第一公民與向量索引在系統設計中的位置
-- **延伸補章**:[補章 A 邊緣 / OT-IT 整合](../part-04-architecture/chA-edge-ot-it.md) ⸺ 邊緣端時序資料的本地緩衝與雲端同步
+- **事件驅動**:[Ch 23 事件驅動架構](../part-04-architecture/ch-23-event-driven-cqrs-es.md) ⸺ CQRS 讀模型如何接住反正規化
+- **資料治理**:[Ch 31 資料治理與合規](../part-05-quality/ch-31-data-architecture.md) ⸺ 不可變性、審計、retention
+- **AI 時代**:[Ch 36 AI-Native 架構](../part-07-ai-era/ch-36-ai-native-architecture.md) ⸺ embedding 第一公民與向量索引在系統設計中的位置
+- **延伸補章**:[Ch 26 邊緣 / OT-IT 整合](../part-04-architecture/ch-26-edge-ot-it.md) ⸺ 邊緣端時序資料的本地緩衝與雲端同步
 
 ## 引用
 

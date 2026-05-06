@@ -18,7 +18,7 @@ word_count_target: 6000
 
 > **前置閱讀**:[Ch 1 為什麼 SA/SD](./ch-01-why-sa-sd.md)、[Ch 3 利害關係人地圖](./ch-03-project-initiation.md)
 > **下游章節**:[Ch 5 領域建模](./ch-05-uml-overview.md)、[Ch 7 用例與流程](../part-02-analysis/ch-07-object-oriented-analysis.md)、[Ch 10 NFR 與品質情境](../part-02-analysis/ch-10-spec-documents.md)
-> **延伸補章**:[補章 F 多模態 UX 與需求](../part-03-design/chF-cux.md)
+> **延伸補章**:[Ch 17 多模態 UX 與需求](../part-03-design/ch-17-cux.md)
 
 ---
 
@@ -229,7 +229,7 @@ flowchart TD
 - 每個測試案例的標題或 tag 中嵌 ID
 - 用一個簡單的 CI script 在每次 PR 自動產出當前的 RTM,當作 readiness 看板
 
-這樣一來,RTM 不是季度才看一次的大表,**而是每次 PR 都在自己更新的活物**。詳細做法留給 [Ch 31 Fitness Functions](../part-06-engineering/ch-31-fitness-functions.md) 展開,本章先把概念釘住:RTM 的價值不在「曾經做過一份」,在「永遠是當前的真相」。
+這樣一來,RTM 不是季度才看一次的大表,**而是每次 PR 都在自己更新的活物**。詳細做法留給 [Ch 34 Fitness Functions](../part-06-engineering/ch-34-fitness-functions.md) 展開,本章先把概念釘住:RTM 的價值不在「曾經做過一份」,在「永遠是當前的真相」。
 
 ### 4.3.7 2026 視角 ⸺ AI Agent 友善的需求格式
 
@@ -246,7 +246,7 @@ flowchart TD
 3. **拒絕理由也是脈絡**:`out_of_scope` 區塊明確寫「不做 X,因為 Y」⸺ 這對 AI 比對 humans 更重要,因為 AI 不會「自然知道我們不做雙因素認證」。
 4. **連結 ADR**:每個需求引用其依賴的決策(`adr_refs: [ADR-0012, ADR-0017]`),讓 AI 拉脈絡時能順著引用走。
 
-這個方向會在 [Ch 34 Context-Driven Engineering](../part-07-ai-era/ch-34-context-driven-engineering.md) 整章展開。本章先把它當成下游的伏筆。
+這個方向會在 [Ch 37 Context-Driven Engineering](../part-07-ai-era/ch-37-context-driven-engineering.md) 整章展開。本章先把它當成下游的伏筆。
 
 ---
 
@@ -276,7 +276,7 @@ PRD 寫了 60 頁,但每一頁都在描述「按鈕長什麼樣、欄位幾個 p
 
 專案啟動時做了一張 RTM,把 60 個需求對應到 240 個測試案例。三個月後,需求改了 80 次、測試案例改了 300 次,但 RTM 那張 Excel 還停在 kickoff 那一天。當稽核員來問「請出示 REQ-2026-0042 的測試證據」時,大家在 Slack 裡找了兩天。
 
-> ✅ **修正方向**:RTM 不靠人工維護,**靠 commit 與 issue tracker 的 ID 引用自動聚合**。每個 PR title 必須帶 `REQ-NNNN`,CI 跑一次聚合 script,產出當前的 RTM 當 artifact。這樣 RTM 就不是一張會過期的表,而是每次 PR 都自我更新的視圖。先做這一件,之後再讀 [Ch 31](../part-06-engineering/ch-31-fitness-functions.md) 把它升級成 Fitness Function。
+> ✅ **修正方向**:RTM 不靠人工維護,**靠 commit 與 issue tracker 的 ID 引用自動聚合**。每個 PR title 必須帶 `REQ-NNNN`,CI 跑一次聚合 script,產出當前的 RTM 當 artifact。這樣 RTM 就不是一張會過期的表,而是每次 PR 都自我更新的視圖。先做這一件,之後再讀 [Ch 34](../part-06-engineering/ch-34-fitness-functions.md) 把它升級成 Fitness Function。
 
 ---
 
@@ -352,8 +352,8 @@ PRD 寫了 60 頁,但每一頁都在描述「按鈕長什麼樣、欄位幾個 p
 - **下一章**:[Ch 5 領域建模與 Bounded Context](./ch-05-uml-overview.md) ⸺ 把需求轉成領域結構
 - **用例展開**:[Ch 7 Use Case 與業務流程](../part-02-analysis/ch-07-object-oriented-analysis.md)
 - **NFR 深入**:[Ch 10 非功能性需求與品質情境](../part-02-analysis/ch-10-spec-documents.md)
-- **AI 友善 spec 完整論述**:[Ch 34 Context-Driven Engineering](../part-07-ai-era/ch-34-context-driven-engineering.md)
-- **多模態 / CUX 對需求的影響**:[補章 F](../part-03-design/chF-cux.md)
+- **AI 友善 spec 完整論述**:[Ch 37 Context-Driven Engineering](../part-07-ai-era/ch-37-context-driven-engineering.md)
+- **多模態 / CUX 對需求的影響**:[Ch 17](../part-03-design/ch-17-cux.md)
 
 ## 引用
 

@@ -18,7 +18,7 @@ word_count_target: 5500
 ## ⸺ DFD、資料字典與系統流程
 
 > **前置閱讀**:[Ch 1 為什麼 SA/SD](../part-01-foundations/ch-01-why-sa-sd.md)、[Ch 5 UML 與模型語言](../part-01-foundations/ch-05-uml-overview.md)
-> **下游章節**:[Ch 7 用例與場景分析](./ch-07-object-oriented-analysis.md)、[Ch 8 ERD 與資料建模](./ch-08-data-modeling-normalization.md)、[Ch 22 Event-Driven 架構](../part-04-architecture/ch-22-event-driven-cqrs-es.md)
+> **下游章節**:[Ch 7 用例與場景分析](./ch-07-object-oriented-analysis.md)、[Ch 8 ERD 與資料建模](./ch-08-data-modeling-normalization.md)、[Ch 23 Event-Driven 架構](../part-04-architecture/ch-23-event-driven-cqrs-es.md)
 > **延伸補章**:無
 
 ---
@@ -352,8 +352,8 @@ NorthBay 在第三個月做了 9 張 Lineage Card(每張對應一個被合規反
 - **上一章**:[Ch 5 UML 與模型語言](../part-01-foundations/ch-05-uml-overview.md) ⸺ DFD 與 UML 的分工
 - **下一章**:[Ch 7 用例與場景分析](./ch-07-object-oriented-analysis.md) ⸺ 從資料拓樸到互動場景
 - **資料建模**:[Ch 8 ERD 與資料建模](./ch-08-data-modeling-normalization.md) ⸺ 從 DFD Data Store 到實體關聯
-- **Event-Driven 架構**:[Ch 22 Event-Driven 架構](../part-04-architecture/ch-22-event-driven-cqrs-es.md) ⸺ DFD 與事件流的對齊
-- **架構決策紀錄**:[Ch 30 ADR](../part-06-engineering/ch-30-adr-architecture-knowledge.md)
+- **Event-Driven 架構**:[Ch 23 Event-Driven 架構](../part-04-architecture/ch-23-event-driven-cqrs-es.md) ⸺ DFD 與事件流的對齊
+- **架構決策紀錄**:[Ch 33 ADR](../part-06-engineering/ch-33-adr-architecture-knowledge.md)
 
 ## 引用
 

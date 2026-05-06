@@ -68,4 +68,4 @@ flowchart LR
 
 - **前置**:[第 I 篇 認知基礎](../part-01-foundations/00-overview.md)
 - **這篇解鎖**:[第 III 篇 設計基礎](../part-03-design/00-overview.md) — spec 文件確定之後,才能開始做架構與設計決策
-- **長距離影響**:[Ch 17 DDD](../part-04-architecture/ch-17-ddd-strategic-tactical.md)(Ch 7 的 OOA 是 DDD 戰術設計的前置語言)、[Ch 22 EDA](../part-04-architecture/ch-22-event-driven-cqrs-es.md)(Ch 6 DFD 的進階版,資料流變成事件流)
+- **長距離影響**:[Ch 18 DDD](../part-04-architecture/ch-18-ddd-strategic-tactical.md)(Ch 7 的 OOA 是 DDD 戰術設計的前置語言)、[Ch 23 EDA](../part-04-architecture/ch-23-event-driven-cqrs-es.md)(Ch 6 DFD 的進階版,資料流變成事件流)

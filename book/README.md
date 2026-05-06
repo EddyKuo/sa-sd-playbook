@@ -1,6 +1,6 @@
 # 《系統分析與系統設計 2026 版》— `book/`
 
-> 本目錄收錄全書 47 篇主章與補章。
+> 本目錄收錄全書 53 章。
 > 書本介紹、章節摘要、適用對象與閱讀路徑，請見 [專案根目錄 README](../README.md)。
 > mdBook / GitBook 結構化目錄請見 [SUMMARY.md](SUMMARY.md)。
 
@@ -13,13 +13,13 @@ book/
 ├── front-matter/        序章 / 三層讀者導引 / 章節依存圖
 ├── part-01-foundations/ 認知基礎（Ch 1–5）
 ├── part-02-analysis/    分析（Ch 6–10）
-├── part-03-design/      設計（Ch 11–16 + 補章 F）
-├── part-04-architecture/ 進階架構（Ch 17–24 + 補章 A）
-├── part-05-quality/     品質屬性（Ch 25–28 + 補章 E）
-├── part-06-engineering/ 現代工程實踐（Ch 29–32）
-├── part-07-ai-era/      AI 時代（Ch 33–38 + 補章 B/C/D/H/I）
-├── part-08-synthesis/   Capstone（Ch 39）
-├── part-09-human-engineer/ 人類工程師的定位（Ch 40–44 + 補章 G）
+├── part-03-design/      設計（Ch 11–17）
+├── part-04-architecture/ 進階架構（Ch 18–26）
+├── part-05-quality/     品質屬性（Ch 27–31）
+├── part-06-engineering/ 現代工程實踐（Ch 32–35）
+├── part-07-ai-era/      AI 時代（Ch 36–46）
+├── part-08-synthesis/   Capstone（Ch 47）
+├── part-09-human-engineer/ 人類工程師的定位（Ch 48–53）
 ├── annex-*.md           附錄 A–G
 ├── voice-guide.md       寫作風格守則
 └── conventions.md       章節格式規範

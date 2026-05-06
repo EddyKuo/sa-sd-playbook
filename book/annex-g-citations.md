@@ -442,7 +442,7 @@
 
 ---
 
-## Ch 17(DDD)— CIT-170 ~ CIT-179
+## Ch 18(DDD)— CIT-170 ~ CIT-179
 
 ## CIT-170
 **Eric Evans, "Domain-Driven Design: Tackling Complexity in the Heart of Software"** (Addison-Wesley, 2003) — DDD 原典;同 CIT-005 / CIT-023,Part IV 區段起點。
@@ -467,7 +467,7 @@
 
 ---
 
-## Ch 18(Event Storming)— CIT-180 ~ CIT-189
+## Ch 19(Event Storming)— CIT-180 ~ CIT-189
 
 ## CIT-180
 **Alberto Brandolini, "Introducing EventStorming"** (Leanpub, 2021,持續更新);同 CIT-093 / CIT-175。Event Storming 三層工作坊方法學原典。
@@ -492,20 +492,20 @@
 
 ---
 
-## Ch 19(C4 Model)— CIT-190 ~ CIT-199
+## Ch 20(C4 Model)— CIT-190 ~ CIT-199
 
 ## CIT-190
 **Simon Brown, c4model.com**(2018+,持續更新);同 CIT-052,本章在 C4 工具與整合節奏脈絡再引。
 
 ## CIT-191
-**Structurizr DSL Documentation** — docs.structurizr.com/dsl。Ch 19 主示範工具。
+**Structurizr DSL Documentation** — docs.structurizr.com/dsl。Ch 20 主示範工具。
 
 ## CIT-192
 **IcePanel** — icepanel.io;互動式 C4 工具。
 
 ---
 
-## Ch 20(Modular Monolith)— CIT-200 ~ CIT-209
+## Ch 21(Modular Monolith)— CIT-200 ~ CIT-209
 
 ## CIT-200
 **James Lewis & Martin Fowler, "Microservices"** (martinfowler.com/articles/microservices.html, 2014) — 微服務概念原始公開文章。
@@ -540,7 +540,7 @@
 
 ---
 
-## Ch 21(微服務)— CIT-210 ~ CIT-219
+## Ch 22(微服務)— CIT-210 ~ CIT-219
 
 ## CIT-210
 **Sam Newman, "Building Microservices, 2nd Edition"** (O'Reilly, 2021);同 CIT-007 / CIT-202。
@@ -568,7 +568,7 @@
 
 ---
 
-## Ch 22(EDA / CQRS / ES)— CIT-220 ~ CIT-229
+## Ch 23(EDA / CQRS / ES)— CIT-220 ~ CIT-229
 
 ## CIT-220
 **Martin Fowler, "What do you mean by Event-Driven?"** (martinfowler.com, 2017)。
@@ -602,7 +602,7 @@
 
 ---
 
-## Ch 23(雲端原生 / K8s)— CIT-230 ~ CIT-239
+## Ch 24(雲端原生 / K8s)— CIT-230 ~ CIT-239
 
 ## CIT-230
 **CNCF Annual Survey 2024** — cncf.io/reports/cncf-annual-survey-2024/。
@@ -636,7 +636,7 @@
 
 ---
 
-## Ch 24(Service Mesh / Cell-Based)— CIT-240 ~ CIT-249
+## Ch 25(Service Mesh / Cell-Based)— CIT-240 ~ CIT-249
 
 ## CIT-240
 **Istio Ambient Mesh GA Documentation** — istio.io/latest/docs/ambient/。Sidecar-less,ztunnel + waypoint 雙層;1.22+ GA。
@@ -658,7 +658,7 @@
 
 ---
 
-## Ch 21(微服務)— CIT-210 ~ CIT-219
+## Ch 22(微服務)— CIT-210 ~ CIT-219
 
 ## CIT-210
 **Sam Newman, "Building Microservices, 2nd Edition"** (O'Reilly, 2021);同 CIT-007 / CIT-202。
@@ -686,7 +686,7 @@
 
 ---
 
-## Ch 22(EDA / CQRS / ES)— CIT-220 ~ CIT-229
+## Ch 23(EDA / CQRS / ES)— CIT-220 ~ CIT-229
 
 ## CIT-220
 **Martin Fowler, "What do you mean by Event-Driven?"** (martinfowler.com, 2017)。
@@ -720,7 +720,7 @@
 
 ---
 
-## Ch 23(雲端原生 / K8s)— CIT-230 ~ CIT-239
+## Ch 24(雲端原生 / K8s)— CIT-230 ~ CIT-239
 
 ## CIT-230
 **CNCF Annual Survey 2024** — cncf.io/reports/cncf-annual-survey-2024/。
@@ -754,7 +754,7 @@
 
 ---
 
-## Ch 24(Service Mesh / Cell-Based)— CIT-240 ~ CIT-249
+## Ch 25(Service Mesh / Cell-Based)— CIT-240 ~ CIT-249
 
 ## CIT-240
 **Istio Ambient Mesh GA Documentation** — istio.io/latest/docs/ambient/。Sidecar-less,ztunnel + waypoint 雙層;1.22+ GA。
@@ -786,7 +786,7 @@
 
 ---
 
-## Ch 25(Security by Design)— CIT-250 ~ CIT-259
+## Ch 27(Security by Design)— CIT-250 ~ CIT-259
 
 ## CIT-250
 **OWASP Top 10 (2021)** + **OWASP API Security Top 10 (2023)** — owasp.org。
@@ -820,7 +820,7 @@
 
 ---
 
-## Ch 26(可觀測性 / OTel)— CIT-260 ~ CIT-269
+## Ch 29(可觀測性 / OTel)— CIT-260 ~ CIT-269
 
 ## CIT-260
 **Charity Majors, Liz Fong-Jones, George Miranda, "Observability Engineering"** (O'Reilly, 2022)。
@@ -854,7 +854,7 @@
 
 ---
 
-## Ch 27(SRE / SLO / Chaos)— CIT-270 ~ CIT-279
+## Ch 30(SRE / SLO / Chaos)— CIT-270 ~ CIT-279
 
 ## CIT-270
 **Google, "Site Reliability Engineering"** (O'Reilly, 2016) + **"The Site Reliability Workbook"** (O'Reilly, 2018)。
@@ -888,7 +888,7 @@
 
 ---
 
-## Ch 28(資料架構)— CIT-280 ~ CIT-289
+## Ch 31(資料架構)— CIT-280 ~ CIT-289
 
 ## CIT-280
 **Zhamak Dehghani, "Data Mesh: Delivering Data-Driven Value at Scale"** (O'Reilly, 2022) — Data Mesh 原典。
@@ -923,7 +923,7 @@
 
 ---
 
-## Ch 29(Platform Engineering / IDP)— CIT-290 ~ CIT-299
+## Ch 32(Platform Engineering / IDP)— CIT-290 ~ CIT-299
 
 ## CIT-290
 Matthew Skelton & Manuel Pais, "Team Topologies" (IT Revolution, 2019);同 CIT-212。
@@ -957,7 +957,7 @@ Gregor Hohpe, "The Software Architect Elevator", 2nd Edition (O'Reilly, 2025);�
 
 ---
 
-## Ch 30(ADR)— CIT-300 ~ CIT-309
+## Ch 33(ADR)— CIT-300 ~ CIT-309
 
 ## CIT-300
 Michael Nygard, "Documenting Architecture Decisions" (cognitect.com, 2011);同 CIT-004。
@@ -991,7 +991,7 @@ Andrew Harmel-Law, "Facilitating Software Architecture: Empowering Teams to Make
 
 ---
 
-## Ch 31(Fitness Functions)— CIT-310 ~ CIT-319
+## Ch 34(Fitness Functions)— CIT-310 ~ CIT-319
 
 ## CIT-310
 Neal Ford, Rebecca Parsons, Patrick Kua, "Building Evolutionary Architectures: Automated Software Governance", 2nd Edition (O'Reilly, 2023);同 CIT-118。
@@ -1025,7 +1025,7 @@ Sloth — Prometheus SLO generator — sloth.dev。
 
 ---
 
-## Ch 32(FinOps / Green)— CIT-320 ~ CIT-329
+## Ch 35(FinOps / Green)— CIT-320 ~ CIT-329
 
 ## CIT-320
 FinOps Foundation, "FinOps Framework v3" (2024) — finops.org/framework。
@@ -1060,7 +1060,7 @@ Electricity Maps / WattTime — electricitymaps.com / watttime.org。
 
 ---
 
-## Ch 33(AI-Native Architecture)— CIT-330 ~ CIT-339
+## Ch 36(AI-Native Architecture)— CIT-330 ~ CIT-339
 
 ## CIT-330
 Anthropic, "Building Effective Agents" (December 2024) — anthropic.com/research/building-effective-agents;同 CIT-009 / CIT-123。
@@ -1078,7 +1078,7 @@ Chip Huyen, "AI Engineering: Building Applications with Foundation Models" (O'Re
 Anthropic, "Constitutional AI" + "Tool Use Safety" (2023–2026);同 CIT-258。
 
 ## CIT-335
-EU AI Act, Regulation (EU) 2024/1689, Art. 12 (Logging) / Art. 14 (Human Oversight) / Art. 27 (FRIA);同 CIT-335 系列見補章 E。
+EU AI Act, Regulation (EU) 2024/1689, Art. 12 (Logging) / Art. 14 (Human Oversight) / Art. 27 (FRIA);同 CIT-335 系列見Ch 28。
 
 ## CIT-336
 Emergency Severity Index (ESI) Implementation Handbook, Version 4 (AHRQ) — ahrq.gov/professionals/systems/hospital/esi/。
@@ -1094,7 +1094,7 @@ OWASP Top 10 for LLM Applications (2024 / 2025 update);同 CIT-257。
 
 ---
 
-## Ch 34(Context-Driven Engineering)— CIT-340 ~ CIT-349
+## Ch 37(Context-Driven Engineering)— CIT-340 ~ CIT-349
 
 ## CIT-340
 Andrej Karpathy, "Software 3.0" (YC AI Startup School Keynote / X posts, 2025) — Vibe coding 一詞與適用邊界出處。
@@ -1128,7 +1128,7 @@ Drew Breunig, "How Long Contexts Fail / How to Fix Your Context" (2025) — drew
 
 ---
 
-## Ch 35(RAG / Memory / Tool)— CIT-350 ~ CIT-359
+## Ch 38(RAG / Memory / Tool)— CIT-350 ~ CIT-359
 
 ## CIT-350
 Lewis, P. et al., "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks" (NeurIPS 2020) — RAG 原始論文。
@@ -1160,7 +1160,7 @@ Es, S. et al., "RAGAS: Automated Evaluation of Retrieval Augmented Generation" (
 
 ---
 
-## Ch 36(Multi-Agent)— CIT-360 ~ CIT-369
+## Ch 39(Multi-Agent)— CIT-360 ~ CIT-369
 
 ## CIT-360
 Anthropic, "Building Effective Agents" (2024) — 同 CIT-009 / CIT-123 / CIT-330。Agent 模式分類、決定階梯。
@@ -1194,7 +1194,7 @@ Park et al., "Generative Agents" (Stanford, 2023)。
 
 ---
 
-## Ch 37(Coding Agent)— CIT-370 ~ CIT-379
+## Ch 43(Coding Agent)— CIT-370 ~ CIT-379
 
 ## CIT-370
 GitHub Copilot 官方公告與技術文件 (2021–2026) — github.com/features/copilot。
@@ -1228,7 +1228,7 @@ CodeRabbit / Greptile / Sweep / Aider 比較 (2025–2026)。
 
 ---
 
-## Ch 38(AI Eval / Drift / Red Team)— CIT-380 ~ CIT-389
+## Ch 44(AI Eval / Drift / Red Team)— CIT-380 ~ CIT-389
 
 ## CIT-380
 Es et al., "RAGAS: Automated Evaluation of RAG" (2023);同 CIT-358。
@@ -1263,7 +1263,7 @@ OWASP Top 10 for LLM Applications (2024 / 2025 update);同 CIT-257 / CIT-339 / C
 
 ---
 
-## Ch 39(Capstone)— CIT-390 ~ CIT-399
+## Ch 47(Capstone)— CIT-390 ~ CIT-399
 
 ## CIT-390
 Andrej Karpathy, "Software 3.0 / Software Is Changing (Again)" (2024–2025);同 CIT-340。
