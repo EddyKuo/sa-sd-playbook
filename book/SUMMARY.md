@@ -33,7 +33,7 @@
 - [第 14 章｜API 設計](part-03-design/ch-14-api-design.md)
 - [第 15 章｜資料儲存設計](part-03-design/ch-15-data-storage.md)
 - [第 16 章｜UI/UX 與人機互動的系統觀](part-03-design/ch-16-uiux-system-view.md)
-- [Ch 17｜多模態與對話式互動的系統分析](part-03-design/ch-17-cux.md)
+- [第 17 章｜多模態與對話式互動的系統分析](part-03-design/ch-17-cux.md)
 
 ## Part 04｜架構
 
@@ -46,16 +46,16 @@
 - [第 23 章｜事件驅動架構、CQRS 與 Event Sourcing](part-04-architecture/ch-23-event-driven-cqrs-es.md)
 - [第 24 章｜雲端原生架構與 Kubernetes](part-04-architecture/ch-24-cloud-native-kubernetes.md)
 - [第 25 章｜Service Mesh、API Gateway、Cell-Based](part-04-architecture/ch-25-service-mesh-cell-based.md)
-- [Ch 26｜邊緣計算與 OT/IT 融合的系統架構](part-04-architecture/ch-26-edge-ot-it.md)
+- [第 26 章｜邊緣計算與 OT/IT 融合的系統架構](part-04-architecture/ch-26-edge-ot-it.md)
 
 ## Part 05｜品質
 
 - [篇導讀](part-05-quality/00-overview.md)
 - [第 27 章｜安全設計](part-05-quality/ch-27-security-by-design.md)
+- [第 28 章｜Compliance by Design ⸺ AI 合規架構](part-05-quality/ch-28-compliance.md)
 - [第 29 章｜可觀測性](part-05-quality/ch-29-observability-otel.md)
 - [第 30 章｜SRE、SLO、Chaos Engineering](part-05-quality/ch-30-sre-slo-chaos.md)
 - [第 31 章｜資料架構](part-05-quality/ch-31-data-architecture.md)
-- [Ch 28｜Compliance by Design ⸺ AI 合規架構](part-05-quality/ch-28-compliance.md)
 
 ## Part 06｜工程實踐
 
@@ -72,13 +72,13 @@
 - [第 37 章｜Context-Driven Engineering（CDE）](part-07-ai-era/ch-37-context-driven-engineering.md)
 - [第 38 章｜RAG、Memory 與 Tool 設計](part-07-ai-era/ch-38-rag-memory-tool.md)
 - [第 39 章｜Multi-Agent 系統設計](part-07-ai-era/ch-39-multi-agent.md)
+- [第 40 章｜Multi-Agent 共識、狀態與衝突解決](part-07-ai-era/ch-40-multi-agent-consensus.md)
+- [第 41 章｜Agent 設定語言 ⸺ SA 的新交付物](part-07-ai-era/ch-41-agent-spec.md)
+- [第 42 章｜Agent Harness 工程 ⸺ 從模型到可用代理的執行層設計](part-07-ai-era/ch-42-harness-engineering.md)
 - [第 43 章｜AI Coding Agent / Pair Programming](part-07-ai-era/ch-43-coding-agent.md)
 - [第 44 章｜AI 系統的 Eval、Drift 與 Red Team](part-07-ai-era/ch-44-ai-eval-drift-redteam.md)
-- [Ch 45｜Agentic QA ⸺ 非確定性系統的品質保證](part-07-ai-era/ch-45-agentic-qa.md)
-- [Ch 46｜遺留系統現代化與 AI 逆向工程](part-07-ai-era/ch-46-legacy-ai.md)
-- [Ch 40｜Multi-Agent 共識、狀態與衝突解決](part-07-ai-era/ch-40-multi-agent.md)
-- [Ch 41｜Agent 設定語言 ⸺ SA 的新交付物](part-07-ai-era/ch-41-agent-spec.md)
-- [Ch 42｜Agent Harness 工程 ⸺ 從模型到可用代理的執行層設計](part-07-ai-era/ch-42-harness-engineering.md)
+- [第 45 章｜Agentic QA ⸺ 非確定性系統的品質保證](part-07-ai-era/ch-45-agentic-qa.md)
+- [第 46 章｜遺留系統現代化與 AI 逆向工程](part-07-ai-era/ch-46-legacy-ai.md)
 
 ## Part 08｜綜合
 
@@ -93,7 +93,7 @@
 - [第 50 章｜人類不能外包的邊界](part-09-human-engineer/ch-50-human-judgment-boundary.md)
 - [第 51 章｜主動研究 AI 弱點](part-09-human-engineer/ch-51-ai-weakness-research.md)
 - [第 52 章｜AI 程式碼的審計哲學](part-09-human-engineer/ch-52-ai-code-audit.md)
-- [Ch 53｜工程直覺保護手冊](part-09-human-engineer/ch-53-engineering-intuition.md)
+- [第 53 章｜工程直覺保護手冊](part-09-human-engineer/ch-53-engineering-intuition.md)
 
 ---
 

@@ -299,6 +299,13 @@ flowchart LR
 
 ---
 
+#### Ch 28｜Compliance by Design — AI 合規架構
+**核心主題**：EU AI Act 2026/8/2 高風險系統合規執行日已至，罰則達全球年營收 7%——合規必須從架構層設計，不是上線後補。  
+**關鍵工具**：EU AI Act 風險分級、GDPR 隱私設計原則、合規 by Design 架構模式、DPIA 流程  
+**適用場景**：AI 系統合規、金融 / 醫療 / 政府系統、跨境資料處理
+
+---
+
 #### Ch 29｜可觀測性
 **核心主題**：12 個 dashboard 全綠，結帳成功率掉 12%，因為第三方物流 API 7% 機率 503 沒有被監測——可觀測性不是 dashboard 牆。  
 **關鍵工具**：Metrics / Traces / Logs 三大支柱、RED 方法、OpenTelemetry 實作、根本原因分析流程  
@@ -317,13 +324,6 @@ flowchart LR
 **核心主題**：花 1.4 億蓋 Lakehouse，結果七家醫院還是每週 SFTP CSV——Lakehouse 是儲存層問題，Data Mesh 是組織層問題，不要混。  
 **關鍵工具**：Data Mesh / Lakehouse / Lakebase 三層分工矩陣、Data Contract 格式、資料血緣設計  
 **適用場景**：資料平台建設、跨組織資料治理、OLAP / OLTP 混合系統
-
----
-
-#### Ch 28｜Compliance by Design — AI 合規架構
-**核心主題**：EU AI Act 2026/8/2 高風險系統合規執行日已至，罰則達全球年營收 7%——合規必須從架構層設計，不是上線後補。  
-**關鍵工具**：EU AI Act 風險分級、GDPR 隱私設計原則、合規 by Design 架構模式、DPIA 流程  
-**適用場景**：AI 系統合規、金融 / 醫療 / 政府系統、跨境資料處理
 
 ---
 
@@ -391,6 +391,29 @@ flowchart LR
 
 ---
 
+#### Ch 40｜Multi-Agent 共識、狀態與衝突解決
+**核心主題**：兩個自主 Agent 對同一件事不同意怎麼辦？——分散式 Agent 系統的共識與衝突解決機制。  
+**關鍵工具**：分散式共識機制、Conflict Resolution 策略、State Management 設計、Saga 補償  
+**適用場景**：自主 Agent 系統設計、多 Agent 協作架構
+
+---
+
+#### Ch 41｜Agent 設定語言 — SA 的新交付物
+**核心主題**：四個 Agent 的 `instructions` 字串硬塞在程式碼裡、沒有版本歷史，SA 連「這個 Agent 是誰、能做什麼」都翻不出來——CLAUDE.md / agent.md / skill.md 是新世代的 SRS。  
+**案例**：Caldwell Systems ERP 整合 Agent 的規格真空。  
+**關鍵工具**：Agent Identity / Capabilities / Instruction / Handoff 四問框架、跨廠商通用設定語言、Agent 規格版本控制  
+**適用場景**：Multi-Agent 系統 SA 交付、Agent 行為治理、跨團隊協作介面
+
+---
+
+#### Ch 42｜Agent Harness 工程 — 從模型到可用代理的執行層設計
+**核心主題**：模型從 Sonnet 4.5 升到 Opus 4.7，內部評測 +14pp、PR merge 率 0%——真正該研究的不是模型，是 harness 本身。  
+**案例**：Cresvale Engineering Cloud 的 Codex 內評跟 merge 率脫鉤事件。  
+**關鍵工具**：Harness 執行層分解（Tool Result 壓縮、Context Window 預算、Trace 接 Review）、Eval-Production Gap 量化、Harness Observability  
+**適用場景**：Coding Agent 平台建置、Multi-Agent 執行框架選型、AI 工具效益跟丟診斷
+
+---
+
 #### Ch 43｜AI Coding Agent / Pair Programming
 **核心主題**：拆成 9 個微服務後 Cursor PR 通過率從 78% 跌到 24%，因為脈絡分散了但沒有跟著分散 ADR、CLAUDE.md。  
 **關鍵工具**：AI-Friendly Codebase 設計、Context Preservation 策略、Monorepo vs Polyrepo 選型  
@@ -416,29 +439,6 @@ flowchart LR
 **核心主題**：現實大多是 7 年舊 Java EE + 5000 行 stored procedure，不是 Greenfield——用 AI Agent 逆向挖掘隱性知識。  
 **關鍵工具**：程式碼考古學方法、AI 輔助分析工具、Strangler Fig 現代化路徑、知識萃取框架  
 **適用場景**：遺留系統重構、技術債管理、系統遷移規劃
-
----
-
-#### Ch 40｜Multi-Agent 共識、狀態與衝突解決
-**核心主題**：兩個自主 Agent 對同一件事不同意怎麼辦？——分散式 Agent 系統的共識與衝突解決機制。  
-**關鍵工具**：分散式共識機制、Conflict Resolution 策略、State Management 設計、Saga 補償  
-**適用場景**：自主 Agent 系統設計、多 Agent 協作架構
-
----
-
-#### Ch 41｜Agent 設定語言 — SA 的新交付物
-**核心主題**：四個 Agent 的 `instructions` 字串硬塞在程式碼裡、沒有版本歷史，SA 連「這個 Agent 是誰、能做什麼」都翻不出來——CLAUDE.md / agent.md / skill.md 是新世代的 SRS。  
-**案例**：Caldwell Systems ERP 整合 Agent 的規格真空。  
-**關鍵工具**：Agent Identity / Capabilities / Instruction / Handoff 四問框架、跨廠商通用設定語言、Agent 規格版本控制  
-**適用場景**：Multi-Agent 系統 SA 交付、Agent 行為治理、跨團隊協作介面
-
----
-
-#### Ch 42｜Agent Harness 工程 — 從模型到可用代理的執行層設計
-**核心主題**：模型從 Sonnet 4.5 升到 Opus 4.7，內部評測 +14pp、PR merge 率 0%——真正該研究的不是模型，是 harness 本身。  
-**案例**：Cresvale Engineering Cloud 的 Codex 內評跟 merge 率脫鉤事件。  
-**關鍵工具**：Harness 執行層分解（Tool Result 壓縮、Context Window 預算、Trace 接 Review）、Eval-Production Gap 量化、Harness Observability  
-**適用場景**：Coding Agent 平台建置、Multi-Agent 執行框架選型、AI 工具效益跟丟診斷
 
 ---
 
