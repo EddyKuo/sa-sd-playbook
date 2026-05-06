@@ -1,7 +1,7 @@
 ---
-chapter: A
+chapter: 26
 part: IV
-title: 補章 A|邊緣計算與 OT/IT 融合的系統架構
+title: Ch 26|邊緣計算與 OT/IT 融合的系統架構
 slug: edge-ot-it
 agent: SA
 skills_used:
@@ -14,13 +14,13 @@ status: migrated
 word_count_target: 6500
 ---
 
-# 補章 A|邊緣計算與 OT/IT 融合的系統架構
+# Ch 26|邊緣計算與 OT/IT 融合的系統架構
 ## ⸺ Edge Computing & OT/IT Convergence — 給有實體設備的系統
 
-> **插入位置**:緊接 [Ch 24 Service Mesh / API Gateway / Cell-Based](./ch-24-service-mesh-cell-based.md) 之後
-> **前置閱讀**:[Ch 21 微服務](./ch-21-microservices.md)、[Ch 23 雲端原生 K8s](./ch-23-cloud-native-kubernetes.md)、[Ch 24](./ch-24-service-mesh-cell-based.md)
-> **下游章節**:[Ch 27 SRE / 可靠度](../part-05-quality/ch-27-sre-slo-chaos.md)、[Ch 28 資料架構](../part-05-quality/ch-28-data-architecture.md)
-> **延伸補章**:[補章 E Compliance](../part-05-quality/chE-compliance.md)、[補章 F CUX 多模態](../part-03-design/chF-cux.md)
+> **插入位置**:緊接 [Ch 25 Service Mesh / API Gateway / Cell-Based](./ch-25-service-mesh-cell-based.md) 之後
+> **前置閱讀**:[Ch 22 微服務](./ch-22-microservices.md)、[Ch 24 雲端原生 K8s](./ch-24-cloud-native-kubernetes.md)、[Ch 25](./ch-25-service-mesh-cell-based.md)
+> **下游章節**:[Ch 30 SRE / 可靠度](../part-05-quality/ch-30-sre-slo-chaos.md)、[Ch 31 資料架構](../part-05-quality/ch-31-data-architecture.md)
+> **延伸補章**:[Ch 28 Compliance](../part-05-quality/ch-28-compliance.md)、[Ch 17 CUX 多模態](../part-03-design/ch-17-cux.md)
 
 ---
 
@@ -36,7 +36,7 @@ word_count_target: 6500
 
 這個問題揭穿了一個根本盲點:當系統包含**會傷人、會燒掉、會違反電力法規**的硬體時,不是在設計軟體系統,是在設計一個「軟體只是其中一層」的更大系統。儲能櫃的 BMS(電池管理系統)不會等 Kubernetes Pod 重新調度。電網調度單位的 EMS 不會接受「我們的 Kafka 集群正在重啟,請等三分鐘」這種理由。
 
-[Ch 23](./ch-23-cloud-native-kubernetes.md) 與 [Ch 24](./ch-24-service-mesh-cell-based.md) 談雲原生與 K8s,前提是「網路是可靠的、計算資源是隨叫隨到的」。這個前提在 OT 世界**完全不成立**。
+[Ch 24](./ch-24-cloud-native-kubernetes.md) 與 [Ch 25](./ch-25-service-mesh-cell-based.md) 談雲原生與 K8s,前提是「網路是可靠的、計算資源是隨叫隨到的」。這個前提在 OT 世界**完全不成立**。
 
 ```mermaid
 flowchart LR
@@ -278,6 +278,6 @@ flowchart TD
 
 ## Cross-References
 
-- **前置**:[Ch 21 微服務](./ch-21-microservices.md)、[Ch 23 K8s](./ch-23-cloud-native-kubernetes.md)、[Ch 24 Mesh / Cell](./ch-24-service-mesh-cell-based.md)
-- **下游**:[Ch 27 SRE / 可靠度](../part-05-quality/ch-27-sre-slo-chaos.md)、[Ch 28 資料架構](../part-05-quality/ch-28-data-architecture.md)
-- **延伸補章**:[補章 E Compliance](../part-05-quality/chE-compliance.md)、[補章 F CUX](../part-03-design/chF-cux.md)
+- **前置**:[Ch 22 微服務](./ch-22-microservices.md)、[Ch 24 K8s](./ch-24-cloud-native-kubernetes.md)、[Ch 25 Mesh / Cell](./ch-25-service-mesh-cell-based.md)
+- **下游**:[Ch 30 SRE / 可靠度](../part-05-quality/ch-30-sre-slo-chaos.md)、[Ch 31 資料架構](../part-05-quality/ch-31-data-architecture.md)
+- **延伸補章**:[Ch 28 Compliance](../part-05-quality/ch-28-compliance.md)、[Ch 17 CUX](../part-03-design/ch-17-cux.md)

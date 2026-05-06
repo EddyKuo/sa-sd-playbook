@@ -1,7 +1,7 @@
 ---
-chapter: I
+chapter: 42
 part: VII
-title: 補章 I｜Agent Harness 工程 ⸺ 從模型到可用代理的執行層設計
+title: Ch 42｜Agent Harness 工程 ⸺ 從模型到可用代理的執行層設計
 slug: harness-engineering
 agent: SA
 skills_used:
@@ -14,13 +14,13 @@ status: draft
 word_count_target: 8500
 ---
 
-# 補章 I｜Agent Harness 工程
+# Ch 42｜Agent Harness 工程
 ## ⸺ 從模型到可用代理的執行層設計
 
-> **插入位置**：緊接 [補章 H Agent 設定語言](./chH-agent-spec.md) 之後，作為 Part VII 收束補章
-> **前置閱讀**：[Ch 35 RAG / Memory / Tool 設計](./ch-35-rag-memory-tool.md)、[Ch 36 Multi-Agent 系統設計](./ch-36-multi-agent.md)、[Ch 38 AI Eval / Drift / Red Team](./ch-38-ai-eval-drift-redteam.md)、[補章 H Agent 設定語言](./chH-agent-spec.md)
-> **下游章節**：[Ch 39 Capstone](../part-08-synthesis/ch-39-capstone.md)
-> **延伸補章**：[補章 B Agentic QA](./chB-agentic-qa.md)、[補章 D Multi-Agent 共識](./chD-multi-agent.md)
+> **插入位置**：緊接 [Ch 41 Agent 設定語言](./ch-41-agent-spec.md) 之後，作為 Part VII 收束補章
+> **前置閱讀**：[Ch 38 RAG / Memory / Tool 設計](./ch-38-rag-memory-tool.md)、[Ch 39 Multi-Agent 系統設計](./ch-39-multi-agent.md)、[Ch 44 AI Eval / Drift / Red Team](./ch-44-ai-eval-drift-redteam.md)、[Ch 41 Agent 設定語言](./ch-41-agent-spec.md)
+> **下游章節**：[Ch 47 Capstone](../part-08-synthesis/ch-47-capstone.md)
+> **延伸補章**：[Ch 45 Agentic QA](./ch-45-agentic-qa.md)、[Ch 40 Multi-Agent 共識](./ch-40-multi-agent.md)
 
 ---
 
@@ -99,7 +99,7 @@ flowchart LR
 
 一個粗略但實用的劃線：
 
-- **Scaffolding** 是「在第一個 prompt 之前你先寫好的東西」⸺ 補章 H 整章在講這層，包括 CLAUDE.md、agent.md、tool 描述、skill。它是**靜態宣告**，可以放進 Git，可以版控，可以審查。
+- **Scaffolding** 是「在第一個 prompt 之前你先寫好的東西」⸺ Ch 41 整章在講這層，包括 CLAUDE.md、agent.md、tool 描述、skill。它是**靜態宣告**，可以放進 Git，可以版控，可以審查。
 - **[Harness](../annex-f-glossary.md#agent-harness)** 是「第一個 prompt 之後，跑起來會發生的事」⸺ 模型回了什麼、要不要呼叫工具、結果怎麼裁切、要不要壓縮 context、要不要重試、要不要轉手給子代理、要不要把這次互動寫進 trace 與 eval。它是**動態執行**，只在 runtime 存在。
 
 兩件事的工程責任本來就不同。Scaffolding 的問題是「規格寫得對不對」，Harness 的問題是「規格被執行得對不對」。**SRS 寫得再清楚，runtime 不照著跑，東西還是壞的**。
@@ -252,7 +252,7 @@ flowchart LR
 
 ### I.3.4 Multi-Agent Harness 模式
 
-當任務本質要求多代理時（呼應補章 D 的多代理共識章），harness 設計變成「在多個獨立 context 之間協調」。Anthropic 的 multi-agent research system[^CIT-I03] 給了一個現在已被廣泛複製的範式。
+當任務本質要求多代理時（呼應Ch 40 的多代理共識章），harness 設計變成「在多個獨立 context 之間協調」。Anthropic 的 multi-agent research system[^CIT-I03] 給了一個現在已被廣泛複製的範式。
 
 **核心模式：Lead-researcher + Sub-research workers**
 
@@ -284,7 +284,7 @@ flowchart TD
 
 4. **代價**：Anthropic 報告 lead-researcher（Opus 4）配 sub-agents（Sonnet 4）的設計，比單代理 Opus 4 高 90.2% 的內部研究評測分數，但**消耗的 token 數約 15 倍**。token 用量解釋了瀏覽評測上 80% 的表現變異。SA 在規格 multi-agent 時，必須把這個倍率寫進預算控制。
 
-5. **何時不該走多代理**：補章 D 與 Ch 36 都討論過 ⸺ 任務本質是序列依賴、上下文需要連續累積、結果需要極強一致性時，硬拆多代理會讓 token 倍增同時品質下降。Multi-agent 適合「可平行探索 + 結果可獨立驗證」的場景：研究、跨庫搜尋、多視角生成。
+5. **何時不該走多代理**：Ch 40 與 Ch 39 都討論過 ⸺ 任務本質是序列依賴、上下文需要連續累積、結果需要極強一致性時，硬拆多代理會讓 token 倍增同時品質下降。Multi-agent 適合「可平行探索 + 結果可獨立驗證」的場景：研究、跨庫搜尋、多視角生成。
 
 ### I.3.5 SA 的 Harness 規格交付物
 
@@ -485,10 +485,10 @@ Trace span 必填欄位（OTel GenAI semantic conventions 對齊）：
 
 ## Cross-References
 
-- **插入位置**：[補章 H Agent 設定語言](./chH-agent-spec.md) 之後，Part VII 收束補章
-- **前置閱讀**：[Ch 35 RAG / Memory / Tool 設計](./ch-35-rag-memory-tool.md)、[Ch 36 Multi-Agent 系統設計](./ch-36-multi-agent.md)、[Ch 38 AI Eval / Drift / Red Team](./ch-38-ai-eval-drift-redteam.md)、[補章 H Agent 設定語言](./chH-agent-spec.md)
-- **下游章節**：[Ch 39 Capstone](../part-08-synthesis/ch-39-capstone.md)
-- **強連結**：[補章 B Agentic QA](./chB-agentic-qa.md)、[補章 D Multi-Agent 共識](./chD-multi-agent.md)
+- **插入位置**：[Ch 41 Agent 設定語言](./ch-41-agent-spec.md) 之後，Part VII 收束補章
+- **前置閱讀**：[Ch 38 RAG / Memory / Tool 設計](./ch-38-rag-memory-tool.md)、[Ch 39 Multi-Agent 系統設計](./ch-39-multi-agent.md)、[Ch 44 AI Eval / Drift / Red Team](./ch-44-ai-eval-drift-redteam.md)、[Ch 41 Agent 設定語言](./ch-41-agent-spec.md)
+- **下游章節**：[Ch 47 Capstone](../part-08-synthesis/ch-47-capstone.md)
+- **強連結**：[Ch 45 Agentic QA](./ch-45-agentic-qa.md)、[Ch 40 Multi-Agent 共識](./ch-40-multi-agent.md)
 
 ## 引用
 
@@ -500,7 +500,7 @@ Trace span 必填欄位（OTel GenAI semantic conventions 對齊）：
 
 <!-- PROPOSED-REFS
 # QA 注意:
-# 1. CASE-SAS-014 依賴於補章 H 的 CASE-SAS-013（Caldwell Systems）先合併進
+# 1. CASE-SAS-014 依賴於Ch 41 的 CASE-SAS-013（Caldwell Systems）先合併進
 #    case-registry.yaml。合併順序:chH 的 CASE-SAS-013 → 本章的 CASE-SAS-014。
 # 2. glossary anchor `harness-engineering-discipline` 用以避免與本章 slug
 #    `harness-engineering` 在跨參考工具上的潛在衝突。

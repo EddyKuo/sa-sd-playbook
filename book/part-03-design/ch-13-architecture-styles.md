@@ -18,7 +18,7 @@ word_count_target: 6000
 ## ⸺ 分層、六角、洋蔥、Clean,各擋哪一種變動
 
 > **前置閱讀**:[Ch 11 設計原則(SOLID / GRASP)](./ch-11-architecture-principles.md)、[Ch 12 元件與模組化](./ch-12-design-patterns.md)
-> **下游章節**:[Ch 17 DDD 戰術設計](../part-04-architecture/ch-17-ddd-strategic-tactical.md)、[Ch 20 Modular Monolith](../part-04-architecture/ch-20-modular-monolith.md)、[Ch 33 AI-Native 架構](../part-07-ai-era/ch-33-ai-native-architecture.md)
+> **下游章節**:[Ch 18 DDD 戰術設計](../part-04-architecture/ch-18-ddd-strategic-tactical.md)、[Ch 21 Modular Monolith](../part-04-architecture/ch-21-modular-monolith.md)、[Ch 36 AI-Native 架構](../part-07-ai-era/ch-36-ai-native-architecture.md)
 > **延伸補章**:無
 
 ---
@@ -387,7 +387,7 @@ flowchart LR
 - [ ] 在會議上認得出四個反模式(Controller 肥、Port 沒 Adapter、Onion 同 module、Clean 過度抽象),並有一句話的修正方向
 - [ ] 為手上的專案寫好一份 Architecture Style Selection Card,並把半年後驗證指標寫死
 
-如果四項中先挑一項做完就好,建議從最後那一項 ⸺ 把目前主系統的 style selection card 補出來,**寫不出主威脅或寫不出半年驗證指標**的那個系統,就是下一輪該做架構檢視的對象。本書 Ch 17 會接著談 DDD 戰術設計,Ch 20 會展開 Modular Monolith 的內部風格組合,Ch 33 會把 AI-Native 架構接到本章六角的延伸視角上。
+如果四項中先挑一項做完就好,建議從最後那一項 ⸺ 把目前主系統的 style selection card 補出來,**寫不出主威脅或寫不出半年驗證指標**的那個系統,就是下一輪該做架構檢視的對象。本書 Ch 18 會接著談 DDD 戰術設計,Ch 21 會展開 Modular Monolith 的內部風格組合,Ch 36 會把 AI-Native 架構接到本章六角的延伸視角上。
 
 ---
 
@@ -395,9 +395,9 @@ flowchart LR
 
 - **回顧**:[Ch 11 設計原則(SOLID / GRASP)](./ch-11-architecture-principles.md)、[Ch 12 元件與模組化](./ch-12-design-patterns.md)
 - **下一章**:[Ch 14 設計模式(GoF + 現代延伸)](./ch-12-design-patterns.md)
-- **DDD 戰術設計**:[Ch 17](../part-04-architecture/ch-17-ddd-strategic-tactical.md) ⸺ Aggregate / Repository / Domain Service 在 Hexagonal/Onion 裡的位置
-- **模組化單體**:[Ch 20](../part-04-architecture/ch-20-modular-monolith.md) ⸺ 多模組系統內部如何混用不同風格
-- **AI-Native 架構**:[Ch 33](../part-07-ai-era/ch-33-ai-native-architecture.md) ⸺ AI Agent 作為 Adapter 的進階實踐
+- **DDD 戰術設計**:[Ch 18](../part-04-architecture/ch-18-ddd-strategic-tactical.md) ⸺ Aggregate / Repository / Domain Service 在 Hexagonal/Onion 裡的位置
+- **模組化單體**:[Ch 21](../part-04-architecture/ch-21-modular-monolith.md) ⸺ 多模組系統內部如何混用不同風格
+- **AI-Native 架構**:[Ch 36](../part-07-ai-era/ch-36-ai-native-architecture.md) ⸺ AI Agent 作為 Adapter 的進階實踐
 
 ## 引用
 

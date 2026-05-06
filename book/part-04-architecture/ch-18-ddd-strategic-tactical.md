@@ -1,5 +1,5 @@
 ---
-chapter: 17
+chapter: 18
 part: IV
 title: 領域驅動設計(DDD)— 戰略 vs 戰術,真正的價值在語言邊界
 slug: ddd-strategic-tactical
@@ -15,11 +15,11 @@ status: draft
 word_count_target: 6500
 ---
 
-# 第 17 章|領域驅動設計(DDD)
+# 第 18 章|領域驅動設計(DDD)
 ## ⸺ 戰略 vs 戰術,真正的價值在語言邊界
 
 > **前置閱讀**:[Ch 7 物件導向分析(OOA)](../part-02-analysis/ch-07-object-oriented-analysis.md)、[Ch 13 架構風格實戰](../part-03-design/ch-13-architecture-styles.md)
-> **下游章節**:[Ch 18 Event Storming](./ch-18-event-storming-modeling.md)、[Ch 20 Modular Monolith](./ch-20-modular-monolith.md)、[Ch 21 微服務](./ch-21-microservices.md)、[Ch 22 Event-Driven Architecture](./ch-22-event-driven-cqrs-es.md)
+> **下游章節**:[Ch 19 Event Storming](./ch-19-event-storming-modeling.md)、[Ch 21 Modular Monolith](./ch-21-modular-monolith.md)、[Ch 22 微服務](./ch-22-microservices.md)、[Ch 23 Event-Driven Architecture](./ch-23-event-driven-cqrs-es.md)
 > **延伸補章**:無
 
 ---
@@ -327,7 +327,7 @@ flowchart TD
 
 最常見的 DDD 失敗:讀完 *Implementing DDD* 之後,團隊直接開始拆 Aggregate、寫 Repository、加 Domain Service。每個微服務內部都很漂亮,但跨服務的同一個業務概念(`Order`、`Patient`、`Account`)各自定義一套,語意不一致 ⸺ Order 在訂單服務指「結帳成功的訂單」,在出貨服務指「進入揀貨佇列的訂單」,在客服服務指「客戶看得到的歷史紀錄」,三個 service 各自的 `Order` schema 有 12 個欄位重複但語意不同。
 
-> ✅ **修正方向**:戰術之前,先用兩週做 Event Storming 工作坊(Ch 18 詳述),把領域專家、PO、工程師、QA 拉進同一個房間,用便利貼把所有 Domain Event 貼在牆上,自然會浮現出語言邊界。判準:工作坊結束時,每個 Bounded Context 應該能用一句話說「在這裡,X 這個詞的意思是 Y」⸺ 寫不出這句話,就還沒做完戰略。聖維禮做了 11 個月才壓平事故,主要時間花在這件事上,不在改程式碼。
+> ✅ **修正方向**:戰術之前,先用兩週做 Event Storming 工作坊(Ch 19 詳述),把領域專家、PO、工程師、QA 拉進同一個房間,用便利貼把所有 Domain Event 貼在牆上,自然會浮現出語言邊界。判準:工作坊結束時,每個 Bounded Context 應該能用一句話說「在這裡,X 這個詞的意思是 Y」⸺ 寫不出這句話,就還沒做完戰略。聖維禮做了 11 個月才壓平事故,主要時間花在這件事上,不在改程式碼。
 
 ### 反模式 2:Aggregate 拆得太細(每張表一個 Aggregate Root)
 
@@ -427,7 +427,7 @@ ACL 是 Context Map 八種模式裡最常被「形式上做了、實質上沒做
 - [ ] 在會議上認得出四個反模式(跳戰略做戰術、Aggregate 太細、ACL 漏一半、Glossary 變死字典),並有一句話的修正方向
 - [ ] 為手上的關鍵 Bounded Context 寫好一份 Bounded Context Card,並把跨 context 詞彙對應寫進去
 
-如果四項中先挑一項做完就好,建議從最後那一項 ⸺ 把目前主系統「最常被工程師誤解」的那個業務概念,當作起點寫一張 Bounded Context Card。**寫不出 Top 10 Ubiquitous Language**或**寫不出跨 context 對應詞**的那個 context,就是下一輪戰略檢視的對象。本書 Ch 18 會接著談 Event Storming 怎麼把這張卡的內容跑出來,Ch 20 會展開 Modular Monolith 內 BC 之間的程式碼組織,Ch 21 / Ch 22 會把 BC 升級成獨立微服務 + Event-Driven 整合的細節接上來。
+如果四項中先挑一項做完就好,建議從最後那一項 ⸺ 把目前主系統「最常被工程師誤解」的那個業務概念,當作起點寫一張 Bounded Context Card。**寫不出 Top 10 Ubiquitous Language**或**寫不出跨 context 對應詞**的那個 context,就是下一輪戰略檢視的對象。本書 Ch 19 會接著談 Event Storming 怎麼把這張卡的內容跑出來,Ch 21 會展開 Modular Monolith 內 BC 之間的程式碼組織,Ch 22 / Ch 23 會把 BC 升級成獨立微服務 + Event-Driven 整合的細節接上來。
 
 ---
 
@@ -435,10 +435,10 @@ ACL 是 Context Map 八種模式裡最常被「形式上做了、實質上沒做
 
 - **回顧**:[Ch 7 物件導向分析(OOA)](../part-02-analysis/ch-07-object-oriented-analysis.md) ⸺ OOA 是單一 BC 內的工作方法,DDD 處理跨 BC 的整合
 - **回顧**:[Ch 13 架構風格實戰](../part-03-design/ch-13-architecture-styles.md) ⸺ Hexagonal 是 BC 內部的程式碼結構,DDD 是 BC 之間的關係
-- **下一章**:[Ch 18 Event Storming](./ch-18-event-storming-modeling.md) ⸺ 把 Bounded Context 跑出來的工作坊方法
-- **模組化單體**:[Ch 20 Modular Monolith](./ch-20-modular-monolith.md) ⸺ BC 對應 module 的實作風格
-- **微服務**:[Ch 21 微服務](./ch-21-microservices.md) ⸺ BC 對應 service 的拆分判準
-- **事件驅動**:[Ch 22 Event-Driven Architecture](./ch-22-event-driven-cqrs-es.md) ⸺ Domain Event 跨 BC 的整合協議
+- **下一章**:[Ch 19 Event Storming](./ch-19-event-storming-modeling.md) ⸺ 把 Bounded Context 跑出來的工作坊方法
+- **模組化單體**:[Ch 21 Modular Monolith](./ch-21-modular-monolith.md) ⸺ BC 對應 module 的實作風格
+- **微服務**:[Ch 22 微服務](./ch-22-microservices.md) ⸺ BC 對應 service 的拆分判準
+- **事件驅動**:[Ch 23 Event-Driven Architecture](./ch-23-event-driven-cqrs-es.md) ⸺ Domain Event 跨 BC 的整合協議
 
 ## 引用
 
@@ -447,7 +447,7 @@ ACL 是 Context Map 八種模式裡最常被「形式上做了、實質上沒做
 [^CIT-172]: Vaughn Vernon, *Domain-Driven Design Distilled* (Addison-Wesley, 2016)。DDD 的精簡入門版,Ubiquitous Language 與 Context Map 八種模式的快速參照。
 [^CIT-173]: Vaughn Vernon, "Effective Aggregate Design" 三部曲 (kalele.io, 2011)。Aggregate 顆粒度設計的四條判準。
 [^CIT-174]: NetArchTest / ArchUnit — .NET / Java 生態的架構規則靜態檢查工具,用於強制執行 Bounded Context 內的 Ubiquitous Language 命名規則。github.com/BenMorris/NetArchTest;archunit.org。同 CIT-136。
-[^CIT-175]: Alberto Brandolini, *Introducing EventStorming* (Leanpub, 2021)。Event Storming 工作坊方法,在 Ch 18 詳述,本章用於戰略設計起手式。
+[^CIT-175]: Alberto Brandolini, *Introducing EventStorming* (Leanpub, 2021)。Event Storming 工作坊方法,在 Ch 19 詳述,本章用於戰略設計起手式。
 [^CIT-176]: Nick Tune & Scott Millett, *Patterns, Principles, and Practices of Domain-Driven Design* (Wrox, 2015) 與 Nick Tune 後續部落格系列 (medium.com/nick-tune-tech-strategy-blog)。Strategic DDD 在現代微服務架構中的應用實踐。
 
 ---

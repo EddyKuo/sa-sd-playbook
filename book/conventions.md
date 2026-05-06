@@ -6,8 +6,8 @@
 
 ## 1. 檔案命名
 
-- **主章**:`part-{NN}-{slug}/ch-{NN}-{kebab-slug}.md`(如 `part-04-architecture/ch-17-ddd-strategic-tactical.md`)
-- **補章**:對應篇下 `ch{A-F}-{kebab-slug}.md`(如 `part-04-architecture/chA-edge-ot-it.md`)
+- **主章**:`part-{NN}-{slug}/ch-{NN}-{kebab-slug}.md`(如 `part-04-architecture/ch-18-ddd-strategic-tactical.md`)
+- **補章**:對應篇下 `ch{A-F}-{kebab-slug}.md`(如 `part-04-architecture/ch-26-edge-ot-it.md`)
 - **附錄**:`annex-{a-g}-{kebab-slug}.md`(如 `annex-f-glossary.md`)
 - **Front Matter**:`front-matter/{NN}-{kebab-slug}.md`
 
@@ -76,7 +76,7 @@ classDef cold fill:#eef,stroke:#36c    # 中性 / 起始狀態
 classDef goal fill:#efe,stroke:#3a3    # 目標 / 推薦做法
 ```
 
-C4 圖(Ch 19)專用 Structurizr DSL,其他章節一律用 Mermaid。
+C4 圖(Ch 20)專用 Structurizr DSL,其他章節一律用 Mermaid。
 
 ## 7. 章節內標題層級
 

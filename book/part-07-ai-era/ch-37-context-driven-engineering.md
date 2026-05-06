@@ -1,5 +1,5 @@
 ---
-chapter: 34
+chapter: 37
 part: VII
 title: Context-Driven Engineering(CDE)— 從 Vibe Coding 到可被傳遞的脈絡
 slug: context-driven-engineering
@@ -14,11 +14,11 @@ status: draft
 word_count_target: 6500
 ---
 
-# 第 34 章|Context-Driven Engineering(CDE)
+# 第 37 章|Context-Driven Engineering(CDE)
 ## ⸺ 從 Vibe Coding 到可被傳遞的脈絡
 
-> **前置閱讀**:[Ch 1 為什麼 SA/SD](../part-01-foundations/ch-01-why-sa-sd.md)、[Ch 30 ADR 與架構知識管理](../part-06-engineering/ch-30-adr-architecture-knowledge.md)
-> **下游章節**:[Ch 35 Skill 工程與 Subagent 設計](./ch-35-rag-memory-tool.md)、[Ch 36 AI 時代的 SA 角色重構](./ch-36-multi-agent.md)、[Ch 37 工程治理與責任邊界](./ch-37-coding-agent.md)
+> **前置閱讀**:[Ch 1 為什麼 SA/SD](../part-01-foundations/ch-01-why-sa-sd.md)、[Ch 33 ADR 與架構知識管理](../part-06-engineering/ch-33-adr-architecture-knowledge.md)
+> **下游章節**:[Ch 38 Skill 工程與 Subagent 設計](./ch-38-rag-memory-tool.md)、[Ch 39 AI 時代的 SA 角色重構](./ch-39-multi-agent.md)、[Ch 43 工程治理與責任邊界](./ch-43-coding-agent.md)
 > **延伸補章**:無
 
 ---
@@ -104,7 +104,7 @@ Context-Driven Engineering 不是 Anthropic 發明的口號。它是 2025 下半
 把這句話拆開來看,它在處理三件事:
 
 1. **把個人咒語變成組織契約** ⸺ `.cursorrules` 不再是個人 dotfile,而是 repo 內的 `CLAUDE.md` / `agents.md`,跟程式碼同 PR review。
-2. **把對話脈絡變成持久知識** ⸺ ADR(Ch 30)、System Charter(Ch 1)、C4 圖(Ch 19)不只給人看,還是 Skill 的 Knowledge Source。
+2. **把對話脈絡變成持久知識** ⸺ ADR(Ch 33)、System Charter(Ch 1)、C4 圖(Ch 20)不只給人看,還是 Skill 的 Knowledge Source。
 3. **把臨時 prompt 變成可調用能力** ⸺ Skill 是一個三要素契約:Description(何時用)+ Allowed Tools(能做什麼)+ Knowledge Sources(讀什麼脈絡)。
 
 換句話說,CDE 真正在處理的是「**讓 AI 從會話結束就消失的副駕駛,變成 repo 內可被傳遞的同事**」。這條路徑跟 SA/SD 三十年的演化邏輯一致:從個人經驗,走向可被傳遞的理解。差別只在 2026 的傳遞對象多了一類非人類讀者。
@@ -177,7 +177,7 @@ flowchart TD
 
 ### 34.3.4 ADR ↔ Skill 連動機制
 
-Ch 30 提過,ADR 在 2026 年的雙重角色:對人是「決定的化石」,對 Agent 是 Skill 的 Knowledge Source。把這個連動畫成圖會比較清楚:
+Ch 33 提過,ADR 在 2026 年的雙重角色:對人是「決定的化石」,對 Agent 是 Skill 的 Knowledge Source。把這個連動畫成圖會比較清楚:
 
 ```mermaid
 flowchart LR
@@ -237,7 +237,7 @@ flowchart LR
 | 「這個專案的某個小決策」 | **ADR**(不是 CDE 三層,是 SA/SD 產出) |
 | 「臨時的一次性 prompt」 | **不要寫進 CDE**,留在當次對話即可 |
 
-這張表的關鍵是最後一行:**並不是所有 prompt 都該被 CDE 化**。臨時的、一次性的、探索性的 prompt 留在對話裡就好;只有「會被反覆觸發」「需要跨人傳遞」「需要跨對話保留」的脈絡,才值得寫進 CDE 三層。把所有 prompt 都寫進 Skill,結果跟 Ch 30 的「ADR 過度生產」是一樣的:倉庫滿了,但沒人讀。
+這張表的關鍵是最後一行:**並不是所有 prompt 都該被 CDE 化**。臨時的、一次性的、探索性的 prompt 留在對話裡就好;只有「會被反覆觸發」「需要跨人傳遞」「需要跨對話保留」的脈絡,才值得寫進 CDE 三層。把所有 prompt 都寫進 Skill,結果跟 Ch 33 的「ADR 過度生產」是一樣的:倉庫滿了,但沒人讀。
 
 ---
 
@@ -267,7 +267,7 @@ AisleNova 早期的失敗。他們開了 Orchestrator / PM / SA / RD / QA 五個
 
 某虛構 fintech 寫了一份 Skill `payment-retry-policy/SKILL.md`,描述當 Stripe 失敗時的重試邏輯。半年後 ADR-0042 拍板「改為走 Stripe 的 idempotent retry,不再自實作」⸺ 但 Skill 沒更新。工程師用 Cursor 寫新功能時,Agent 載入 Skill 後仍然按舊邏輯產出自實作的重試,PR 被 reviewer 退回三次後才有人發現 Skill 跟 ADR 脫節。
 
-> ✅ **修正方向**:Skill 與 ADR 走雙向連結。Skill 的 Knowledge Sources 必須列出對應 ADR 路徑;ADR 的 frontmatter 加 `cde-skill-binding`(Ch 30 §30.5 模板已預留 `ai-skill-hint` 欄位)。在 CI 加一條 fitness function:當 ADR Status 改為 `Superseded`,自動掃所有引用此 ADR 的 Skill 並開 issue 提示 review。讓「決策化石」與「能力契約」之間有自動化的看守者,避免靠人的記憶維護一致性。
+> ✅ **修正方向**:Skill 與 ADR 走雙向連結。Skill 的 Knowledge Sources 必須列出對應 ADR 路徑;ADR 的 frontmatter 加 `cde-skill-binding`(Ch 33 §30.5 模板已預留 `ai-skill-hint` 欄位)。在 CI 加一條 fitness function:當 ADR Status 改為 `Superseded`,自動掃所有引用此 ADR 的 Skill 並開 issue 提示 review。讓「決策化石」與「能力契約」之間有自動化的看守者,避免靠人的記憶維護一致性。
 
 ---
 
@@ -304,7 +304,7 @@ AisleNova 早期的失敗。他們開了 Orchestrator / PM / SA / RD / QA 五個
 - 路徑:`.claude/skills/{skill-name}/SKILL.md`
 - 命名規則:`{domain}-{capability}`(例 `ecommerce-order-state-machine`)
 - 每份必填三要素:Description / Allowed Tools / Knowledge Sources
-- Skill Index:`.claude/skills/README.md`(對齊 Ch 30 ADR Index 形式)
+- Skill Index:`.claude/skills/README.md`(對齊 Ch 33 ADR Index 形式)
 
 ## 4. ADR ↔ Skill Binding
 - 每份 ADR 在 frontmatter 加 `cde-skill-binding: {skill-name}`(可選)
@@ -422,17 +422,17 @@ linked-adrs:
 - [ ] 在 review 一份 Skill 時認得出它是「prompt 集合」還是「能力 + 工具 + 知識來源契約」,並有四個反模式的修正方向可以接著說。
 - [ ] 為手上的專案寫好一份 `docs/cde-setup.md`(CDE Setup Card)+ 至少一份完整的 `SKILL.md`,並把對應 ADR 的 `cde-skill-binding` 雙向連結補上。
 
-如果四項中先挑一項做完就好,建議是最後那一項 ⸺ 找出專案中最常被反覆觸發的那項能力(電商通常是訂單狀態變更、fintech 通常是金流結算、SaaS 通常是計費邏輯),把它寫成第一份 SKILL.md。Ch 30 的 ADR 是「為什麼是這個形狀」,本章的 Skill 是「Agent 在這個形狀裡能做什麼」。下一章 Ch 35 會把 Skill 工程與 Subagent 設計拆得更細,本章先把那一份基礎契約交到你手上。
+如果四項中先挑一項做完就好,建議是最後那一項 ⸺ 找出專案中最常被反覆觸發的那項能力(電商通常是訂單狀態變更、fintech 通常是金流結算、SaaS 通常是計費邏輯),把它寫成第一份 SKILL.md。Ch 33 的 ADR 是「為什麼是這個形狀」,本章的 Skill 是「Agent 在這個形狀裡能做什麼」。下一章 Ch 38 會把 Skill 工程與 Subagent 設計拆得更細,本章先把那一份基礎契約交到你手上。
 
 ---
 
 ## Cross-References
 
 - **回顧**:[Ch 1 §1.2 SA/SD 是製造可被傳遞的理解](../part-01-foundations/ch-01-why-sa-sd.md) ⸺ CDE 是這句話在 AI 時代的具體實踐形式
-- **回顧**:[Ch 30 ADR 與架構知識管理](../part-06-engineering/ch-30-adr-architecture-knowledge.md) ⸺ ADR 是 CDE Skill 的 Knowledge Source 骨幹
-- **下一章**:[Ch 35 Skill 工程與 Subagent 設計](./ch-35-rag-memory-tool.md) ⸺ 把本章的契約展開到實作層級
-- **延伸**:[Ch 36 AI 時代的 SA 角色重構](./ch-36-multi-agent.md) ⸺ SA 在 CDE 流程裡的職責變化
-- **延伸**:[Ch 37 工程治理與責任邊界](./ch-37-coding-agent.md) ⸺ Subagent 出錯時誰負責
+- **回顧**:[Ch 33 ADR 與架構知識管理](../part-06-engineering/ch-33-adr-architecture-knowledge.md) ⸺ ADR 是 CDE Skill 的 Knowledge Source 骨幹
+- **下一章**:[Ch 38 Skill 工程與 Subagent 設計](./ch-38-rag-memory-tool.md) ⸺ 把本章的契約展開到實作層級
+- **延伸**:[Ch 39 AI 時代的 SA 角色重構](./ch-39-multi-agent.md) ⸺ SA 在 CDE 流程裡的職責變化
+- **延伸**:[Ch 43 工程治理與責任邊界](./ch-43-coding-agent.md) ⸺ Subagent 出錯時誰負責
 
 ## 引用
 

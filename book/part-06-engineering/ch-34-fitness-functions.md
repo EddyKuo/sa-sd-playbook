@@ -1,5 +1,5 @@
 ---
-chapter: 31
+chapter: 34
 part: VI
 title: 架構適應度函式 — 把架構規則寫成可執行的測試
 slug: fitness-functions
@@ -15,11 +15,11 @@ status: draft
 word_count_target: 6000
 ---
 
-# 第 31 章|架構適應度函式
+# 第 34 章|架構適應度函式
 ## ⸺ 把架構規則寫成可執行的測試
 
-> **前置閱讀**:[Ch 11 設計原則 SOLID 與依賴方向](../part-03-design/ch-11-architecture-principles.md)、[Ch 20 Modular Monolith](../part-04-architecture/ch-20-modular-monolith.md)、[Ch 30 ADR](./ch-30-adr-architecture-knowledge.md)
-> **下游章節**:[Ch 32 平台工程 / Internal Developer Platform](./ch-29-platform-engineering-idp.md)
+> **前置閱讀**:[Ch 11 設計原則 SOLID 與依賴方向](../part-03-design/ch-11-architecture-principles.md)、[Ch 21 Modular Monolith](../part-04-architecture/ch-21-modular-monolith.md)、[Ch 33 ADR](./ch-33-adr-architecture-knowledge.md)
+> **下游章節**:[Ch 35 平台工程 / Internal Developer Platform](./ch-32-platform-engineering-idp.md)
 > **延伸補章**:無
 
 ---
@@ -165,7 +165,7 @@ flowchart TB
     classDef goal fill:#efe,stroke:#3a3
 ```
 
-這張圖最關鍵的是右下那條虛線:**Observe 層燒爆,反向回去 block PR**。SLO error budget 不只是 SRE 的事,它是 fitness function 的最後一層 ⸺ 如果近 7 天 error budget 燒掉超過 50%,新功能 PR 就應該被擋,這是 Ch 27 的延伸,也是 § 31.4 第四條反模式要處理的。
+這張圖最關鍵的是右下那條虛線:**Observe 層燒爆,反向回去 block PR**。SLO error budget 不只是 SRE 的事,它是 fitness function 的最後一層 ⸺ 如果近 7 天 error budget 燒掉超過 50%,新功能 PR 就應該被擋,這是 Ch 30 的延伸,也是 § 31.4 第四條反模式要處理的。
 
 ### 31.3.2 三維分類:Atomic / Holistic、Triggered / Continuous、Static / Dynamic
 
@@ -450,26 +450,26 @@ Prometheus + Sloth 都建好了,SLO catalog 寫了 14 條,multi-burn-rate alert 
 - [ ] 用 § 31.3.4 的決策樹,為一份新 ADR 判斷該寫哪一層 fitness function;寫不出對應規則的 ADR,要重新檢查它是否屬於風格指南而非架構約束
 - [ ] 為手上系統的最關鍵那份 ADR(通常是依賴方向、API 版本、或 SLO 三選一)寫一張 Fitness Function Card,並把對應規則寫進 CI 並設為 Required Status Check
 
-四項中先挑一項做完就好,建議從最後那一項 ⸺ 把當前最重要的那份 ADR 配一張 Fitness Function Card,即使第一版只有 Code 層一條規則也算數。下一輪再加一層。本書 Ch 32 會接著談「平台工程怎麼把這些 fitness function 包成 paved road,讓所有專案開箱就有」⸺ Fitness Function 是合約,Platform 是讓合約自動就在你身上的環境。
+四項中先挑一項做完就好,建議從最後那一項 ⸺ 把當前最重要的那份 ADR 配一張 Fitness Function Card,即使第一版只有 Code 層一條規則也算數。下一輪再加一層。本書 Ch 35 會接著談「平台工程怎麼把這些 fitness function 包成 paved road,讓所有專案開箱就有」⸺ Fitness Function 是合約,Platform 是讓合約自動就在你身上的環境。
 
 ---
 
 ## Cross-References
 
 - **回顧**:[Ch 11 SOLID 與依賴方向](../part-03-design/ch-11-architecture-principles.md) ⸺ ArchUnit 守的就是 SOLID 的可執行版本
-- **回顧**:[Ch 20 Modular Monolith § 20.4 反模式 3](../part-04-architecture/ch-20-modular-monolith.md) ⸺ 沒有 fitness function 的模組邊界會在 18 個月內腐爛
+- **回顧**:[Ch 21 Modular Monolith § 20.4 反模式 3](../part-04-architecture/ch-21-modular-monolith.md) ⸺ 沒有 fitness function 的模組邊界會在 18 個月內腐爛
 - **回顧**:[Ch 14 API 設計與 Spectral](../part-03-design/ch-14-api-design.md) ⸺ API 層 fitness function 的場景
-- **回顧**:[Ch 27 SRE 與 SLO](../part-05-quality/ch-27-sre-slo-chaos.md) ⸺ Observe 層 multi-burn-rate 來自這裡
-- **前置**:[Ch 30 ADR](./ch-30-adr-architecture-knowledge.md) ⸺ Fitness Function 是 ADR 的可執行對偶
-- **下一章**:[Ch 32 平台工程](./ch-29-platform-engineering-idp.md) ⸺ 把 fitness function 包成 paved road
+- **回顧**:[Ch 30 SRE 與 SLO](../part-05-quality/ch-30-sre-slo-chaos.md) ⸺ Observe 層 multi-burn-rate 來自這裡
+- **前置**:[Ch 33 ADR](./ch-33-adr-architecture-knowledge.md) ⸺ Fitness Function 是 ADR 的可執行對偶
+- **下一章**:[Ch 35 平台工程](./ch-32-platform-engineering-idp.md) ⸺ 把 fitness function 包成 paved road
 
 ## 引用
 
 [^CIT-310]: Neal Ford, Rebecca Parsons, Patrick Kua, *Building Evolutionary Architectures*, 2nd Edition (O'Reilly, 2023)。第一版 2017,二版加入 GenAI 章節與更新案例。書中三維分類(Atomic/Holistic、Triggered/Continuous、Static/Dynamic)為本章 § 31.3.2 的依據。
 [^CIT-311]: ArchUnit Project — archunit.org / github.com/TNG/ArchUnit。Java/Kotlin bytecode 架構規則靜態分析庫,1.3 版加入 Java 21 record 支援。
 [^CIT-312]: Konsist — github.com/LemonAppDev/konsist。Kotlin-first 架構規則 DSL,2024–2025 在 Kotlin 社群快速採用,0.17 版穩定。
-[^CIT-313]: Spring Modulith Reference Documentation — docs.spring.io/spring-modulith/。同 Ch 20 CIT-204。
-[^CIT-314]: Shopify Packwerk — github.com/Shopify/packwerk。同 Ch 20 CIT-205。
+[^CIT-313]: Spring Modulith Reference Documentation — docs.spring.io/spring-modulith/。同 Ch 21 CIT-204。
+[^CIT-314]: Shopify Packwerk — github.com/Shopify/packwerk。同 Ch 21 CIT-205。
 [^CIT-315]: Spectral — github.com/stoplightio/spectral。Stoplight 維護的 OpenAPI / AsyncAPI / JSON Schema lint 工具,6.x 為 2024–2026 主線。
 [^CIT-316]: Buf CLI / Breaking Change Detector — buf.build/docs/breaking。Protobuf 與 OpenAPI 的破壞性變更偵測,2025 起加入 OpenAPI 支援。
 [^CIT-317]: Pact Foundation — pact.io / docs.pact.io。消費者驅動契約測試框架,Pact Broker 為協調中心,2.x 對應 v4 wire format。

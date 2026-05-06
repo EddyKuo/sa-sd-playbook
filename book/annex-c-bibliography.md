@@ -1,5 +1,5 @@
 ---
-chapter: C
+chapter: 46
 part: annex
 title: 附錄 C — 參考書單
 slug: bibliography
@@ -90,7 +90,7 @@ status: published
 - **Simon Brown, *Software Architecture for Developers*, Vol. 2** (Leanpub, 持續更新)
 - **C4 Model** — c4model.com
 
-## 3. 品質屬性(Ch 25–28)
+## 3. 品質屬性(Ch 27–28)
 
 ### 可觀測性
 - **Charity Majors, Liz Fong-Jones, George Miranda, *Observability Engineering*** (O'Reilly, 2022)
@@ -112,7 +112,7 @@ status: published
 - **Bill Inmon, *Building the Data Warehouse*, 4th Edition** (Wiley, 2005)
 - **Ralph Kimball, *The Data Warehouse Toolkit*, 3rd Edition** (Wiley, 2013)
 
-## 4. 現代工程實踐(Ch 29–32)
+## 4. 現代工程實踐(Ch 32–32)
 
 - **Matthew Skelton & Manuel Pais, *Team Topologies*** (IT Revolution, 2019)
 - **Nicole Forsgren, Jez Humble, Gene Kim, *Accelerate*** (IT Revolution, 2018) — DORA
@@ -123,7 +123,7 @@ status: published
 - **Green Software Foundation Principles** — principles.green
 - **ISO/IEC 21031:2024 Software Carbon Intensity (SCI)**
 
-## 5. AI 時代(Ch 33–38 + 補章 B/C/D)
+## 5. AI 時代(Ch 36–38 + Ch 45/C/D)
 
 ### AI 系統設計
 - **Chip Huyen, *Designing Machine Learning Systems*** (O'Reilly, 2022)

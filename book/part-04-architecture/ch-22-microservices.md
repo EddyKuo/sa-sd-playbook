@@ -1,5 +1,5 @@
 ---
-chapter: 21
+chapter: 22
 part: IV
 title: 微服務架構 — 分散式系統的稅金與其抵稅條件
 slug: microservices
@@ -15,11 +15,11 @@ status: draft
 word_count_target: 6500
 ---
 
-# 第 21 章|微服務架構
+# 第 22 章|微服務架構
 ## ⸺ 分散式系統的稅金與其抵稅條件
 
-> **前置閱讀**:[Ch 17 DDD 戰術設計](./ch-17-ddd-strategic-tactical.md)、[Ch 20 Modular Monolith](./ch-20-modular-monolith.md)
-> **下游章節**:[Ch 22 Event-Driven 架構](./ch-22-event-driven-cqrs-es.md)、[Ch 23 Kubernetes 實戰](./ch-23-cloud-native-kubernetes.md)、[Ch 24 Service Mesh / Cell-Based](./ch-24-service-mesh-cell-based.md)、[Ch 27 可觀測性](../part-05-quality/ch-26-observability-otel.md)
+> **前置閱讀**:[Ch 18 DDD 戰術設計](./ch-18-ddd-strategic-tactical.md)、[Ch 21 Modular Monolith](./ch-21-modular-monolith.md)
+> **下游章節**:[Ch 23 Event-Driven 架構](./ch-23-event-driven-cqrs-es.md)、[Ch 24 Kubernetes 實戰](./ch-24-cloud-native-kubernetes.md)、[Ch 25 Service Mesh / Cell-Based](./ch-25-service-mesh-cell-based.md)、[Ch 30 可觀測性](../part-05-quality/ch-29-observability-otel.md)
 > **延伸補章**:無
 
 ---
@@ -121,7 +121,7 @@ James Lewis 與 Martin Fowler 2014 那篇 *Microservices*[^CIT-200] 留下了一
 
 ### 21.2.4 與 Modular Monolith 的決策延伸
 
-Ch 20 已經把預設值定在 Modular Monolith。本章不是反過來推銷微服務,**是要回答 Ch 20 沒回答的那個問題:「什麼條件下,值得跨進微服務?」**
+Ch 21 已經把預設值定在 Modular Monolith。本章不是反過來推銷微服務,**是要回答 Ch 21 沒回答的那個問題:「什麼條件下,值得跨進微服務?」**
 
 換句話說,本章要做的事是「把那份稅金清單對著抵稅條件看」。下一節的決策框架,就是把抵稅條件講清楚。
 
@@ -165,7 +165,7 @@ flowchart TD
     classDef hot fill:#fee,stroke:#c33
 ```
 
-這張圖跟 Ch 20 §20.3.3 的決策樹精神一致,但這裡多了最後一格:**第五題是「能不能負擔稅金」**。前四題回答「邊界要不要切出去」;第五題回答「切出去之後,你願不願意付那六項稅」。沒到第五題那一格之前,任何拆分討論都太早。
+這張圖跟 Ch 21 §20.3.3 的決策樹精神一致,但這裡多了最後一格:**第五題是「能不能負擔稅金」**。前四題回答「邊界要不要切出去」;第五題回答「切出去之後,你願不願意付那六項稅」。沒到第五題那一格之前,任何拆分討論都太早。
 
 ### 21.3.3 八大謬誤對照表
 
@@ -324,9 +324,9 @@ API 版本管理走 SemVer:major 是破壞性變更(必須跑棄用節奏),minor
 
 ### 反模式 4:服務 < 50 人團隊就拆 30+ 個
 
-最常見的版本。32 個工程師,拆出 32 個微服務,每個服務名義上有人擁有,實際上同一群人在五個服務之間切換。Platform Engineering 沒人做、SRE 工時佔 18%、新人 onboarding 12 週、跨服務改一個功能要協調 4 個 PR。**業務節奏是月度,卻付了週度級分散式系統的稅金**。TideCart 2023 年那一刀就是這個範本,Ch 20 的 MeshFirst 也是。
+最常見的版本。32 個工程師,拆出 32 個微服務,每個服務名義上有人擁有,實際上同一群人在五個服務之間切換。Platform Engineering 沒人做、SRE 工時佔 18%、新人 onboarding 12 週、跨服務改一個功能要協調 4 個 PR。**業務節奏是月度,卻付了週度級分散式系統的稅金**。TideCart 2023 年那一刀就是這個範本,Ch 21 的 MeshFirst 也是。
 
-> ✅ **修正方向**:用 §21.3.1 四維 + §21.3.2 決策樹做判斷,**四維全部通過才考慮拆**。團隊規模 < 50 人的階段,預設值是 Modular Monolith(Ch 20),需要獨立部署的就拆出 1–3 個邊緣服務(BFF、Webhook fanout、Search index),不要一次拆 30+ 個。判準:每要拆一個新服務,先過一遍決策樹,把答案寫進 ADR;答不出來的維度,就是這次不該拆的訊號。
+> ✅ **修正方向**:用 §21.3.1 四維 + §21.3.2 決策樹做判斷,**四維全部通過才考慮拆**。團隊規模 < 50 人的階段,預設值是 Modular Monolith(Ch 21),需要獨立部署的就拆出 1–3 個邊緣服務(BFF、Webhook fanout、Search index),不要一次拆 30+ 個。判準:每要拆一個新服務,先過一遍決策樹,把答案寫進 ADR;答不出來的維度,就是這次不該拆的訊號。
 
 ---
 
@@ -341,7 +341,7 @@ API 版本管理走 SemVer:major 是破壞性變更(必須跑棄用節奏),minor
 
 > 版本:v0.1 | 撰寫日期:YYYY-MM-DD | Owner team:{team}
 > 對應 ADR:`docs/adr/00NN-extract-<service>.md`
-> 對應 Bounded Context(Ch 17):
+> 對應 Bounded Context(Ch 18):
 
 ## 1. Service Identity(這個服務是什麼)
 - 一句話 mission:{對誰、提供什麼能力、不做什麼}
@@ -399,7 +399,7 @@ API 版本管理走 SemVer:major 是破壞性變更(必須跑棄用節奏),minor
 
 **為什麼是一頁?** 一頁的篇幅會逼出選擇。寫不滿稅金清單那一節,通常意思是還沒搞清楚拆服務的真實成本。寫不出抵稅條件那一節,通常意思是這個服務還不該拆。
 
-**為什麼有「退場條件」?** 因為微服務不是單向決策。Ch 20 的 MeshFirst 跟 §21.1 的 TideCart 都示範了「拆出來之後收回去」這條路徑。在 Tax Card 裡先寫好退場條件,等於把「我們有勇氣承認這個服務不該繼續存在」這件事先制度化 ⸺ 不然兩年後它會變成沒人敢動的歷史包袱。
+**為什麼有「退場條件」?** 因為微服務不是單向決策。Ch 21 的 MeshFirst 跟 §21.1 的 TideCart 都示範了「拆出來之後收回去」這條路徑。在 Tax Card 裡先寫好退場條件,等於把「我們有勇氣承認這個服務不該繼續存在」這件事先制度化 ⸺ 不然兩年後它會變成沒人敢動的歷史包袱。
 
 **為什麼六項稅金每項都要有 Owner?** 沒寫 Owner 的稅金,長期會變成 service team 自己扛。平台稅、觀測稅、網路稅在成熟組織裡應該由 Platform team 提供,service team 只負責一致性、認知、部署這三項裡的業務面。Owner 寫清楚,後面的能力建設才有人推。
 
@@ -414,21 +414,21 @@ API 版本管理走 SemVer:major 是破壞性變更(必須跑棄用節奏),minor
 - [ ] 看到一條超過 3 hop 的同步呼叫鏈會警覺,知道分散式單體是怎麼長出來的;能講清楚 Choreography 與 Orchestration 在「步驟數」這個維度的切換點
 - [ ] 為手上的服務寫好一張 Microservice Tax Card,把六項稅金的 Owner 與抵稅條件寫具體;沒寫好的服務先不要拆
 
-四項中先挑一項做完就好,建議從最後那一項 ⸺ 把「下一個準備拆出去的服務」先寫一張 Tax Card,**寫不滿稅金清單或寫不出退場條件的那個服務,就是這次不該拆的訊號**。Ch 22 會把 Event-Driven 架構講透,讓你在「同步呼叫鏈」之外還有第二種拓樸選擇;Ch 23 會接著 Kubernetes 跟 Platform Engineering 怎麼支撐這份稅金;Ch 24 會把 Service Mesh 跟 AWS Cell-Based 講清楚 ⸺ Cell-Based 是 2026 年「不要無腦拆 30+ 服務」的另一種答案。
+四項中先挑一項做完就好,建議從最後那一項 ⸺ 把「下一個準備拆出去的服務」先寫一張 Tax Card,**寫不滿稅金清單或寫不出退場條件的那個服務,就是這次不該拆的訊號**。Ch 23 會把 Event-Driven 架構講透,讓你在「同步呼叫鏈」之外還有第二種拓樸選擇;Ch 24 會接著 Kubernetes 跟 Platform Engineering 怎麼支撐這份稅金;Ch 25 會把 Service Mesh 跟 AWS Cell-Based 講清楚 ⸺ Cell-Based 是 2026 年「不要無腦拆 30+ 服務」的另一種答案。
 
 ---
 
 ## Cross-References
 
-- **回顧**:[Ch 17 DDD 戰術設計](./ch-17-ddd-strategic-tactical.md) ⸺ Bounded Context 是服務邊界的來源;[Ch 20 Modular Monolith](./ch-20-modular-monolith.md) ⸺ 預設值在這裡,本章是它的延伸決策
-- **下一章**:[Ch 22 Event-Driven 架構](./ch-22-event-driven-cqrs-es.md) ⸺ 把 §21.3.5 / §21.3.6 的非同步通訊延伸到完整的事件驅動拓樸
-- **平台支撐**:[Ch 23 Kubernetes 實戰](./ch-23-cloud-native-kubernetes.md)、[Ch 24 Service Mesh / Cell-Based](./ch-24-service-mesh-cell-based.md)
-- **觀測稅怎麼付**:[Ch 27 可觀測性](../part-05-quality/ch-26-observability-otel.md)
+- **回顧**:[Ch 18 DDD 戰術設計](./ch-18-ddd-strategic-tactical.md) ⸺ Bounded Context 是服務邊界的來源;[Ch 21 Modular Monolith](./ch-21-modular-monolith.md) ⸺ 預設值在這裡,本章是它的延伸決策
+- **下一章**:[Ch 23 Event-Driven 架構](./ch-23-event-driven-cqrs-es.md) ⸺ 把 §21.3.5 / §21.3.6 的非同步通訊延伸到完整的事件驅動拓樸
+- **平台支撐**:[Ch 24 Kubernetes 實戰](./ch-24-cloud-native-kubernetes.md)、[Ch 25 Service Mesh / Cell-Based](./ch-25-service-mesh-cell-based.md)
+- **觀測稅怎麼付**:[Ch 30 可觀測性](../part-05-quality/ch-29-observability-otel.md)
 
 ## 引用
 
 [^CIT-005]: Eric Evans, *Domain-Driven Design* (Addison-Wesley, 2003)。同 Ch 1。
-[^CIT-200]: James Lewis & Martin Fowler, "Microservices" (martinfowler.com, 2014-03-25)。同 Ch 20。
+[^CIT-200]: James Lewis & Martin Fowler, "Microservices" (martinfowler.com, 2014-03-25)。同 Ch 21。
 [^CIT-210]: Sam Newman, *Building Microservices*, 2nd Edition (O'Reilly, 2021)。微服務拆分判準與組織契合度的當代基準。
 [^CIT-211]: Pat Helland, "Life Beyond Distributed Transactions: An Apostate's Opinion" (CIDR 2007;ACM Queue 2017 重刊)。分散式系統一致性的本質討論。
 [^CIT-212]: Matthew Skelton & Manuel Pais, *Team Topologies* (IT Revolution, 2019)。Stream-aligned / Platform / Enabling / Complicated-Subsystem 四種團隊型態。

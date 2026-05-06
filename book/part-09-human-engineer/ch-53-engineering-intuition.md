@@ -1,7 +1,7 @@
 ---
-chapter: G
+chapter: 53
 part: IX
-title: 補章 G｜工程直覺保護手冊 — 在 AI 加速下不讓判斷力退化
+title: Ch 53｜工程直覺保護手冊 — 在 AI 加速下不讓判斷力退化
 slug: engineering-intuition
 agent: SA
 skills_used:
@@ -13,12 +13,12 @@ status: draft
 word_count_target: 7000
 ---
 
-# 補章 G｜工程直覺保護手冊
+# Ch 53｜工程直覺保護手冊
 ## ⸺ 在 AI 加速下不讓判斷力退化
 
-> **插入位置**：緊接 [Ch 44 AI 程式碼的審計哲學](./ch-44-ai-code-audit.md) 之後
-> **前置閱讀**：[Ch 42 人類不能外包的邊界](./ch-42-human-judgment-boundary.md)、[Ch 44 AI 程式碼的審計哲學](./ch-44-ai-code-audit.md)
-> **下游章節**：[Ch 39 Capstone](../part-08-synthesis/ch-39-capstone.md)（全書收束）
+> **插入位置**：緊接 [Ch 52 AI 程式碼的審計哲學](./ch-52-ai-code-audit.md) 之後
+> **前置閱讀**：[Ch 50 人類不能外包的邊界](./ch-50-human-judgment-boundary.md)、[Ch 52 AI 程式碼的審計哲學](./ch-52-ai-code-audit.md)
+> **下游章節**：[Ch 47 Capstone](../part-08-synthesis/ch-47-capstone.md)（全書收束）
 
 ---
 
@@ -315,9 +315,9 @@ flowchart LR
 
 ## Cross-References
 
-- **插入位置**：緊接 [Ch 44 AI 程式碼的審計哲學](./ch-44-ai-code-audit.md) 之後
-- **前置閱讀**：[Ch 42 人類不能外包的邊界](./ch-42-human-judgment-boundary.md)、[Ch 44 AI 程式碼的審計哲學](./ch-44-ai-code-audit.md)
-- **下游章節**：[Ch 39 Capstone](../part-08-synthesis/ch-39-capstone.md)（全書收束）
+- **插入位置**：緊接 [Ch 52 AI 程式碼的審計哲學](./ch-52-ai-code-audit.md) 之後
+- **前置閱讀**：[Ch 50 人類不能外包的邊界](./ch-50-human-judgment-boundary.md)、[Ch 52 AI 程式碼的審計哲學](./ch-52-ai-code-audit.md)
+- **下游章節**：[Ch 47 Capstone](../part-08-synthesis/ch-47-capstone.md)（全書收束）
 
 ## 引用
 
@@ -331,5 +331,5 @@ glossary:
       工程師透過長時間、高密度接觸真實系統所形成的高度壓縮模式識別能力。它是「看到這個
       錯誤訊息，第一反應是去看那裡」的能力，其核心燃料是「承擔後果」的回饋環——決策 →
       觀察後果 → 歸因 → 修正判斷模型。AI 介入後，若後果歸因指向「AI 建議」而非「工程師
-      評估 AI 建議的能力」，該回饋環中斷，直覺退化。見 補章 G.2.1。
+      評估 AI 建議的能力」，該回饋環中斷，直覺退化。見 Ch 53.2.1。
 -->

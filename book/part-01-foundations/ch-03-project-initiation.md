@@ -20,7 +20,7 @@ word_count_target: 5800
 
 > **前置閱讀**:[Ch 1 為什麼 SA/SD](./ch-01-why-sa-sd.md)、[Ch 2 SDLC 演進](./ch-02-sdlc-evolution.md)
 > **下游章節**:[Ch 4 需求工程](./ch-04-requirements-engineering.md)、[Ch 10 風險與不確定性管理](../part-02-analysis/ch-10-spec-documents.md)
-> **延伸補章**:[補章 E Compliance by Design](../part-05-quality/chE-compliance.md)
+> **延伸補章**:[Ch 28 Compliance by Design](../part-05-quality/ch-28-compliance.md)
 
 ---
 
@@ -364,7 +364,7 @@ flowchart TB
 - **下一章**:[Ch 4 需求工程與用戶故事](./ch-04-requirements-engineering.md) ⸺ 從利害關係人到可驗證的需求
 - **上一章**:[Ch 2 SDLC 與方法學演進](./ch-02-sdlc-evolution.md) ⸺ 啟動階段在不同 SDLC 中的位置
 - **風險與不確定性深探**:[Ch 10 風險與不確定性管理](../part-02-analysis/ch-10-spec-documents.md)
-- **合規可行性深入**:[補章 E Compliance by Design](../part-05-quality/chE-compliance.md)
+- **合規可行性深入**:[Ch 28 Compliance by Design](../part-05-quality/ch-28-compliance.md)
 - **Charter 的具體格式**:[Ch 1 §1.5 System Charter 模板](./ch-01-why-sa-sd.md#15-交付清單--一頁式-system-charter-模板)
 
 ## 引用

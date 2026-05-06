@@ -1,7 +1,7 @@
 ---
-chapter: C
+chapter: 46
 part: VII
-title: 補章 C|遺留系統現代化與 AI 逆向工程
+title: Ch 46|遺留系統現代化與 AI 逆向工程
 slug: legacy-ai
 agent: SA
 skills_used:
@@ -15,25 +15,25 @@ status: migrated
 word_count_target: 6500
 ---
 
-# 補章 C|遺留系統現代化與 AI 逆向工程
+# Ch 46|遺留系統現代化與 AI 逆向工程
 ## ⸺ Brownfield Modernization with Agent-Assisted Reverse Engineering
 
-> **插入位置**:緊接 [補章 B Agentic QA](./chB-agentic-qa.md) 之後,接續 [Ch 38](./ch-38-ai-eval-drift-redteam.md) 之後的 AI 時代延伸
-> **前置閱讀**:[Ch 17 DDD](../part-04-architecture/ch-17-ddd-strategic-tactical.md)、[Ch 20 Modular Monolith](../part-04-architecture/ch-20-modular-monolith.md)、[Ch 34 CDE](./ch-34-context-driven-engineering.md)、[Ch 37 Coding Agent](./ch-37-coding-agent.md)
-> **下游章節**:[Ch 39 Capstone](../part-08-synthesis/ch-39-capstone.md)
-> **延伸補章**:[補章 B Agentic QA](./chB-agentic-qa.md)
+> **插入位置**:緊接 [Ch 45 Agentic QA](./ch-45-agentic-qa.md) 之後,接續 [Ch 44](./ch-44-ai-eval-drift-redteam.md) 之後的 AI 時代延伸
+> **前置閱讀**:[Ch 18 DDD](../part-04-architecture/ch-18-ddd-strategic-tactical.md)、[Ch 21 Modular Monolith](../part-04-architecture/ch-21-modular-monolith.md)、[Ch 37 CDE](./ch-37-context-driven-engineering.md)、[Ch 43 Coding Agent](./ch-43-coding-agent.md)
+> **下游章節**:[Ch 47 Capstone](../part-08-synthesis/ch-47-capstone.md)
+> **延伸補章**:[Ch 45 Agentic QA](./ch-45-agentic-qa.md)
 
 ---
 
 ## C.1 冷觀察 ⸺ 主大綱默認在 Greenfield,但你大概率不在
 
-打開主大綱重讀:[Ch 17](../part-04-architecture/ch-17-ddd-strategic-tactical.md) 談 DDD 從 Bounded Context 開始畫,[Ch 19](../part-04-architecture/ch-19-c4-model-visualization.md) C4 從 System Context 圖開始畫,[Ch 22](../part-04-architecture/ch-22-event-driven-cqrs-es.md) Event Sourcing 假設能重新設計事件流。
+打開主大綱重讀:[Ch 18](../part-04-architecture/ch-18-ddd-strategic-tactical.md) 談 DDD 從 Bounded Context 開始畫,[Ch 20](../part-04-architecture/ch-20-c4-model-visualization.md) C4 從 System Context 圖開始畫,[Ch 23](../part-04-architecture/ch-23-event-driven-cqrs-es.md) Event Sourcing 假設能重新設計事件流。
 
 **這些都是 Greenfield 視角**。
 
 但任何在現場待過 5 年以上的工程師都知道:接手的系統,大概率是一個 7 年前由某個離職資深工程師寫的 Java EE 應用,跑在 WebLogic 上,跟一個 PL/SQL 資料庫深度耦合,沒有單元測試,沒有文件,業務規則散落在 5,000 行的 stored procedure 裡(`CASE-FIN-011`)。
 
-[Ch 20](../part-04-architecture/ch-20-modular-monolith.md) 提到 Strangler Fig 模式 ⸺ 這是現代化的「目標形狀」,但不是「行動方案」。Strangler Fig 假設已經知道**舊系統做了什麼**。**現實是:不知道**。原作者離職了,文件不存在,使用者只知道「按這個鈕會觸發那個流程」。
+[Ch 21](../part-04-architecture/ch-21-modular-monolith.md) 提到 Strangler Fig 模式 ⸺ 這是現代化的「目標形狀」,但不是「行動方案」。Strangler Fig 假設已經知道**舊系統做了什麼**。**現實是:不知道**。原作者離職了,文件不存在,使用者只知道「按這個鈕會觸發那個流程」。
 
 這一章談的是:**在這種狀態下,如何用 AI Agent 逆向找回知識,然後設計現代化路徑**。
 
@@ -73,7 +73,7 @@ flowchart LR
 
 ### C.3.1 IDE / Agent 工具取捨(2026 現實)
 
-[Ch 34 CDE](./ch-34-context-driven-engineering.md) 與 [Ch 37 Coding Agent](./ch-37-coding-agent.md) 提到了 Context-Driven Engineering 與工具,但沒針對「逆向工程」場景做選型。這裡補上:
+[Ch 37 CDE](./ch-37-context-driven-engineering.md) 與 [Ch 43 Coding Agent](./ch-43-coding-agent.md) 提到了 Context-Driven Engineering 與工具,但沒針對「逆向工程」場景做選型。這裡補上:
 
 | 工具 | 上下文視窗 | Brownfield 適合度 | 取捨 |
 |---|---|---|---|
@@ -208,9 +208,9 @@ Agent 看了一段沒被呼叫的程式碼說「這是 dead code 可以刪」⸺
 
 ## Cross-References
 
-- **前置**:[Ch 17 DDD](../part-04-architecture/ch-17-ddd-strategic-tactical.md)、[Ch 20 Modular Monolith](../part-04-architecture/ch-20-modular-monolith.md)、[Ch 34 CDE](./ch-34-context-driven-engineering.md)、[Ch 37 Coding Agent](./ch-37-coding-agent.md)
-- **下游**:[Ch 39 Capstone](../part-08-synthesis/ch-39-capstone.md)
-- **延伸補章**:[補章 B Agentic QA](./chB-agentic-qa.md)
+- **前置**:[Ch 18 DDD](../part-04-architecture/ch-18-ddd-strategic-tactical.md)、[Ch 21 Modular Monolith](../part-04-architecture/ch-21-modular-monolith.md)、[Ch 37 CDE](./ch-37-context-driven-engineering.md)、[Ch 43 Coding Agent](./ch-43-coding-agent.md)
+- **下游**:[Ch 47 Capstone](../part-08-synthesis/ch-47-capstone.md)
+- **延伸補章**:[Ch 45 Agentic QA](./ch-45-agentic-qa.md)
 
 ## 引用
 

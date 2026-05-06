@@ -1,5 +1,5 @@
 ---
-chapter: 20
+chapter: 21
 part: IV
 title: Modular Monolith — 2026 微服務反思元年的主場
 slug: modular-monolith
@@ -14,11 +14,11 @@ status: draft
 word_count_target: 6500
 ---
 
-# 第 20 章|Modular Monolith
+# 第 21 章|Modular Monolith
 ## ⸺ 2026 微服務反思元年的主場
 
-> **前置閱讀**:[Ch 1 為什麼 SA/SD](../part-01-foundations/ch-01-why-sa-sd.md)、[Ch 13 架構風格實戰](../part-03-design/ch-13-architecture-styles.md)、[Ch 17 DDD 戰術設計](./ch-17-ddd-strategic-tactical.md)、[Ch 18 Event Storming](./ch-18-event-storming-modeling.md)
-> **下游章節**:[Ch 21 微服務拆分判準](./ch-21-microservices.md)、[Ch 22 Event-Driven 架構](./ch-22-event-driven-cqrs-es.md)
+> **前置閱讀**:[Ch 1 為什麼 SA/SD](../part-01-foundations/ch-01-why-sa-sd.md)、[Ch 13 架構風格實戰](../part-03-design/ch-13-architecture-styles.md)、[Ch 18 DDD 戰術設計](./ch-18-ddd-strategic-tactical.md)、[Ch 19 Event Storming](./ch-19-event-storming-modeling.md)
+> **下游章節**:[Ch 22 微服務拆分判準](./ch-22-microservices.md)、[Ch 23 Event-Driven 架構](./ch-23-event-driven-cqrs-es.md)
 > **延伸補章**:無
 
 ---
@@ -218,7 +218,7 @@ flowchart TD
 具體可以拆成五步,MeshFirst 的回收就是按這個節奏走的:
 
 1. **包住(Wrap)**:在現有系統外圍包一層 anti-corruption layer(ACL),把所有外部呼叫先導進 ACL。這一步沒有改業務邏輯,只是讓「替換點」變得明確。
-2. **切模組(Carve)**:用 Bounded Context(Ch 17)+ Event Storming(Ch 18)的產出,把 monolith 內部切出第一個目標模組的邊界。**先用 namespace / package 切,不要先切 repo**。
+2. **切模組(Carve)**:用 Bounded Context(Ch 18)+ Event Storming(Ch 19)的產出,把 monolith 內部切出第一個目標模組的邊界。**先用 namespace / package 切,不要先切 repo**。
 3. **強制邊界(Enforce)**:加上 Spring Modulith / Packwerk / ArchUnit 的規則,把目標模組的 Public API 鎖住,違反者擋 PR。從這一步開始,模組邊界是真的。
 4. **替換實作(Replace)**:模組內部慢慢替換實作。原本散在各處的同類業務邏輯,一次搬一塊進模組;搬完一塊,加一條 fitness function 防回流。
 5. **量化收尾(Measure & Retire)**:每個模組搬完,量「跨模組呼叫減少了多少 / 平均改動半徑減少了多少 / 新人 onboarding 時間減少了多少」⸺ 沒有量化,Strangler 會在 80% 的時候被叫停,留下一個半成品,情況比一開始還差。
@@ -356,7 +356,7 @@ metadata:
 
 ## 1. Module Identity(這個模組是什麼)
 - 一句話 mission:{對誰、提供什麼能力、不做什麼}
-- Bounded Context 對應:{Ch 17 中的哪個 BC}
+- Bounded Context 對應:{Ch 18 中的哪個 BC}
 - 領域語言關鍵詞(3–5 個):
 
 ## 2. Public API(對外暴露的契約)
@@ -424,17 +424,17 @@ metadata:
 - [ ] 用 § 20.3.3 的五維決策樹回答「這個模組要不要拆出去」⸺ 五個維度都通過才拆,任何一個不通過就留在 Modulith
 - [ ] 為手上的系統寫好至少一張 Module Boundary Card,並把對應的 fitness function 寫進 CI
 
-四項中先挑一項做完就好,建議從最後那一項 ⸺ 把目前主系統最大的那個模組先補一張 Module Boundary Card,**寫不出 Public API 或寫不出 Allowed Dependencies 的那個模組,就是下一輪該做架構檢視的對象**。本書 Ch 21 會接著談「真的要拆微服務時,該怎麼拆」,Ch 22 會把 Event-First 通訊延伸到分散式 Event-Driven 架構,在你決定走出 Modulith 的那一天再讀。
+四項中先挑一項做完就好,建議從最後那一項 ⸺ 把目前主系統最大的那個模組先補一張 Module Boundary Card,**寫不出 Public API 或寫不出 Allowed Dependencies 的那個模組,就是下一輪該做架構檢視的對象**。本書 Ch 22 會接著談「真的要拆微服務時,該怎麼拆」,Ch 23 會把 Event-First 通訊延伸到分散式 Event-Driven 架構,在你決定走出 Modulith 的那一天再讀。
 
 ---
 
 ## Cross-References
 
 - **回顧**:[Ch 1 § 1.2.1 防早期分解](../part-01-foundations/ch-01-why-sa-sd.md)、[Ch 13 架構風格實戰](../part-03-design/ch-13-architecture-styles.md)
-- **前置決策工作**:[Ch 17 DDD 戰術設計](./ch-17-ddd-strategic-tactical.md) ⸺ Bounded Context 是模組邊界的來源;[Ch 18 Event Storming](./ch-18-event-storming-modeling.md) ⸺ Domain Event 是 Event-First 通訊的素材
-- **下一章**:[Ch 21 微服務拆分判準](./ch-21-microservices.md) ⸺ 真的要拆的時候怎麼拆
-- **Event-Driven 進階**:[Ch 22 Event-Driven 架構](./ch-22-event-driven-cqrs-es.md)
-- **Fitness Function 詳述**:[Ch 31 演化式架構](../part-06-engineering/ch-31-fitness-functions.md)
+- **前置決策工作**:[Ch 18 DDD 戰術設計](./ch-18-ddd-strategic-tactical.md) ⸺ Bounded Context 是模組邊界的來源;[Ch 19 Event Storming](./ch-19-event-storming-modeling.md) ⸺ Domain Event 是 Event-First 通訊的素材
+- **下一章**:[Ch 22 微服務拆分判準](./ch-22-microservices.md) ⸺ 真的要拆的時候怎麼拆
+- **Event-Driven 進階**:[Ch 23 Event-Driven 架構](./ch-23-event-driven-cqrs-es.md)
+- **Fitness Function 詳述**:[Ch 34 演化式架構](../part-06-engineering/ch-34-fitness-functions.md)
 
 ## 引用
 

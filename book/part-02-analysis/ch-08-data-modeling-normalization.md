@@ -18,7 +18,7 @@ word_count_target: 6000
 ## ⸺ 從 ERD 到 Schema,3NF 通過不等於 schema 是好的
 
 > **前置閱讀**:[Ch 6 需求工程](./ch-06-dfd-structured-analysis.md)、[Ch 7 領域建模](./ch-07-object-oriented-analysis.md)
-> **下游章節**:[Ch 9 資料流與整合](./ch-09-process-modeling.md)、[Ch 15 資料庫選型](../part-03-design/ch-15-data-storage.md)、[Ch 22 事件驅動架構](../part-04-architecture/ch-22-event-driven-cqrs-es.md)、[Ch 28 資料治理與合規](../part-05-quality/ch-28-data-architecture.md)
+> **下游章節**:[Ch 9 資料流與整合](./ch-09-process-modeling.md)、[Ch 15 資料庫選型](../part-03-design/ch-15-data-storage.md)、[Ch 23 事件驅動架構](../part-04-architecture/ch-23-event-driven-cqrs-es.md)、[Ch 31 資料治理與合規](../part-05-quality/ch-31-data-architecture.md)
 > **延伸補章**:無
 
 ---
@@ -323,7 +323,7 @@ JSONB 是好工具,但**它是「結構化資料的逃生口」,不是「拒絕 
 ## 1. 業務概念(Model Layer)
 - 這張表代表的業務概念是:{一句話,用業務語言}
 - 不代表的概念:{避免被誤用的近義概念}
-- Bounded Context:{對應 Ch 17 的哪個 BC}
+- Bounded Context:{對應 Ch 18 的哪個 BC}
 
 ## 2. 欄位 / 型別 / 來源
 
@@ -383,8 +383,8 @@ JSONB 是好工具,但**它是「結構化資料的逃生口」,不是「拒絕 
 - **回顧**:[Ch 6 需求工程](./ch-06-dfd-structured-analysis.md)、[Ch 7 領域建模](./ch-07-object-oriented-analysis.md)
 - **下一章**:[Ch 9 資料流與整合](./ch-09-process-modeling.md) ⸺ 資料如何在多個系統之間流動
 - **資料庫選型**:[Ch 15 資料庫選型](../part-03-design/ch-15-data-storage.md) ⸺ 關聯/文件/時序/向量在 2026 的取捨
-- **事件驅動**:[Ch 22 事件驅動架構](../part-04-architecture/ch-22-event-driven-cqrs-es.md) ⸺ CQRS 與事件流如何接住反正規化的讀模型
-- **資料治理**:[Ch 28 資料治理與合規](../part-05-quality/ch-28-data-architecture.md) ⸺ 不可變性聲明與審計
+- **事件驅動**:[Ch 23 事件驅動架構](../part-04-architecture/ch-23-event-driven-cqrs-es.md) ⸺ CQRS 與事件流如何接住反正規化的讀模型
+- **資料治理**:[Ch 31 資料治理與合規](../part-05-quality/ch-31-data-architecture.md) ⸺ 不可變性聲明與審計
 
 ## 引用
 

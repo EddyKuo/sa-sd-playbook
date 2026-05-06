@@ -33,67 +33,67 @@
 - [第 14 章｜API 設計](part-03-design/ch-14-api-design.md)
 - [第 15 章｜資料儲存設計](part-03-design/ch-15-data-storage.md)
 - [第 16 章｜UI/UX 與人機互動的系統觀](part-03-design/ch-16-uiux-system-view.md)
-- [補章 F｜多模態與對話式互動的系統分析](part-03-design/chF-cux.md)
+- [Ch 17｜多模態與對話式互動的系統分析](part-03-design/ch-17-cux.md)
 
 ## Part 04｜架構
 
 - [篇導讀](part-04-architecture/00-overview.md)
-- [第 17 章｜領域驅動設計（DDD）](part-04-architecture/ch-17-ddd-strategic-tactical.md)
-- [第 18 章｜Event Storming 與 Event Modeling](part-04-architecture/ch-18-event-storming-modeling.md)
-- [第 19 章｜C4 Model 與架構視覺化](part-04-architecture/ch-19-c4-model-visualization.md)
-- [第 20 章｜Modular Monolith](part-04-architecture/ch-20-modular-monolith.md)
-- [第 21 章｜微服務架構](part-04-architecture/ch-21-microservices.md)
-- [第 22 章｜事件驅動架構、CQRS 與 Event Sourcing](part-04-architecture/ch-22-event-driven-cqrs-es.md)
-- [第 23 章｜雲端原生架構與 Kubernetes](part-04-architecture/ch-23-cloud-native-kubernetes.md)
-- [第 24 章｜Service Mesh、API Gateway、Cell-Based](part-04-architecture/ch-24-service-mesh-cell-based.md)
-- [補章 A｜邊緣計算與 OT/IT 融合的系統架構](part-04-architecture/chA-edge-ot-it.md)
+- [第 18 章｜領域驅動設計（DDD）](part-04-architecture/ch-18-ddd-strategic-tactical.md)
+- [第 19 章｜Event Storming 與 Event Modeling](part-04-architecture/ch-19-event-storming-modeling.md)
+- [第 20 章｜C4 Model 與架構視覺化](part-04-architecture/ch-20-c4-model-visualization.md)
+- [第 21 章｜Modular Monolith](part-04-architecture/ch-21-modular-monolith.md)
+- [第 22 章｜微服務架構](part-04-architecture/ch-22-microservices.md)
+- [第 23 章｜事件驅動架構、CQRS 與 Event Sourcing](part-04-architecture/ch-23-event-driven-cqrs-es.md)
+- [第 24 章｜雲端原生架構與 Kubernetes](part-04-architecture/ch-24-cloud-native-kubernetes.md)
+- [第 25 章｜Service Mesh、API Gateway、Cell-Based](part-04-architecture/ch-25-service-mesh-cell-based.md)
+- [Ch 26｜邊緣計算與 OT/IT 融合的系統架構](part-04-architecture/ch-26-edge-ot-it.md)
 
 ## Part 05｜品質
 
 - [篇導讀](part-05-quality/00-overview.md)
-- [第 25 章｜安全設計](part-05-quality/ch-25-security-by-design.md)
-- [第 26 章｜可觀測性](part-05-quality/ch-26-observability-otel.md)
-- [第 27 章｜SRE、SLO、Chaos Engineering](part-05-quality/ch-27-sre-slo-chaos.md)
-- [第 28 章｜資料架構](part-05-quality/ch-28-data-architecture.md)
-- [補章 E｜Compliance by Design ⸺ AI 合規架構](part-05-quality/chE-compliance.md)
+- [第 27 章｜安全設計](part-05-quality/ch-27-security-by-design.md)
+- [第 29 章｜可觀測性](part-05-quality/ch-29-observability-otel.md)
+- [第 30 章｜SRE、SLO、Chaos Engineering](part-05-quality/ch-30-sre-slo-chaos.md)
+- [第 31 章｜資料架構](part-05-quality/ch-31-data-architecture.md)
+- [Ch 28｜Compliance by Design ⸺ AI 合規架構](part-05-quality/ch-28-compliance.md)
 
 ## Part 06｜工程實踐
 
 - [篇導讀](part-06-engineering/00-overview.md)
-- [第 29 章｜Platform Engineering 與 IDP](part-06-engineering/ch-29-platform-engineering-idp.md)
-- [第 30 章｜架構決策紀錄（ADR）與架構知識管理](part-06-engineering/ch-30-adr-architecture-knowledge.md)
-- [第 31 章｜架構適應度函式](part-06-engineering/ch-31-fitness-functions.md)
-- [第 32 章｜FinOps、永續工程與綠色軟體](part-06-engineering/ch-32-finops-green-software.md)
+- [第 32 章｜Platform Engineering 與 IDP](part-06-engineering/ch-32-platform-engineering-idp.md)
+- [第 33 章｜架構決策紀錄（ADR）與架構知識管理](part-06-engineering/ch-33-adr-architecture-knowledge.md)
+- [第 34 章｜架構適應度函式](part-06-engineering/ch-34-fitness-functions.md)
+- [第 35 章｜FinOps、永續工程與綠色軟體](part-06-engineering/ch-35-finops-green-software.md)
 
 ## Part 07｜AI 時代
 
 - [篇導讀](part-07-ai-era/00-overview.md)
-- [第 33 章｜AI-Native 架構](part-07-ai-era/ch-33-ai-native-architecture.md)
-- [第 34 章｜Context-Driven Engineering（CDE）](part-07-ai-era/ch-34-context-driven-engineering.md)
-- [第 35 章｜RAG、Memory 與 Tool 設計](part-07-ai-era/ch-35-rag-memory-tool.md)
-- [第 36 章｜Multi-Agent 系統設計](part-07-ai-era/ch-36-multi-agent.md)
-- [第 37 章｜AI Coding Agent / Pair Programming](part-07-ai-era/ch-37-coding-agent.md)
-- [第 38 章｜AI 系統的 Eval、Drift 與 Red Team](part-07-ai-era/ch-38-ai-eval-drift-redteam.md)
-- [補章 B｜Agentic QA ⸺ 非確定性系統的品質保證](part-07-ai-era/chB-agentic-qa.md)
-- [補章 C｜遺留系統現代化與 AI 逆向工程](part-07-ai-era/chC-legacy-ai.md)
-- [補章 D｜Multi-Agent 共識、狀態與衝突解決](part-07-ai-era/chD-multi-agent.md)
-- [補章 H｜Agent 設定語言 ⸺ SA 的新交付物](part-07-ai-era/chH-agent-spec.md)
-- [補章 I｜Agent Harness 工程 ⸺ 從模型到可用代理的執行層設計](part-07-ai-era/chI-harness-engineering.md)
+- [第 36 章｜AI-Native 架構](part-07-ai-era/ch-36-ai-native-architecture.md)
+- [第 37 章｜Context-Driven Engineering（CDE）](part-07-ai-era/ch-37-context-driven-engineering.md)
+- [第 38 章｜RAG、Memory 與 Tool 設計](part-07-ai-era/ch-38-rag-memory-tool.md)
+- [第 39 章｜Multi-Agent 系統設計](part-07-ai-era/ch-39-multi-agent.md)
+- [第 43 章｜AI Coding Agent / Pair Programming](part-07-ai-era/ch-43-coding-agent.md)
+- [第 44 章｜AI 系統的 Eval、Drift 與 Red Team](part-07-ai-era/ch-44-ai-eval-drift-redteam.md)
+- [Ch 45｜Agentic QA ⸺ 非確定性系統的品質保證](part-07-ai-era/ch-45-agentic-qa.md)
+- [Ch 46｜遺留系統現代化與 AI 逆向工程](part-07-ai-era/ch-46-legacy-ai.md)
+- [Ch 40｜Multi-Agent 共識、狀態與衝突解決](part-07-ai-era/ch-40-multi-agent.md)
+- [Ch 41｜Agent 設定語言 ⸺ SA 的新交付物](part-07-ai-era/ch-41-agent-spec.md)
+- [Ch 42｜Agent Harness 工程 ⸺ 從模型到可用代理的執行層設計](part-07-ai-era/ch-42-harness-engineering.md)
 
 ## Part 08｜綜合
 
 - [篇導讀](part-08-synthesis/00-overview.md)
-- [第 39 章｜Capstone](part-08-synthesis/ch-39-capstone.md)
+- [第 47 章｜Capstone](part-08-synthesis/ch-47-capstone.md)
 
 ## Part 09｜人類工程師的定位
 
 - [篇導讀](part-09-human-engineer/00-overview.md)
-- [第 40 章｜AI 能力地圖](part-09-human-engineer/ch-40-ai-capability-map.md)
-- [第 41 章｜有效使用 AI 輔助](part-09-human-engineer/ch-41-effective-ai-assistance.md)
-- [第 42 章｜人類不能外包的邊界](part-09-human-engineer/ch-42-human-judgment-boundary.md)
-- [第 43 章｜主動研究 AI 弱點](part-09-human-engineer/ch-43-ai-weakness-research.md)
-- [第 44 章｜AI 程式碼的審計哲學](part-09-human-engineer/ch-44-ai-code-audit.md)
-- [補章 G｜工程直覺保護手冊](part-09-human-engineer/chG-engineering-intuition.md)
+- [第 48 章｜AI 能力地圖](part-09-human-engineer/ch-48-ai-capability-map.md)
+- [第 49 章｜有效使用 AI 輔助](part-09-human-engineer/ch-49-effective-ai-assistance.md)
+- [第 50 章｜人類不能外包的邊界](part-09-human-engineer/ch-50-human-judgment-boundary.md)
+- [第 51 章｜主動研究 AI 弱點](part-09-human-engineer/ch-51-ai-weakness-research.md)
+- [第 52 章｜AI 程式碼的審計哲學](part-09-human-engineer/ch-52-ai-code-audit.md)
+- [Ch 53｜工程直覺保護手冊](part-09-human-engineer/ch-53-engineering-intuition.md)
 
 ---
 

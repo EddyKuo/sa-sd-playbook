@@ -1,5 +1,5 @@
 ---
-chapter: 33
+chapter: 36
 part: VII
 title: AI-Native 架構 — 從 AI-Embedded 到 Agent-First
 slug: ai-native-architecture
@@ -14,12 +14,12 @@ status: draft
 word_count_target: 6500
 ---
 
-# 第 33 章|AI-Native 架構
+# 第 36 章|AI-Native 架構
 ## ⸺ 從 AI-Embedded 到 Agent-First
 
-> **前置閱讀**:[Ch 13 架構風格與決策](../part-03-design/ch-13-architecture-styles.md)、[Ch 22 EDA / CQRS / ES](../part-04-architecture/ch-22-event-driven-cqrs-es.md)、[Ch 25 Security by Design](../part-05-quality/ch-25-security-by-design.md)
-> **下游章節**:[Ch 34 Context-Driven Engineering](./ch-34-context-driven-engineering.md)、[Ch 35 RAG 與知識架構](./ch-35-rag-memory-tool.md)、[Ch 36 Multi-Agent 系統設計](./ch-36-multi-agent.md)
-> **延伸補章**:[補章 B Agentic QA](./chB-agentic-qa.md)、[補章 E Compliance by Design](../part-05-quality/chE-compliance.md)
+> **前置閱讀**:[Ch 13 架構風格與決策](../part-03-design/ch-13-architecture-styles.md)、[Ch 23 EDA / CQRS / ES](../part-04-architecture/ch-23-event-driven-cqrs-es.md)、[Ch 27 Security by Design](../part-05-quality/ch-27-security-by-design.md)
+> **下游章節**:[Ch 37 Context-Driven Engineering](./ch-37-context-driven-engineering.md)、[Ch 38 RAG 與知識架構](./ch-38-rag-memory-tool.md)、[Ch 39 Multi-Agent 系統設計](./ch-39-multi-agent.md)
+> **延伸補章**:[Ch 45 Agentic QA](./ch-45-agentic-qa.md)、[Ch 28 Compliance by Design](../part-05-quality/ch-28-compliance.md)
 
 ---
 
@@ -252,7 +252,7 @@ NorthVale 後來把這三根支柱補回去:HITL 改成「ESI ≤ 2 必有兩位
 - **Hexagonal + Agent-as-Driven-Adapter**(M 規模):Domain 在中心,LLM 與 deterministic tools 都是 adapter,Agent Orchestrator 也是 adapter。Domain 對外只暴露 use case(`triage(case) → ESI`),不知道後面是規則還是 LLM。
 - **Event-Driven + Agent Worker**(L 規模):Agent 訂閱 command bus、產出 event 到 event bus,Saga / Process Manager 協調 ⸺ Anthropic 的 Building Effective Agents [^CIT-330] 中 Orchestrator-Workers 模式就是這個拓樸。Audit Trail 自然就是 event store。
 
-這三種組合不衝突,大致對應 S / M / L 三種複雜度。**起手建議用 Modular Monolith + Agent,等到 bounded context 穩了再考慮拆出 Agent Worker**(承接 Ch 20 / Ch 21 的判準)。
+這三種組合不衝突,大致對應 S / M / L 三種複雜度。**起手建議用 Modular Monolith + Agent,等到 bounded context 穩了再考慮拆出 Agent Worker**(承接 Ch 21 / Ch 22 的判準)。
 
 ### 33.3.6 一張決策樹:這個產品該選哪一種定位
 
@@ -298,13 +298,13 @@ flowchart TD
 
 公司網站貼上「我們秉持負責任 AI 原則 ⸺ 透明、公平、可解釋、安全」,treating AI ethics 為公關文案。但 PR 流程裡沒有 OPA policy 檢查 prompt diff、Audit Trail 沒接到 event store、Circuit Breaker 不存在、Eval set 連 baseline 都沒測過。事故發生時,合規團隊唯一能做的事是發新聞稿。
 
-> ✅ **修正方向**:把 Governance 三支柱(HITL / Circuit Breaker / Audit Trail)各自寫成至少一條**可執行的 fitness function**(承接 Ch 31)。例如:HITL → Spectral 規則檢查 OpenAPI 中所有 `/decision` endpoint 必須有 `requires_human_confirm: true` 欄位;Circuit Breaker → Prometheus rule 檢查 LLM hallucination rate burn rate;Audit Trail → ArchUnit 規則禁止 LLM client 直接呼叫 write API,必須走經過 audit log 的 facade。**寫得出可執行 policy,治理才是真的存在;寫不出來,就是公關**。
+> ✅ **修正方向**:把 Governance 三支柱(HITL / Circuit Breaker / Audit Trail)各自寫成至少一條**可執行的 fitness function**(承接 Ch 34)。例如:HITL → Spectral 規則檢查 OpenAPI 中所有 `/decision` endpoint 必須有 `requires_human_confirm: true` 欄位;Circuit Breaker → Prometheus rule 檢查 LLM hallucination rate burn rate;Audit Trail → ArchUnit 規則禁止 LLM client 直接呼叫 write API,必須走經過 audit log 的 facade。**寫得出可執行 policy,治理才是真的存在;寫不出來,就是公關**。
 
 ### 反模式 4:Modular Monolith / Hexagonal / EDA 與 Agent 各做各的
 
 團隊一邊跑「現代化架構轉型」(從 layered 遷到 Hexagonal、從同步遷到 EDA),一邊另外開一個「AI 創新團隊」用 LangChain 在隔壁倉庫疊另一套 service。半年後出現兩套並行架構:傳統那套有 ArchUnit / outbox / event store;AI 那套是一鍋 prompt + tool call,沒有 audit、沒有 schema 治理、沒有依賴方向。要整合時兩邊的 mental model 對不起來。
 
-> ✅ **修正方向**:**Agent 是 Adapter,不是另一個系統**。從第一天起就把 Agent / LLM 接入既有架構風格的 adapter 槽位 ⸺ Hexagonal 系統把 LLM 當 Driven Adapter、Modular Monolith 系統把 Agent 視為一個模組(有自己的 Public API、Events、Boundary)、EDA 系統把 Agent 當成一個訂閱 command bus 的 worker。這個原則寫進 ADR(Ch 30)、用 Fitness Function(Ch 31)守護,新人 onboarding 那天就會看到「這裡的 AI 不是異類,是另一個 Adapter」。承接 Ch 13 的 Hexagonal 訓練,這條路最自然。
+> ✅ **修正方向**:**Agent 是 Adapter,不是另一個系統**。從第一天起就把 Agent / LLM 接入既有架構風格的 adapter 槽位 ⸺ Hexagonal 系統把 LLM 當 Driven Adapter、Modular Monolith 系統把 Agent 視為一個模組(有自己的 Public API、Events、Boundary)、EDA 系統把 Agent 當成一個訂閱 command bus 的 worker。這個原則寫進 ADR(Ch 33)、用 Fitness Function(Ch 34)守護,新人 onboarding 那天就會看到「這裡的 AI 不是異類,是另一個 Adapter」。承接 Ch 13 的 Hexagonal 訓練,這條路最自然。
 
 ---
 
@@ -414,19 +414,19 @@ flowchart TD
 - [ ] 用 AI-Native 七層架構表 + 治理三支柱表(HITL / Circuit Breaker / Audit Trail)切出確定性層與非確定性層的邊界,並為高風險領域強制三支柱
 - [ ] 為手上規劃中的 AI 功能寫一份 AI-Native System Vision Card(放 `docs/architecture/ai-native-vision-{slug}.md`),逼自己在動手前回答八個答案
 
-四項中先挑一項做完就好,建議是最後那一項 ⸺ 把手上正在規劃的 AI 功能拉出來,補一張 Vision Card,逼自己回答 Litmus Test。本章留給你的就是「把 LLM 拿掉,旅程還能成立嗎」這條判斷線。下一章 [Ch 34 Context-Driven Engineering](./ch-34-context-driven-engineering.md) 會接著回答:**確定性那一層,要怎麼餵給 AI 才能讓它穩定產出**。
+四項中先挑一項做完就好,建議是最後那一項 ⸺ 把手上正在規劃的 AI 功能拉出來,補一張 Vision Card,逼自己回答 Litmus Test。本章留給你的就是「把 LLM 拿掉,旅程還能成立嗎」這條判斷線。下一章 [Ch 37 Context-Driven Engineering](./ch-37-context-driven-engineering.md) 會接著回答:**確定性那一層,要怎麼餵給 AI 才能讓它穩定產出**。
 
 ---
 
 ## Cross-References
 
-- **下一章**:[Ch 34 Context-Driven Engineering](./ch-34-context-driven-engineering.md) ⸺ AI 協作下的脈絡工程
+- **下一章**:[Ch 37 Context-Driven Engineering](./ch-37-context-driven-engineering.md) ⸺ AI 協作下的脈絡工程
 - **架構風格基礎**:[Ch 13 架構風格與決策](../part-03-design/ch-13-architecture-styles.md) ⸺ Hexagonal 是 Agent-as-Adapter 的母體
-- **事件流基礎**:[Ch 22 EDA / CQRS / ES](../part-04-architecture/ch-22-event-driven-cqrs-es.md) ⸺ Audit Trail 與 Agent Worker 的拓樸
-- **安全設計**:[Ch 25 Security by Design](../part-05-quality/ch-25-security-by-design.md) ⸺ Threat Model + Prompt Injection
-- **下游 RAG**:[Ch 35 RAG 與知識架構](./ch-35-rag-memory-tool.md) ⸺ L3 Memory 的展開
-- **下游 Multi-Agent**:[Ch 36 Multi-Agent 系統設計](./ch-36-multi-agent.md) ⸺ L5 Agent Orchestration 的展開
-- **延伸補章**:[補章 B Agentic QA](./chB-agentic-qa.md)、[補章 E Compliance by Design](../part-05-quality/chE-compliance.md)
+- **事件流基礎**:[Ch 23 EDA / CQRS / ES](../part-04-architecture/ch-23-event-driven-cqrs-es.md) ⸺ Audit Trail 與 Agent Worker 的拓樸
+- **安全設計**:[Ch 27 Security by Design](../part-05-quality/ch-27-security-by-design.md) ⸺ Threat Model + Prompt Injection
+- **下游 RAG**:[Ch 38 RAG 與知識架構](./ch-38-rag-memory-tool.md) ⸺ L3 Memory 的展開
+- **下游 Multi-Agent**:[Ch 39 Multi-Agent 系統設計](./ch-39-multi-agent.md) ⸺ L5 Agent Orchestration 的展開
+- **延伸補章**:[Ch 45 Agentic QA](./ch-45-agentic-qa.md)、[Ch 28 Compliance by Design](../part-05-quality/ch-28-compliance.md)
 
 ## 引用
 

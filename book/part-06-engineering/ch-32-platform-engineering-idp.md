@@ -1,5 +1,5 @@
 ---
-chapter: 29
+chapter: 32
 part: VI
 title: Platform Engineering 與 IDP — Platform-as-a-Product 不是 DevOps 重命名
 slug: platform-engineering-idp
@@ -15,11 +15,11 @@ status: draft
 word_count_target: 6500
 ---
 
-# 第 29 章|Platform Engineering 與 IDP
+# 第 32 章|Platform Engineering 與 IDP
 ## ⸺ Platform-as-a-Product 不是 DevOps 重命名
 
-> **前置閱讀**:[Ch 23 雲端原生與 Kubernetes](../part-04-architecture/ch-23-cloud-native-kubernetes.md)、[Ch 26 可觀測性](../part-05-quality/ch-26-observability-otel.md)、[Ch 27 SRE / SLO](../part-05-quality/ch-27-sre-slo-chaos.md)
-> **下游章節**:[Ch 30 ADR 與技術決策紀錄](./ch-30-adr-architecture-knowledge.md)、[Ch 31 Fitness Functions](./ch-31-fitness-functions.md)
+> **前置閱讀**:[Ch 24 雲端原生與 Kubernetes](../part-04-architecture/ch-24-cloud-native-kubernetes.md)、[Ch 29 可觀測性](../part-05-quality/ch-29-observability-otel.md)、[Ch 30 SRE / SLO](../part-05-quality/ch-30-sre-slo-chaos.md)
+> **下游章節**:[Ch 33 ADR 與技術決策紀錄](./ch-33-adr-architecture-knowledge.md)、[Ch 34 Fitness Functions](./ch-34-fitness-functions.md)
 > **延伸補章**:無
 
 ---
@@ -462,15 +462,15 @@ Platform team 推出了 service catalog、CI/CD 模板、provisioning portal、c
 - [ ] 用 § 29.3.5 的決策樹回答「我們現在該不該成立 Platform team」⸺ < 50 人通常太早,有了也要先補 PM 跟採用度量
 - [ ] 為手上的 paved road / IDP 工具寫一張 Platform Product Card,並且**對全公司公開**
 
-四項中先挑一項做完就好,建議從最後那一項 ⸺ 把 platform team 目前最重要的一條 paved road 拉出來填一張 Platform Product Card,**填不出 § 2 速度比、§ 3 NPS、§ 5 退場條件的 paved road,就是下個 sprint 該重新評估的對象**。本書 Ch 30 會接著談 ADR 把 Platform 決策變成「決定的化石」(把 paved road 演化記錄起來),Ch 31 會把 Fitness Function 跟 paved road 合規檢查接起來,在 Platform team 跑兩季之後讀最有感。
+四項中先挑一項做完就好,建議從最後那一項 ⸺ 把 platform team 目前最重要的一條 paved road 拉出來填一張 Platform Product Card,**填不出 § 2 速度比、§ 3 NPS、§ 5 退場條件的 paved road,就是下個 sprint 該重新評估的對象**。本書 Ch 33 會接著談 ADR 把 Platform 決策變成「決定的化石」(把 paved road 演化記錄起來),Ch 34 會把 Fitness Function 跟 paved road 合規檢查接起來,在 Platform team 跑兩季之後讀最有感。
 
 ---
 
 ## Cross-References
 
-- **回顧**:[Ch 23 雲端原生與 Kubernetes](../part-04-architecture/ch-23-cloud-native-kubernetes.md) ⸺ 50–500 人組織為什麼需要 Platform team 的源頭;[Ch 26 可觀測性](../part-05-quality/ch-26-observability-otel.md)、[Ch 27 SRE / SLO](../part-05-quality/ch-27-sre-slo-chaos.md) ⸺ DORA 量測的基礎建設
-- **下一章**:[Ch 30 ADR](./ch-30-adr-architecture-knowledge.md) ⸺ Platform 決策的記憶層
-- **延伸**:[Ch 31 Fitness Functions](./ch-31-fitness-functions.md) ⸺ Paved road 的自動化合規
+- **回顧**:[Ch 24 雲端原生與 Kubernetes](../part-04-architecture/ch-24-cloud-native-kubernetes.md) ⸺ 50–500 人組織為什麼需要 Platform team 的源頭;[Ch 29 可觀測性](../part-05-quality/ch-29-observability-otel.md)、[Ch 30 SRE / SLO](../part-05-quality/ch-30-sre-slo-chaos.md) ⸺ DORA 量測的基礎建設
+- **下一章**:[Ch 33 ADR](./ch-33-adr-architecture-knowledge.md) ⸺ Platform 決策的記憶層
+- **延伸**:[Ch 34 Fitness Functions](./ch-34-fitness-functions.md) ⸺ Paved road 的自動化合規
 
 ## 引用
 

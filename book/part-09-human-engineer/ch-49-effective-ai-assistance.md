@@ -1,5 +1,5 @@
 ---
-chapter: 41
+chapter: 49
 part: IX
 title: 有效使用 AI 輔助 — 委派設計與 Context Engineering
 slug: effective-ai-assistance
@@ -13,12 +13,12 @@ status: draft
 word_count_target: 6000
 ---
 
-# 第 41 章|有效使用 AI 輔助
+# 第 49 章|有效使用 AI 輔助
 ## ⸺ 委派設計與 Context Engineering
 
-> **前置閱讀**：[Ch 34 Context-Driven Engineering](../part-07-ai-era/ch-34-context-driven-engineering.md)、[Ch 40 AI 能力地圖](./ch-40-ai-capability-map.md)
-> **下游章節**：[Ch 42 人類不能外包的邊界](./ch-42-human-judgment-boundary.md)、[Ch 44 AI 程式碼的審計哲學](./ch-44-ai-code-audit.md)
-> **延伸補章**：[補章 G 工程直覺保護手冊](./chG-engineering-intuition.md)
+> **前置閱讀**：[Ch 37 Context-Driven Engineering](../part-07-ai-era/ch-37-context-driven-engineering.md)、[Ch 48 AI 能力地圖](./ch-48-ai-capability-map.md)
+> **下游章節**：[Ch 50 人類不能外包的邊界](./ch-50-human-judgment-boundary.md)、[Ch 52 AI 程式碼的審計哲學](./ch-52-ai-code-audit.md)
+> **延伸補章**：[Ch 53 工程直覺保護手冊](./ch-53-engineering-intuition.md)
 
 ---
 
@@ -56,7 +56,7 @@ Context 不完整，AI 就只能靠訓練資料的「通常情況」來補全。
 
 | 問題 | 典型錯誤 | 正確框架 |
 |---|---|---|
-| **委派什麼** | 「把任務丟給 AI，看它給什麼」 | 根據 Ch 40 可靠性地圖，決定委派模式 |
+| **委派什麼** | 「把任務丟給 AI，看它給什麼」 | 根據 Ch 48 可靠性地圖，決定委派模式 |
 | **怎麼指定** | 「用自然語言描述需求」 | Context Engineering：給 AI 決策所需的完整脈絡 |
 | **怎麼驗收** | 「看起來沒問題就 LGTM」 | 用業務語義而非技術正確性驗收 |
 
@@ -251,9 +251,9 @@ GridForge 是一個 B2B SaaS 工作流自動化平台，服務對象是
 
 ## Cross-References
 
-- **前置閱讀**：[Ch 34 Context-Driven Engineering](../part-07-ai-era/ch-34-context-driven-engineering.md)、[Ch 40 AI 能力地圖](./ch-40-ai-capability-map.md)
-- **下游章節**：[Ch 42 人類不能外包的邊界](./ch-42-human-judgment-boundary.md)、[Ch 44 AI 程式碼的審計哲學](./ch-44-ai-code-audit.md)
-- **延伸補章**：[補章 G 工程直覺保護手冊](./chG-engineering-intuition.md)
+- **前置閱讀**：[Ch 37 Context-Driven Engineering](../part-07-ai-era/ch-37-context-driven-engineering.md)、[Ch 48 AI 能力地圖](./ch-48-ai-capability-map.md)
+- **下游章節**：[Ch 50 人類不能外包的邊界](./ch-50-human-judgment-boundary.md)、[Ch 52 AI 程式碼的審計哲學](./ch-52-ai-code-audit.md)
+- **延伸補章**：[Ch 53 工程直覺保護手冊](./ch-53-engineering-intuition.md)
 
 ## 引用
 
@@ -266,6 +266,6 @@ glossary:
     body: |
       有意識地設計 AI 在每次互動中能取用的資訊結構，而不是每次對話從零開始描述需求。
       分為三層：持久 Context（專案級）、任務 Context（Sprint 級）、對話 Context（即時）。
-      由 Ch 41 提出，是 CDE（Context-Driven Engineering，Ch 34）在日常工程實踐層面的具體操作方法。
+      由 Ch 49 提出，是 CDE（Context-Driven Engineering，Ch 37）在日常工程實踐層面的具體操作方法。
 -->
 

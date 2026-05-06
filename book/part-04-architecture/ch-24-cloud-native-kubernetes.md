@@ -1,5 +1,5 @@
 ---
-chapter: 23
+chapter: 24
 part: IV
 title: 雲端原生架構與 Kubernetes — 不是用 K8s 就是雲端原生
 slug: cloud-native-kubernetes
@@ -15,11 +15,11 @@ status: draft
 word_count_target: 6000
 ---
 
-# 第 23 章|雲端原生架構與 Kubernetes
+# 第 24 章|雲端原生架構與 Kubernetes
 ## ⸺ 不是用 K8s 就是雲端原生
 
-> **前置閱讀**:[Ch 11 SOLID 與架構原則](../part-03-design/ch-11-architecture-principles.md)、[Ch 21 微服務拆分判準](./ch-21-microservices.md)
-> **下游章節**:[Ch 24 Service Mesh / Cell-Based](./ch-24-service-mesh-cell-based.md)、[Ch 27 Observability](../part-05-quality/ch-26-observability-otel.md)、[Ch 29 Platform Engineering](../part-06-engineering/ch-29-platform-engineering-idp.md)
+> **前置閱讀**:[Ch 11 SOLID 與架構原則](../part-03-design/ch-11-architecture-principles.md)、[Ch 22 微服務拆分判準](./ch-22-microservices.md)
+> **下游章節**:[Ch 25 Service Mesh / Cell-Based](./ch-25-service-mesh-cell-based.md)、[Ch 30 Observability](../part-05-quality/ch-29-observability-otel.md)、[Ch 32 Platform Engineering](../part-06-engineering/ch-32-platform-engineering-idp.md)
 > **延伸補章**:無
 
 ---
@@ -515,16 +515,16 @@ K8s 1.25(2022)正式移除 PodSecurityPolicy(PSP),改用 Pod Security Standards 
 - [ ] 在會議上分得清四個反模式的修正方向 ⸺ 特別是「小團隊上 K8s」與「StatefulSet 跑生產 DB」兩條最常見
 - [ ] 為手上的服務寫一張 Cloud-Native Choice Card,把平台選擇與退場策略一起寫進去
 
-四項中先挑一項做完就好,建議從最後那一項 ⸺ 把目前主系統的部署平台選擇拉出來填一張 Cloud-Native Choice Card,**填不出 § 6 三點理由的服務,就是下一輪該重新評估部署平台的對象**。本書 Ch 24 會接著談 Service Mesh / Cell-Based 架構(在你 K8s 確實該上、且需要更精細的東西向治理時再讀),Ch 27 會把 Observability 這層補齊,Ch 29 會把「50–500 人組織為什麼需要 Platform Engineering」展開,在 K8s 採用之後讀最有感。
+四項中先挑一項做完就好,建議從最後那一項 ⸺ 把目前主系統的部署平台選擇拉出來填一張 Cloud-Native Choice Card,**填不出 § 6 三點理由的服務,就是下一輪該重新評估部署平台的對象**。本書 Ch 25 會接著談 Service Mesh / Cell-Based 架構(在你 K8s 確實該上、且需要更精細的東西向治理時再讀),Ch 30 會把 Observability 這層補齊,Ch 32 會把「50–500 人組織為什麼需要 Platform Engineering」展開,在 K8s 採用之後讀最有感。
 
 ---
 
 ## Cross-References
 
-- **回顧**:[Ch 11 SOLID 與架構原則](../part-03-design/ch-11-architecture-principles.md) ⸺ 12-Factor 是雲端時代的 SOLID 延伸;[Ch 21 微服務拆分判準](./ch-21-microservices.md) ⸺ 拆服務的判準與選平台的判準是兩件事
-- **下一章**:[Ch 24 Service Mesh / Cell-Based](./ch-24-service-mesh-cell-based.md) ⸺ K8s 之上的東西向治理
-- **Observability 完整版**:[Ch 27 Observability](../part-05-quality/ch-26-observability-otel.md)
-- **Platform Engineering 詳述**:[Ch 29 Platform Engineering](../part-06-engineering/ch-29-platform-engineering-idp.md) ⸺ 50–500 人組織為什麼需要 Platform team
+- **回顧**:[Ch 11 SOLID 與架構原則](../part-03-design/ch-11-architecture-principles.md) ⸺ 12-Factor 是雲端時代的 SOLID 延伸;[Ch 22 微服務拆分判準](./ch-22-microservices.md) ⸺ 拆服務的判準與選平台的判準是兩件事
+- **下一章**:[Ch 25 Service Mesh / Cell-Based](./ch-25-service-mesh-cell-based.md) ⸺ K8s 之上的東西向治理
+- **Observability 完整版**:[Ch 30 Observability](../part-05-quality/ch-29-observability-otel.md)
+- **Platform Engineering 詳述**:[Ch 32 Platform Engineering](../part-06-engineering/ch-32-platform-engineering-idp.md) ⸺ 50–500 人組織為什麼需要 Platform team
 
 ## 引用
 

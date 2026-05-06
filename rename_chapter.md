@@ -21,10 +21,10 @@
 
 | 補章 | 插入位置 |
 |---|---|
-| 補章 F | Ch 16 之後（Part 03 末） |
-| 補章 A | Ch 24 之後（Part 04 末） |
-| 補章 E | Ch 25 之後（Part 05） |
-| 補章 G | Ch 44 之後（Part 09 末） |
+| Ch 17 | Ch 16 之後（Part 03 末） |
+| Ch 26 | Ch 25 之後（Part 04 末） |
+| Ch 28 | Ch 27 之後（Part 05） |
+| Ch 53 | Ch 52 之後（Part 09 末） |
 
 ### 需要確認的四個問題
 
@@ -57,46 +57,46 @@
 | Ch 14 | Ch 14 | API 設計 | `ch-14-api-design.md` | 不變 |
 | Ch 15 | Ch 15 | 資料儲存 | `ch-15-data-storage.md` | 不變 |
 | Ch 16 | Ch 16 | UI/UX | `ch-16-uiux-system-view.md` | 不變 |
-| **補章 F** | **Ch 17** | 多模態 / CUX | `chF-cux.md` | `ch-17-cux.md` |
-| Ch 17 | Ch 18 | DDD | `ch-17-ddd-strategic-tactical.md` | `ch-18-ddd-strategic-tactical.md` |
-| Ch 18 | Ch 19 | Event Storming | `ch-18-event-storming-modeling.md` | `ch-19-event-storming-modeling.md` |
-| Ch 19 | Ch 20 | C4 Model | `ch-19-c4-model-visualization.md` | `ch-20-c4-model-visualization.md` |
-| Ch 20 | Ch 21 | Modular Monolith | `ch-20-modular-monolith.md` | `ch-21-modular-monolith.md` |
-| Ch 21 | Ch 22 | 微服務 | `ch-21-microservices.md` | `ch-22-microservices.md` |
-| Ch 22 | Ch 23 | EDA/CQRS/ES | `ch-22-event-driven-cqrs-es.md` | `ch-23-event-driven-cqrs-es.md` |
-| Ch 23 | Ch 24 | Cloud Native/K8s | `ch-23-cloud-native-kubernetes.md` | `ch-24-cloud-native-kubernetes.md` |
-| Ch 24 | Ch 25 | Service Mesh | `ch-24-service-mesh-cell-based.md` | `ch-25-service-mesh-cell-based.md` |
-| **補章 A** | **Ch 26** | 邊緣 / OT-IT | `chA-edge-ot-it.md` | `ch-26-edge-ot-it.md` |
-| Ch 25 | Ch 27 | Security | `ch-25-security-by-design.md` | `ch-27-security-by-design.md` |
-| **補章 E** | **Ch 28** | Compliance | `chE-compliance.md` | `ch-28-compliance.md` |
-| Ch 26 | Ch 29 | 可觀測性 | `ch-26-observability-otel.md` | `ch-29-observability-otel.md` |
-| Ch 27 | Ch 30 | SRE/SLO/Chaos | `ch-27-sre-slo-chaos.md` | `ch-30-sre-slo-chaos.md` |
-| Ch 28 | Ch 31 | 資料架構 | `ch-28-data-architecture.md` | `ch-31-data-architecture.md` |
-| Ch 29 | Ch 32 | Platform/IDP | `ch-29-platform-engineering-idp.md` | `ch-32-platform-engineering-idp.md` |
-| Ch 30 | Ch 33 | ADR | `ch-30-adr-architecture-knowledge.md` | `ch-33-adr-architecture-knowledge.md` |
-| Ch 31 | Ch 34 | Fitness Functions | `ch-31-fitness-functions.md` | `ch-34-fitness-functions.md` |
-| Ch 32 | Ch 35 | FinOps | `ch-32-finops-green-software.md` | `ch-35-finops-green-software.md` |
-| Ch 33 | Ch 36 | AI-Native | `ch-33-ai-native-architecture.md` | `ch-36-ai-native-architecture.md` |
-| Ch 34 | Ch 37 | CDE | `ch-34-context-driven-engineering.md` | `ch-37-context-driven-engineering.md` |
-| Ch 35 | Ch 38 | RAG/Memory/Tool | `ch-35-rag-memory-tool.md` | `ch-38-rag-memory-tool.md` |
-| Ch 36 | Ch 39 | Multi-Agent | `ch-36-multi-agent.md` | `ch-39-multi-agent.md` |
-| **補章 D** | **Ch 40** | Multi-Agent 共識 | `chD-multi-agent.md` | `ch-40-multi-agent-consensus.md` |
-| **補章 H** | **Ch 41** | Agent 設定語言 | `chH-agent-spec.md` | `ch-41-agent-spec.md` |
-| **補章 I** | **Ch 42** | Agent Harness | `chI-harness-engineering.md` | `ch-42-harness-engineering.md` |
-| Ch 37 | Ch 43 | Coding Agent | `ch-37-coding-agent.md` | `ch-43-coding-agent.md` |
-| Ch 38 | Ch 44 | Eval/Drift/Red Team | `ch-38-ai-eval-drift-redteam.md` | `ch-44-ai-eval-drift-redteam.md` |
-| **補章 B** | **Ch 45** | Agentic QA | `chB-agentic-qa.md` | `ch-45-agentic-qa.md` |
-| **補章 C** | **Ch 46** | Legacy/AI 逆向 | `chC-legacy-ai.md` | `ch-46-legacy-ai.md` |
-| Ch 39 | **Ch 47** | Capstone | `ch-39-capstone.md` | `ch-47-capstone.md` |
-| Ch 40 | Ch 48 | AI 能力地圖 | `ch-40-ai-capability-map.md` | `ch-48-ai-capability-map.md` |
-| Ch 41 | Ch 49 | 有效使用 AI | `ch-41-effective-ai-assistance.md` | `ch-49-effective-ai-assistance.md` |
-| Ch 42 | Ch 50 | 不能外包的邊界 | `ch-42-human-judgment-boundary.md` | `ch-50-human-judgment-boundary.md` |
-| Ch 43 | Ch 51 | AI 弱點研究 | `ch-43-ai-weakness-research.md` | `ch-51-ai-weakness-research.md` |
-| Ch 44 | Ch 52 | AI 程式碼審計 | `ch-44-ai-code-audit.md` | `ch-52-ai-code-audit.md` |
-| **補章 G** | **Ch 53** | 工程直覺保護 | `chG-engineering-intuition.md` | `ch-53-engineering-intuition.md` |
+| **Ch 17** | **Ch 18** | 多模態 / CUX | `ch-17-cux.md` | `ch-18-cux.md` |
+| Ch 18 | Ch 19 | DDD | `ch-18-ddd-strategic-tactical.md` | `ch-19-ddd-strategic-tactical.md` |
+| Ch 19 | Ch 20 | Event Storming | `ch-19-event-storming-modeling.md` | `ch-20-event-storming-modeling.md` |
+| Ch 20 | Ch 21 | C4 Model | `ch-20-c4-model-visualization.md` | `ch-21-c4-model-visualization.md` |
+| Ch 21 | Ch 22 | Modular Monolith | `ch-21-modular-monolith.md` | `ch-22-modular-monolith.md` |
+| Ch 22 | Ch 23 | 微服務 | `ch-22-microservices.md` | `ch-23-microservices.md` |
+| Ch 23 | Ch 24 | EDA/CQRS/ES | `ch-23-event-driven-cqrs-es.md` | `ch-24-event-driven-cqrs-es.md` |
+| Ch 24 | Ch 25 | Cloud Native/K8s | `ch-24-cloud-native-kubernetes.md` | `ch-25-cloud-native-kubernetes.md` |
+| Ch 25 | Ch 27 | Service Mesh | `ch-25-service-mesh-cell-based.md` | `ch-27-service-mesh-cell-based.md` |
+| **Ch 26** | **Ch 29** | 邊緣 / OT-IT | `ch-26-edge-ot-it.md` | `ch-29-edge-ot-it.md` |
+| Ch 27 | Ch 30 | Security | `ch-27-security-by-design.md` | `ch-30-security-by-design.md` |
+| **Ch 28** | **Ch 31** | Compliance | `ch-28-compliance.md` | `ch-31-compliance.md` |
+| Ch 29 | Ch 32 | 可觀測性 | `ch-29-observability-otel.md` | `ch-32-observability-otel.md` |
+| Ch 30 | Ch 33 | SRE/SLO/Chaos | `ch-30-sre-slo-chaos.md` | `ch-33-sre-slo-chaos.md` |
+| Ch 31 | Ch 34 | 資料架構 | `ch-31-data-architecture.md` | `ch-34-data-architecture.md` |
+| Ch 32 | Ch 35 | Platform/IDP | `ch-32-platform-engineering-idp.md` | `ch-35-platform-engineering-idp.md` |
+| Ch 33 | Ch 36 | ADR | `ch-33-adr-architecture-knowledge.md` | `ch-36-adr-architecture-knowledge.md` |
+| Ch 34 | Ch 37 | Fitness Functions | `ch-34-fitness-functions.md` | `ch-37-fitness-functions.md` |
+| Ch 35 | Ch 38 | FinOps | `ch-35-finops-green-software.md` | `ch-38-finops-green-software.md` |
+| Ch 36 | Ch 39 | AI-Native | `ch-36-ai-native-architecture.md` | `ch-39-ai-native-architecture.md` |
+| Ch 37 | Ch 43 | CDE | `ch-37-context-driven-engineering.md` | `ch-43-context-driven-engineering.md` |
+| Ch 38 | Ch 44 | RAG/Memory/Tool | `ch-38-rag-memory-tool.md` | `ch-44-rag-memory-tool.md` |
+| Ch 39 | Ch 47 | Multi-Agent | `ch-39-multi-agent.md` | `ch-47-multi-agent.md` |
+| **Ch 40** | **Ch 48** | Multi-Agent 共識 | `ch-40-multi-agent.md` | `ch-48-multi-agent-consensus.md` |
+| **Ch 41** | **Ch 49** | Agent 設定語言 | `ch-41-agent-spec.md` | `ch-49-agent-spec.md` |
+| **Ch 42** | **Ch 50** | Agent Harness | `ch-42-harness-engineering.md` | `ch-50-harness-engineering.md` |
+| Ch 43 | Ch 51 | Coding Agent | `ch-43-coding-agent.md` | `ch-51-coding-agent.md` |
+| Ch 44 | Ch 52 | Eval/Drift/Red Team | `ch-44-ai-eval-drift-redteam.md` | `ch-52-ai-eval-drift-redteam.md` |
+| **Ch 45** | **Ch 45** | Agentic QA | `ch-45-agentic-qa.md` | `ch-45-agentic-qa.md` |
+| **Ch 46** | **Ch 46** | Legacy/AI 逆向 | `ch-46-legacy-ai.md` | `ch-46-legacy-ai.md` |
+| Ch 47 | **Ch 47** | Capstone | `ch-47-capstone.md` | `ch-47-capstone.md` |
+| Ch 48 | Ch 48 | AI 能力地圖 | `ch-48-ai-capability-map.md` | `ch-48-ai-capability-map.md` |
+| Ch 49 | Ch 49 | 有效使用 AI | `ch-49-effective-ai-assistance.md` | `ch-49-effective-ai-assistance.md` |
+| Ch 50 | Ch 50 | 不能外包的邊界 | `ch-50-human-judgment-boundary.md` | `ch-50-human-judgment-boundary.md` |
+| Ch 51 | Ch 51 | AI 弱點研究 | `ch-51-ai-weakness-research.md` | `ch-51-ai-weakness-research.md` |
+| Ch 52 | Ch 52 | AI 程式碼審計 | `ch-52-ai-code-audit.md` | `ch-52-ai-code-audit.md` |
+| **Ch 53** | **Ch 53** | 工程直覺保護 | `ch-53-engineering-intuition.md` | `ch-53-engineering-intuition.md` |
 
-> ⚠️ 檔名衝突警告：`ch-36-multi-agent.md`（舊 Ch 36）與補章 D 都含 `multi-agent`。
-> 補章 D 新檔名加區分詞 `ch-40-multi-agent-consensus.md` 以避免衝突。
+> ⚠️ 檔名衝突警告：`ch-39-multi-agent.md`（舊 Ch 39）與Ch 40 都含 `multi-agent`。
+> Ch 40 新檔名加區分詞 `ch-48-multi-agent-consensus.md` 以避免衝突。
 
 ---
 
@@ -108,8 +108,8 @@
 
 ```csv
 old_chapter,new_chapter,old_filename,new_filename
-F,17,chF-cux.md,ch-17-cux.md
-17,18,ch-17-ddd-strategic-tactical.md,ch-18-ddd-strategic-tactical.md
+F,17,ch-17-cux.md,ch-18-cux.md
+17,18,ch-18-ddd-strategic-tactical.md,ch-19-ddd-strategic-tactical.md
 ...
 ```
 
@@ -124,11 +124,11 @@ foreach ($row in $mapping) {
 
 # Pass 2 — 兩階段文字替換（避免連鎖污染）
 # 第一階段：所有舊號換成獨特佔位符
-# 例：Ch 17 → __CH_OLD017__，Ch 18 → __CH_OLD018__ ...
-# （包含「第 17 章」「Ch17」「ch-17-」等所有變體）
+# 例：Ch 18 → __CH_OLD017__，Ch 19 → __CH_OLD018__ ...
+# （包含「第 18 章」「Ch 18」「ch-18-」等所有變體）
 
 # 第二階段：佔位符換成新號
-# __CH_OLD017__ → Ch 18，__CH_OLD018__ → Ch 19 ...
+# __CH_OLD017__ → Ch 19，__CH_OLD018__ → Ch 20 ...
 
 # Pass 3 — 補章引用
 # 「補章 X」   → 「Ch NN」
@@ -141,11 +141,11 @@ foreach ($row in $mapping) {
 
 | 變體 | 範例 |
 |---|---|
-| 英文帶空格 | `Ch 17` |
-| 英文不帶空格 | `Ch17` |
-| 中文帶空格 | `第 17 章` |
-| 中文不帶空格 | `第17章` |
-| 檔名形式 | `ch-17-` |
+| 英文帶空格 | `Ch 18` |
+| 英文不帶空格 | `Ch 18` |
+| 中文帶空格 | `第 18 章` |
+| 中文不帶空格 | `第 18 章` |
+| 檔名形式 | `ch-18-` |
 | frontmatter | `chapter: 17` |
 
 ### 2.4 驗證腳本（執行後應全部為 0）
@@ -172,7 +172,7 @@ grep -rE "__CH_OLD\d+" book/
 |---|---|---|---|
 | 1 | `chore: 加入章節重編號對照表與腳本` | `renumber-mapping.csv` + 腳本 + 本計畫文件 | 新增 2–3 檔 |
 | 2 | `refactor(ch): 重命名補章檔案` | 9 個 `git mv`（`chX-*.md` → `ch-NN-*.md`）+ frontmatter `chapter:` 欄位更新 | 9 檔重命名 |
-| 3 | `refactor(ch): 主章檔名位移` | Ch 17→18, 18→19 ... Ch 44→52 等約 28 檔 `git mv` + frontmatter | 28 檔重命名 |
+| 3 | `refactor(ch): 主章檔名位移` | Ch 18→18, 18→19 ... Ch 52→52 等約 28 檔 `git mv` + frontmatter | 28 檔重命名 |
 | 4 | `refactor(ch): 章節內文字引用更新` | 「補章 X」→「Ch NN」、舊 Ch 號 → 新 Ch 號（腳本批次，跨 53 檔） | ~450 處 |
 | 5 | `refactor(ch): 章節內檔名連結更新` | `chX-*.md` 與 `ch-舊NN-*.md` 路徑修正 | ~140 處 |
 | 6 | `refactor(ch): 索引文件更新` | `SUMMARY.md` / 兩份 `README.md` / 7 份附錄 / 9 份篇導讀 / 3 份 front-matter | ~17 檔 |
@@ -187,12 +187,12 @@ grep -rE "__CH_OLD\d+" book/
 
 | 區域 | 風險點 | 引用密度 |
 |---|---|---|
-| **Ch 47 Capstone**（舊 Ch 39） | 全書文件樹整合，47 處補章引用 + 18 處檔名引用 | ⭐⭐⭐ 最高 |
+| **Ch 47 Capstone**（舊 Ch 47） | 全書文件樹整合，47 處補章引用 + 18 處檔名引用 | ⭐⭐⭐ 最高 |
 | **附錄 F Glossary** | 32 處補章交叉引用 | ⭐⭐⭐ |
 | **附錄 E Standards** | 16 處，圖表編號可能含補章字母 | ⭐⭐ |
-| **`part-07-ai-era/00-overview.md`** | 16 處，章節依存圖含補章 D/H/I 拓樸 | ⭐⭐ |
+| **`part-07-ai-era/00-overview.md`** | 16 處，章節依存圖含Ch 40/H/I 拓樸 | ⭐⭐ |
 | **各補章自身 frontmatter 的「插入位置」段** | 重編號後此段意義消失，需改寫或刪除 | ⭐⭐ |
-| **補章 H/I/D 內部相互引用** | 補章間互引需轉成新章號 | ⭐⭐ |
+| **Ch 41/I/D 內部相互引用** | 補章間互引需轉成新章號 | ⭐⭐ |
 | **`front-matter/02-how-to-read.md`** | mermaid 圖節點 ID 可能用了 chA、chF | ⭐ |
 
 ---
@@ -220,7 +220,7 @@ grep -rE "^chapter:\s*[A-I]" book/
 
 | 風險 | 機率 | 衝擊 | 緩解方式 |
 |---|---|---|---|
-| 章號替換連鎖污染（Ch 17→18 把新 Ch 18 又改成 19） | 高 | 高 | 強制使用佔位符兩階段法，絕不直接 `s/Ch 17/Ch 18/` |
+| 章號替換連鎖污染（Ch 18→18 把新 Ch 19 又改成 19） | 高 | 高 | 強制使用佔位符兩階段法，絕不直接 `s/Ch 18/Ch 19/` |
 | 中文 / 全形空格在 grep 漏抓 | 中 | 高 | Phase 2.3 先盤點所有變體，腳本支援多 pattern |
 | 附錄 D 案例索引綁了補章字母 ID（如 `CASE-CHA-*`） | 中 | 中 | Phase 0 加做案例 ID 盤點，有則改為 `CASE-CH26-*` |
 | Glossary 詞條「來源章節」過時 | 高 | 低 | Phase 4 手工掃 annex-f |

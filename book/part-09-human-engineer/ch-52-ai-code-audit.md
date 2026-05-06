@@ -1,5 +1,5 @@
 ---
-chapter: 44
+chapter: 52
 part: IX
 title: AI 程式碼的審計哲學 — 從 LGTM 到意圖符合性驗證
 slug: ai-code-audit
@@ -14,12 +14,12 @@ status: draft
 word_count_target: 6000
 ---
 
-# 第 44 章|AI 程式碼的審計哲學
+# 第 52 章|AI 程式碼的審計哲學
 ## ⸺ 從 LGTM 到意圖符合性驗證
 
-> **前置閱讀**：[Ch 41 有效使用 AI 輔助](./ch-41-effective-ai-assistance.md)、[Ch 31 架構適應度函式](../part-06-engineering/ch-31-fitness-functions.md)
-> **下游章節**：[補章 G 工程直覺保護手冊](./chG-engineering-intuition.md)
-> **延伸補章**：[補章 B Agentic QA](../part-07-ai-era/chB-agentic-qa.md)
+> **前置閱讀**：[Ch 49 有效使用 AI 輔助](./ch-49-effective-ai-assistance.md)、[Ch 34 架構適應度函式](../part-06-engineering/ch-34-fitness-functions.md)
+> **下游章節**：[Ch 53 工程直覺保護手冊](./ch-53-engineering-intuition.md)
+> **延伸補章**：[Ch 45 Agentic QA](../part-07-ai-era/ch-45-agentic-qa.md)
 
 ---
 
@@ -244,9 +244,9 @@ PR：______  審計者：______  日期：______
 
 ## Cross-References
 
-- **前置閱讀**：[Ch 41 有效使用 AI 輔助](./ch-41-effective-ai-assistance.md)、[Ch 31 架構適應度函式](../part-06-engineering/ch-31-fitness-functions.md)
-- **下游章節**：[補章 G 工程直覺保護手冊](./chG-engineering-intuition.md)
-- **延伸補章**：[補章 B Agentic QA](../part-07-ai-era/chB-agentic-qa.md)
+- **前置閱讀**：[Ch 49 有效使用 AI 輔助](./ch-49-effective-ai-assistance.md)、[Ch 34 架構適應度函式](../part-06-engineering/ch-34-fitness-functions.md)
+- **下游章節**：[Ch 53 工程直覺保護手冊](./ch-53-engineering-intuition.md)
+- **延伸補章**：[Ch 45 Agentic QA](../part-07-ai-era/ch-45-agentic-qa.md)
 
 ## 引用
 
@@ -259,6 +259,6 @@ glossary:
     body: |
       AI 生成程式碼的審計維度之一：驗證 AI 實作的行為是否等於工程師真正想要的業務行為。
       有別於「技術正確性」（程式碼邏輯是否無誤），意圖符合性關注的是「業務語義是否被完整
-      實現」。PortBridge 訂單狀態同步案例（Ch 44.1）是典型的意圖符合性失敗：技術上正確，
+      實現」。PortBridge 訂單狀態同步案例（Ch 52.1）是典型的意圖符合性失敗：技術上正確，
       業務語義上不完整。
 -->

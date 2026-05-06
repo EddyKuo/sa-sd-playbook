@@ -1,7 +1,7 @@
 ---
-chapter: H
+chapter: 41
 part: VII
-title: 補章 H|Agent 設定語言 ⸺ SA 的新交付物
+title: Ch 41|Agent 設定語言 ⸺ SA 的新交付物
 slug: agent-spec-language
 agent: SA
 skills_used:
@@ -14,13 +14,13 @@ status: draft
 word_count_target: 6500
 ---
 
-# 補章 H|Agent 設定語言 ⸺ SA 的新交付物
+# Ch 41|Agent 設定語言 ⸺ SA 的新交付物
 ## ⸺ CLAUDE.md、agent.md、skill.md 與跨廠商通用設計框架
 
-> **插入位置**：緊接 [補章 D Multi-Agent 共識](./chD-multi-agent.md) 之後，作為 Part VII 最後一個補章
-> **前置閱讀**：[Ch 36 Multi-Agent 系統設計](./ch-36-multi-agent.md)、[Ch 37 AI Coding Agent](./ch-37-coding-agent.md)、[補章 D](./chD-multi-agent.md)
-> **下游章節**：[Ch 39 Capstone](../part-08-synthesis/ch-39-capstone.md)
-> **延伸補章**：[補章 B Agentic QA](./chB-agentic-qa.md)、[補章 D](./chD-multi-agent.md)
+> **插入位置**：緊接 [Ch 40 Multi-Agent 共識](./ch-40-multi-agent.md) 之後，作為 Part VII 最後一個補章
+> **前置閱讀**：[Ch 39 Multi-Agent 系統設計](./ch-39-multi-agent.md)、[Ch 43 AI Coding Agent](./ch-43-coding-agent.md)、[Ch 40](./ch-40-multi-agent.md)
+> **下游章節**：[Ch 47 Capstone](../part-08-synthesis/ch-47-capstone.md)
+> **延伸補章**：[Ch 45 Agentic QA](./ch-45-agentic-qa.md)、[Ch 40](./ch-40-multi-agent.md)
 
 ---
 
@@ -468,10 +468,10 @@ Agent 設定語言正在快速演進。已知的高變動風險點：
 
 ## Cross-References
 
-- **插入位置**：[補章 D Multi-Agent 共識](./chD-multi-agent.md) 之後，Part VII 最後一個補章
-- **前置閱讀**：[Ch 36 Multi-Agent 系統設計](./ch-36-multi-agent.md)、[Ch 37 AI Coding Agent](./ch-37-coding-agent.md)、[補章 D](./chD-multi-agent.md)
-- **下游章節**：[Ch 39 Capstone](../part-08-synthesis/ch-39-capstone.md)
-- **強連結**：[補章 B Agentic QA](./chB-agentic-qa.md)、[補章 D](./chD-multi-agent.md)
+- **插入位置**：[Ch 40 Multi-Agent 共識](./ch-40-multi-agent.md) 之後，Part VII 最後一個補章
+- **前置閱讀**：[Ch 39 Multi-Agent 系統設計](./ch-39-multi-agent.md)、[Ch 43 AI Coding Agent](./ch-43-coding-agent.md)、[Ch 40](./ch-40-multi-agent.md)
+- **下游章節**：[Ch 47 Capstone](../part-08-synthesis/ch-47-capstone.md)
+- **強連結**：[Ch 45 Agentic QA](./ch-45-agentic-qa.md)、[Ch 40](./ch-40-multi-agent.md)
 
 ## 引用
 

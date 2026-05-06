@@ -1,7 +1,7 @@
 ---
-chapter: F
+chapter: 17
 part: III
-title: 補章 F|多模態與對話式互動的系統分析
+title: Ch 17|多模態與對話式互動的系統分析
 slug: cux
 agent: UI/UX
 skills_used:
@@ -13,13 +13,13 @@ status: migrated
 word_count_target: 6500
 ---
 
-# 補章 F|多模態與對話式互動的系統分析
+# Ch 17|多模態與對話式互動的系統分析
 ## ⸺ Multimodal & Conversational UX (CUX) Systems Analysis
 
 > **插入位置**:緊接 [Ch 16 UI/UX 與人機互動的系統觀](./ch-16-uiux-system-view.md) 之後
 > **前置閱讀**:[Ch 9 流程模型](../part-02-analysis/ch-09-process-modeling.md)、[Ch 16](./ch-16-uiux-system-view.md)
-> **下游章節**:[Ch 25 Security by Design](../part-05-quality/ch-25-security-by-design.md)
-> **延伸補章**:[補章 A 邊緣/OT-IT](../part-04-architecture/chA-edge-ot-it.md)、[補章 E Compliance](../part-05-quality/chE-compliance.md)
+> **下游章節**:[Ch 27 Security by Design](../part-05-quality/ch-27-security-by-design.md)
+> **延伸補章**:[Ch 26 邊緣/OT-IT](../part-04-architecture/ch-26-edge-ot-it.md)、[Ch 28 Compliance](../part-05-quality/ch-28-compliance.md)
 
 ---
 
@@ -200,10 +200,10 @@ flowchart TD
 
 **兩個踩坑**:
 
-- **不要把 30fps 整段送進雲端做推論** ⸺ 頻寬與成本會爆炸。一定要在 Edge 做 Frame Sampler(回看 [補章 A](../part-04-architecture/chA-edge-ot-it.md))。
+- **不要把 30fps 整段送進雲端做推論** ⸺ 頻寬與成本會爆炸。一定要在 Edge 做 Frame Sampler(回看 [Ch 26](../part-04-architecture/ch-26-edge-ot-it.md))。
 - **不要相信單張 frame 的判斷** ⸺ 用 Temporal Aggregation。例如「連續 3 張都偵測到跌倒姿態才告警」。
 
-**視覺即時串流的隱私問題**(跟 [補章 E](../part-05-quality/chE-compliance.md) 緊密相關):**攝影機是個資災區**。
+**視覺即時串流的隱私問題**(跟 [Ch 28](../part-05-quality/ch-28-compliance.md) 緊密相關):**攝影機是個資災區**。
 
 - **邊緣處理(Edge-Inference)**:只把判斷結果上傳,原始影像不上傳。
 - **即時去識別化(Real-time Anonymization)**:上傳前打馬賽克 / 替換臉部。
@@ -238,7 +238,7 @@ flowchart TD
 
 頻寬 + 成本 + 合規(個資)三方面都會出事。
 
-> ✅ **修正方向**:Edge-first inference。原始流不離開現場,只把判斷結果(+ 必要證據片段)上傳。隱私設計與 [補章 E](../part-05-quality/chE-compliance.md) 對齊:同意管理、去識別化、留存最小化、DPIA 在開工前做完。
+> ✅ **修正方向**:Edge-first inference。原始流不離開現場,只把判斷結果(+ 必要證據片段)上傳。隱私設計與 [Ch 28](../part-05-quality/ch-28-compliance.md) 對齊:同意管理、去識別化、留存最小化、DPIA 在開工前做完。
 
 ---
 
@@ -280,7 +280,7 @@ flowchart TD
 - [ ] 採樣決策圖
 - [ ] Edge-Inference 邊界
 - [ ] 去識別化策略
-- [ ] DPIA / 同意管理(對齊補章 E)
+- [ ] DPIA / 同意管理(對齊Ch 28)
 ````
 
 把這份清單放在 `docs/cux-design-pack/`,跟程式碼同 repo,跟 README 同層。
@@ -295,7 +295,7 @@ flowchart TD
 - [ ] 用 SDC 五層模型分析「感知 → 推論 → 決策」這一層,而不是強用 BPMN
 - [ ] 對對話流寫五條路徑 + 邊角案例,而非單一流程圖
 - [ ] 在不可逆動作上獨立設計信心門檻與多重驗證
-- [ ] 把視覺串流的隱私設計提前到 SA 階段(對齊 [補章 E](../part-05-quality/chE-compliance.md))
+- [ ] 把視覺串流的隱私設計提前到 SA 階段(對齊 [Ch 28](../part-05-quality/ch-28-compliance.md))
 
 如果四項中先挑一項做,建議是第二項 ⸺ 把現有系統試著畫一張 SDC 五層圖,你大概會立刻發現 Fusion 與 Irreversible Action 兩格之前沒人寫過。
 
@@ -304,8 +304,8 @@ flowchart TD
 ## Cross-References
 
 - **前置**:[Ch 9 流程模型](../part-02-analysis/ch-09-process-modeling.md)、[Ch 16 UI/UX](./ch-16-uiux-system-view.md)
-- **下游**:[Ch 25 Security by Design](../part-05-quality/ch-25-security-by-design.md)
-- **延伸補章**:[補章 A 邊緣/OT-IT](../part-04-architecture/chA-edge-ot-it.md)(Edge-Inference)、[補章 E Compliance](../part-05-quality/chE-compliance.md)(視覺隱私 / DPIA)
+- **下游**:[Ch 27 Security by Design](../part-05-quality/ch-27-security-by-design.md)
+- **延伸補章**:[Ch 26 邊緣/OT-IT](../part-04-architecture/ch-26-edge-ot-it.md)(Edge-Inference)、[Ch 28 Compliance](../part-05-quality/ch-28-compliance.md)(視覺隱私 / DPIA)
 
 ## 引用
 

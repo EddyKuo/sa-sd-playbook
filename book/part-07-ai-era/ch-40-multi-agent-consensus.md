@@ -1,7 +1,7 @@
 ---
-chapter: D
+chapter: 40
 part: VII
-title: 補章 D|Multi-Agent 共識、狀態與衝突解決
+title: Ch 40|Multi-Agent 共識、狀態與衝突解決
 slug: multi-agent-consensus
 agent: SA
 skills_used:
@@ -14,19 +14,19 @@ status: migrated
 word_count_target: 6500
 ---
 
-# 補章 D|Multi-Agent 共識、狀態與衝突解決
+# Ch 40|Multi-Agent 共識、狀態與衝突解決
 ## ⸺ Multi-Agent State Management & Consensus
 
-> **插入位置**:緊接 [Ch 36 Multi-Agent](./ch-36-multi-agent.md) 之後
-> **前置閱讀**:[Ch 21 微服務](../part-04-architecture/ch-21-microservices.md)、[Ch 22 EDA / CQRS / ES](../part-04-architecture/ch-22-event-driven-cqrs-es.md)、[Ch 36](./ch-36-multi-agent.md)
-> **下游章節**:[Ch 38 AI Eval](./ch-38-ai-eval-drift-redteam.md)
-> **延伸補章**:[補章 B Agentic QA](./chB-agentic-qa.md)
+> **插入位置**:緊接 [Ch 39 Multi-Agent](./ch-39-multi-agent.md) 之後
+> **前置閱讀**:[Ch 22 微服務](../part-04-architecture/ch-22-microservices.md)、[Ch 23 EDA / CQRS / ES](../part-04-architecture/ch-23-event-driven-cqrs-es.md)、[Ch 39](./ch-39-multi-agent.md)
+> **下游章節**:[Ch 44 AI Eval](./ch-44-ai-eval-drift-redteam.md)
+> **延伸補章**:[Ch 45 Agentic QA](./ch-45-agentic-qa.md)
 
 ---
 
-## D.1 冷觀察 ⸺ Ch 36 畫了拓樸,但沒談「他們不同意怎麼辦」
+## D.1 冷觀察 ⸺ Ch 39 畫了拓樸,但沒談「他們不同意怎麼辦」
 
-[Ch 36 Multi-Agent](./ch-36-multi-agent.md) 列出了 Multi-Agent 的五種模式(Augmented LLM、Prompt Chaining、Routing、Parallelization、Orchestrator-Workers、Evaluator-Optimizer)。[Ch 21 微服務](../part-04-architecture/ch-21-microservices.md) 與 [Ch 22 EDA](../part-04-architecture/ch-22-event-driven-cqrs-es.md) 談了傳統微服務的分散式交易(Saga、Outbox)。
+[Ch 39 Multi-Agent](./ch-39-multi-agent.md) 列出了 Multi-Agent 的五種模式(Augmented LLM、Prompt Chaining、Routing、Parallelization、Orchestrator-Workers、Evaluator-Optimizer)。[Ch 22 微服務](../part-04-architecture/ch-22-microservices.md) 與 [Ch 23 EDA](../part-04-architecture/ch-23-event-driven-cqrs-es.md) 談了傳統微服務的分散式交易(Saga、Outbox)。
 
 **但兩者沒有交叉**。
 
@@ -80,7 +80,7 @@ flowchart LR
 | **權威共識**(誰說了算) | 「這次申請該由 A 還是 B 簽核」 | RBAC + Workflow Engine |
 | **意義共識**(這代表什麼) | 「這封 email 是 P0 還是 P2」 | (傳統沒對應,人類來判斷) |
 
-[Ch 21](../part-04-architecture/ch-21-microservices.md) 的工具(Saga、Outbox)解決的是「資料共識」。Agent 系統最常需要的反而是**意義共識** ⸺ 這是傳統分散式系統幾乎沒處理過的問題。
+[Ch 22](../part-04-architecture/ch-22-microservices.md) 的工具(Saga、Outbox)解決的是「資料共識」。Agent 系統最常需要的反而是**意義共識** ⸺ 這是傳統分散式系統幾乎沒處理過的問題。
 
 ## D.3 決策框架 ⸺ Event Log、Bounded Negotiation、Distributed State Machine
 
@@ -272,9 +272,9 @@ state = llm_decision  # 把狀態本身交給 LLM 決定
 
 ## Cross-References
 
-- **前置**:[Ch 21 微服務](../part-04-architecture/ch-21-microservices.md)、[Ch 22 EDA](../part-04-architecture/ch-22-event-driven-cqrs-es.md)、[Ch 36 Multi-Agent](./ch-36-multi-agent.md)
-- **下游**:[Ch 38 AI Eval](./ch-38-ai-eval-drift-redteam.md)
-- **延伸補章**:[補章 B Agentic QA](./chB-agentic-qa.md)
+- **前置**:[Ch 22 微服務](../part-04-architecture/ch-22-microservices.md)、[Ch 23 EDA](../part-04-architecture/ch-23-event-driven-cqrs-es.md)、[Ch 39 Multi-Agent](./ch-39-multi-agent.md)
+- **下游**:[Ch 44 AI Eval](./ch-44-ai-eval-drift-redteam.md)
+- **延伸補章**:[Ch 45 Agentic QA](./ch-45-agentic-qa.md)
 
 ## 引用
 

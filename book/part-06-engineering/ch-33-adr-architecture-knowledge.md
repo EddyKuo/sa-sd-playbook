@@ -1,5 +1,5 @@
 ---
-chapter: 30
+chapter: 33
 part: VI
 title: 架構決策紀錄(ADR)與架構知識管理 — 把決策寫成「決定的化石」
 slug: adr-architecture-knowledge
@@ -14,11 +14,11 @@ status: draft
 word_count_target: 6000
 ---
 
-# 第 30 章|架構決策紀錄(ADR)與架構知識管理
+# 第 33 章|架構決策紀錄(ADR)與架構知識管理
 ## ⸺ 把決策寫成「決定的化石」
 
-> **前置閱讀**:[Ch 1 為什麼 SA/SD](../part-01-foundations/ch-01-why-sa-sd.md)、[Ch 17 DDD 戰術設計](../part-04-architecture/ch-17-ddd-strategic-tactical.md)、[Ch 19 C4 Model 與架構視覺化](../part-04-architecture/ch-19-c4-model-visualization.md)
-> **下游章節**:[Ch 31 Fitness Function 與演進式架構](./ch-31-fitness-functions.md)、[Ch 34 Context-Driven Engineering](../part-07-ai-era/ch-34-context-driven-engineering.md)
+> **前置閱讀**:[Ch 1 為什麼 SA/SD](../part-01-foundations/ch-01-why-sa-sd.md)、[Ch 18 DDD 戰術設計](../part-04-architecture/ch-18-ddd-strategic-tactical.md)、[Ch 20 C4 Model 與架構視覺化](../part-04-architecture/ch-20-c4-model-visualization.md)
+> **下游章節**:[Ch 34 Fitness Function 與演進式架構](./ch-34-fitness-functions.md)、[Ch 37 Context-Driven Engineering](../part-07-ai-era/ch-37-context-driven-engineering.md)
 > **延伸補章**:無
 
 ---
@@ -246,11 +246,11 @@ flowchart TD
 
 ### 30.3.7 ADR 與 C4 / Fitness Function 的整合節奏
 
-ADR 不是孤島。Ch 19 §19.3.6 已經談過 ADR 與 C4 的整合,Ch 31 將談 Fitness Function。三者的關係可以這樣定:
+ADR 不是孤島。Ch 20 §19.3.6 已經談過 ADR 與 C4 的整合,Ch 34 將談 Fitness Function。三者的關係可以這樣定:
 
-- **C4(Ch 19)= 決定棲息的地形**(系統長什麼形狀)
-- **ADR(Ch 30)= 決定的化石**(為什麼是這個形狀)
-- **Fitness Function(Ch 31)= 決定的看守者**(這個形狀有沒有偏離)
+- **C4(Ch 20)= 決定棲息的地形**(系統長什麼形狀)
+- **ADR(Ch 33)= 決定的化石**(為什麼是這個形狀)
+- **Fitness Function(Ch 34)= 決定的看守者**(這個形狀有沒有偏離)
 
 整合節奏:
 
@@ -287,7 +287,7 @@ OrbitPay 的核心病灶。`docs/adr/` 只有 11 份,全部時間戳是公司剛
 
 ADR 的價值不只在「有寫」,在「**寫的時候有人挑戰、寫完後有人定期 review**」。沒 review 程序的 ADR,跟個人 Notion 上的隨筆沒有差別。
 
-> ✅ **修正方向**:把 ADR 視為跟程式碼同等的工程產出,走相同 review 流程。具體做法:`docs/adr/` 在 GitHub `CODEOWNERS` 中指定 architecture team 為必審 reviewer;每份 ADR PR 至少 2 位 approve(其中一位必須是該領域 owner);每季度做一次「ADR audit」,掃所有 `Status: Accepted` 的 ADR 中是否有實際已被改變但沒 Supersede 的;建立 `relates-to` / `contradicts` 自動化檢查(見 Ch 31 fitness function)。
+> ✅ **修正方向**:把 ADR 視為跟程式碼同等的工程產出,走相同 review 流程。具體做法:`docs/adr/` 在 GitHub `CODEOWNERS` 中指定 architecture team 為必審 reviewer;每份 ADR PR 至少 2 位 approve(其中一位必須是該領域 owner);每季度做一次「ADR audit」,掃所有 `Status: Accepted` 的 ADR 中是否有實際已被改變但沒 Supersede 的;建立 `relates-to` / `contradicts` 自動化檢查(見 Ch 34 fitness function)。
 
 ### 反模式 4:ADR 寫成週報(沒寫 Consequences)
 
@@ -315,8 +315,8 @@ deciders: [@alice, @bob]
 supersedes: ADR-NNNN  # 可選
 superseded-by: ADR-NNNN  # 可選
 relates-to: [ADR-NNNN, ADR-NNNN]  # 可選
-linked-c4-view: L2_Container  # 可選,對應 Ch 19 workspace.dsl
-linked-fitness-function: scripts/fitness/{name}.sh  # 可選,對應 Ch 31
+linked-c4-view: L2_Container  # 可選,對應 Ch 20 workspace.dsl
+linked-fitness-function: scripts/fitness/{name}.sh  # 可選,對應 Ch 34
 ai-skill-hint: |
   Agent 載入此 ADR 時應理解的核心 invariant
   (例:「KMS rotation 週期 ≤ 90 天」「所有 PII 必須 at-rest 加密」)
@@ -393,7 +393,7 @@ ai-skill-hint: |
 
 > 本 repo 所有 Architecture Decision Records 索引。
 > 新增 ADR:複製 `template.md` → 編號取下一個未用 → 加入下表。
-> 判準:見 [Ch 30 §30.3.5 決策樹](./ch-30-adr-architecture-knowledge.md#3035-寫不寫-adr一張決策樹)。
+> 判準:見 [Ch 33 §30.3.5 決策樹](./ch-33-adr-architecture-knowledge.md#3035-寫不寫-adr一張決策樹)。
 
 ## 核心(Status: Accepted,Agent 應載入)
 
@@ -435,17 +435,17 @@ ai-skill-hint: |
 - [ ] 在會議上認得出四個反模式(每 commit 都寫 / 只在 kickoff 寫 / 沒 review 程序 / 沒寫 Consequences),並有一句話的修正方向可以接著說
 - [ ] 為手上的專案寫好一份 `docs/adr/template.md` + `docs/adr/README.md`(Index Card),並把第一份核心決策 ADR-0001 寫進去
 
-如果四項中先挑一項做完就好,建議是最後那一項 ⸺ 把專案最重要的那一個架構決策(通常是「為什麼選這個架構風格」)寫成 ADR-0001,跟 Ch 19 的 `workspace.dsl` 同一個 PR 進 repo。本章 ADR 是「為什麼是這個形狀」,Ch 19 C4 是「形狀長什麼樣」,Ch 31 Fitness Function 是「形狀有沒有偏離」⸺ 三章的 artifact 合在一起,構成一個系統「**可被傳遞的理解**」的最小完整劑量。
+如果四項中先挑一項做完就好,建議是最後那一項 ⸺ 把專案最重要的那一個架構決策(通常是「為什麼選這個架構風格」)寫成 ADR-0001,跟 Ch 20 的 `workspace.dsl` 同一個 PR 進 repo。本章 ADR 是「為什麼是這個形狀」,Ch 20 C4 是「形狀長什麼樣」,Ch 34 Fitness Function 是「形狀有沒有偏離」⸺ 三章的 artifact 合在一起,構成一個系統「**可被傳遞的理解**」的最小完整劑量。
 
 ---
 
 ## Cross-References
 
 - **回顧**:[Ch 1 §1.4 反模式 2](../part-01-foundations/ch-01-why-sa-sd.md#反模式-2用-adr-當週報) ⸺ 本章把那個反模式深化為四個
-- **回顧**:[Ch 17 DDD 戰術設計](../part-04-architecture/ch-17-ddd-strategic-tactical.md) ⸺ Bounded Context 邊界決策常產出 ADR
-- **回顧**:[Ch 19 C4 Model](../part-04-architecture/ch-19-c4-model-visualization.md) ⸺ ADR 對應 Container 圖的整合節奏
-- **下一章**:[Ch 31 Fitness Function 與演進式架構](./ch-31-fitness-functions.md) ⸺ 把 ADR 的 invariant 變成可機器驗證的看守者
-- **AI 時代脈絡**:[Ch 34 Context-Driven Engineering](../part-07-ai-era/ch-34-context-driven-engineering.md) ⸺ ADR 作為 AI Agent 的 Skill 知識來源
+- **回顧**:[Ch 18 DDD 戰術設計](../part-04-architecture/ch-18-ddd-strategic-tactical.md) ⸺ Bounded Context 邊界決策常產出 ADR
+- **回顧**:[Ch 20 C4 Model](../part-04-architecture/ch-20-c4-model-visualization.md) ⸺ ADR 對應 Container 圖的整合節奏
+- **下一章**:[Ch 34 Fitness Function 與演進式架構](./ch-34-fitness-functions.md) ⸺ 把 ADR 的 invariant 變成可機器驗證的看守者
+- **AI 時代脈絡**:[Ch 37 Context-Driven Engineering](../part-07-ai-era/ch-37-context-driven-engineering.md) ⸺ ADR 作為 AI Agent 的 Skill 知識來源
 
 ## 引用
 

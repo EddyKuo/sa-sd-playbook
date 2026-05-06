@@ -1,5 +1,5 @@
 ---
-chapter: 28
+chapter: 31
 part: V
 title: 資料架構 — Data Mesh、Lakehouse、Lakebase 是不同層級的問題不要混為一談
 slug: data-architecture
@@ -14,12 +14,12 @@ status: draft
 word_count_target: 6500
 ---
 
-# 第 28 章|資料架構
+# 第 31 章|資料架構
 ## ⸺ Data Mesh、Lakehouse、Lakebase 是不同層級的問題,不要混為一談
 
-> **前置閱讀**:[Ch 6 DFD 與資料血緣](../part-02-analysis/ch-06-dfd-structured-analysis.md)、[Ch 8 資料模型與正規化](../part-02-analysis/ch-08-data-modeling-normalization.md)、[Ch 15 資料儲存設計](../part-03-design/ch-15-data-storage.md)、[Ch 22 事件驅動架構](../part-04-architecture/ch-22-event-driven-cqrs-es.md)
-> **下游章節**:[Ch 33 AI-Native 架構](../part-07-ai-era/ch-33-ai-native-architecture.md)
-> **延伸補章**:[補章 E Compliance by Design](../part-05-quality/chE-compliance.md)
+> **前置閱讀**:[Ch 6 DFD 與資料血緣](../part-02-analysis/ch-06-dfd-structured-analysis.md)、[Ch 8 資料模型與正規化](../part-02-analysis/ch-08-data-modeling-normalization.md)、[Ch 15 資料儲存設計](../part-03-design/ch-15-data-storage.md)、[Ch 23 事件驅動架構](../part-04-architecture/ch-23-event-driven-cqrs-es.md)
+> **下游章節**:[Ch 36 AI-Native 架構](../part-07-ai-era/ch-36-ai-native-architecture.md)
+> **延伸補章**:[Ch 28 Compliance by Design](../part-05-quality/ch-28-compliance.md)
 
 ---
 
@@ -139,7 +139,7 @@ Bill Inmon(top-down warehouse)與 Ralph Kimball(dimensional modeling)[^CIT-283] 
 - **ETL**:1990s 起,Extract → Transform → Load。轉換在中間 ETL 工具(Informatica、Talend),目標是 warehouse。2020s 後常被詬病「轉換邏輯黑盒、版本控制困難」。
 - **ELT**:2010s 起,Extract → Load → Transform。先把 raw 資料丟進 warehouse / lake,在裡面用 SQL/dbt 轉換。dbt [^CIT-286] 把 ELT 的 transformation 層做成「SQL + Git + 測試」,2026 年是事實標準。
 - **Reverse ETL**:2020s 起,從 warehouse 把分析結果**推回**業務系統(Salesforce、HubSpot、CRM)。代表工具 Hightouch、Census。「資料倉儲是 source of truth、業務系統是消費者」這個方向在 2026 年成形。
-- **Streaming**:Kafka [^CIT-287] + Flink [^CIT-288],資料在事件流中即時處理。Ch 22 已詳論 Event-Driven,Streaming ETL 是它在資料層的延伸。
+- **Streaming**:Kafka [^CIT-287] + Flink [^CIT-288],資料在事件流中即時處理。Ch 23 已詳論 Event-Driven,Streaming ETL 是它在資料層的延伸。
 
 ### 28.2.4 三層問題的混淆,是 MedNexus 事故的根因
 
@@ -425,7 +425,7 @@ checks:
 
 > 對應 ADR:`docs/adr/NNNN-{slug}.md`
 > 撰寫日期:YYYY-MM-DD | 擁有人:{名字}
-> 對齊章節:Ch 6 資料血緣、Ch 8 模型、Ch 15 引擎、Ch 22 事件流、Ch 28 資料架構
+> 對齊章節:Ch 6 資料血緣、Ch 8 模型、Ch 15 引擎、Ch 23 事件流、Ch 31 資料架構
 
 ## 1. 三層問題對照(這個決定處理哪一層?)
 
@@ -487,7 +487,7 @@ checks:
 
 ## 8. Out of Scope(這個決定不解決什麼)
 
-- 這個決定**不**處理 {法規隱私 / 跨境 / PII masking}(走補章 E 合規路徑)
+- 這個決定**不**處理 {法規隱私 / 跨境 / PII masking}(走Ch 28 合規路徑)
 - 這個決定**不**改變 {某個既有 schema / 某個既有 Kafka topic}
 - 這個決定**不**負責 {歷史資料回填、雙寫、舊系統下線}(由 {另一份文件} 處理)
 ````
@@ -509,7 +509,7 @@ checks:
 - [ ] 在 Lakehouse 三大格式(Iceberg / Delta / Hudi)中,用「中立 vs Databricks 整合 vs streaming-first」三條取捨軸選一個主格式,**避免三家同時用**
 - [ ] 為手上的資料平台決定寫好一份 Data Architecture Decision Card,並把 Data Contract 寫成 YAML 進 CI
 
-如果四項中先挑一項做完就好,建議是最後那一項 ⸺ 把目前團隊正在討論「我們是不是要做 Data Mesh / 換 Lakehouse」的那個決定,寫成一張 Data Architecture Decision Card。寫到第 1 節「三層問題對照」就卡住的話,**那個決定本來就還沒到該做的時候**。下游 Ch 33 會接著談 AI-Native 架構,把這一章的 Lakebase 與 Data Contract 接到 AI Agent 自助查詢的場景。
+如果四項中先挑一項做完就好,建議是最後那一項 ⸺ 把目前團隊正在討論「我們是不是要做 Data Mesh / 換 Lakehouse」的那個決定,寫成一張 Data Architecture Decision Card。寫到第 1 節「三層問題對照」就卡住的話,**那個決定本來就還沒到該做的時候**。下游 Ch 36 會接著談 AI-Native 架構,把這一章的 Lakebase 與 Data Contract 接到 AI Agent 自助查詢的場景。
 
 ---
 
@@ -518,9 +518,9 @@ checks:
 - **回顧**:[Ch 6 DFD 與資料血緣](../part-02-analysis/ch-06-dfd-structured-analysis.md) ⸺ Data Lineage Card 是 Data Contract 的前身
 - **回顧**:[Ch 8 資料模型與正規化](../part-02-analysis/ch-08-data-modeling-normalization.md) ⸺ patient_id 語意對齊是跨院 encounter 表的前置
 - **回顧**:[Ch 15 資料儲存設計](../part-03-design/ch-15-data-storage.md) ⸺ Workload Profile 與引擎選型,Lakebase 在那章已埋下伏筆
-- **回顧**:[Ch 22 事件驅動架構](../part-04-architecture/ch-22-event-driven-cqrs-es.md) ⸺ Streaming ETL 是 EDA 在資料層的延伸
-- **下游**:[Ch 33 AI-Native 架構](../part-07-ai-era/ch-33-ai-native-architecture.md) ⸺ AI Agent 自助查詢時,Lakebase / Data Contract / Vector Index 三件事如何整合
-- **延伸補章**:[補章 E Compliance by Design](../part-05-quality/chE-compliance.md) ⸺ 跨院資料、PII、HIPAA / 個資法的合規路徑
+- **回顧**:[Ch 23 事件驅動架構](../part-04-architecture/ch-23-event-driven-cqrs-es.md) ⸺ Streaming ETL 是 EDA 在資料層的延伸
+- **下游**:[Ch 36 AI-Native 架構](../part-07-ai-era/ch-36-ai-native-architecture.md) ⸺ AI Agent 自助查詢時,Lakebase / Data Contract / Vector Index 三件事如何整合
+- **延伸補章**:[Ch 28 Compliance by Design](../part-05-quality/ch-28-compliance.md) ⸺ 跨院資料、PII、HIPAA / 個資法的合規路徑
 
 ## 引用
 
