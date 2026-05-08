@@ -23,7 +23,7 @@ word_count_target: 6500
 
 ---
 
-## 40.1 冷觀察 ⸺ Ch 39 畫了拓樸,但沒談「他們不同意怎麼辦」
+## 41.1 冷觀察 ⸺ Ch 39 畫了拓樸,但沒談「他們不同意怎麼辦」
 
 [Ch 39 Multi-Agent](./ch-40-multi-agent.md) 列出了 Multi-Agent 的五種模式(Augmented LLM、Prompt Chaining、Routing、Parallelization、Orchestrator-Workers、Evaluator-Optimizer)。[Ch 22 微服務](../part-04-architecture/ch-22-microservices.md) 與 [Ch 23 EDA](../part-04-architecture/ch-23-event-driven-cqrs-es.md) 談了傳統微服務的分散式交易(Saga、Outbox)。
 
@@ -69,7 +69,7 @@ flowchart LR
     class X,Y,Z,Q hot
 ```
 
-## 40.2 真問題 ⸺ 三種共識需求,不要混為一談
+## 41.2 真問題 ⸺ 三種共識需求,不要混為一談
 
 第一步是**承認需要的不是「一種共識」**。把它分成三類:
 
@@ -81,9 +81,9 @@ flowchart LR
 
 [Ch 22](../part-04-architecture/ch-22-microservices.md) 的工具(Saga、Outbox)解決的是「資料共識」。Agent 系統最常需要的反而是**意義共識** ⸺ 這是傳統分散式系統幾乎沒處理過的問題。
 
-## 40.3 決策框架 ⸺ Event Log、Bounded Negotiation、Distributed State Machine
+## 41.3 決策框架 ⸺ Event Log、Bounded Negotiation、Distributed State Machine
 
-### 40.3.1 解法 1:重建「中央但不單點」的共識層 — Event Log as Truth
+### 41.3.1 解法 1:重建「中央但不單點」的共識層 — Event Log as Truth
 
 最務實的解法,通常不是讓 Agent 自己達成共識,而是**設計一個受信任的共識層**。它不是一個 Agent,是一個**協議**。
 
@@ -105,7 +105,7 @@ sequenceDiagram
 
 這套等於把 Event Sourcing 升級為**多 Agent 的共享記憶與爭議仲裁機制**。每個 Agent 只能對 log 提出主張(propose),不能直接改變狀態。**這個模式現場用得最多**。它把問題從「分散式共識」轉化為「事件序列推論」,難度大幅下降。
 
-### 40.3.2 解法 1 強化版:兩階段共識(2-Phase Agreement)
+### 41.3.2 解法 1 強化版:兩階段共識(2-Phase Agreement)
 
 對於需要強一致性的場景(資金、庫存):
 
@@ -125,7 +125,7 @@ Phase 2 (Commit):
 - **Phase 1 的 NACK 可以包含「為什麼不同意」的推理**,而不只是 yes/no
 - **Phase 2 失敗的補償可以是 Agent 自己決定的**(例如「用另一個策略再嘗試」),不像資料庫只能 rollback
 
-### 40.3.3 解法 2:衝突解決協議(Bounded Negotiation)
+### 41.3.3 解法 2:衝突解決協議(Bounded Negotiation)
 
 當 Agent 之間真的需要協商(沒有共識層,或共識層也搞不定的意義衝突),需要一個**明確的協商協議**。
 
@@ -160,7 +160,7 @@ flowchart TD
 | **領域專家 Agent** | 採購衝突中引入「採購 SOP Agent」做仲裁,它有完整政策知識 |
 | **人類** | 最後手段,但要設計成易接入(把所有 context 整理成一頁摘要,人類點 A/B 即可) |
 
-### 40.3.4 解法 3:分散式狀態機(Distributed State Machine)
+### 41.3.4 解法 3:分散式狀態機(Distributed State Machine)
 
 當 Agent 之間有複雜的多步協作(比 Saga 更複雜),需要顯式的**分散式狀態機**。
 
@@ -188,7 +188,7 @@ state = llm_decision  # 把狀態本身交給 LLM 決定
 
 ---
 
-## 40.4 踩坑清單 ⸺ Multi-Agent 共識失敗速查
+## 41.4 踩坑清單 ⸺ Multi-Agent 共識失敗速查
 
 ### 反模式 1:Agent 之間無限對話
 
@@ -216,7 +216,7 @@ state = llm_decision  # 把狀態本身交給 LLM 決定
 
 ---
 
-## 40.5 交付清單
+## 41.5 交付清單
 
 完成本章後,讀者應產出:
 
@@ -255,7 +255,7 @@ state = llm_decision  # 把狀態本身交給 LLM 決定
 
 ---
 
-## 40.6 Recap
+## 41.6 Recap
 
 讀完本章,應該已經能做到:
 

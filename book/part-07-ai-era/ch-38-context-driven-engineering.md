@@ -23,7 +23,7 @@ word_count_target: 6500
 
 ---
 
-## 34.1 冷觀察 ⸺ 三個月生產力 2x,然後歸零
+## 38.1 冷觀察 ⸺ 三個月生產力 2x,然後歸零
 
 我在 2026 年 3 月,看過一個虛構電商平台 **AisleNova**(`CASE-ECM-008`)的內部覆盤紀錄。AisleNova 做台灣與越南的中型 D2C 平台,28 名工程師,2025 年 11 月全員導入 Cursor + Claude Code,前三個月 Jira 上的 story point 完成數從每雙週 220 飆到 480。CTO 在公司全員會議上放了那張曲線圖,標題寫:
 
@@ -74,7 +74,7 @@ Ch 1 講的是「決策失憶」會把 PayLoop 在 180 天炸掉;這一章要講
 
 ---
 
-## 34.2 真問題 ⸺ Vibe Coding 的甜蜜陷阱與 CDE 的三層必要性
+## 38.2 真問題 ⸺ Vibe Coding 的甜蜜陷阱與 CDE 的三層必要性
 
 Andrej Karpathy 在 2025 年初提出 *Software 3.0* 概念 [^CIT-340],把寫程式分成三個世代:Software 1.0 是人類寫程式碼、Software 2.0 是訓練模型權重、Software 3.0 是用自然語言指揮 LLM 完成任務。他在同一場演講順手丟出 *vibe coding* 這個詞,描述「跟著感覺走、看 AI 寫得對不對再修」的開發節奏。這個詞被誤讀成「AI 時代的新工法」,但 Karpathy 自己後來補充:vibe coding 適合**週末玩具專案**,不適合需要交接、需要合規、需要長期維護的系統。
 
@@ -82,7 +82,7 @@ Andrej Karpathy 在 2025 年初提出 *Software 3.0* 概念 [^CIT-340],把寫程
 
 換句話說,vibe coding 的天花板是「個人最強工程師的水準」;CDE 的天花板是「組織最強知識的水準」。兩者差一個量級。
 
-### 34.2.1 為什麼小專案撞不到牆,大專案會
+### 38.2.1 為什麼小專案撞不到牆,大專案會
 
 | 維度 | Vibe Coding 在小專案 | Vibe Coding 在大專案 |
 |---|---|---|
@@ -95,7 +95,7 @@ Andrej Karpathy 在 2025 年初提出 *Software 3.0* 概念 [^CIT-340],把寫程
 
 AisleNova 撞牆的位置是右欄。他們的程式碼超過 60 萬行、12 個服務、4 個團隊;Cursor 的 context window 即使 1M token 也只能裝 5–8% 的 codebase,而那 5–8% 該裝什麼,**沒有契約規範就只能靠工程師當下的記憶**。資深工程師記憶好,新人記憶差,離職的人記憶帶走。生產力曲線回到原點,是這個結構的必然結果。
 
-### 34.2.2 CDE 的核心定義:三件事的轉換
+### 38.2.2 CDE 的核心定義:三件事的轉換
 
 Context-Driven Engineering 不是 Anthropic 發明的口號。它是 2025 下半年起 Eventuallymaking、Latent Space、ManoMano、Brevo 等多家工程部落格陸續歸納出的工程實踐通稱 [^CIT-348]。它的核心主張可以用一句話說完:
 
@@ -109,7 +109,7 @@ Context-Driven Engineering 不是 Anthropic 發明的口號。它是 2025 下半
 
 換句話說,CDE 真正在處理的是「**讓 AI 從會話結束就消失的副駕駛,變成 repo 內可被傳遞的同事**」。這條路徑跟 SA/SD 三十年的演化邏輯一致:從個人經驗,走向可被傳遞的理解。差別只在 2026 的傳遞對象多了一類非人類讀者。
 
-### 34.2.3 為什麼必須是「三層」而不是「一層」
+### 38.2.3 為什麼必須是「三層」而不是「一層」
 
 現場最常見的失敗,是把所有 AI 協作規範塞進同一個 CLAUDE.md ⸺ 結果是一份 6,000 字、什麼都寫又什麼都不夠細的長文件。Anthropic 在 2025 年 10 月公開的 Claude Code Skills 系統 [^CIT-341] 跟 OpenAI / Cursor 採納的 agents.md 開放規範 [^CIT-342] 都不約而同走向**三層分工**:
 
@@ -121,11 +121,11 @@ Context-Driven Engineering 不是 Anthropic 發明的口號。它是 2025 下半
 
 ---
 
-## 34.3 決策框架 ⸺ Constitution / Role / Skill 三層分工
+## 38.3 決策框架 ⸺ Constitution / Role / Skill 三層分工
 
 下面這幾張表跟兩張 Mermaid,在現場相當好用。它們的共同前提是:**CDE 不是把 prompt 寫得更長,是把 prompt 拆得更結構化**。
 
-### 34.3.1 三層分工表
+### 38.3.1 三層分工表
 
 | 層級 | 對應檔案 | 變動頻率 | 寫給誰看 | 內容範例 |
 |---|---|---|---|---|
@@ -135,7 +135,7 @@ Context-Driven Engineering 不是 Anthropic 發明的口號。它是 2025 下半
 
 AisleNova 後來重整時,把原本那份 6,000 字的 `.cursorrules` 拆成:`CLAUDE.md`(420 字)+ 7 份 Role 檔(每份約 800 字)+ 32 份 Skill(每份 200–600 字)。**總字數變多,但每份的責任邊界變清楚**,新人 onboarding 時間從 12 週縮到 5 週。
 
-### 34.3.2 Skill 三要素契約
+### 38.3.2 Skill 三要素契約
 
 Skill 是 CDE 三層裡最容易寫壞的一層。Anthropic 的 Skill spec [^CIT-341] 把 Skill 定義為三要素契約,缺一不可:
 
@@ -147,7 +147,7 @@ Skill 是 CDE 三層裡最容易寫壞的一層。Anthropic 的 Skill spec [^CIT
 
 **Skill 寫成「prompt 集合」是最常見的失敗**。一份 Skill 如果只是 800 字的「請你做以下事情:1. … 2. … 3. …」,那它本質上還是 vibe coding,只是換了存放位置。正確的 Skill 是「能力 + 工具 + 知識來源」的三要素契約 ⸺ Agent 載入後得到的是**何時觸發**(Description)、**能動什麼**(Allowed Tools)、**該讀什麼脈絡**(Knowledge Sources),而不是「請按以下步驟做」。
 
-### 34.3.3 Subagent 適用場景判準
+### 38.3.3 Subagent 適用場景判準
 
 Subagent 是 Claude Code 在 2025 年下半年推出的協作模式 [^CIT-343]:主 Agent 把特定任務委派給專責的子 Agent,子 Agent 有自己的 context window、自己的 Allowed Tools、自己的 system prompt。這個機制聽起來很美,但**不是所有任務都該開 Subagent**。
 
@@ -175,7 +175,7 @@ flowchart TD
 
 可以抄走的判準:**Subagent 適合「邊界清楚 + 知識來源差異大」的任務**(例如:SA 寫 spec、RD 寫程式、QA 寫測試)。不適合「需要持續對話協商」的任務(例如:跟 PM 釐清需求、跟客戶 demo)⸺ 那種任務開 Subagent 會讓 context 在主 Agent 與 Subagent 之間反覆來回,反而變慢。
 
-### 34.3.4 ADR ↔ Skill 連動機制
+### 38.3.4 ADR ↔ Skill 連動機制
 
 Ch 33 提過,ADR 在 2026 年的雙重角色:對人是「決定的化石」,對 Agent 是 Skill 的 Knowledge Source。把這個連動畫成圖會比較清楚:
 
@@ -227,7 +227,7 @@ flowchart LR
 
 這張圖的關鍵在左半邊到中間的虛線:**SA/SD 的 artifact 不是「另外給 AI 看的副本」,而是直接被 Skill 引用**。AisleNova 後來定的紀律是:每份 `Status: Accepted` 的 ADR 在 frontmatter 加 `cde-skill-binding: skill-name`,該 Skill 的 Knowledge Sources 自動包含此 ADR 的路徑。當 ADR 被 Supersede,對應 Skill 的 Knowledge Sources 自動更新,**Agent 就不會在新場景下再參考舊決策**。
 
-### 34.3.5 三層的決策樹:這次該寫在哪一層?
+### 38.3.5 三層的決策樹:這次該寫在哪一層?
 
 | 問題類型 | 該寫在 |
 |---|---|
@@ -241,7 +241,7 @@ flowchart LR
 
 ---
 
-## 34.4 踩坑清單
+## 38.4 踩坑清單
 
 下面這四個反模式,在 ecommerce、saas、fintech 各種領域都常見。它們的共同點是「**有導入 CDE 形式,但脈絡沒有真的被傳遞**」。
 
@@ -267,11 +267,11 @@ AisleNova 早期的失敗。他們開了 Orchestrator / PM / SA / RD / QA 五個
 
 某虛構 fintech 寫了一份 Skill `payment-retry-policy/SKILL.md`,描述當 Stripe 失敗時的重試邏輯。半年後 ADR-0042 拍板「改為走 Stripe 的 idempotent retry,不再自實作」⸺ 但 Skill 沒更新。工程師用 Cursor 寫新功能時,Agent 載入 Skill 後仍然按舊邏輯產出自實作的重試,PR 被 reviewer 退回三次後才有人發現 Skill 跟 ADR 脫節。
 
-> ✅ **修正方向**:Skill 與 ADR 走雙向連結。Skill 的 Knowledge Sources 必須列出對應 ADR 路徑;ADR 的 frontmatter 加 `cde-skill-binding`(Ch 33 §30.5 模板已預留 `ai-skill-hint` 欄位)。在 CI 加一條 fitness function:當 ADR Status 改為 `Superseded`,自動掃所有引用此 ADR 的 Skill 並開 issue 提示 review。讓「決策化石」與「能力契約」之間有自動化的看守者,避免靠人的記憶維護一致性。
+> ✅ **修正方向**:Skill 與 ADR 走雙向連結。Skill 的 Knowledge Sources 必須列出對應 ADR 路徑;ADR 的 frontmatter 加 `cde-skill-binding`(Ch 33 §33.5 模板已預留 `ai-skill-hint` 欄位)。在 CI 加一條 fitness function:當 ADR Status 改為 `Superseded`,自動掃所有引用此 ADR 的 Skill 並開 issue 提示 review。讓「決策化石」與「能力契約」之間有自動化的看守者,避免靠人的記憶維護一致性。
 
 ---
 
-## 34.5 交付清單 ⸺ CDE Setup Card + 完整 SKILL.md 範例
+## 38.5 交付清單 ⸺ CDE Setup Card + 完整 SKILL.md 範例
 
 每個專案要導入 CDE 時,**第一份要產出的不是 CLAUDE.md,是 CDE Setup Card**。它是一頁 Markdown,寫不滿一頁就是寫得不對,寫超過一頁也是寫得不對。
 
@@ -323,7 +323,7 @@ AisleNova 早期的失敗。他們開了 Orchestrator / PM / SA / RD / QA 五個
 
 **為什麼是一頁?** 跟 System Charter 同樣的理由:一頁的篇幅會自然逼出選擇。CDE 的價值在「結構清楚」,不在「內容豐富」⸺ 結構不清楚的時候,內容越豐富越容易出事。
 
-### 34.5.1 完整 SKILL.md 範例(電商訂單狀態機)
+### 38.5.1 完整 SKILL.md 範例(電商訂單狀態機)
 
 下面這份是 AisleNova 重整後的核心 Skill 之一,可直接抄走改寫。它對應 `CASE-ECM-008` 的訂單退款場景,Knowledge Sources 引用了三份 ADR、兩個程式碼路徑、一份外部文檔。
 
@@ -413,7 +413,7 @@ linked-adrs:
 
 ---
 
-## 34.6 本章交付清單 Recap
+## 38.6 本章交付清單 Recap
 
 讀完本章,你應該已經能做到:
 
