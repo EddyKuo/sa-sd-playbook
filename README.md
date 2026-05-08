@@ -61,7 +61,7 @@ flowchart TD
 flowchart LR
     A["冷觀察<br/>真實案例現場"] --> B["真問題<br/>拆解根本原因"]
     B --> C["決策框架<br/>表格 / 決策樹 / 對比矩陣"]
-    C --> D["踩坑 + 交付清單<br/>反模式 + 可帶走模板"]
+    C --> D["踩坑 + 交付清單<br/>反模式 + 模板 + 填好範例"]
 
     classDef tense fill:#fee2e2,stroke:#dc2626
     classDef steady fill:#fef3c7,stroke:#d97706

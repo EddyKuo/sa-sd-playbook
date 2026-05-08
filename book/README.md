@@ -41,7 +41,7 @@ book/
 - **總篇數**：47 篇（主章 39 章 + 補章 7 章 + Capstone 1 章 + 人類工程師補章 1 章）
 - **總字元**：約 174 萬（中文約 107 萬字）
 - **平均每章**：~28,000 字元
-- **可帶走 artifact**：51 份（每章一頁式模板）
+- **可帶走 artifact**：每章一頁式模板 + 一份填好的具體範例（§X.5 格式見 [conventions.md §12](./conventions.md#12-x5-交付清單格式--模板--填好範例--欄位註解)）
 - **虛構案例**：49 個（fintech / ecommerce / saas / healthcare / energy 五領域均衡）
 - **術語**：280+ 條（[附錄 F](annex-f-glossary.md)）
 - **引用**：318+ 條（[附錄 G](annex-g-citations.md)）

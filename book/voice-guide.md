@@ -15,7 +15,7 @@
 1. **冷觀察** — 現場、衝突、引子
 2. **真問題** — 把表面需求拆開來看,指出真正在處理的是什麼
 3. **決策框架 / 模式** — 可抄走用的判準、表格、Mermaid
-4. **踩坑清單 + 交付清單** — 常見地雷與可帶走的 artifact 模板
+4. **踩坑清單 + 交付清單** — 常見地雷與可帶走的 artifact 模板(§X.5 結構詳見 [conventions.md §12](./conventions.md#12-x5-交付清單格式--模板--填好範例--欄位註解):空白模板 + 填好範例 + 欄位註解)
 
 ## 2.1 Tonal Arc(語氣弧線,硬規)
 
@@ -94,7 +94,7 @@ TENSE           STEADY          COACHING        CONSTRUCTIVE
 - ≥ 1 決策表
 - ≥ 1 案例(已註冊 `_refs/case-registry.yaml`)
 - ≥ 1 反模式(Anti-Pattern)
-- ≥ 1 可帶走 artifact 模板(章末交付清單)
+- ≥ 1 可帶走 artifact 模板 + ≥ 1 對應的填好範例(章末交付清單,格式見 [conventions.md §12](./conventions.md#12-x5-交付清單格式--模板--填好範例--欄位註解))
 
 ## 5. 案例輪替
 
