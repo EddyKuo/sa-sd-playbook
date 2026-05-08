@@ -5,6 +5,7 @@ CLAUDE.md
 # 開發規劃文件
 plan.md
 plan.md.test
+plan-*.md
 extract_logs.py
 
 # 編輯器設定
