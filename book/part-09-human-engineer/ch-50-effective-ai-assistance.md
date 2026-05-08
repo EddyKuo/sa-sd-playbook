@@ -161,7 +161,7 @@ GridForge 是一個 B2B SaaS 工作流自動化平台，服務對象是
 
 ---
 
-## 50.4 踩坑清單與交付清單
+## 50.4 踩坑清單
 
 ### 常見反模式
 
@@ -197,7 +197,7 @@ GridForge 是一個 B2B SaaS 工作流自動化平台，服務對象是
 
 ---
 
-### 交付清單
+## 50.5 交付清單 ⸺ 一頁式 CLAUDE.md + 委派配置卡
 
 **可帶走 Artifact：GridForge 式 CLAUDE.md 模板**
 
@@ -236,7 +236,55 @@ GridForge 是一個 B2B SaaS 工作流自動化平台，服務對象是
 
 ---
 
-## 50.5 本章交付清單 Recap
+### 50.5.1 範例：GridForge 第六個月該寫卻沒寫的那份 CLAUDE.md
+
+GridForge（`CASE-SAS-011`）28 個工程師裡有 23 種 CLAUDE.md，等於 23 種失憶的同事。下面這份是事後整理出來、本來應該在導入 Cursor 第一週就放進 `repo:/CLAUDE.md` 的版本：
+
+````markdown
+# GridForge Workflow Platform — CLAUDE.md
+> 版本: v1.0   最後更新: 2026-03-12   維護者: Platform Team
+
+## 1. 專案定位
+GridForge 是一個 B2B SaaS 工作流自動化平台，服務對象是中型製造業 IT 部門。
+核心產品是可視化規則引擎與觸發器系統，跨多 workspace 多租戶。
+
+## 2. 技術棧
+- Backend: Spring Boot 3.3, Java 21, PostgreSQL 17
+- Frontend: React 19, TypeScript 5.4, Tailwind 3.x
+- Infra: Kubernetes 1.31, Istio 1.22, Kafka 3.7
+- AI: Claude Sonnet 4.6（內部工具）
+
+## 3. 架構禁令
+<!-- 為什麼這欄:這四條是過去 6 個月 PR 出事最頻繁的位置;
+     沒寫進來,AI 會以「通常做法」蓋過 GridForge 的歷史決策。 -->
+- 禁止:在 domain 層直接依賴 infrastructure（Clean Architecture，ADR-014）
+- 禁止:用 @Transactional 跨越 Bounded Context 邊界
+- 禁止:前端 component 直接呼叫 API，一律走 custom hook
+- 注意:方案升降必須先寫 plan_change_events，再更新 subscriptions.plan_id（同單交易）
+
+## 4. 業務術語對照
+<!-- 為什麼這欄:這三個詞在 GridForge 與工業界的「常識」意思不一致;
+     不對齊就會把 K8s 的 namespace、DB 的 trigger 當成 Workspace 與 Trigger。 -->
+| 術語 | 在 GridForge 的意義 | 常見混淆 |
+|---|---|---|
+| Workspace | 多租戶頂層隔離單位 | ≠ Organization、≠ K8s namespace |
+| Rule | 業務規則邏輯單元 | ≠ DB row-level security |
+| Trigger | 自動執行規則的事件 | ≠ DB trigger |
+
+## 5. 常見陷阱
+1. `plan_id` 在 subscriptions 是「當前生效方案」，在 plan_change_events 是「升降前方案 ID」
+2. 所有金額單位是分（cents），DB schema 與 API 一致；UI 才換算
+3. Workspace 之間的資料完全隔離，不要寫「跨 workspace 聚合」的查詢
+
+## 6. 本 Sprint 優先級
+> 當前 Sprint 目標:把 Trigger 模組從 polling 改為 Kafka consumer
+> 本 Sprint 不做:Workspace 之間的 Rule 共享（已在 ADR-018 暫緩）
+````
+這份不到一頁的東西,**換的是讓 AI 每次對話不再從第一天 onboarding 開始**。第二層、第三層的 Context 才有地方往上長。
+
+---
+
+## 50.6 本章交付清單 Recap
 
 讀完本章，你應該已經能做到：
 

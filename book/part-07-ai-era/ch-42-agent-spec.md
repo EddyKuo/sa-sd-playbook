@@ -366,7 +366,7 @@ skills/
 
 ---
 
-## 42.4 踩坑與交付清單
+## 42.4 踩坑清單
 
 ### 42.4.1 五個常見反模式
 
@@ -414,7 +414,7 @@ Agent 設定語言正在快速演進。已知的高變動風險點：
 
 **SA 的應對策略**：關注四要素（Identity、Capabilities、Instruction、Coordination）的**語意設計**，而非特定廠商的**語法細節**。語意設計的壽命和需求文件一樣長；語法細節的壽命和 SDK 版本一樣短。
 
-### 42.4.3 SA 的 Agent 設計審查清單
+## 42.5 交付清單 ⸺ 一頁式 Agent 設計審查清單（5 層）
 
 **可帶走 Artifact：SA Agent 設計審查清單**
 
@@ -449,9 +449,50 @@ Agent 設定語言正在快速演進。已知的高變動風險點：
 - [ ] Layer 2 的 token 預估值在可接受範圍內（< 5,000 tokens / agent）
 ```
 
+### 42.5.1 範例：Caldwell Systems 退款 Agent 該過卻沒過的那五層審查
+
+如果 Caldwell Systems（`CASE-SAS-013`）那位 SA 主管被拉進來時，手上有一份這樣填好的審查表，她不必花兩天翻程式碼——兩小時就能指出哪幾個 Agent 還沒準備好上線。下面是事故覆盤後補做的 `RefundAgent` 那一張：
+
+````markdown
+## SA Agent 設計審查清單
+系統：Caldwell ERP 客服 Agent 群（v0.4）   審查者：SA Lead   日期：2026-02-18
+
+### Identity 層
+<!-- 為什麼這欄：兩個 Agent 同時認領一張退款單，比兩個都不認領更貴；
+     name + description + trigger 三件套不齊就是在賭運氣。 -->
+- [x] `RefundAgent`，description 已寫明「處理 ≤ NTD 50,000 的客訴退款」
+- [ ] **協調角色尚未標注**——目前同時被 Orchestrator 和 BillingAgent 呼叫，行為不一致
+- [x] 對應需求文件 SRS-CS-04「客服自助退款」Actor
+
+### Capabilities 層
+<!-- 為什麼這欄：退款工具的授權範圍直接等於「Agent 一句話可以燒掉多少錢」；
+     沒鎖死敏感工具，下一次 prompt injection 就是新聞稿素材。 -->
+- [x] 工具清單：`lookup_order` / `issue_refund` / `notify_customer`
+- [ ] **`issue_refund` 未做金額上限授權**——目前任意金額都能呼叫
+- [ ] 敏感工具（`issue_refund`）獨立審查紀錄缺失
+
+### Instruction 層
+<!-- 為什麼這欄：4,000 字硬塞在程式碼字串裡，等於把業務規則藏在沒人 review 的地方；
+     版本漂移三個月後沒人知道哪句是現行規則。 -->
+- [ ] **System Prompt 仍硬編碼於 Python 字串**，未提取為 agent.md
+- [ ] 三段式結構未採用，業務規則與輸出格式混在同一段落
+- [ ] 全域術語表（「客訴」「異常退款」定義）重複出現在四個 Agent 的 prompt 裡
+
+### Coordination 層
+- [ ] **同時用 Manager 和 Handoff，無明文選擇理由**
+- [ ] Orchestrator → RefundAgent 的 payload schema 未定義
+- [x] 失敗回傳路徑（金額超限）已設計，但未測試
+
+### Progressive Disclosure
+- [x] Layer 1 / 2 / 3 雛形存在
+- [ ] **Layer 2 token 預估超過 8,000**（含重複的全域規格）
+````
+
+填完這一張，SA 不用再口頭說「文件不齊」——**未打勾的格子就是下一個 sprint 的 backlog**，每一條都對應一個可以指派、可以驗收的任務。
+
 ---
 
-## 42.5 本章交付清單 Recap
+## 42.6 本章交付清單 Recap
 
 讀完本章，你應該已經能做到：
 
@@ -459,7 +500,7 @@ Agent 設定語言正在快速演進。已知的高變動風險點：
 - [ ] 在三家廠商（Anthropic / OpenAI / Google ADK）的格式中，看懂各欄位對應的語意，而不被語法差異干擾
 - [ ] 根據業務情境選擇 Manager Pattern 或 Handoff Pattern，並寫下選擇理由
 - [ ] 設計系統提示（System Prompt）的三段式結構（角色定位 → 行為規範 → 輸出規格）
-- [ ] 對一個 Multi-Agent 系統做 SA 設計審查，完成 H.4.3 的交付清單
+- [ ] 對一個 Multi-Agent 系統做 SA 設計審查，完成 §42.5 的五層交付清單
 
 如果先挑一項做，建議是 ⸺ **用四要素框一個現有系統的某個 Agent**，理由是它立刻讓你看見哪個欄位是空的、哪個欄位沒有文件依據——那就是下一個設計工作的起點。
 
