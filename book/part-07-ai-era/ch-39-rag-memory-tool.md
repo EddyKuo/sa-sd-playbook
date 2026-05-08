@@ -183,7 +183,7 @@ ORDER BY f.rrf_score DESC
 LIMIT 20;  -- 給 reranker
 ```
 
-注意三件事:`tenant_id` 在每個 CTE 都要寫(這是 [Ch 28](../part-05-quality/ch-28-compliance.md) §E.4 的硬規,vector index 共用必須靠 row-level filter 隔離);`LIMIT 50` 是經驗值,RRF 在 top-50 內最穩;最終取 top-20 給 reranker,reranker 才取最終 top-5 給 LLM。
+注意三件事:`tenant_id` 在每個 CTE 都要寫(這是 [Ch 28](../part-05-quality/ch-28-compliance.md) §28.2.3 的硬規,vector index 共用必須靠 row-level filter 隔離);`LIMIT 50` 是經驗值,RRF 在 top-50 內最穩;最終取 top-20 給 reranker,reranker 才取最終 top-5 給 LLM。
 
 ### 39.3.3 Chunking 四種
 
@@ -356,7 +356,7 @@ Anthropic Claude 在 2025 把 context 推到 1M token [^CIT-356],Gemini 2.5 Pro 
 
 Demo 階段最酷的功能:「Agent 直接幫你轉帳」。生產階段最快變新聞的功能也是同一個。LLM 在 99% 的情況都對,但金融場景的 1% 不能丟。
 
-> ✅ **修正方向**:寫操作 tool 預設兩段式:第一段 `prepare_transfer` 回傳一個 `confirmation_token` 與 dry-run 預覽;第二段 `execute_transfer(confirmation_token, user_signed_otp)` 才真的執行,且需要使用者額外簽核(OTP / passkey)。Agent 永遠拿不到「直接執行」的權限。這條規則對應 [Ch 27 Security by Design](../part-05-quality/ch-27-security-by-design.md) 與 [Ch 28](../part-05-quality/ch-28-compliance.md) §E.6 的 human oversight 要求。
+> ✅ **修正方向**:寫操作 tool 預設兩段式:第一段 `prepare_transfer` 回傳一個 `confirmation_token` 與 dry-run 預覽;第二段 `execute_transfer(confirmation_token, user_signed_otp)` 才真的執行,且需要使用者額外簽核(OTP / passkey)。Agent 永遠拿不到「直接執行」的權限。這條規則對應 [Ch 27 Security by Design](../part-05-quality/ch-27-security-by-design.md) 與 [Ch 28](../part-05-quality/ch-28-compliance.md) §28.3.1 的人類監督 要求。
 
 ---
 

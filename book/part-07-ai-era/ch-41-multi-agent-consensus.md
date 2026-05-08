@@ -117,7 +117,7 @@ Phase 1 (Propose):
 
 Phase 2 (Commit):
   若全部 ACK → Coordinator 寫入 → 通知全體
-  若有 NACK → 啟動衝突解決(見 D.3.3)
+  若有 NACK → 啟動衝突解決(見 §41.3.3)
 ```
 
 這在 Agent 世界跟資料庫的 2PC 在概念上一樣,但有兩個關鍵差異:
