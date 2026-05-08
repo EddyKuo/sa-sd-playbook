@@ -403,6 +403,69 @@ flowchart TD
 
 **為什麼第 6 題寫「預設要看過細節」而不是「預設按確認」?** 這就是 NorthVale 那一場事故的本質。預設值決定行為,不是 UI 文案決定行為。
 
+### 37.5.1 範例:NorthVale ER Triage 重構後的 Vision Card
+
+NorthVale(`CASE-HCR-007`)在那位 58 歲胸痛病人事故覆盤後第八週,把當初「沒寫」的這頁補上。下面這份就是他們重構時放進 git 的版本 ⸺ 同一份系統,定位從「AI-Native」往回拉到「AI-Augmented」,確定性層被獨立出來:
+
+````markdown
+# AI-Native System Vision Card — NorthVale ER Triage v2
+
+> 撰寫日期:2026-03-22 | 擁有人:Karen(病安長)+ Jason(架構師)
+> 對齊:System Charter v0.4、ADR-0017(DMN 紅旗表)、ADR-0019(LLM Fallback)
+> 狀態:Approved(急診醫學會 + 法遵 + 病安委員會三方簽核)
+
+## 1. 定位選擇(勾一個)
+
+- [ ] AI-Embedded
+- [x] **AI-Augmented**:護理師 + LLM 雙線,LLM 斷掉時走純 DMN 紅旗表 + 人工分流
+- [ ] AI-Native
+<!-- 為什麼這欄:當初寫「AI-First」其實做的是 AI-Dependent;
+     拉回 Augmented 是承認「臨床最後一道閘門不能交給機率模型」。 -->
+
+**理由**:STEMI 漏判代價是命,LLM hallucination rate 在 triage 場景 SME 標註下仍有 3.4%,不可作為唯一決策。
+
+## 2. Litmus Test
+
+> 把 LLM 整體拿掉(回應 503),使用者旅程是否還能成立?
+
+- [ ] 仍可成立
+- [x] **降級可成立**:走 DMN 紅旗表 + 護理師既有 ESI 訓練(LLM 上線前的流程)
+- [ ] 完全不可成立
+
+## 3. 業務風險分級
+
+- [x] 業務領域涉及「會死人」 → 預設值是 **Embedded**;選 Augmented **強制**三支柱(HITL + Circuit Breaker + Audit)
+
+## 5. 確定性層 vs 非確定性層邊界
+<!-- 為什麼這欄:NorthVale 事故的根因就在這條邊界從沒被畫出來;
+     胸痛 / 頭部外傷 / 呼吸困難屬於確定性層,不該由 LLM 排序。 -->
+- 確定性層:DMN 紅旗規則表(急醫會審核,12 條主訴 → ESI ≤ 2 強制)、ESI 寫入動作、paging 動作
+- 非確定性層:**僅在紅旗表未命中時** 由 LLM 給 ESI 3–5 建議 + 候診時間文案
+- 契約:LLM output schema 鎖死 `{esi: 3|4|5, rationale: string, citations: FHIR_ref[]}`
+
+## 6. HITL 觸發點
+
+| 動作 | HITL 觸發策略 | 確認方式 |
+|---|---|---|
+| 紅旗命中(ESI ≤ 2) | 強制 + 自動 paging 主治 | 主治醫師 + 護理長兩人 |
+| LLM 給 ESI 3 | **預設要看細節**(展開 reasoning + vitals + 主訴原文) | 護理師主動點「同意」 |
+| LLM 給 ESI 4–5 | 預設展開 reasoning | 護理師主動點「同意」 |
+
+## 7. Circuit Breaker
+<!-- 為什麼這欄:LLM 飄移時要能自動退回純 DMN,不是等病安長下令;
+     沒這欄等於把熔斷決策留給事故當天的值班人員。 -->
+- 監測:LLM↔急醫會 SME 抽樣 kappa(weekly,目標 ≥ 0.6)、ESI 3 → 實際入院率(monthly)
+- 觸發閾值:kappa < 0.5 連續兩週 / ESI 3 入院率 > 18%
+- 降級行為:LLM 旁路,全量走 DMN + 護理師判讀,值班 SRE + 病安長同步收 PagerDuty
+
+## 8. Audit Trail
+- 工具:LangSmith + 自建 FHIR AuditEvent
+- 必含:trace_id / prompt / model_version / DMN_rule_hits / final_esi / nurse_confirm_log
+- 對齊:HIPAA §164.312(b) + 台灣個資法 §27 + 醫療法 §70(七年)
+````
+
+事故發生前那條 sequence diagram 上少的那兩格 ⸺ 紅旗檢測、HITL 第二意見 ⸺ 在這頁的第 5、6 題各佔一格。**寫得出這頁,代表「LLM 不在」這個問句已經在白板被認真回答過一次。**
+
 ---
 
 ## 37.6 本章交付清單 Recap

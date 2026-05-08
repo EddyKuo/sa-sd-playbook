@@ -383,6 +383,68 @@ flowchart LR
 
 **為什麼要有「採用後的驗收信號」?** 模式採用之後,團隊很少回頭驗證「它真的解決問題了嗎」⸺ 結果模式變成既定事實,沒人敢動。把驗收信號寫進 card,讓「這次採用是對的」變成可被檢驗的命題,不是信仰。
 
+### 12.5.1 範例:MeshConduit 收掉 6 個 GoF 模式時的這張卡
+
+MeshConduit(`CASE-SAS-003`)那次 Q4 回顧後,新人花兩小時讀不懂的「條件式重試」被打開重看。下面是其中一張卡 ⸺ 拿來決定 `IdempotencyKeyChainOfResponsibility` 該不該活下去。寫完之後,這個 CoR 變成兩行 if-else;業務邏輯 3,400 行收斂到 220 行。
+
+````markdown
+# Pattern Adoption Card — Chain of Responsibility for Idempotency
+
+> 版本:v0.1 | 撰寫日期:2025-12-08 | 擁有人:@yu(資深 RD)
+> 對應 ADR:`docs/adr/0024-retire-cor-idempotency.md`
+> 適用範圍:`services/webhook-retry/src/idempotency/`
+
+## 1. 模式名稱(Pattern Name)
+- 名稱:Chain of Responsibility(GoF 行為型)
+- 來源:GoF 1994
+- 一句話定義:把一連串處理者串起來,事件沿著鏈走,誰能處理誰就接
+
+## 2. 解決的問題(Problem)
+<!-- 為什麼這欄:「< 3 次回頭重評估」是 MeshConduit 的入口痛;
+     模式是給「重複出現」的問題的命名,不是給單一情境的裝飾。 -->
+- 系統內反覆出現的問題情境:**只有一個** ⸺ idempotency key 衝突分流
+- 過去 12 個月出現次數:**1 次**(< 3 次門檻)
+- 不解決會發生什麼:重試三次開三張發票(已發生 1 次)
+
+## 3. 採用代價(Cost of Adoption)
+- 新增的概念數:CoR / Handler / NextHandler ⸺ 新人要記 3 個名字
+- 影響的測試成本:每個 Handler 一份 contract test + chain 整合測試
+- 對效能的影響:鏈深度 7 → 平均額外 0.3ms(可忽略)
+- 對 onboarding 影響:新人讀「業務在哪裡」要多花 ~90 分鐘
+
+## 4. 不採用代價(Cost of NOT Adopting)
+<!-- 為什麼這欄:模式採用最大的隱性成本是回不去;
+     寫不採用代價,等於檢查「我們是真的需要它,還是只是不想刪 code」。 -->
+- 維持現狀:`if conflict → reconcile; else → retry` ⸺ 兩行 if-else
+- 三個月後:沒有放大軌跡,因為這個分流就是兩條
+- 不採用會被誰罵:沒人。連 audit log 都不會少
+
+## 5. 替代方案(Alternatives)
+
+| 方案 | 採用代價 | 不採用代價 | 結論 |
+|---|---|---|---|
+| 維持 CoR | 220 行 → 3,400 行膨脹係數 15× | 已知無膨脹 | ⛔ |
+| 兩行 if-else | 0 | 業務邏輯一眼可讀 | ✅ 採用 |
+| Strategy + DI 注入 | 額外 1 個 enum + 1 個 bean | 比 CoR 輕,但仍超殺 | 過度 |
+
+## 6. 退場策略(Exit Strategy)
+- 移除方式:刪除 7 個 Handler 類別 + chain builder + 配置
+- 影響檔案:`idempotency/` 目錄整個刪,改寫 `WebhookRetryService` 兩行
+- 預估退場成本:**1.5 人天**(含測試補寫)
+
+## 7. 採用後的驗收信號
+<!-- 為什麼這欄:CoR 三個月前採用時這四格全空;
+     現在打開來看,沒有一格通過 ⸺ 這就是該退場的訊號。 -->
+- [ ] 新人 30 分鐘內讀懂這個模組做什麼 → ❌(實測 2 小時)
+- [ ] 重複問題情境真的減少 → ❌(只有 1 次,沒有重複)
+- [ ] 測試覆蓋率不下降 → ⚠️(維持但測的是模式不是業務)
+- [ ] 對應 ADR 寫完 → ❌(當初沒寫 ADR)
+
+**結論:退場。**改用兩行 if-else,寫 ADR-0024 紀錄退場理由。
+````
+
+MeshConduit 用同樣這張卡格式,把 `AbstractRetryStrategyFactory`、`CompositeRetryDecorator`、`RetryContextVisitor` 等六個模式逐一過篩,六張卡寫完 ⸺ 六個都退場。**模式不是寫越多越專業;能講清楚為什麼不需要某個模式,通常比講清楚為什麼需要它更值錢。**
+
 ---
 
 ## 12.6 本章交付清單 Recap

@@ -253,6 +253,54 @@ state = llm_decision  # 把狀態本身交給 LLM 決定
 
 放在 `docs/multi-agent-consensus/`,跟程式碼同 repo。
 
+### 41.5.1 範例:Helmsworth 退款/合約跨界工單的共識 Pack
+
+Helmsworth(`CASE-SAS-009`)在 Ch 39 那場 23 次互相呼叫的事故後拆回 Routing,但保留兩個 Subagent。第 11 週開始出現新問題:**「同一張工單,Refund 與 Contract Subagent 各自認為該由對方主處理」** ⸺ 不是品質問題,是「責任歸屬」這類**意義共識**。下面這份就是他們補上的那一頁:
+
+````markdown
+# Multi-Agent Consensus Pack — Helmsworth Ticket Reply
+
+## 1. 共識需求分類表
+<!-- 為什麼這欄:不分類就會用 Saga 的腦圖去解 Refund vs Contract 之爭;
+     Saga 解資料、不解意義,套錯工具就會在工單上來回 23 次。 -->
+- [x] 資料共識:無(訂單金額由 PostgreSQL 既有 `orders` 表為準,單一 source)
+- [x] 權威共識:用 ADR-0023 §4 寫死的優先級表(退款條款 > 合約條款)
+- [x] 意義共識:**這張工單該由 Refund 還是 Contract 主處理** ⸺ 走 Bounded Negotiation
+
+## 2. Event Log Schema(寫進 Kafka topic `ticket.consensus.v1`)
+- Propose:`{ticket_id, agent: "refund"|"contract", claim: "owner"|"co-owner"|"defer", evidence: string, ts}`
+- Dispute:`{ticket_id, by: agent, against_event_id, reason}`
+- Resolve:`{ticket_id, owner: agent, by: "rule"|"arbiter"|"human", rationale}`
+- 儲存:Kafka 3.7,retention 30 天;歸檔到 S3 + Athena 7 年(對齊 SOC 2)
+
+## 3. Negotiation Protocol
+- 最大輪數:**3**(Position → Question → Update),超過直接升 Arbiter
+- 每輪 Position / Question / Update 各 ≤ 200 字 + 必引 1 條 ADR / SOP chunk_id
+- Arbiter 類型:**領域專家 Agent**(Policy-SOP-Agent,只讀政策知識庫,Claude Opus 4.7)
+- Arbiter 仍不收斂:升級客服 Tier 2(人類),trace 摘要產一頁卡片給人類看 A/B
+
+## 4. Distributed State Machine 圖
+<!-- 為什麼這欄:把「誰主處理」寫成顯式 state,
+     避免 LLM 自己決定「我覺得現在該由 contract 接手」這種失控轉移。 -->
+- 狀態:`routed → proposed → disputed → arbiting → resolved → drafting → sent`
+- 合法轉換(部分):
+  - `proposed --(no_dispute_within_30s)--> resolved`
+  - `proposed --(dispute_event)--> disputed`
+  - `disputed --(round < 3)--> disputed`(再一輪 Bounded Negotiation)
+  - `disputed --(round == 3)--> arbiting`
+  - `arbiting --(arbiter_resolve)--> resolved`
+  - `arbiting --(arbiter_no_decision)--> human_handoff`
+- 工具:**LangGraph 0.2 StateGraph**(LLM 決定 action,transition_table 決定 state)
+
+## 5. 失敗劇本(Runbook)
+- Agent 無限對話 → round counter ≥ 3 強制 `arbiting`,paging #ai-ops
+- 共識長期不收斂(arbiter 也判 no_decision)→ human_handoff,SLA 5 分鐘專員回覆
+- Event Log 爆炸 → 只寫業務級事件(Propose / Dispute / Resolve);Subagent 內部步驟走 OTel
+- Sycophancy 偵測 → Arbiter 模型家族(Anthropic)≠ Subagent 家族時提高警戒;每月抽 50 筆 SME 重判 kappa
+````
+
+第 1 題那一格分類做完之後,Helmsworth 才發現 80% 的「跨界工單」其實有現成的權威共識(優先級表)可走,只剩 20% 真正需要 Bounded Negotiation。**多數 Multi-Agent 衝突的解,不在更聰明的協商,而在第 1 題的分類欄位被誠實填過一次。**
+
 ---
 
 ## 41.6 Recap

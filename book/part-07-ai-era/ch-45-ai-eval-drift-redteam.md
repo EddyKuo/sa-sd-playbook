@@ -531,6 +531,89 @@ flowchart TD
 
 **為什麼第 6 題要求同一張面板?** trade-off 只有並列才看得到。把 accuracy 跟 cost 跟 latency 拆三張面板,工程師會在不知不覺中追單一指標,事故就從沒看的那欄送來。
 
+### 45.5.1 範例:HavenAxis AMLNavigator 重做後的 Quality Card
+
+HavenAxis(`CASE-FIN-010`)在 MAS thematic review 把 19 筆漏報攤在桌上之後,把 AMLNavigator 重新拉回起點。下面這份就是合規長拿去釘在白板上的版本 ⸺ 不是替代上線時那份 480 題 eval set,是把 eval、drift、red team 三軸並列放進同一張紙:
+
+````markdown
+# AI Quality Card — AMLNavigator v2
+
+> 版本:v0.1 | 撰寫日期:2026-05-19 | QA Owner:Aiko(合規 QA Lead)
+> 風險等級:**High**(EU AI Act Annex III + MAS Notice 626 高風險場景)
+> 對齊:Agent System Card v0.6、ADR-0031(LLM-as-Judge 校準)、ADR-0033(Crypto Slice)
+
+## 1. Eval Set 結構
+<!-- 為什麼這欄:上線那份 480 題在 7 個月裡沒被量過第二次;
+     重做後改成「每月新增 + 每季 SME review」,讓 eval 有呼吸。 -->
+
+| 維度 | 占比 | 題數 | 來源 | Reviewer |
+|---|---|---|---|---|
+| Diversity | 30% | 240 | 過去 12 個月 production 抽樣(分層) | Aiko + 法遵 |
+| Edge cases | 20% | 160 | MAS 公告 + FATF typology | 合規長 |
+| Adversarial | 15% | 120 | 紅隊產出(見 §4) | Red Team Lead |
+| Slice — 加密貨幣 | / 片 | **150**(原 38 題,擴 4×) | 鏈上分析 + 案例庫 | 合規長 |
+| Slice — PEP / 高風險司法 | / 片 | 100 | OFAC + UN List + MAS | 合規長 |
+| Slice — 跨境匯款 / 現金存入 | / 片 | 各 80 | 既有 | Aiko |
+
+- 更新節奏:每月新增 30 筆、每季 SME review、每年大改
+- 版本控制:`tests/eval/aml-navigator/v{X}.{Y}.yaml` + git tag
+
+## 2. Online vs Offline Eval
+
+| 模式 | 時機 | 通道 | 警報門檻 |
+|---|---|---|---|
+| Offline | nightly + pre-release | DeepEval + 自建 grader | accuracy 跌 > 3pp 阻擋 release(高風險場景緊縮) |
+| Online | production 抽樣 5% | LangSmith + banker 反饋 | banker dispute rate > 4% 進 weekly review |
+
+## 3. Drift 監測指標
+<!-- 為什麼這欄:加密貨幣 query 占比從 4% 飄到 23%,沒人看;
+     PSI / Concept drift 寫進門檻才擋得住下一次「我們不知道」。 -->
+
+| Drift 類型 | 監測 | 頻率 | 警報 | 行動 |
+|---|---|---|---|---|
+| Data drift(input 分布) | PSI(per category) + embedding centroid | weekly | PSI > 0.20(高風險場景緊縮) | SME review + eval set 補題 |
+| Concept drift(世界變了) | online accuracy(SME 重標 1%) | monthly | accuracy 跌 > 3pp | 重 prompt + 重訓 grader |
+| Model drift(模型版本) | model_id 鎖定 + provider deprecation watch | per upgrade | 任何 deprecation | 跑完整 regression + 影子上線 |
+| Prompt drift | prompt 進 git + CI eval | per PR | eval 跌 > 2pp | 阻擋 merge |
+
+## 4. Red Team Cadence
+
+- 上線前 baseline:OWASP LLM Top 10 + 銀行特化攻擊集 80 題,穿透率 ≤ **3%**(過去 11/16 被打穿,新門檻緊縮)
+- CI 攻擊集:120 題,prompt / model / tool 任一改動觸發
+- 月度 manual red team:第 2 個工作天,4 小時,合規 + InfoSec + 外部 vendor 三方
+- 新攻擊向量發現 → 進 CI 攻擊集:**24 小時 SLA**(高風險場景)
+
+## 5. LLM-as-Judge 校準
+<!-- 為什麼這欄:上線時 GPT-4 judge 對加密貨幣判讀系統性偏寬;
+     沒這格,judge 自己飄了卻沒人發現。 -->
+- Judge 模型:**Claude Opus 4.7 + 加密貨幣 slice 強制人類覆判**(雙軌)
+- Calibration set:300 筆 SME 標註(其中 100 筆為加密貨幣 slice)
+- 上線 Kappa 要求:整體 ≥ 0.7,加密貨幣 / PEP 切片 ≥ 0.75
+- 重校準觸發:換 judge / rubric 改動 / 每季一次 / Kappa < 門檻時立即
+
+## 6. 五條警報門檻(Grafana 同面板)
+
+| 指標 | 工具 | 門檻 | On-call |
+|---|---|---|---|
+| Accuracy(整體) | DeepEval | 跌 > 3pp 或 < 88% | P1 |
+| FN rate(高風險場景) | 自建 grader | > 2% | **P0** |
+| Faithfulness(引用條號可驗) | RAGAS | < 0.9 | P1 |
+| Cost / query | Anthropic billing | 月 burn > 預算 1.2× | P3 |
+| Latency P95 | LangSmith | > 12s SLO | P2 |
+
+## 7. Owner
+
+| 區塊 | Owner | 副手 |
+|---|---|---|
+| Eval set 維護 | Aiko | 合規長 |
+| Drift monitor | Platform team | Aiko |
+| Red Team cadence | Red Team Lead | InfoSec |
+| Judge 校準 | Aiko | 外部 vendor |
+| 警報 on-call | SRE rota | 合規長(P0) |
+````
+
+第 3 題那一格 PSI 的門檻寫成 0.20,是合規長刻意把高風險場景拉得比一般 0.25 緊一點 ⸺ 那 0.05 的差距,等於下次加密貨幣 query 從 4% 飄到 23% 之前,系統會在 9% 左右先叫一次。**那 19 筆漏報的代價,折算進這格 PSI 門檻,大概值 0.05。**
+
 ---
 
 ## 45.6 本章交付清單 Recap

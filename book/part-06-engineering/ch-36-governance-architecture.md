@@ -442,6 +442,67 @@ GitOps 流程做完了，audit log 規規矩矩寫了三個月，每天 200+ 條
 
 **為什麼有 Sunset Plan？** 不是每個彈性點都該活到永遠。NovaPay 第二輪盤點時發現，70 個 flag 裡有 23 個對應的不確定性已經消失（地區法規穩定、A/B test 結束），但沒人敢動 ⸺ 因為當初沒寫退場條件。**沒有 sunset 的彈性點，會在系統裡變成化石**。
 
+### 36.5.1 範例：NovaPay 罰款後第一張補回去的卡
+
+NovaPay（`CASE-FIN-009`）在 USD 22 萬罰款 + 限期改善之後，第一個被拿出來補卡的就是事故主角 ⸺ `risk_rules.threshold_amount`，即「台灣小額匯款風控閾值」。下面這份是合規與工程合擬、跟新版 Rego policy 同 PR 進 main 的版本：
+
+````markdown
+# Governance Card — risk-threshold-tw（台灣小額匯款風控閾值）
+
+> 版本：v1.0 | 撰寫日期：2026-02-18 | Owner：合規 lead（Lin）+ 風控工程（Hsin）
+> 對應政策檔：`policies/risk/threshold-tw.rego`（OPA 0.69）
+> 對應 ADR：`docs/adr/0036-risk-rules-policy-as-code.md`
+
+## 1. 這個彈性點為什麼存在
+<!-- 為什麼這欄：寫不出這格的彈性點通常就不該存在；事故那條 UPDATE 就是這格沒人填。 -->
+- 對應業務不確定性：金管會對小額匯款的閾值會跟著反洗錢公告調整（年內 1–3 次）
+- 一句話：拿掉的話，每次法規調整需出新 release，無法在 24h 內生效
+- 業務 owner：合規 lead（Lin），單一窗口
+
+## 2. 機制 / 政策分層
+<!-- 為什麼這欄：把規則寫進 PG UPDATE 是機制層污染，這次強制下到政策層。 -->
+- ☑ 政策層 — 形式：☑ OPA Rego（`policies/risk/threshold-tw.rego`）
+- 工具版本：OPA 0.69 + Conftest 進 CI
+- **不**走 `risk_rules` 表 UPDATE（事故主因，已凍結 deprecation 期至 Q3）
+
+## 3. 黃金路徑覆蓋
+- 預設值：NTD 50,000（單筆觸發強化 KYC）
+- 過去 90 天 PR 統計：97% 場景走預設不偏離
+- 偏離預設值的審批：☑ 高（需 ADR + 合規雙簽）
+
+## 4. 風險等級
+<!-- 為什麼這欄：這格決定要不要走 ADR + staging 驗證；事故前這欄沒寫，所有 UPDATE 都用 SLA<1min 的「低」處理。 -->
+- ☑ 高 — ADR + 人工審核 + staging 驗證 + reg-test 全綠，SLA 1–3 days
+- 緊急通道：48h 內須補 ADR；一年至多 2 次（事故前無此上限）
+- 風險判定理由：合規 + 法律可訴性
+
+## 5. 複雜度預算
+- 計入：Active flag count（風控類預算 12，目前 8/12）
+- 退場條件：金管會於 2026 末完成統一閾值公告後 → 改 hardcode + 條文連結
+
+## 6. Audit Trail Schema
+<!-- 為什麼這欄：事故的根因就是 UPDATE 沒帶 Who/Why；這次每筆變更都進 immutable log。 -->
+- Who：git commit author + signed PR approver（雙來源）
+- What：Rego policy diff（Conftest report）
+- Why：PR description 必填 + 引用合規公告編號
+- When：commit time + ArgoCD sync time（雙時點）
+- Where：ArgoCD sync log（`argocd-app-history`）
+
+## 7. Owner & 共識
+| 角色 | 名字 |
+|---|---|
+| 業務 Owner（值的決定者） | Lin（合規 lead）|
+| 技術 Owner（規則維護） | Hsin（風控工程）|
+| 審批人（高風險）| CFO + 合規 lead 雙簽 |
+| 違反 / 異常通知 | `#risk-policy` Slack + 合規信箱 |
+
+## 8. 退場規劃
+- 退場條件：金管會發布統一閾值公告 + 連 90 天無調整 → 改 hardcode
+- 季度檢視：☑ Q1 ☑ Q2 ☑ Q3 ☑ Q4（每季最後週五）
+````
+
+NovaPay 補完這張卡的兩週後，金管單位再來一封信問「2025 Q4 的閾值版本」。這次工程組 11 分鐘就生出 git commit + PR + ADR + audit log 一整套 ⸺ **彈性沒少，但它從「不可治理」變成「在合約裡」**。
+
 ---
 
 ## 36.6 本章交付清單 Recap

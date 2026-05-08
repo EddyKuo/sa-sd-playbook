@@ -411,6 +411,64 @@ linked-adrs:
 
 **為什麼有 Hand-off Contract?** 這是 Skill 跟 Subagent 整合的關鍵。沒有 hand-off contract 的 Skill,Subagent 完成任務後產出物五花八門,Orchestrator 沒辦法可靠地把產物交給下一棒。把交付物寫成契約,等於替整條 Subagent pipeline 加了型別系統。
 
+### 38.5.3 範例:AisleNova 第六個月覆盤後寫的 CDE Setup Card
+
+184 個救火 PR、3 位資深離職那場會議結束後,AisleNova(`CASE-ECM-008`)做的第一件事不是改 prompt、不是換工具,是**停掉所有 AI 協作 PR 兩週**,把這頁先寫出來。下面就是他們第二週末那份 v0.1:
+
+````markdown
+# CDE Setup Card — AisleNova D2C 平台
+
+> 版本:v0.1 | 撰寫日期:2026-04-08 | 擁有人:Howard(VP Engineering)
+> 對齊複雜度:M  ←(Ch 1 §1.3 Triage:28 人、單一電商主系統、跨台越雙市場)
+
+## 1. Constitution(在哪裡)
+<!-- 為什麼這欄:之前 28 人有 28 份「咒語」,離職就帶走;
+     先講清楚 single source of truth 在哪,後面才有得收斂。 -->
+- `CLAUDE.md`(主要,Cursor 與 Claude Code 共用,放 repo root)
+- `agents.md`(暫不啟用,等 OpenAI Codex 規範穩定再評估)
+- 預期長度:≤ 800 字(目前 v0.1 為 720 字)
+- 預期更新頻率:季 review;新 Subagent 上線時必更新
+
+## 2. Roles(我們有哪些 Agent 角色)
+<!-- 為什麼這欄:184 個救火 PR 中 71 個來自「Claude 同時寫 spec 又寫實作」;
+     角色分開後,每個 Agent 的邊界與不能做什麼,寫進來才擋得住。 -->
+| 角色 | 檔案 | 主要職責邊界 | 不能做什麼 |
+|---|---|---|---|
+| Orchestrator | `.claude/agents/orchestrator.md` | 任務拆解、Subagent 派發 | 不直接寫程式 |
+| SA | `.claude/agents/sa.md` | spec.md、ADR draft | 不寫實作 |
+| RD | `.claude/agents/rd.md` | 依 spec 實作 | 不修改 spec / ADR |
+| QA | `.claude/agents/qa.md` | Playwright + pytest 測試 | 只讀 production code |
+| DBA | `.claude/agents/dba.md` | schema、Flyway 遷移腳本 | 不直接動 production |
+
+## 3. Skills(我們有哪些可調用能力)
+- 路徑:`.claude/skills/{skill-name}/SKILL.md`
+- 命名規則:`{domain}-{capability}`(例 `ecommerce-order-state-machine`)
+- 每份必填:Description / Allowed Tools / Knowledge Sources
+- Skill Index:`.claude/skills/README.md`(2026-04 啟用,首批 7 份)
+
+## 4. ADR ↔ Skill Binding
+<!-- 為什麼這欄:184 PR 裡 43 個是「Agent 重新提案三個月前已拍板的決策」;
+     沒 binding 等於沒記憶,每次都重新爭論。 -->
+- 每份 ADR frontmatter 加 `cde-skill-binding: {skill-name}`
+- 每份 Skill 的 Knowledge Sources 必列出對應 ADR 路徑
+- CI 看守:`scripts/fitness/cde-skill-adr-consistency.sh`(每日 cron)
+- 補寫期:過去 14 個月決策回填 ADR,目標 90 天內補完 ≥ 30 份
+
+## 5. Subagent 適用清單
+- 適用:SA(寫 spec)、RD(實作 well-defined ticket)、QA(寫測試)、DBA(寫 migration)
+- 不適用:跟 PM 釐清需求、跟客戶 demo、incident 第一時間決策
+
+## 6. Out of Scope(我們明確不做的事)
+<!-- 為什麼這欄:上一輪失敗就是各自把 prompt 塞進各自的地方;
+     寫下「明確不做什麼」,新人才不會以為「沒寫=可以做」。 -->
+- **不**把臨時 prompt 寫進 Skill(臨時 prompt 留在 PR description)
+- **不**把 PRD 寫進 CLAUDE.md(PRD 屬於 PM,放 `docs/prd/`)
+- **不**在 Constitution 放 coding style(放 `docs/style/` + linter)
+- **不**接受未綁 ADR 的 Skill 進 main(CI gate)
+````
+
+那兩週沒寫程式,第三週開始恢復 AI 協作 PR。第八週的內部追蹤:救火 PR 比例從 14% 降到 3.7%;新人到第一個 PR 通過 review 的時間從 9 天縮到 2.5 天。**這頁不是「導入 AI」的文件,是把「28 份私人 prompt」收斂成「一份工程契約」的那條紅線。**
+
 ---
 
 ## 38.6 本章交付清單 Recap

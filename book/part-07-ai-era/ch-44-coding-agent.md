@@ -462,6 +462,63 @@ PR Review Bot 失敗的常見模式不是「抓不到問題」,是**「抓到的
 
 **為什麼有「下一次體檢觸發條件」?** CartMosaic 的事故就是在「拆服務」這個觸發點沒做體檢 ⸺ codebase 結構大改時 Agent 表現會經歷一段斷層,提前體檢讓你知道斷層多深、需要補哪幾格,而不是事後看 24% 通過率才驚醒。
 
+### 44.5.1 範例:CartMosaic Order Service 的第一張體檢卡
+
+CartMosaic(`CASE-ECM-009`)在 PR 通過率掉到 24% 的第七週,先挑了 9 個服務裡退回理由最集中的那個 ⸺ `order-service` ⸺ 做第一張體檢卡。三個月後 PR 通過率回到 71%,靠的不是換模型,是下面這頁紅變綠的過程:
+
+````markdown
+# Agent-Friendly Codebase Card — order-service
+
+> 版本:v0.3 | 撰寫日期:2026-04-09 | Owner:Hyejin(tech lead)
+> 對齊複雜度:**M**(Ch 1 §1.3 Triage)
+> 對齊 CDE Setup:`docs/cde-setup.md` v0.5(2026-03 補)
+
+## 1. 六維體檢
+<!-- 為什麼這欄:六格紅黃綠是覆盤 184 個被退 PR 之後唯一可量化的形狀;
+     一張紙就看得出哪兩格在拖整體下水。 -->
+
+| 維度 | 現況 | 量測值 | 下一步 | Due |
+|---|---|---|---|---|
+| **CLAUDE.md 完整度** | 🔴 → 🟡 | 從 0 字 → 410 字;尚缺 Skill 索引 | 補 Skill 索引段落(指向 docs/skills/) | 2026-04-22 |
+| **Skill ↔ ADR 連動** | 🔴 | 11 份 Skill 全未連 ADR(monolith ADR 沒搬過來) | 把 ADR-0042(Stripe idempotency)等 6 份搬入 + Skill frontmatter binding | 2026-05-06 |
+| **模組邊界** | 🟡 | 反向依賴 7%(Konsist 量) | 拆 `OrderRefund` 出來、加 ArchUnit fitness | 2026-05-13 |
+| **Test 覆蓋** | 🔴 | unit 64% / contract test 全缺 | 補 order ↔ payment / order ↔ inventory contract test | 2026-05-20 |
+| **命名一致性** | 🔴 | order_id / orderRef / oid 三種共存 | linter rule + 一次性 codemod(已草稿 PR #1841) | 2026-04-30 |
+| **Context Size** | 🟢 | 抽 5 任務,平均 18k token | 維持 | 季度 review |
+
+## 2. Owner
+
+| 維度 | Owner |
+|---|---|
+| CLAUDE.md / agents.md | @hyejin(tech lead) |
+| Skill ↔ ADR | @minho(SA / 兼架構守護) |
+| 模組邊界 / Test | @hyejin + @ren(QA) |
+| 命名一致性 | @hyejin |
+| Context Size 監控 | Platform team(@dxteam) |
+
+## 3. 紅線
+<!-- 為什麼這欄:這四條是退 PR 184 個的根因清單,
+     不寫進紅線,半年後拆下一個服務又會踩同一坑。 -->
+- [x] 不可有 repo 完全沒有 CLAUDE.md(已補)
+- [ ] 不可有 Skill 不指向任何 ADR(進行中,Due 2026-05-06)
+- [x] PR Review Bot 區分 advisory / blocking(2026-04-05 上線)
+- [x] critical path(下單 / 退款)測試由人類寫或 review
+
+## 4. 下一次體檢
+- 日期:2026-07-09(季度)
+- 觸發條件:
+  - codebase 結構大改(再拆任何服務 → 開卡前先體檢)
+  - 全公司 Agent 工具升級(Claude / Cursor major bump)
+  - PR 通過率連續兩週 < 60%(目前監控線)
+
+## 5. Out of Scope
+- 工程文化(走 Ch 34)
+- AI 治理(走 Ch 36 治理章節)
+- 模型選型(這張卡片預設「先把 codebase 弄好,模型不換」)
+````
+
+第一次體檢時 6 維裡有 4 維是紅,沒有人想動 ⸺ 工程主管說「**這就是事實的形狀,動不了的不是 codebase,是我們對 codebase 的理解**」。三個月後紅變綠的順序是:命名 → CLAUDE.md → ADR → contract test ⸺ **Agent 不是被新功能改強的,是被這四格的順序改強的。**
+
 ---
 
 ## 44.6 本章交付清單 Recap

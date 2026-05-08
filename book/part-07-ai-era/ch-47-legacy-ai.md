@@ -189,6 +189,52 @@ Agent 看了一段沒被呼叫的程式碼說「這是 dead code 可以刪」⸺
 
 放在 `docs/brownfield/`,與程式碼同 repo。
 
+### 47.5.1 範例:WebLogic 利率計算 SP 第一張考古卡
+
+`CASE-FIN-011` 那位離職資深工程師留下的 5,000 行 PL/SQL 裡,團隊挑了最常被客服質疑的 `pkg_loan_rate.calc_effective` 當第一個考古目標。下面是 L3/L4 跑完之後**應該**產出的那一頁,而不是「Claude 說大概是這樣」的對話 log:
+
+````markdown
+# Brownfield Modernization Pack — 個金放款計息核心(WebLogic 7y)
+
+## 1. As-Is Bounded Context Map
+<!-- 為什麼這欄:沒這張圖,Strangler Fig 第一刀往哪切都是賭;
+     畫出來才看見「利率計算」其實藏在 Loan / Pricing / Compliance 三個 BC 中間。 -->
+- 識別 4 個 As-Is BC:Loan Servicing / Pricing Engine / Compliance Hold / Customer
+- Pricing Engine 的 Ubiquitous Language Top 10:base_rate / spread / floor / cap / promo_offset / hold_flag …
+- 與訪談的矛盾:5 位資深 banker 說「促銷迭代過三套」,但 SP 只看得出兩套
+
+## 2. Business Rules Catalog
+<!-- 為什麼這欄:每條規則沒標出處與置信度,To-Be 重寫時會把暗藏的合規條款一起遺失;
+     2008 OBU 拒貸條款就藏在 BR-017。 -->
+| ID | 規則 | 出處 | 推導理由 | 置信度 |
+|---|---|---|---|---|
+| BR-007 | 寬限期內不複利 | `pkg_loan_rate.calc_effective` L142–168 | 與 banker 訪談一致 | High |
+| BR-017 | OBU 客戶利率下限 = TWD prime + 0.75% | trigger `trg_obu_floor` + 2008 函釋 PDF | 訪談「沒人記得為什麼」+ Compliance NAS | Medium |
+| BR-031 | 月底促銷自動延期 7 天 | SP L2310–2380(註解只寫「per Eddy」) | 推導 + 三個月日誌比對 | Low(待 banker 確認) |
+
+## 3. Migration Dependency Graph
+- 第一刀:Pricing Engine(讀多寫少、邊界清楚、有銀行對賬可比)
+- 並行期 source of truth = 舊 SP(新 service 只讀後算,寫回仍走 SP 30 天)
+- 不切:Compliance Hold(trigger 鏈過深,留到第三刀)
+
+## 4. Migration ADR Set
+- ADR-021:Pricing Engine 用 Spring Boot 3.3 + Drools 重寫,不沿用 SP 風格
+- ADR-022:BR-017 OBU floor 維持為**規則**而非常數(2008 函釋仍在效)
+- 每個 ADR 連結到 `docs/brownfield/archeology/pricing-engine.md` 對應段落
+
+## 5. Parallel Run Comparison Report
+<!-- 為什麼這欄:沒寫進這張表的差異,上線後就會被當成新系統 bug 而不是舊 SP 的歷史包袱;
+     兩種歸因處理流程完全不同。 -->
+- 並行 30 天,5,420 萬筆計息事件
+- 差異 47 筆:舊 SP bug 31 筆(寬限期計算誤差,簽 ADR-023 採新版)/ To-Be bug 12 筆(已修)/ 業務歧義 4 筆(召集 Risk + 法遵決議)
+
+## 6. 工具組合配置
+- L1/L2:SonarQube + CodeQL 跑全 codebase 拓樸,輸出 dead code 候選(僅候選,不刪)
+- L3:Claude Code Skill `archeology-plsql`(吃單一 SP → 產 BR catalog 草稿,強制附行號證據)
+- L4:Antigravity 跑全景一次後鎖權限唯讀;領域決策由 banker + SA 主導,Agent 只提案
+````
+**第一張考古卡寫得出來,Strangler Fig 才有真正能下手的位置;** 寫不出來,通常代表這條 SP 還沒準備好被現代化。
+
 ---
 
 ## 47.6 Recap

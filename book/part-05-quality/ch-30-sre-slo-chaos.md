@@ -436,6 +436,57 @@ flowchart LR
 
 **為什麼把 SLA 跟 SLO 分開兩節?** 因為它們是給不同人看的。SLA 在 § 3 給法務看(合約條款),SLO 在 § 2 給工程看(內部紀律)。混在同一節,等於讓法務文書干擾工程決策 ⸺ PolicyPilot 整年的問題,根源就是兩者沒分開。
 
+### 30.5.1 範例:PolicyPilot 律師函之後補的那一頁
+
+PolicyPilot(`CASE-SAS-006`)那 168,400 美元賠款 + 大客戶解約之後,新上任的 Head of SRE 第一件事就是把核心使用者旅程「核保送件→佣金結算」這條鏈寫成一張 SLO Card。下面這份是貼上 wiki、銷售簽下一份新合約前必看的版本:
+
+````markdown
+# SLO Catalog & Error Budget Card — Underwriting Submission API
+
+> 版本:v1.0 | 撰寫日期:2026-01-20 | Owner:platform-team(主)+ underwriting-squad
+> 對應 SLA:合約第 11.3 條(99.95% 季度,賠款 10%/pp,上限 30%)
+> 對應 Prometheus rule:`slo/underwriting.yaml`
+
+## 1. SLI 定義
+| SLI | 定義 | 量測位置 | 排除 |
+|---|---|---|---|
+| Availability | (1 - 5xx_rate) for `POST /submissions` | API Gateway(Kong) | 客戶端 4xx、計畫維護窗 |
+| Latency | P99 of 2xx response,30 天視窗 | Gateway access log | 健康檢查、< 5ms 視為 cache |
+
+## 2. SLO 目標(內部紀律)
+<!-- 為什麼這欄:事故前 SLA 跟 SLO 同寫 99.95%,沒留緩衝;這次 SLO 訂 99.9%,留 1 個數量級。 -->
+| SLI | 目標 | 視窗 |
+|---|---|---|
+| Availability | ≥ 99.9% | 28 天滾動 |
+| Latency P99 | < 800ms | 28 天滾動 |
+
+## 3. SLA 對齊
+<!-- 為什麼這欄:銷售簽下一份合約前必看這格,寫不滿就是又要走同樣的路。 -->
+- 合約 SLA:99.95%(條款 11.3)
+- SLO 緩衝:SLO 比 SLA 嚴格 1 個數量級(99.9% vs 99.95%)
+- 賠款上限:30% MRR(歷史實際支出:Q4 2025 = USD 102,800)
+
+## 4. Error Budget(2026 Q1)
+<!-- 為什麼這欄:沒這格,可靠度永遠是「明天再投資」;觸發規則寫在卡上,凍結時誰都不能反悔。 -->
+- 公式:(1 - 99.9%) × 90d = 129.6 分鐘
+- 已用:34 分鐘(26%,自動從 Prometheus 抓,2026-02-19)
+- 觸發:
+  - [ ] 50% → soft freeze(產品 + 工程協商會,週五例會)
+  - [ ] 80% → hard freeze(僅修可靠度,銷售知會大客戶)
+  - [ ] 100% → 全停新功能直到下季
+
+## 5. 補預算機制(Earn-Back)
+- 補 1 份 public postmortem(blameless,含 5 Whys + 可驗證 action item):補 10 分鐘
+- 完成 1 場 L2 Chaos 演練 + 通過:補 15 分鐘
+- 補預算上限:不超過原預算 25%
+
+## 7. Review Cadence
+- 每季回顧 SLO 是否仍合理
+- 重評估觸發:連 2 季 Error Budget 用 < 30%(太鬆)/ 用 > 100%(太嚴或真壞)/ SLA 重議
+````
+
+PolicyPilot 用這張卡撐過 2026 Q1,Error Budget 用到 78% 自動觸發 hard freeze,銷售第一次接到「**這個月不能再簽新功能 commitment**」的工程回覆 ⸺ 那一刻,可靠度才第一次有了預算這個身分。
+
 ---
 
 ## 30.6 本章交付清單 Recap

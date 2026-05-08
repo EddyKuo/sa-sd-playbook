@@ -376,6 +376,68 @@ flowchart LR
 
 **為什麼有「Out of Scope」?** 沒寫下來的範圍,半年後一定會冒出「我們是不是該全面導入 Clean」這種會議。把它預先擋掉,團隊省下的時間用來寫程式比較划算。
 
+### 13.5.1 範例:CareLattice 在第 9 個 EMR 簽約那週寫的這張卡
+
+那場「我們不是要重寫一切,我們是要讓第 10 個 Adapter 進來時沒人需要動 `MedicationOrderService`」的會議散會後,架構長把下面這張卡釘在 `docs/architecture/` 第一份 commit。七個月後遷移結束,第 11 個外部系統(InterSystems IRIS 長照機構)從簽約到 UAT 通過用了 19 天 ⸺ 對比 Allscripts 那家當年的 14 週。
+
+````markdown
+# Architecture Style Selection Card — CareLattice MedicationOrderService
+
+> 版本:v0.1 | 撰寫日期:2025-10-21 | 擁有人:@chen(架構長)
+> 對應 ADR:`docs/adr/0007-hexagonal-medication-order.md`
+
+## 1. 這次最怕誰變?(主威脅)
+<!-- 為什麼這欄:沒寫主威脅,風格選擇就會變成「哪個聽起來潮」;
+     CareLattice 2018 選 Layered 沒錯,2025 主威脅換了卻沒換風格,代價就是 14 次小事故。 -->
+
+- [ ] 業務邏輯變動  [x] **邊界系統變動(主)**
+- [x] 依賴方向錯置(次)  [ ] 跨層次同時變動
+- 證據:過去 7 年對接 6 家 EMR(Epic / Cerner ×2、Allscripts、自家 EHR ×3)
+  + 第 9 家(奇美自研 FHIR)簽約;`MedicationOrderService` 直接 `using`
+  三家 client namespace,過去 12 個月為此產生 14 次小事故
+
+## 2. 風格選擇與依據
+
+- 選擇:☐ Layered  ☑ Hexagonal  ☐ Onion  ☐ Clean
+- 依據(對照 §13.3.1):邊界變動列得分最高 = Hexagonal
+- 入場成本是否負擔得起:**是**(7 人團隊已熟悉 DI,新增 Port 介面 + Fake Adapter 模式)
+- 不選擇 Clean 的理由:
+  - 第二個 UI / 第二種交付形式在 roadmap 上嗎?**否**(只有 Razor Pages)
+  - 系統壽命預估:5–7 年(可接受 Hexagonal,Clean 多付的抽象沒收益)
+
+## 3. 入場成本承諾
+<!-- 為什麼這欄:架構選擇不寫成本,半年後沒人記得當初承諾;
+     寫了成本,未來爭議會在數字上,而不是在「我覺得」「你覺得」。 -->
+- 預估第一個 Use Case(下一條藥囑核對規則)0 → 上線:**14 人天**
+- 新人 onboarding 到第一個 PR merged:**3 週**
+- 額外抽象:每個 Use Case 多寫 ~3 個檔案(Port + InMemoryAdapter + Test)
+- 我們願意付,因為:第 10 個 Adapter 進來時要動 0 行業務 code
+
+## 4. 半年後驗證指標
+<!-- 為什麼這欄:架構代價半年內看不出來;
+     沒事先寫死指標,半年後爭議會變成「感覺好像有變好」。 -->
+- [ ] 第 10 個外部 EMR 進來,核心模組變更行數 ≤ **20** 行
+- [ ] Domain 單元測試跑完 ≤ **8** 秒(全 Fake Adapter 模式)
+- [ ] `MedicationOrder.Domain` 不引入任何 NuGet(NetArchTest 強制)
+- [ ] 新人從 onboard 到第一個 PR merged ≤ **15** 天
+- [ ] 升 .NET / EF / SQL Server 不需動 Domain 模組
+
+## 5. Out of Scope(本次不做)
+- 我們**不**為「以後可能換 SQL Server → PostgreSQL」預先抽象 ⸺ 真要換時做
+- 我們**不**強迫 Razor UI 層也走 Hexagonal(只 `MedicationOrderService` 邊界)
+- 我們**不**把 Clean 當預設 ⸺ Hexagonal 才是,Clean 是七年後可能的升級
+
+## 6. Owners
+| 區塊 | Owner | 副手 |
+|---|---|---|
+| Domain 邊界守護(NetArchTest 規則) | @chen | @lin |
+| Port / Adapter 介面契約 | @lin | @yu |
+| Fake Adapter 維護 | @yu | @lin |
+| Onboarding 文件 | @hwang | @chen |
+````
+
+第 7 個月,新加入的 InterSystems IRIS 長照機構接過 UAT。架構長把當初寫進第 4 段的指標逐欄打勾 ⸺ 五項全綠。**架構選擇真正的工作不是「畫圖那天」,而是把六個月後的爭議,提前壓進一張可以重看的卡。**
+
 ---
 
 ## 13.6 本章交付清單 Recap

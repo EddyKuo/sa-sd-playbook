@@ -413,6 +413,83 @@ metadata:
 
 **為什麼有「Boundary Enforcement」那一節?** 沒有 fitness function 的 Module Boundary Card,18 個月後會變成歷史文件。把工具、CI job、規則檔的位置寫進 card,讓「邊界是真的」這件事可被驗證。
 
+### 21.5.1 範例:MeshFirst 收回 47 服務後,ecommerce-core 的第一張 Order Card
+
+MeshFirst 6 個月回收期結束時,新生的 `ecommerce-core` 內部第一個被切出來的模組是 `Order`。下面這張卡片寫於回收第 5 個月,**Splittability Score 五項刻意全部留空或填「否」** ⸺ 因為他們剛從拆得太早回來,不想再次被「我們應該拆」這句話推著走:
+
+````markdown
+# Module Boundary Card — Order
+
+> 版本:v1.0 | 撰寫日期:2025-09-12 | Owner:team-ecommerce-core(7 人)
+> 對應 ADR:`docs/adr/0042-order-module-boundary.md`、`docs/adr/0044-no-cross-module-join.md`
+> 對應宣告檔:`order/package-info.java`(Spring Modulith 1.4)
+
+## 1. Module Identity
+- 一句話 mission:對 ecommerce-core 內其他模組與 BFF,提供「下單 / 查單 / 取消」三件事;
+  **不**做 pricing 計算、**不**做扣庫存、**不**做付款扣款
+- Bounded Context 對應:Ch 18 中的 `Order`(獨立 BC,2025-08 重新確認)
+- 領域語言關鍵詞:Order / OrderLine / OrderStatus / PlacedAt / Cancelled
+
+## 2. Public API
+| 操作 | 簽章 | 用途 | 變更政策 |
+|---|---|---|---|
+| `place(cmd)` | `OrderId place(PlaceOrderCommand)` | 建立訂單 | 破壞性變更需 ADR |
+| `findBy(id)` | `Optional<OrderView> findBy(OrderId)` | 查單 | Read-only |
+| `cancel(id, reason)` | `void cancel(OrderId, CancelReason)` | 取消 | 破壞性變更需 ADR |
+
+## 3. Events Published
+<!-- 為什麼這欄:回收前 47 服務時代,OrderPlaced 在三個 repo 各有一份不同 schema;
+     寫進 card 後就只有這一份權威定義。 -->
+| 事件 | Payload | 觸發時機 | Schema 版本 |
+|---|---|---|---|
+| `OrderPlaced` | `{ orderId, customerId, total, lines[] }` | place() 成功後同 tx | v1 |
+| `OrderCancelled` | `{ orderId, reason, cancelledAt }` | cancel() 成功後同 tx | v1 |
+
+## 4. Events Consumed
+| 來源 | 事件 | 處理 | 失敗策略 |
+|---|---|---|---|
+| inventory | `StockReserved` | order 進 paid_pending 狀態 | retry 3 / DLQ |
+| finance | `PaymentCaptured` | 觸發 fulfillment 訊號 | at-least-once |
+
+## 5. Allowed Dependencies
+<!-- 為什麼這欄:沒寫白名單,半年後 internal 又會被別人 import;
+     ArchUnit 直接讀這份白名單擋 PR。 -->
+- ✅ `pricing`(全部 Public API)
+- ✅ `inventory.events`(只能 import events 子 package)
+- ❌ `inventory.internal`、`finance.internal`(禁止)
+- ❌ `finance.*`(禁止;走 PaymentCaptured event 通訊)
+
+## 6. Boundary Enforcement
+- 工具:Spring Modulith 1.4 + ArchUnit 1.3
+- CI job:`./gradlew archTest` 在 `pull_request` 觸發
+- 違規:PR 自動紅燈,需 `@arch-team` review 才能 merge
+- 規則檔:`src/test/java/com/meshfirst/ecommerce/ModuleBoundaryTest.java`
+
+## 7. Persistence Boundary
+<!-- 為什麼這欄:回收期最痛的 6 個月就是拆 47 個 cross-module JOIN;
+     寫進 card 等於把那段痛變成 lint 規則,不會再犯。 -->
+- 擁有的 schema:`order_schema`
+- 不可被其他模組 SQL JOIN 的表:`order_schema.*`(全部)
+- 對外查詢方式:Public API / OrderPlaced 派生 read model;不開放直連 DB
+
+## 8. Out of Scope
+- 不做 pricing 計算(由 `pricing` 模組負責)
+- 不做扣庫存(由 `inventory` 模組負責,訂閱 OrderPlaced)
+- 不做付款(由 `finance` 模組負責)
+
+## 9. Splittability Score
+<!-- 為什麼這欄:剛從 47 服務回收,寫進「暫不拆」是讓下季 review 有依據,
+     不會被「業界都在拆」那句話再推一次。 -->
+- 部署節奏與主系統差距:☒ 同 ☐ 2–5x ☐ > 5x
+- SLA 差異:☒ 同 ☐ 不同
+- 團隊規模 ≥ 3 人且穩定:☒ 是(7 人,半年內離職率 0)
+- Platform Eng 能力齊備:☐ 是 ☒ 否(2 人 SRE,K8s 自管能力剛起步)
+- 已具備獨立 schema:☒ 是
+- 結論:☒ 暫不拆 ☐ 邊緣服務候選 ☐ 已排程
+````
+
+回收後的第一張 card,刻意把 Splittability 寫成「暫不拆」⸺ 不是保守,是承認三年前的代價還沒收完。**每季拿出來重新填一次,五項真的都翻成「是」之前,留在 Modulith 比拆出去便宜**。
+
 ---
 
 ## 21.6 本章交付清單 Recap

@@ -332,6 +332,66 @@ DFD 是系統級的拓樸圖。但在現場,經常需要的是更小的單位:**
 
 NorthBay 在第三個月做了 9 張 Lineage Card(每張對應一個被合規反覆問到的資料元素)。第四個月馬來那家銀行又寄了一筆拒付來,這次他們在 14 分鐘內回答出走過哪幾步、寫進哪幾張表、誰是 owner。8.40 美元的金額沒變,**但問題從「沒人答得出來」變成「14 分鐘可以答出來」**,差別就在那 9 張卡。
 
+### 6.5.1 範例:NorthBay Pay 為「pan_token」補的那張 Lineage Card
+
+那筆 8.40 美元拒付的調研第三週,Head of Engineering 指定的第一張卡是 `pan_token` ⸺ 因為 PCI DSS v4.0 Req 3.4 與 Mastercard 拒付調查最常問到它。下面就是當時補上去、放在 `docs/lineage/pan-token.md` 的版本:
+
+````markdown
+# Data Lineage Card — pan_token
+
+> 版本:v0.1 | 撰寫日期:2025-11-12 | Owner:auth team / Eddy K.
+> 對應 DFD:`docs/dfd/level-0.md#auth-flow`
+> 對應 ADR:`docs/adr/0042-tokenization-vault.md`
+
+## 1. Source(資料從哪裡來)
+<!-- 為什麼這欄:沒寫來源,合規問「PAN 從哪一刻開始 token 化」就答不出;
+     PCI DSS Req 3.4 直接落在這條問題上。 -->
+- 主要來源系統:Tokenization Vault(內部 service `vault.svc`),
+  由 Merchant SDK 在 POS 端透過 `/v1/tokenize` 預先換取
+- 觸發事件:商家發起卡片授權請求(P1 入口前已完成 tokenize)
+- 進入頻率:即時(每筆交易一次)
+- 法規類別:PCI DSS v4.0 Req 3.4(PAN 不得在系統內明文流動)
+
+## 2. Transformation(資料被怎麼處理)
+- 經過的程序(對應 DFD Process):P1 auth → P2 risk → P3 3ds-proxy → P4 settlement
+- 關鍵轉換邏輯:
+  - P1 入口即使用 token,**任何下游系統皆不接觸明文 PAN**
+  - P3 與 ACS 互動時,以 token 換取一次性 directory server reference
+  - P4 對 Mastercard MTI 0220 送出時,由 vault 在出口端再次解密(僅此一處)
+- 衍生欄位:`token_last4`(P1 計算,給客服與 BI 使用,非可逆)
+
+## 3. Sink(資料流去哪裡)
+<!-- 為什麼這欄:沒寫流向,30 天內回覆監理機關 DSAR / chargeback 證據鏈就湊不出;
+     8.40 美元那次卡住的就是這欄。 -->
+- 持久化儲存:D1 `auth_log`、D2 `3ds_session`、D3 `ledger`、D4 `clearing_log`
+- 下游消費者:P5 reconcile、BI(僅 token_last4)、Chargeback Service P6
+- 對外輸出:Mastercard MTI 0220(由 vault 出口端解密)、客戶銀行拒付證據檔
+- 保留期限:7 年(PCI DSS Req 10.7);超過後由 vault 統一銷毀映射
+
+## 4. Owner(誰要為這份資料負責)
+| 階段 | 主 Owner | 副 Owner |
+|---|---|---|
+| 採集準確性(Tokenize) | Vault Team / Lin | Auth Team |
+| 轉換正確性 | Auth Team / Eddy | Risk Team |
+| 儲存完整性 | DBA / Wu | SRE |
+| 合規符合性 | Compliance / Chen | CISO |
+
+## 5. Update Trigger(什麼情況下要更新這張卡)
+<!-- 為什麼這欄:反模式 1 的根因是沒人知道何時該更新;
+     觸發條件寫進卡裡,等於提前授權發 PR,卡才不會變成另一份 SharePoint Visio。 -->
+- [ ] Tokenization Vault schema 變更(`vault.proto` 改版)
+- [ ] 任一新下游消費者接入(新 service 訂閱 `auth.token.*` topic)
+- [ ] PCI DSS 改版或地區個資新法影響保留期限
+- [ ] DFD Level 0 中 P1–P4 任一節點變更
+- [ ] 任一 Owner 異動
+
+## 6. 已知問題與技術債
+- P3 challenge 結果目前只寫 D2,未送 OpenLineage 事件,2026-Q1 補
+- BI 報表中 token_last4 與訂單系統的 last4 對齊率 99.6%,差額 0.4% 待釐清
+````
+
+第四個月馬來那家銀行再寄拒付過來時,值班工程師翻到這張卡的第 3 節,14 分鐘內就把證據鏈拼齊 ⸺ **DFD 是地圖,Lineage Card 是地圖上某一條路的逐步導航**,兩者一起用才會在事故當下答得出問題。
+
 ---
 
 ## 6.6 本章交付清單 Recap

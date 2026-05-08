@@ -498,6 +498,56 @@ checks:
 
 **為什麼候選清單裡要包含「維持現狀」?** 因為現場最常被忽略的選項,就是「組織層先走、儲存層不動」。MedNexus 第三年體檢後,他們做的就是這件事 ⸺ 把 14 個月花在組織層,Iceberg/Delta 沒換,但七家醫院終於有人對自己的資料負責。
 
+### 31.5.1 範例:MedNexus 第三年體檢後寫的那一頁
+
+MedNexus(`CASE-HCR-006`)第三年那場 retro 之後,聯盟 PM 把他們**真正該做但沒做**的決定寫成這張卡 ⸺ 結論不是「換 Iceberg」,是「組織層先走 14 個月、儲存層先不動」:
+
+````markdown
+# Data Architecture Decision Card — 七院 EMR 共享平台 v2
+
+> 對應 ADR:`docs/adr/0031-data-mesh-org-first.md`
+> 撰寫日期:2026-03-12 | 擁有人:平台 PM(Hsin)
+> 對齊章節:Ch 28 合規、Ch 31 資料架構
+
+## 1. 三層問題對照
+<!-- 為什麼這欄:第一年買 Databricks 時這格沒填,結果三層的決定全綁進一個工具決議。 -->
+| 層 | 痛點(量化) | 處理 | 不處理 |
+|---|---|---|---|
+| 組織 | 對不上資料追責 2 週、無 domain owner | 七家醫院各指 1 名 Data PO + Data Contract 進 CI | 不改 Databricks 帳號架構 |
+| 儲存 | Delta 表能跑、schema evolution OK | (本季不動)Delta 維持 | 不引入 Iceberg / Hudi |
+| 存取 | DRG 月報延遲 6 週 | weekly SFTP → daily ELT(dbt + Airflow) | 不做 streaming(業務不需要) |
+
+## 2. 組織層決定(Data Mesh 四原則體檢)
+<!-- 為什麼這欄:寫不出 Domain Owner 姓名 Mesh 就只是 PPT。 -->
+- [x] Domain Ownership:七家各指 Data PO,姓名已列入 `data-contracts/owners.yaml`
+- [x] Data as a Product:每家先發 1 個資料產品(`emr-discharge-summary`),版本 v0.1
+- [x] Self-Serve Platform:平台 team 提供 `dbt-template-emr` + `unity-catalog-onboarding-runbook`
+- [ ] Federated Governance:**Q2 才上 CI**(目前 Confluence 寫了沒守)
+
+## 3. 儲存層決定
+- 選擇:**維持現狀(Delta + Unity Catalog)**
+- 理由:三層痛點集中在組織層,換格式不解決追責問題
+- 不選 Iceberg 的理由:Databricks 整合是現有資產,Iceberg 跨引擎中立性對七院場景不是首要
+
+## 5. Data Contract 治理機制
+<!-- 為什麼這欄:HL7 PID-3 在七家有三種語意,沒契約進 CI 就會繼續對不上。 -->
+- 格式:Open Data Contract Standard YAML
+- 存放:`data-contracts/{hospital}/{product}-v{N}.yaml`
+- CI 檢查:① PID-3 語意宣告必填(MRN / 健保 ID / token)② ICD-10-CM 粒度宣告必填
+- Breaking change:由產出方通知所有 consumer,5 工作日內簽核
+
+## 7. 半年後 Reassessment Trigger
+- [ ] 任一 Domain Owner 離職 → 重新體檢
+- [ ] Data Contract breaking change 一季 > 3 次 → 重看契約治理
+- [ ] 業務要做即時跨院疫情監測 → 重看儲存層(評估 Lakebase)
+
+## 8. Out of Scope
+- 不處理跨境傳輸合規(走 Ch 28)
+- 不負責歷史 CSV 回填(由 `migration-2026-q3.md` 處理)
+````
+
+MedNexus 把這張卡釘在會議室白板上 14 個月。儲存層沒動一行,但七家醫院終於有 Data PO 在群組裡接「這欄是誰填的」這種訊息 ⸺ **資料架構的成熟度不是看用了什麼工具,是看出問題時找不找得到人**。
+
 ---
 
 ## 31.6 本章交付清單 Recap

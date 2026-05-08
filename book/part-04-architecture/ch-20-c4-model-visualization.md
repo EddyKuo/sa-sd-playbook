@@ -378,6 +378,30 @@ workspace "PaySpan" "東南亞 e-wallet 與 SME 收單支付平台" {
 
 **為什麼一份 `workspace.dsl` 同時放 L1 與 L2、還有一個 Filtered View?** 這正是 Structurizr DSL 對 Mermaid C4 plugin 的核心優勢:**單一 source、多視圖**。把這個檔案放進 PaySpan 的 repo,B 輪審查那場會議只要在 Structurizr Lite 上切換三個 view,就能分別回答 Visa 顧問與 MAS 合規顧問的問題,不需要 47 張投影片。
 
+### 20.5.1 範例:PaySpan 為那場 B 輪審查補的 L2 Container Card
+
+47 張投影片那場會議結束後,PaySpan 在三天內補了 `workspace.dsl`(就是上面那份),並為其中最關鍵的一張 view ⸺ `L2_Container` ⸺ 寫了下面這張 Card。如果這張卡片在募資前就掛在 GitHub 上,Visa 顧問那 6 分鐘的翻簡報根本不會發生:
+
+````markdown
+# C4 Diagram Card — L2_Container(PaySpan 內部 8 個 container)
+
+> 對應檔:docs/architecture/c4/workspace.dsl(view: `L2_Container`)
+> 對應 ADR:docs/adr/0017-fraud-engine-split.md, docs/adr/0024-ledger-pg17.md
+
+| 欄位 | 內容 |
+|---|---|
+| **Level** | Container (L2) |
+| **Audience** | <!-- 為什麼這欄:不寫具體角色,圖會被當「萬用」用,結果誰都看不懂。 --><br/>(1) B 輪投資人帶來的 Visa Asia 技術顧問<br/>(2) MAS 合規顧問週期性審查<br/>(3) 新進後端工程師 onboarding 第 3 天 |
+| **Question Answered** | <!-- 為什麼這欄:沒這一句,讀者每次都得自己猜這張圖在答什麼;PaySpan 那場就是因為缺這個。 --><br/>「一筆消費者刷卡的授權請求,在 PaySpan 內部走過哪幾個 container,哪一步擋風控、哪一步寫帳本」 |
+| **Last Update** | 2026-01-29(由 @arch-team 在 PR #482 隨 FraudEngine 拆分一起更新) |
+| **Owner** | `@arch-team`(主 owner:Hsin;副:CTO 黎) |
+| **Verification** | <!-- 為什麼這欄:沒 CI 把關,半年後這張圖會變成 SharePoint 上 _v3-final-final 的下場。 --><br/>CI job `c4-container-vs-repo.sh` 每次 PR 自動跑,比對 `workspace.dsl` 的 container 名與 `services/` 子資料夾;不一致 PR 直接擋 |
+| **Linked ADRs** | ADR-0017(為何 FraudEngine 從 AuthSvc 拆出)、ADR-0024(Ledger 為何選 PG 17 不選 Cockroach)、ADR-0031(Settlement 為何走 Kafka 不走同步呼叫) |
+| **Out of Scope** | <!-- 為什麼這欄:寫下不答的問題,下次有人問起才有依據指向別張圖,不會把這張塞爆。 --><br/>(1) 不顯示 read replica 與災備拓樸 → 見 `L2_Deployment`<br/>(2) 不顯示 KYC 內部規則細節 → 見 `L3_KYC_Component`<br/>(3) 不顯示跨境清算的 region 邊界 → 見 `Filtered_DataResidency` |
+````
+
+寫得出 Audience、Question Answered、Verification 三格的圖,半年後會被回看;寫不出來的,就承認它是當天會議的一次性產出,不必進 DaC。**圖的壽命由這張卡決定,不是由畫得多漂亮決定**。
+
 ---
 
 ## 20.6 本章交付清單 Recap

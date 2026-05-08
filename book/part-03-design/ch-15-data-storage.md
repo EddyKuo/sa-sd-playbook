@@ -385,6 +385,70 @@ MongoDB 4.0 起支援 multi-document transaction,但**它不是免費的** ⸺ r
 
 **為什麼候選清單裡要包含「維持現狀」?** 因為現場最常被忽略的選項,就是「把現有引擎用好」。SunLedger 如果在第二欄寫上「維持 PG 17、加 TimescaleDB extension」,後面整段故事不會發生。
 
+### 15.5.1 範例:SunLedger 那場週會應該先擺上桌的卡
+
+那場「PG 撐不住,我們得換 Cassandra」的週會,如果 SunLedger 的資料工程師在白板上先把下面這張卡填一遍,後面 6 個月遷移與第 7 個月 4 分 12 秒月報的故事都不會發生。下面這份是事故覆盤後,他們補做的、原本應該在會議桌上就攤開的版本。
+
+````markdown
+# Storage Selection Card — SunLedger telemetry 引擎評估
+
+> 對應 ADR:`docs/adr/0011-stay-on-pg-with-timescaledb.md`
+> 撰寫日期:2026-03-04(覆盤補做)| 擁有人:@yu(資料工程)
+> 對齊章節:Ch 8 模型、Ch 15 引擎、Ch 32 FinOps
+
+## 1. Workload Profile(五維量化)
+<!-- 為什麼這欄:這格沒填,「PG 撐不住」就是直覺不是測量;
+     SunLedger 整段故事就是這格被跳過的代價。 -->
+
+| 維度 | 量化值 | 來源 |
+|---|---|---|
+| 讀寫比 | reads:writes ≈ **1 : 6**,但讀走聚合(月報)耗時 | Grafana 30 天 P50 |
+| 查詢模式 | 點查 8% / 範圍 12% / **聚合 78%** / 全文 0% / 向量 2% | pg_stat_statements |
+| 規模 | 7 億 row、~480 GB、年增 40% | pg_database_size |
+| 一致性需求 | telemetry 寫入 **最終一致**(讀己之寫不必要) | 業務 SLA 文件 |
+| 延遲 SLO | P95 寫入 < 20ms ✅ / P95 月報 < 30s ❌(實際 90s) | Grafana |
+
+## 2. 候選引擎(含「不換」選項)
+<!-- 為什麼這欄:現場最常被忽略的選項就是「把現有引擎用好」;
+     寫進來,「換 Cassandra」就不會自動變成可通過的決定。 -->
+
+| 候選 | 強項 對應 workload 哪一格 | 弱項 / 取捨 | 入場成本 |
+|---|---|---|---|
+| **維持 PG 17 + TimescaleDB hypertable + continuous aggregate** | 聚合 78% + 範圍掃描;月報實測 < 8s | TSDB 學習 ~1 週 | ★ 低 |
+| Cassandra 3-node RF=3 | 寫入擴展 + 高可用 | **聚合查詢需在應用層 join,網路來回 70% 時間** | ★★★ 高 |
+| ClickHouse | 聚合超強(欄式) | 第二套引擎運維 + ETL 雙寫 | ★★ 中 |
+
+## 3. 決策(對齊 PACELC)
+
+- 選擇:**維持 PG 17 + TimescaleDB**
+- PACELC 分類:PC/EC(平時延遲可接受 < 200ms)
+- 主要理由:聚合 78% 是讀密集 + 二次聚合 workload,**不是寫密集擴展問題**
+- 不選 Cassandra:它的 partition key 設計逼資料先撈回應用層再算,反向放大延遲
+- 不選 ClickHouse:雙引擎運維成本超過收益,7 億 row 仍在 TSDB 甜蜜點
+
+## 4. 入場成本
+
+- 學習:1 名資料工程師 1 週讀完 TSDB hypertable + continuous aggregate
+- 運維:現有 PG 監控全部繼續用,新增 hypertable chunk 監控 1 個 dashboard
+- 整合:應用層查詢無變動,DDL 改 hypertable + 加 continuous aggregate
+- 退出:若兩年後真的撐不住,從 TSDB 退到 OLAP replica 是常規路徑
+
+## 5. Reassessment Trigger
+<!-- 為什麼這欄:引擎選對了會老,把重看條件預先寫,
+     等於把六個月後的爭議時間預先省下來。 -->
+- [ ] 寫入 P95 > 50ms 連續 7 天 → 重新跑這張卡
+- [ ] 月報 P95 > 30s → 評估 OLAP replica(ClickHouse / DuckDB)
+- [ ] 資料量 > 5 TB 或年增 > 80% → 評估 sharding
+- [ ] 雲端帳單 > USD 8,000/月 → 跟 FinOps 對齊
+
+## 6. Out of Scope
+- 這個決定**不**處理 RAG / 向量(走 pgvector,另一份卡)
+- 這個決定**不**改變 telemetry schema(由 Schema Decision Card 處理)
+- 這個決定**不**負責歷史回填(由遷移 runbook 處理)
+````
+
+那 90 秒的月報,後來在 PG + TSDB hypertable + continuous aggregate 上跑進 7.4 秒。**「PG 撐不住」這四個字真正的問題不在 PG,在那場會議沒有人問「你量過了嗎」。這張卡的工作就是讓那個問題在會議桌上有地方坐。**
+
 ---
 
 ## 15.6 本章交付清單 Recap

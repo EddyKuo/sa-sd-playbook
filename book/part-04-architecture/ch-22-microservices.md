@@ -403,6 +403,81 @@ API 版本管理走 SemVer:major 是破壞性變更(必須跑棄用節奏),minor
 
 **為什麼六項稅金每項都要有 Owner?** 沒寫 Owner 的稅金,長期會變成 service team 自己扛。平台稅、觀測稅、網路稅在成熟組織裡應該由 Platform team 提供,service team 只負責一致性、認知、部署這三項裡的業務面。Owner 寫清楚,後面的能力建設才有人推。
 
+### 22.5.1 範例:TideCart 黑五復盤後,inventory-service 重做的那張卡
+
+§22.1 那七分鐘事故覆盤後,TideCart 把 32 個服務先收回 11 個,其中**保留為微服務**的第一個就是 `inventory-service`(因為庫存 RPS 確實高出主系統 17x)。下面這張卡片寫於復盤後第 6 週,刻意把退場條件寫進去 ⸺ 因為 VP Engineering 在牆上寫過「分散式單體」那三個字之後,團隊不想再有第二個沒退場條件的服務:
+
+````markdown
+# Microservice Tax Card — inventory-service
+
+> 版本:v1.0 | 撰寫日期:2026-01-08 | Owner team:fulfillment-core(6 人)
+> 對應 ADR:`docs/adr/0078-keep-inventory-as-service.md`
+> 對應 Bounded Context(Ch 18):Inventory(獨立 BC,2025-12 重新確認)
+
+## 1. Service Identity
+- 一句話 mission:對 ecommerce-core 與 BFF 提供「可售量查詢 / 預訂 / 釋放」三件事;
+  **不**做 pricing、**不**做訂單狀態、**不**做出貨排程
+- 為什麼是服務不是模組:黑五當天 RPS 為主系統 17x,且擴展時段集中於促銷視窗,
+  與其他模組節奏明顯錯開
+
+## 2. 拆分四維檢核
+<!-- 為什麼這欄:2023 年那刀四維過了零個半,代價就是七分鐘故障;
+     現在每格都要有具體訊號才能勾。 -->
+| 維度 | 通過? | 訊號 |
+|---|---|---|
+| 規模(RPS / 擴展節奏 ≥ 10x) | ☒ | 黑五 17x;平日 4–6x,持續 14 個月 |
+| 團隊(穩定 ≥ 5 人 cradle-to-grave) | ☒ | fulfillment-core 6 人,離職率 0(12 個月) |
+| 變動頻率(部署節奏差 ≥ 5x、≥ 12 個月) | ☒ | inventory 週 8 次,主系統週 1.5 次 |
+| 平台能力(K8s+Mesh+Trace+GitOps) | ☒ | 2025 H2 補完(復盤後第 4 個 sprint) |
+
+## 3. 稅金清單
+<!-- 為什麼這欄:沒 Owner 的稅金最後都會變成 service team 自己扛;
+     寫清楚才能在跨團隊會議上要資源。 -->
+| 稅項 | 工具 | Owner | 抵稅條件 |
+|---|---|---|---|
+| 平台 | EKS 1.31 + ArgoCD | platform-team(4 人) | 既有平台,服務不自寫 manifest |
+| 觀測 | OTel 1.x + Tempo + Loki | platform-team | sidecar 自動注入 trace |
+| 一致性 | Outbox + Kafka 3.7 + Temporal saga | fulfillment-core | reserve / release 補償已寫 |
+| 部署 | Helm chart 模板複用 | platform-team | service team 只填 values.yaml |
+| 認知 | Backstage component + onboard runbook | fulfillment-core | 新人 ≤ 3 週送 PR(目前實測 18 天) |
+| 網路 | Istio mTLS + retry + circuit breaker | platform-team | sidecar 預設,服務只設策略值 |
+
+## 4. 通訊契約
+- 同步:`inventory.v1.proto`,SemVer v1.4.2,Pact contract `pacts/cart-to-inventory@v1`
+- 非同步:Kafka topic `inventory.events.v1`(StockReserved / StockReleased),
+  AsyncAPI 3.0 schema 在 `docs/asyncapi/inventory.yaml`
+
+## 5. 跨服務交易
+| Saga | 角色 | 模式 | 補償 |
+|---|---|---|---|
+| CheckoutSaga | 參與 | Orchestration(Temporal) | `release(reservationId)` |
+
+## 6. 失敗策略
+- 上游(checkout)掛:本服務無 fallback,因為本服務是被叫方
+- 下游(warehouse api)掛:retry 3 次指數退避 / 失敗進 DLQ / 5 分鐘無恢復觸發 PagerDuty
+- 冪等:`Idempotency-Key` 在 gRPC interceptor 處理,Redis 7 存 24h
+- Timeout:每個 reserve 250ms / overall checkout budget 800ms
+
+## 7. SLO / SLI
+- 可用性 99.95%(月度 error budget = 21.6 分鐘)
+- P99 reserve latency:120ms(黑五容忍 250ms)
+- Alerting:`infra/alerts/inventory-service.yaml`(multi-window burn rate)
+
+## 8. Observability
+- Trace:OTel 自動 traceparent 傳遞,跨 Kafka 透過 W3C Baggage
+- Log:JSON,`correlation_id` 從 gRPC metadata 取
+- Metrics:RED + 業務指標 `available_units_by_sku`(注意 cardinality 上限)
+
+## 9. 退場條件
+<!-- 為什麼這欄:七分鐘那場事故的真正教訓 ⸺ 拆出去的東西也要有路收回;
+     沒這欄,兩年後沒人敢動就會變第二個歷史包袱。 -->
+- ☐ 規模差距持續 ≤ 3x 連續 6 個月 → 重新評估收回 ecommerce-core
+- ☐ fulfillment-core < 3 人 → 立即評估收回
+- ☐ checkout 路徑同步呼叫深度再次 > 3 → 重新檢視拓樸(觸發 ADR review)
+````
+
+七分鐘故障跟一張寫滿四維檢核的卡之間,差的不是工具,**是「拆每個服務都要先把抵稅條件寫具體」這個習慣**。退場條件那一欄的價值,在三年後決定要不要把它收回 ecommerce-core 的那場會議才會浮現。
+
 ---
 
 ## 22.6 本章交付清單 Recap

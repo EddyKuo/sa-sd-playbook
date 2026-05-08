@@ -504,6 +504,76 @@ K8s 1.25(2022)正式移除 PodSecurityPolicy(PSP),改用 Pod Security Standards 
 
 **為什麼把 12-Factor Alignment 跟 K8s 採用四維分開?** 因為 12-Factor 是應用設計問題,K8s 是執行平台問題。前者沒對齊就上 K8s,等於把一個有結構性問題的應用丟到一個複雜的環境裡 ⸺ 兩個問題會互相放大。先做應用,再選平台,順序不能反。
 
+### 24.5.1 範例:TenantForge 把無狀態 API 搬回 Cloud Run 那張卡
+
+35% SRE 工時的事故覆盤後,TenantForge 沒有立刻全砍,而是先把每個服務拆出一張 Choice Card。下面這張是他們第一個被搬回 Cloud Run 的服務 ⸺ `tenant-billing-api`。當時上 K8s 的決定是「客戶會問」,這張卡逼他們把那句話拆成三點理由,結果寫不出第二點:
+
+````markdown
+# Cloud-Native Choice Card — tenant-billing-api(無狀態計費 API)
+
+> 版本:v0.1 | 撰寫日期:2026-02-04 | Owner:Backend Lead 周
+> 對應 ADR:`docs/adr/0089-billing-api-back-to-cloud-run.md`
+
+## 1. Team Profile
+<!-- 為什麼這欄:寫不出「凌晨三點接電話的人」,就是 K8s 採用四維過不了的訊號;
+     2025-09 那次決策刻意跳過這欄,代價是 35% 工時。 -->
+- 工程師人數:12(< 50)
+- 專職 SRE / Platform 人數:1(前端轉任,半年資歷)
+- 是否能處理凌晨三點告警:☐ 是 ☒ 否(目前由 Backend Lead 兼)
+- 是否服務金融 / 醫療 / 政府 / 軍工:☐ 是 ☒ 否(SOC 2 Type II,Cloud Run 已合規)
+
+## 2. Workload Profile
+- 主要型態:☒ 長駐 API ☐ 事件 ☐ 排程 ☐ Stateful
+- 高峰 / 平常 QPS:280 / 95
+- 主要瓶頸:☒ Memory(Spring Boot 啟動約 380MB) ☐ 其他
+- 自訂排程 / CRD:☐ 是 ☒ 否
+
+## 3. Platform Tax Estimate
+| 平台 | SRE 工時 % | 月帳(基準=100) | 上線前置 |
+|---|---|---|---|
+| Cloud Run | 3% | 42 | 1 天 |
+| Render | 4% | 38 | 半天 |
+| 自管 EKS(現況) | 35% | 218 | 已上線 |
+
+## 4. 12-Factor Alignment
+<!-- 為什麼這欄:對齊到 11/12 才有資格上 K8s;TenantForge 之前對齊只 9 條,
+     兩個問題互相放大才會在第三個月炸掉。 -->
+- 對齊條數:11 / 12(Admin Processes 還沒外置,目前 ssh 進去手動跑)
+- 結論:對齊度足夠,**問題在平台選錯,不在應用設計**
+
+## 5. K8s 採用四維
+| 維度 | 通過 | 證據 |
+|---|---|---|
+| 規模 ≥ 50 人 / 多產品線 | ☐ | 12 人,單產品線 |
+| ≥ 2 名專職 SRE / Platform | ☐ | 0.5 名(兼任) |
+| 真實多雲 / 合規需求 | ☐ | 0 客戶要求 |
+| 自訂 CRD / 排程需求 | ☐ | 無 |
+- 結論:☐ 四維皆過 ☒ 有未通過 → **遷回 Cloud Run**
+
+## 6. Decision
+<!-- 為什麼這欄:逼自己寫三點工程理由,不是「客戶會問」或「履歷加分」;
+     寫不出第二點時就該回頭。 -->
+- 平台:Google Cloud Run(Gen2,自動 scale to 0)
+- 主要理由:
+  1. 12 人團隊養不起 K8s control plane,SRE 工時 35% 是不可持續的稅
+  2. workload 是長駐 API + 偶發排程,Cloud Run 的 cold start 200ms 在 SLO 內
+  3. 退場成本低 ⸺ 容器映像不變,只是換 runtime
+- 退場策略:若客戶數 ≥ 200 且簽約要求多雲,評估 Cloud Run + 區域備援;
+  ≥ 50 工程師且簽下首個合規多雲合約,才回頭評估 K8s
+
+## 7. Owner & Review Cadence
+<!-- 為什麼這欄:每季拉出來看,觸發訊號出現就重評估,不會被「以前的決定」拖著走。 -->
+- Owner:Backend Lead 周
+- 每 3 個月檢視一次
+- 觸發重評估訊號:
+  - [ ] 團隊 ≥ 50 人
+  - [ ] SRE 工時 > 20%(三個月內)
+  - [ ] 真實多雲合規需求
+  - [ ] Cloud Run 重大價格變動
+````
+
+把這張卡填到「四維皆未通過」那一格,**遷回 Cloud Run 的決定就不再需要說服任何人** ⸺ 證據已經自己列出來了。SRE 工時降回 12%、月帳降到 96 那一週,團隊把這張卡與 2025-09 的會議紀錄並列,釘在工程牆上提醒「下次有人說『客戶會問』,先把卡拿出來填」。
+
 ---
 
 ## 24.6 本章交付清單 Recap

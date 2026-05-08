@@ -482,6 +482,74 @@ app = graph.compile()
 
 **為什麼第 5 題 Budget 是必填、不是選填?** 這是反模式 3 的逆操作。production 上的 Multi-Agent 系統如果沒寫 Budget,就是還沒準備好上 production。
 
+### 40.5.1 範例:Helmsworth 七 Agent 拆回 Routing + 兩 Subagent 後的 Card
+
+Helmsworth(`CASE-SAS-009`)那張七個圓的架構圖被畫了三次給投資人,事故後第四週被縮成下面這份 Card 上的兩格 ⸺ 不是因為團隊變保守,是因為他們補做了第 2 題的功課:
+
+````markdown
+# Multi-Agent System Card — Helmsworth Ticket Reply v2
+
+> 版本:v0.2 | 撰寫日期:2026-03-04 | 擁有人:Lin(工程主管)+ Asuka(QA Lead)
+> 對齊:AI-Native Vision Card v0.3、CDE Setup v0.5、ADR-0023(從 7-Agent 退到 Routing)
+> 狀態:Approved(通過 SRE + QA 雙簽)
+
+## 1. 模式選擇(勾一個)
+
+- [ ] Augmented LLM
+- [ ] Workflow: Prompt Chaining
+- [x] **Workflow: Routing**(主模式;依工單複雜度分流)
+- [ ] Workflow: Parallelization
+- [ ] Workflow: Evaluator-Optimizer
+- [ ] Multi-Agent: Orchestrator-Workers
+- [ ] Multi-Agent: Autonomous
+
+**理由**:Q4 卡點是「複雜混合工單」品質低;Routing + 為「退款」與「合約釐清」各拆一個窄 Subagent 已可解決,不需要 Triage / Sentiment / Audit 各自獨立 Agent。
+
+## 2. Pre-Decision Checklist(若選 Multi-Agent,必須全部 ✅)
+<!-- 為什麼這欄:這正是當初被跳過的那一頁;
+     沒走完這四格就拆 7 Agent,事故就是寫在這格的空白上。 -->
+- [x] 已試過 Prompt Chaining,卡點:複雜工單三類意圖混合,鏈太長 P95 已達 6s
+- [x] 已試過 Routing,卡點:**沒卡點,反而是這次的解**(舊版沒做完整 Routing)
+- [x] 已試過 Evaluator-Optimizer,卡點:對「合約條款釐清」幻覺率仍 12%,需獨立 KB
+- [ ] (本系統選 Routing,Multi-Agent 跳過)
+
+## 3. Agent 分工表
+
+| Agent 名 | 責任邊界 | 上下文獨立性 | 失敗隔離 | Allowed Tools | Knowledge Sources |
+|---|---|---|---|---|---|
+| Router(LLM) | 將工單分到下列三條路之一 | ✅ | ✅ 失敗 → fallback 規則表 | classify_ticket | ADR-0023 §2 |
+| Refund-Subagent | 處理退款試算 + 政策說明 | ✅ | ✅ 失敗 → handoff Tier 2 | refund.* (4 個) | docs/skills/refund.md |
+| Contract-Subagent | 合約條款釐清(只讀) | ✅ | ✅ 失敗 → handoff legal | contract.search | docs/skills/contract.md |
+| (一般工單走原本單 Agent) | — | — | — | — | — |
+
+## 4. 通訊協定
+
+- [x] **Direct Call**(同步直呼,僅 Router → Subagent,單跳;非互相呼叫)
+- [ ] Message Queue
+- [ ] Shared State
+
+**Message Schema**:`schemas/agent-messages/route_decision.json`(`{route: "refund"|"contract"|"general", confidence: 0..1}`)
+
+## 5. Budget Circuit Breaker
+<!-- 為什麼這欄:事故當天的 23 次互相呼叫就是因為這格沒填;
+     寫死上限後,Subagent 之間自然不會回頭找 Router。 -->
+| 維度 | 閾值 | 超過時行為 |
+|---|---|---|
+| 全鏈路 LLM 呼叫次數 | ≤ **3**(Router 1 + Subagent 最多 2) | 停止 + 走規則 fallback + 開單給 SRE |
+| 全鏈路 Wall-clock | ≤ **12 秒** | 停止 + 回「正在請專員處理」+ handoff Tier 1 |
+| 全鏈路 token | ≤ **30K** | 停止 + 通知 #ai-ops |
+
+## 6. 失敗隔離設計
+- Subagent 失敗:Router 不重試 Subagent,直接 handoff(避免回 Router 形成循環)
+- Router 失敗:走 keyword 規則表(舊版 fallback,品質 0.62 但可用)
+
+## 7. 觀測與 Audit
+- Trace:LangSmith;必含 `trace_id / agent_name / message_in / message_out / tokens / latency`
+- 對應 §40.3.3 三支柱:HITL handoff log + Audit Trail + Circuit Breaker counter
+````
+
+那 23 次互相呼叫沒有出現在這份 Card 的任何一格,因為第 4 題只允許 Router → Subagent 單跳、第 5 題的 LLM 呼叫上限被寫成 3。**Multi-Agent 的窄,不是靠紀律,是靠把窄寫進這兩格。**
+
 ---
 
 ## 40.6 本章交付清單 Recap

@@ -363,6 +363,62 @@ JSONB 是好工具,但**它是「結構化資料的逃生口」,不是「拒絕 
 
 **為什麼要有「Out of Scope」?** 跟 Ch 1 System Charter、Ch 5 Diagram Card 同樣的道理 ⸺ 沒寫下來的範圍,半年後一定會被誤用。MedCanvas 的事故根源,就是四張表的「Out of Scope 沒被任何一張卡片寫下來」。
 
+### 8.5.1 範例:MedCanvas 把四個 patient_id 拆完後,為 inpatient_episode 補的那張卡
+
+第 11 週那場 6.4% 對不上的事故覆盤後,MedCanvas 的 DBA 做的第一件事不是寫新 migration,而是把已經存在的 `inpatient_episode` 補一張卡 ⸺ 把「這張表代表什麼、不代表什麼」用業務語言寫清楚,後面三張表才有比較的基準。下面就是那張卡:
+
+````markdown
+# Schema Decision Card — inpatient_episode
+
+> 對應 migration:`db/migrations/20251015_rename_patient_id_to_episode_id.sql`
+> 對應 ERD:`docs/diagrams/erd-inpatient-bc.mmd`
+
+## 1. 業務概念(Model Layer)
+<!-- 為什麼這欄:寫不出業務語言代表這張表沒被獨立理解過;
+     四個 patient_id 共用一個名字的事故根因就在這層。 -->
+- 這張表代表的業務概念是:**一次住院事件(Episode)**,從 ADT-A01 進入到 ADT-A03 出院為止
+- 不代表的概念:病人本身(走 `patient_mrn`)、預掛號(走 `pre_admission_registry`)、跨院轉診紀錄(走 `cross_hospital_transfer`)
+- Bounded Context:Inpatient(對應 Ch 18 `inpatient` BC,與 Outpatient、Billing 為對等 BC)
+
+## 2. 欄位 / 型別 / 來源
+
+| 欄位 | 型別 | 來源 | 不可變性 | 備註 |
+|---|---|---|---|---|
+| episode_id | uuid (v7) | 本系統 ADT-A01 觸發 | 不可變 | **原本誤名為 patient_id** |
+| mrn | bigint | 病人主檔 | 不可變 | FK → patient_mrn(mrn) |
+| admit_at | timestamptz | ADT-A01 PV1-44 | 不可變 | UTC 儲存 |
+| discharge_at | timestamptz | ADT-A03 PV1-45 | 可變(回填) | NULL = 未出院 |
+| bed_id | text | ADT-A02 PV1-3 | 可變(換床) | 跨院區帶院區前綴 |
+| drg_code | text | 出院編碼員 | 可變(覆核可改) | CHECK 對 ICD-10/DRG 字典 |
+
+## 3. 索引策略
+- 主鍵:`episode_id`(B-tree,UUIDv7 時間有序)
+- 查詢索引:`(mrn, admit_at DESC)`(查病人歷次住院)、`admit_at`(每日報表)
+- 不建立的索引:`bed_id` 單獨索引(換床頻繁,索引維護成本高)
+
+## 4. 演進策略
+- Schema 變更節奏:Expand-Contract,本次 `patient_id → episode_id` 走 4 週雙寫期
+- 反正規化的位置:讀模型 `inpatient_summary_view`(由 outbox 事件投影,T+0)
+- 不在這張表做的事:出院帳務細項(走 `discharge_summary`)、跨院統計(走 BI 副本)
+
+## 5. 不可變性聲明
+<!-- 為什麼這欄:HIPAA-like 與健保稽核越來越嚴,
+     寫了就不該動的欄位事先聲明,等於把未來合規證據先準備好。 -->
+- 一旦寫入後**不應**被 UPDATE 的欄位:`episode_id`、`mrn`、`admit_at`
+- 允許 UPDATE 但需歷史化:`discharge_at`、`drg_code`、`bed_id` → 進 `inpatient_episode_history`(by trigger)
+- 軟刪除策略:`deleted_at timestamptz NULL`,RLS 過濾,**禁止** hard delete(7 年保留)
+
+## 6. Out of Scope
+<!-- 為什麼這欄:四個 patient_id 共用一名的事故,
+     就是因為沒一張卡寫清楚「我不是另外那三張表」;這欄是把誤用點先標出來。 -->
+- 不處理門診事件(走 `outpatient_visit`)
+- 不處理預掛號 token(走 `pre_admission_registry`,3 天失效)
+- 不處理跨院轉診來源(走 `cross_hospital_transfer`,external_pid 不入此表)
+- 不做 ICD-10 字典維護(走 `icd10_dictionary`)
+````
+
+第 13 週這張卡填完後,DBA 做的第二件事就是把另外三張表也各補一張同樣格式的卡 ⸺ **真正擋下下一次事故的不是 migration,是這四張卡放在一起時,「Out of Scope」那欄互相對得起來**。
+
 ---
 
 ## 8.6 本章交付清單 Recap

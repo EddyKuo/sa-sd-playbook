@@ -439,6 +439,55 @@ Prometheus + Sloth 都建好了,SLO catalog 寫了 14 條,multi-burn-rate alert 
 
 **為什麼有 Sunset Plan?** 不是每條 fitness function 都該活到永遠。有些是過渡性的(舊系統遷移期間守護),遷移完成後該退場。寫進 card 的退場條件,可以避免規則庫累積成無人維護的化石。HelixOps 在 18 個月後盤點,他們有 47 條 fitness function,其中 11 條已經沒有意義(對應的舊系統下線了),但沒人敢動 ⸺ 因為當初沒寫 sunset plan。
 
+### 34.5.1 範例:HelixOps ADR-0007 配上的那張卡
+
+HelixOps(`CASE-SAS-008`)在那 18 個月、73% 反向依賴的 postmortem 之後,做的第一張 Fitness Function Card 就是把 ADR-0007(Hexagonal)補上守護。下面是他們補回去、跟 ArchUnit 規則檔同 PR 的版本:
+
+````markdown
+# Fitness Function Card — ADR-0007 Hexagonal Architecture
+
+> 版本:v1.0(補建)| 撰寫日期:2026-02-22 | Owner:Wei(staff eng)
+> 對應 ADR:`docs/adr/0007-hexagonal-architecture.md`
+> 規則檔:`core/src/test/java/arch/HexagonalRulesTest.java`(ArchUnit 1.3)
+
+## 1. 守護目標
+<!-- 為什麼這欄:沒這格,規則會在 6 個月後沒人記得「我們當初為什麼擋這條 import」。 -->
+- 守護的架構特徵:**依賴方向**(domain 不依賴 infra / web / 第三方 SDK)
+- 一句話:若 domain 反向依賴 infra,replay test、模擬器、跨 BC 測試全部失效
+- 對應 ADR 段落:ADR-0007 § 3「Decision」第 2、3 條
+
+## 2. 五層分類
+- ☑ Code(其他層在另張卡)
+- 工具:ArchUnit 1.3.0
+- 規則 ID:`HEX-001` ~ `HEX-004`(對應四種違反方向)
+
+## 3. 三維分類
+- Atomic(每條規則獨立失敗)| Triggered(PR 跑)| Static(只看 byte code)
+
+## 4. CI 強制度
+<!-- 為什麼這欄:18 個月前如果這格勾了 error,73% 那筆數字不會發生。 -->
+- ☑ error(擋 PR,不能 merge)
+- GitHub Required Status Check:`arch-fitness / hexagonal`
+- 例外申請:Staff Eng 雙簽 + 寫進新一份 ADR(過去 90 天:0 例外)
+
+## 5. Baseline
+<!-- 為什麼這欄:現有 97 處違反如果一打開全紅,規則會被立刻 revert;baseline + 遞減才走得下去。 -->
+- 違反數(2026-02-22 起跑):97
+- 策略:暫凍 baseline + expiring suppressions(每筆附 sunset 日期)
+- 遞減目標:每季 -25 筆,2026 Q4 歸零
+- 規則:**只能下降不能上升**(新增違反 → CI fail)
+
+## 6. 量測週期
+- 每 PR + 每日 trend(Grafana panel `arch-fitness/hexagonal`)
+- 異常上升警報接收人:Wei + tech-lead-sync Slack channel
+
+## 8. Sunset Plan
+- 不退場(永久守護)— 依賴方向是架構基石,腐爛代價過高
+- 但 baseline suppressions 全清完後,Q4 改 Continuous 模式跑 prod build
+````
+
+HelixOps 這張卡上線三個月後,違反數從 97 降到 51,新增 0;真正的價值不是數字,是**新人 PR 第一次被擋的那 30 秒,比讀完 ADR-0007 全文 3 次還有效**。
+
 ---
 
 ## 34.6 本章交付清單 Recap

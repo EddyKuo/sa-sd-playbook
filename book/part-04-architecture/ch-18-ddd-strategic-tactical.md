@@ -416,6 +416,79 @@ ACL 是 Context Map 八種模式裡最常被「形式上做了、實質上沒做
 
 **為什麼要寫「在其他 context 對應的詞」?** 這欄是跨 context 翻譯的 source of truth。聖維禮的 Clinical context 裡 `Encounter` 對應 Billing 的 `BillingPeriod`、對應 Scheduling 的 `Visit` ⸺ 這份對應寫在卡片上,ACL 開發時直接抄。
 
+### 18.5.1 範例:聖維禮 Clinical Context 重命名前的第一張卡
+
+聖維禮 11 個月戰略工作的起點,是把 Clinical 從「跟 Billing / Scheduling 共用 `Patient`」這個習慣裡拔出來。下面這張就是他們在第二週畫的第一張卡 ⸺ 還沒寫程式、還沒改 schema,只是把語言邊界說清楚,後面所有 ACL 與 Aggregate 設計才有東西可以抄:
+
+````markdown
+# Bounded Context Card — Clinical(就診事件主體)
+
+> 版本:v0.1 | 撰寫日期:2025-04-21 | Owner Team:資訊科 — 臨床組(7 人)
+> 對應 ADR:`docs/adr/0017-clinical-context-rename-patient-to-encounter.md`
+
+## 1. Context Name
+- 名稱:Clinical
+- 一句話定義:這個 context 在處理「**單次住院或門診就診事件的臨床決策軌跡**」⸺
+  對主治醫師、護理師、藥師,記錄診斷、醫囑、用藥安全核對結果,直到出院為止
+
+## 2. Subdomain Type
+<!-- 為什麼這欄:把 Clinical 標成 Core 等於承諾把最強的人放這裡;
+     2017 年沒做這一步,結果保險規則引擎吃掉了團隊大半人力。 -->
+- [x] Core(臨床決策是這家醫院的競爭差異,用藥安全 2024 年通過 JCI 複評的關鍵)
+- 證據:過去 12 個月本 context 直接相關的 4 件醫療糾紛全部贏 ⸺ 因為臨床軌跡可被重建
+
+## 3. Ubiquitous Language Top 10
+<!-- 為什麼這欄:寫不出 10 條,代表還沒跟主治對齊;
+     聖維禮第一版只寫得出 4 條,主任要求補完才准進下一輪。 -->
+| # | 詞彙(Clinical 內) | 定義 | 在其他 context 對應的詞 |
+|---|---|---|---|
+| 1 | Encounter | 一次住院或門診的完整就診事件,有起訖時點 | Billing.BillingPeriod / Scheduling.Visit |
+| 2 | EncounterSubject | 此次就診的人(VO,只持 MRN) | Billing.Insured / Scheduling.ScheduledSubject |
+| 3 | PrimaryDiagnosis | 主診斷 ICD-10,出院前 invariant 必填 | Billing.PrincipalDxForClaim |
+| 4 | AttendingPhysician | 此 encounter 的負責主治 | Scheduling.AssignedDoctor |
+| 5 | MedicationOrder | 處方(獨立 Aggregate,以 EncounterId 引用) | Pharmacy.DispenseRequest |
+| 6 | DischargeSummary | 出院摘要,含主診斷、用藥、追蹤指示 | Billing.ClaimEvidence |
+| 7-10 | (略,原卡共 12 條)| | |
+
+## 4. Upstream
+| 上游 Context | 整合模式 | 整合協議 | Owner Team |
+|---|---|---|---|
+| Legacy HIS(2017 接手) | ACL | HL7 v2.5 ADT(A01/A03)| 資訊科 — 整合組 |
+| Lab | Customer-Supplier | HL7 v2.5 ORU^R01 | Lab 工程組 |
+
+## 5. Downstream
+<!-- 為什麼這欄:聖維禮過去七年沒寫這欄,Billing 直接 linked server 拉表;
+     寫進來才有「Billing 必須走 Event」的施力點。 -->
+| 下游 Context | 整合模式 | SLA / 棄用節奏 | Owner Team |
+|---|---|---|---|
+| Billing | OHS + Published Language | EncounterDischarged event ≤ 30s,棄用 24 個月預告 | 財務系統組 |
+| Scheduling | OHS | EncounterAdmitted event ≤ 60s | 門診組 |
+
+## 6. Integration Pattern
+- 對外暴露:☐ 內部模組 ☒ 內部 API ☐ 公開 API ☒ Domain Event Topic
+- Domain Events:
+  - `EncounterAdmitted` — 入院當下 / 訂閱者:Scheduling、Billing(預開立帳)
+  - `EncounterDischarged` — 出院確認後 / 訂閱者:Billing(觸發申報)、Audit
+- ACL 範圍(對 Legacy HIS):覆蓋 ☒ DTO in ☒ DTO out ☒ Event in ☒ Event out
+
+## 7. Out of Scope
+<!-- 為什麼這欄:沒寫下,半年後 Billing PM 又會要求 Clinical 直接算保費;
+     寫進卡片才能在會議上指這一頁拒絕。 -->
+- 本 context **不**負責保險方案核對(由 Billing 負責)
+- 本 context **不**儲存 MRN source of truth(在 MasterPatientIndex context)
+- 本 context **不**接受外部直接 join `Encounter` 表(必須訂閱 event)
+
+## 8. Owner Team & Validation
+- Owner Team:資訊科 — 臨床組(7 人,含 1 名 RD lead 與 1 名駐點主治)
+- Domain Expert:心臟內科李主任(每週四下午 1.5 小時固定 review)
+- 半年驗證指標:
+  - [ ] Clinical namespace 內 grep 不到 `Patient` 這個 type 名稱
+  - [ ] 對外 Domain Event 名稱通過 PR checklist 審查
+  - [ ] 新人從 onboard 到能獨立完成一張 user story ≤ 14 天
+````
+
+這張卡寫出來之後,聖維禮第三週才開始改 schema、第八週才動 Aggregate。**寫不出 Top 10 對應詞**的那個 context,通常是事故率最高的那個 ⸺ 那也是下一張卡該先寫的對象。
+
 ---
 
 ## 18.6 本章交付清單 Recap

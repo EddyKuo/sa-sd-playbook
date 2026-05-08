@@ -436,6 +436,64 @@ public class IsoAuthorizationAdapter {
 
 **這張卡也是 AI Agent 的可查指標**。當 Cursor / Claude Code 寫程式時,把這張卡放進 context,它能驗證自己的改動有沒有破壞模組邊界 ⸺ 比起期待 AI 自己「理解架構」,直接給它檢查表更可靠。
 
+### 11.5.1 範例:AxisPay 重構後 RuleEngine 的第一張 audit card
+
+那條「同卡跨 MCC 2 分鐘第三次強制 3DS」改 14 個檔案的事故之後,AxisPay 把 `FraudGuardCore` 拆成 Clean Architecture 三環。下面這張是新生 `RuleEngine` 模組在 PR review 上跟著 ADR-0019 一起進 repo 的版本 ⸺ ArchUnit 規則直接綁在這張卡的第 5 欄。
+
+````markdown
+# Coupling Audit Card — RuleEngine
+
+> 對應目錄:`src/main/java/com/axispay/fraud/rules/`
+> 撰寫日期:2026-02-09 | 擁有人:@hwang(風控 Tech Lead)
+> 對應 ADR:`docs/adr/0019-fraudguardcore-clean-arch-split.md`
+
+## 1. 模組職責(SRP 視角)
+<!-- 為什麼這欄:Tech Lead 那 14 個檔案的清單,
+     就是這欄「會獨立變更的理由」當初有 7 條全擠在同一個服務的代價。 -->
+- 一句話業務責任:風控分析師寫一條新規則時,**只**該動這個模組
+- 變更來源:[x] 法遵 / 風控  [ ] 業務 / 產品  [ ] SRE  [ ] 資料 / BI
+- 變更節奏:每月 4–8 條新規則(由風控分析師驅動)
+
+## 2. 對外依賴(Outgoing Coupling)
+| 依賴對象 | 種類 | 抽象等級 | 替換成本 |
+|---|---|---|---|
+| `RuleRepository`(port) | 介面 | 介面(實作在 adapter) | 低 |
+| `AuditEventPublisher`(port) | 介面 | Outbox + Adapter | 低 |
+| ⛔ ISO 8583 解析 | 跨模組 | 嚴禁直接依賴 | ⸺ |
+| ⛔ Spring Web | 框架 | 嚴禁出現在本模組 | ⸺ |
+
+## 3. 對外被依賴(Incoming Coupling)
+| 被誰依賴 | 介面類型 | 公開穩定性 |
+|---|---|---|
+| `AuthorizationOrchestrator` | `RuleEngine.evaluate(ctx)` | Stable |
+| `RuleConfigController`(adapter) | `RuleRegistry.register(rule)` | Internal |
+
+## 4. 改動半徑估算
+<!-- 為什麼這欄:14 個檔案是 AxisPay 的入口痛,
+     寫進來等於把「下次有沒有再退步」變成可查的數字。 -->
+- 新增一條同類規則:**2 個檔案 + 1 個測試**(目標,基線 14)
+- 修改主要實體欄位:RuleContext 1 檔 + 受影響 rule N 檔
+- 換掉底層儲存(PG → Mongo):動 `RuleRepository` adapter 1 檔,Domain 不動
+
+## 5. 抽象等級聲明
+<!-- 為什麼這欄:沒 fitness function 守的原則是希望;
+     ArchUnit 規則直接寫在這格,半年後反向依賴會在 CI 紅燈跳出來。 -->
+- 遵守:[x] SRP [x] OCP [x] LSP [x] ISP [x] DIP
+- Clean Architecture 環次:[x] 內環(Domain + Use Case)
+- 12-Factor 例外:無
+- ArchUnit 規則:`tests/architecture/RuleEngineRules.java`
+  - `noClasses().that().resideIn("..rules..").should().dependOn("..web..")`
+  - `noClasses().that().resideIn("..rules..").should().dependOn("..iso8583..")`
+
+## 6. Out of Scope
+- 這個模組**不**處理 ISO 8583 解析(走 `iso8583-parser` 模組)
+- 這個模組**不**負責規則持久化(走 `RuleRepository` 的 adapter 實作)
+- 這個模組**不**發 Kafka audit event(走 `AuditEventPublisher` 的 outbox)
+- 這個模組**不**碰 metrics / dashboard / runbook(SRE 模組各自處理)
+````
+
+那條 MCC velocity 規則第二次補上線時,改動半徑 2 個檔案 + 1 個測試 ⸺ 風控分析師私訊裡那句「AI Agent 寫一百條規則要動多少個檔案」,終於有了答案。**邊界劃對的那一刻,寫程式這件事的單位重量會輕很多。**
+
 ---
 
 ## 11.6 本章交付清單 Recap

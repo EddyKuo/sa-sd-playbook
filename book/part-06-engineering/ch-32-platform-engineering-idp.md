@@ -451,6 +451,54 @@ Platform team 推出了 service catalog、CI/CD 模板、provisioning portal、c
 
 **為什麼把 Agent Integration 放在最後?** 因為它是錦上添花,不是核心。Agent 對沒做好 Platform-as-a-Product 的工具沒有救命作用 ⸺ 反過來,做好的 platform 接 Agent 才有意義。順序不能反。
 
+### 32.5.1 範例:HarborPick PEG 重做後的第一張卡
+
+HarborPick(`CASE-ECM-007`)那 17 個工具裡,PEG 在 2026 Q2 砍到剩 5 個,並且把最重要的一條 paved road —「新服務從 commit 到 prod」—寫成下面這張卡。它就是 onboarding DAU 從 4/18 走到 14/18 的那一張:
+
+````markdown
+# Platform Product Card — `hp-cli new-service`(commit→prod paved road)
+
+> 版本:v1.0 | 撰寫日期:2026-04-08 | Owner:PEG PM(Lin)+ Staff Eng(Wei)
+> 對應 ADR:`platform/adr/0007-paved-road-v3.md`
+> 對應 Backstage entity:`component:hp-cli-new-service`
+
+## 1. Target Customer(目標客戶 persona)
+<!-- 為什麼這欄:當初 17 個工具沒一個寫 persona,結果是「PEG 覺得有用」而不是「stream team 覺得有用」。 -->
+- 主要:checkout / catalog / fulfillment 的 mid-level engineer(85% 流量)
+- 次要:剛入職 90 天內的新人(onboarding 黃金窗口)
+- **不**服務:Complicated-Subsystem team(payment-engine 自己有特殊管線)
+
+## 2. Top 3 Golden Paths
+<!-- 為什麼這欄:速度比 < 3× 的 path 不算 paved road,寫出來才知道哪條是真路、哪條是擺設。 -->
+| # | 場景 | paved road | 土路 | 速度比 |
+|---|---|---|---|---|
+| 1 | 起新 Spring Boot service 到 staging | 18 min | 4h | 13× |
+| 2 | 加一條 SLO + alert | 6 min | 50 min | 8× |
+| 3 | 跨服務 secret 輪替 | 3 min | 35 min | 11× |
+
+## 3. DORA + SPACE 指標
+| 維度 | 基準線(2026-Q1) | 目標(Q3) | 量測 |
+|---|---|---|---|
+| Deployment Frequency | 47/週/team | 80/週/team | ArgoCD audit log |
+| Lead Time for Changes | 14d | 2.5d | GitHub PR → prod |
+| Platform NPS | -12 | +30 | 季度 1 題 |
+| Paved Road Adoption % | 13% | 70% | `triggered-by=hp-cli` 比率 |
+
+## 5. Owner & Retention
+<!-- 為什麼這欄:沒有退場條件的 platform 工具會變成所有人都不敢動的化石,17 個就是這樣堆出來的。 -->
+- Platform PM:Lin(對採用度負責,週週看 ArgoCD audit)
+- Tech Lead:Wei(對技術品質負責)
+- 退場條件:連 6 個月 DAU < 5% 觸發 deprecation review
+- Office Hour:每週四 14:00-15:00,任何 stream team 可預約
+- 季度 user research:訪 ≥ 5 名 stream team 工程師
+
+## 6. Escape Hatch
+- Stream team 不走 paved road 時:① 提 ADR 說明繞過理由 ② 自接 SLO / on-call
+- PEG 對 escape 的態度:**不擋,但會學習** — 上一輪 7 條 escape ADR 變成這版需求
+````
+
+PEG 在 2026 Q3 把 Paved Road Adoption 從 13% 推到 64%,Lead Time 從 14 天到 3.2 天 ⸺ 不是因為砍工具有效,是因為**每條 paved road 終於有人對「會不會被用」這件事負責**。
+
 ---
 
 ## 32.6 本章交付清單 Recap

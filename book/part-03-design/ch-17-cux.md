@@ -284,6 +284,70 @@ flowchart TD
 
 把這份清單放在 `docs/cux-design-pack/`,跟程式碼同 repo,跟 README 同層。
 
+### 17.5.1 範例:居家視訊看護「跌倒偵測」的 Design Pack 雛形
+
+把 §17.2 那個「攝影機 + 語音助理持續監看長者」的虛構案例(`CASE-HCR-004`)展成可帶走的雛形。下面這份是工程開工前 PM + SA + 設計三方第一次坐下來時應該交出的版本 ⸺ 不是上線檔,是讓「我們真的把感知層拆成五層」這件事被擺到桌面的證據。
+
+````markdown
+# CUX/Multimodal Design Pack — 居家視訊看護:跌倒偵測
+
+> 版本:v0.1 | 撰寫日期:2026-04-15 | 擁有人:@yu(SA)+ @hwang(IxD)
+> 對應 ADR:`docs/adr/0008-fall-detect-sdc-five-layer.md`
+
+## 1. Interaction Mode Catalog
+- 主場景:Camera-as-Sensor(連續視覺串流,30fps)+ Voice(雙向)+ IoT(穿戴心率)
+- 降級備案:視覺斷線時退回 Voice + IoT;Voice 噪音時退回 Visual + IoT
+
+## 2. Signal Catalog
+<!-- 為什麼這欄:三條訊號各有自己的「斷線長相」;
+     沒寫降級條件,系統在訊號缺失時會做出有信心但錯的決定。 -->
+| Signal ID | 來源 | 格式 | 頻率 | 品質指標 | 降級條件 |
+|---|---|---|---|---|---|
+| `VID-LIVE` | 客廳攝影機 | H.264 720p | 30fps | 亮度 / 遮蔽率 | 遮蔽 > 60% 連 5s → 視為斷線 |
+| `AUD-AMB` | 智慧音箱麥克風 | 16kHz PCM | 連續 | SNR / VAD | SNR < 6dB → 不採信 |
+| `IOT-HR` | 穿戴心率帶 | BLE 1Hz | 1Hz | 訊號強度 | 連 30s 無心跳 → 升級疑似昏迷 |
+
+## 3. Model Contracts
+- `fall-detector.v2`:輸入 1s 視訊片段(30 frame),輸出 `{posture, confidence}`,SLO P95 < 200ms
+- `voice-emotion.v1`:輸入 3s 音訊,輸出 `{stress_level 0-1, confidence}`,SLO P95 < 400ms
+
+## 4. Fusion Rule Table
+| 組合 | 權重 | 結論 |
+|---|---|---|
+| 視覺(跌倒姿態, 0.92)+ 語音「我沒事」但顫抖 0.7 | 視覺 0.6 / 語音 0.4 | 不可信「我沒事」,進二次確認 |
+| 視覺斷線 + 心率消失 30s | IoT 主導 | 升級疑似昏迷,撥緊急聯絡人 |
+| 視覺(疑似跌倒, 0.55)+ 寵物辨識命中 | 視覺降權至 0.2 | 忽略 |
+
+## 5. Confidence Decision Tree
+<!-- 為什麼這欄:單張 frame 的 0.95 不等於連續 3 張的 0.95;
+     不寫成階梯,Q/A 沒辦法分區間驗收。 -->
+- ≥ 0.95(連續 3 frame)→ 撥 119(不可逆,需多重驗證)
+- 0.7–0.95 → 語音問候「您還好嗎?」+ 啟動心率聚焦
+- 0.4–0.7 → 留意 30 秒,加密採樣
+- < 0.4 → 忽略,正常採樣
+
+## 6. Irreversible Action List
+<!-- 為什麼這欄:撥 119 跟亮提示燈設成同一信心區間,
+     誤觸一次就會被家屬把系統拔掉。 -->
+- 撥 119 / 通知緊急聯絡人:信心 ≥ 0.95 + 多訊號融合一致 + 5 分鐘 cool-down
+- 解鎖門鎖讓救護員進屋:信心 ≥ 0.98 + 心率異常 + 緊急聯絡人遠端 confirm
+
+## 7. Conversation Path Pack
+- Happy Path:長者主動回應「我沒事」聲音穩 → 降回正常監看
+- Slot Filling:「您能站起來嗎?」「能 / 不能 / 沒回應」
+- Disambiguation:模糊「嗯…」→ 提供「按一次燈 = OK」物理按鈕
+- Correction:長者說「剛才是寵物跳上來」→ 模型加入 false positive 訓練佇列
+- Bailout:長者沉默 60 秒 → 直接撥緊急聯絡人(不等 119 流程)
+
+## 8. Sampling & Privacy Pack
+- 採樣:平時 5s/張,event-triggered 加密 1s/張
+- Edge-Inference:`fall-detector` 在客廳 mini-PC 跑,雲端**只**收結果
+- 去識別化:上傳片段前打馬賽克(臉 + 衣物 logo)
+- 同意:DPIA 已完成;訪客模式啟動時暫停錄製
+````
+
+跟 BPMN 那條「攝影機告警 → 語音問候 → 判斷是否報警」線性流程比起來,這份 Pack 多寫了五個欄位 ⸺ 它們的價值不在文件變厚,在 false positive 把家屬逼到拔掉系統之前,有地方可以先回答「為什麼這次不撥 119」。**多模態系統的設計工作,是把「機率」變成可審查的決定。**
+
 ---
 
 ## 17.6 Recap
