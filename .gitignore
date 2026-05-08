@@ -8,6 +8,9 @@ plan.md.test
 plan-*.md
 extract_logs.py
 
+# 本地維護工具(非交付物)
+scripts/
+
 # 編輯器設定
 book/.obsidian/
 
