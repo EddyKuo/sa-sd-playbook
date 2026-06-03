@@ -18,3 +18,12 @@ book/.obsidian/
 *.docx
 補章編_六章_2026.md
 你以為你懂了/
+
+# macOS 系統檔
+.DS_Store
+
+# 本地規劃筆記（非書稿內容）
+memo/
+
+# 其他獨立書稿（不屬於此 repo）
+pm-playbook/

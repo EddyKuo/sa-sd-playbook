@@ -684,6 +684,21 @@ cases:
       工程團隊採納,三個月後稽核發現違反醫院 2019 年與主管機關的書面
       協議 — 這份協議從未進入 codebase 或任何 AI 可讀文件。
 
+  # ========== PM Playbook Ch 41 ==========
+  - id: CASE-HCR-105
+    title: "MedFlow — 護理交班 AI 摘要功能緊急煞車事件"
+    domain: healthcare
+    chapters: [pm-ch-41]
+    anonymized: true
+    summary: |
+      虛構醫療資訊平台 MedFlow，服務 37 家區域醫院護理記錄與排班系統。
+      PM 林彥廷在 2025 Q3 開發「護理交班 AI 摘要」功能，LLM 自動從交班
+      紀錄中提取高風險病患清單並推送給下一班護理師。功能通過 QA（整體準確率
+      87%）、產品委員會批准，但在上線前 72 小時 Legal 顧問提出三個問題後
+      緊急煞車：責任歸屬不明、無 AI 來源標注、未進行子群體分析（跨科轉介
+      病患準確率僅 61%）。用於展示 PM 在 AI 功能上線決策中缺乏倫理審查框架
+      時，技術指標達標與倫理可上線性的斷裂，以及倫理審查延後的代價。
+
   - id: CASE-FIN-013
     title: "ClearVault — AI 安全審查六個月連續通過,第七個月資料外洩"
     domain: fintech
@@ -714,3 +729,277 @@ cases:
       虛構 SaaS 分析平台,八年資深工程師完全轉向 AI 輔助開發。
       兩年後遭遇 AI 工具全線中斷(API outage),發現自己在六小時內
       無法獨立定位一個原本應該三十分鐘就能解決的記憶體洩漏問題。
+
+  # ========== PM Playbook Ch 8 ==========
+  - id: CASE-SAS-104
+    title: "ScaleAxis — 競品情報盲區導致核心功能被吃掉"
+    domain: saas
+    chapters: [pm-ch-08]
+    anonymized: true
+    summary: |
+      虛構 B2B SaaS 工作流程自動化平台 ScaleAxis,在一個季度規劃週期內
+      未監控到競品 FlowRail 悄悄發佈原生 API 整合市集。ScaleAxis PM 在
+      季度中期才從一位 Enterprise 客戶的 Slack 訊息中得知——對方已在評估
+      切換。PM 回溯發現競品發佈已 47 天,而自家 roadmap 剛好有一個類似
+      功能排在下個季度。用於展示競品情報缺乏系統性監控時,信號到達 PM
+      的路徑有多隨機,以及「太晚知道」的實際代價。
+
+  # ========== PM Playbook Ch 26 ==========
+  - id: CASE-ECM-110
+    title: "BrightCart — North Star 缺席導致三套衝突指標與Q4 Roadmap 翻車"
+    domain: ecommerce
+    chapters: [pm-ch-26]
+    anonymized: true
+    summary: |
+      虛構中型電商平台 BrightCart（月活 320 萬、GMV 7.2 億美元、4 個
+      Product Squad），在 2025 Q4 規劃期間出現三套互相矛盾的 North Star
+      指標：成長團隊追 MAU、商業化團隊追 GMV per user、物流團隊追 NPS。
+      三套指標各自有 dashboard、各自在週報呈現漂亮數字，但上線後整體
+      checkout 轉換率連續六週下滑。PM 追查後發現三個團隊的 A/B 測試互相
+      干擾——成長推入口彈窗提升 MAU、物流優化退款流程提升 NPS、商業化
+      強推加購提升 GMV，三者組合讓結帳路徑多了兩個摩擦點。
+      用於展示缺乏 North Star 單一化與指標所有權 DACI 時，多 Squad 平行
+      優化如何產生系統性衝突，以及「每個人的指標都在漲」與「整體轉換率
+      下滑」同時為真的弔詭現象。
+
+  # ========== PM Playbook Ch 35 ==========
+  - id: CASE-ECM-113
+    title: "ShopFlow 的提前判決：CEO 看到 A/B 早期數據就要求停止實驗"
+    domain: ecommerce
+    chapters: [pm-ch-35]
+    anonymized: true
+    related_cases: [CASE-ECM-107]
+    summary: |
+      虛構中型電商 ShopFlow（每日結帳人次約 3,200）：結帳頁折扣資訊位置
+      A/B 測試，PM 林玟事前算過需要 14 天、每組 22,400 筆樣本才能達到 95%
+      信心水準。第五天 CEO 在儀表板上看到 A 組轉換率 4.2% 略高於 B 組 3.8%，
+      在開會前五分鐘於 Slack 要求「A 贏了，全量上吧」。林玟未能援引任何書面
+      停止規則，四小時後 B 組流量切零、A 版全量上線。第三天轉換率回到兩組
+      共有基準 4.0%，Weekly Active Buyer 毫無移動，第九天客服回報零星「結帳
+      頁感覺怪怪的」抱怨。事後覆盤發現第五天的差異只是隨機波動疊加一次推送
+      通知的受眾污染（推送分組與實驗分組重疊、A 組推送比例偏高）。根因為
+      實驗啟動前沒有定義主指標 / 護欄指標 / MDE / 停止規則，也沒有 DACI 約定
+      誰能在什麼時候用什麼理由提前終止——CEO 的組織權威落在沒有任何防護的
+      空白地帶。本章用此案例展示「實驗設計卡」、Peeking Problem、護欄指標與
+      停止規則如何把統計信心水準翻譯成 CEO 能理解的決策語言，與 CASE-ECM-107
+      （ShopFlow 提前上線、Rollback 缺位）形成同公司跨章對照。
+
+  # ========== PM Playbook Ch 15 ==========
+  - id: CASE-ECM-106
+    title: "CartNova — Sprint 點數膨脹與 Roadmap 崩塌的三個月"
+    domain: ecommerce
+    chapters: [pm-ch-15]
+    anonymized: true
+    summary: |
+      虛構中型電商平台 CartNova,PM 在 Q3 規劃時接受工程師給出的
+      Story Point 估算卻未理解其隱含假設（依賴第三方物流 API 穩定性、
+      前端改版並行、資深工程師在位）。三個 Sprint 後 velocity 跌至
+      預估值的 58%，上線時間表推遲六週，Roadmap 中兩個承諾功能被迫下架。
+      用於展示 PM 不理解估算語義時，範圍邊界如何悄悄位移，以及
+      「點數不等於天數」的溝通盲點如何在規劃會議上造成系統性誤判。
+
+  # ========== PM Playbook Ch 11 ==========
+  - id: CASE-SAS-102
+    title: "Teamline 的 Spec 事故：工程師做了 PM 以為沒人會做的選擇"
+    domain: saas
+    chapters: [pm-ch-11]
+    anonymized: true
+    summary: |
+      虛構 B2B 協作 SaaS Teamline，PM 李采薇在聯絡人資料提交表單的規格裡
+      寫「使用者輸入後，系統應快速回應」，後端工程師林昊為了壓低 1.2 秒的
+      送出延遲，選擇把伺服器端 validation 全部移到前端。PM 在 Jira 評論裡
+      以「ok 如果對效能有幫助的話」批准，誤以為這是技術細節授權。上線第二天
+      非法電話號碼讓 SMS queue 卡住、空白公司名讓 billing-service 找不到
+      帳單對應，Customer Success 列出七個需人工修補的異常帳戶。雙方都沒做錯
+      「規格裡寫的事」，但規格沒有 Constraints 欄位。用於展示「可執行規格必須
+      包含約束條件（Constraints），不只是功能描述」以及決策責任漂移（DACI
+      的 Approver 角色錯置）如何讓合理的工程決策造成業務後果。
+
+  - id: CASE-ENR-110
+    title: "GridPulse 韌體告警閾值的『合理優化』事故"
+    domain: energy
+    chapters: [pm-ch-11]
+    anonymized: true
+    summary: |
+      虛構工商儲能 EMS 廠商 GridPulse，PM 在韌體升級規格裡寫「降低不必要的
+      告警噪音」，韌體工程師據此把電芯溫度告警的觸發閾值從 45°C 上調到 55°C，
+      理由是 45°C 的告警在現場確實常被維運忽略。上線後一座案場的電芯在 52°C
+      持續運轉兩週未觸發任何告警，直到電池管理系統（BMS）強制降載才被發現。
+      規格只描述了「減少噪音」的意圖，沒有把「安全相關告警閾值不得調整」這條
+      Constraint 寫進去。用於展示同一套「規格必須鎖定安全邊界」框架在能源 OT
+      場景下的普遍適用性，與 Teamline SaaS 案例形成跨域對照。
+
+  # ========== PM Playbook Ch 13 ==========
+  - id: CASE-ENR-101
+    title: "GridSense MVP 膨脹：Sales 每週加一個「必要」功能"
+    domain: energy
+    chapters: [pm-ch-13]
+    anonymized: true
+    summary: |
+      虛構能源 SaaS GridSense（電網調度即時負載熱點儀表板）：原定 6 週 MVP，
+      目標驗證「調度員會用節點負載熱點數字取代人工電話確認來做臨界值判斷」這個
+      核心假設。但每週 Sales / CTO / 大客戶各帶來一個「客戶強烈要求」或「以後
+      擴充方便」的功能（歷史趨勢對比、配電線路等級細節、EMS API 雙向整合、異常
+      告警推播），PM 沒有可援引的排除標準，每次都在個別情境下合理讓步。第 12 週
+      MVP 已膨脹成完整產品仍未上線，原始驗證假設從未被測試，那個第二週提需求的
+      大客戶在第九週選了競品。根因為缺少（1）假設清單與功能清單的分離、（2）書面
+      排除清單、（3）上線條件 Launch Criteria、（4）明確的 DACI Approver——
+      Approver 缺席使 Contributor（Sales）事實上接管了拍板權。本章用此案例展示
+      「假設驅動的 MVP 設計」流程與一頁式 MVP 設計文件模板。
+
+  # ========== PM Playbook Ch 9 ==========
+  - id: CASE-HCR-102
+    title: "MedNow — 有回饋有數據卻沒有行動閉環的 VoC 流程"
+    domain: healthcare
+    chapters: [pm-ch-09]
+    anonymized: true
+    summary: |
+      虛構醫療資訊平台 MedNow（病歷上傳與診間協作 SaaS）每季發 NPS 問卷，
+      當季 NPS 從 52 升到 57、回收率 40%，但 312 則 open-text 逐字稿從未被
+      分類或頻率統計。「病歷上傳流程要點七步」這個痛點在逐字稿裡出現 19 次，
+      卻沒有人把它算出來，也沒有人把它帶進 roadmap。三個月後（首次出現
+      2025-07-03 到客戶大會 2025-08-14）五間醫院護理長在年度客戶大會上同時
+      提出同一痛點，問題才被看見。根因為回饋蒐集與行動決策之間缺乏轉化機制、
+      信號缺乏分級、以及 DACI 角色懸空——CS 與 PM 互相等待、CPO 未被帶進
+      回饋流程、沒有人擁有把回饋轉化為行動的責任，也沒有固定時間節點。
+      本章用此案例展示「VoC Loop 閉環」流程、頻率 × 業務影響優先化框架，
+      與一頁式 VoC 主題卡模板。
+
+  # ========== PM Playbook Ch 24 ==========
+  - id: CASE-ECM-109
+    title: "VistaCart — UX 升級計劃中的取捨邊界失守"
+    domain: ecommerce
+    chapters: [pm-ch-24]
+    anonymized: true
+    summary: |
+      虛構中型時裝電商平台 VistaCart，月活 230 萬，在 2025 年 Q2 啟動
+      全站 UX 升級計劃，預計三個季度完成 6 個核心流程重新設計。
+      計劃在第二季度失速：設計師在沒有工程約束的前提下完成高保真設計，
+      PM 在 sprint 最後才介入取捨協商，導致四個功能以「降格版」上線。
+      Analytics 顯示其中兩個版本的轉換率比重新設計前更差，但沒有人能
+      還原取捨的決策記錄，也無法驗證當初的假設是否成立。用於展示 PM
+      在 Design 協作中決策時機設計缺失的代價，以及 TDR（Trade-off
+      Decision Record）作為輕量化決策記錄工具的實際應用場景。
+
+  # ========== PM Playbook Ch 17 ==========
+  - id: CASE-ECM-107
+    title: "ShopFlow 的提前上線：日期提前了，Rollback Plan 沒有"
+    domain: ecommerce
+    chapters: [pm-ch-17]
+    anonymized: true
+    summary: |
+      虛構電商 ShopFlow：PM 在 CEO 壓力下，於上線同步會上把促銷活動功能的
+      上線日從週三提前到下週一，縮短九天，犧牲了完整 QA 週期與 Rollback
+      準備。上線後出現折扣碼計費邏輯不一致的 bug——Cart 前端顯示折扣價但
+      後端仍收原始金額，縮版回歸跳過了 Cart + CMS 同步狀態驗證情境組合而
+      未被攔截。因沒有 Rollback Plan、沒有 Feature Flag，工程只能在促銷活動
+      日做緊急 hotfix，修復耗時 36 小時，期間訂單持續以錯誤金額成交，引發
+      退款處理、客服紀錄與財務對帳橫跨兩週。根因為 Go/No-go 決策缺乏觸發
+      條件與授權結構：DACI 倒置（Sales 從 Informed 漂移到實質 Approver、
+      PM 從 Driver 退位為壓力傳遞者、QA 輸入未進入決策迴路），上線窗口
+      評分若套用本章矩陣僅得 1 分（落在 No-go 建議範圍）。本章用此案例展示
+      「上線不等於交付」與一頁式 Release Go/No-go Checklist 模板。
+
+  # ========== PM Playbook Ch 2 ==========
+  - id: CASE-FIN-101
+    title: "MerchantFlow KYC 改版（AML 合規升級）的 Approver 缺位事故"
+    domain: fintech
+    chapters: [pm-ch-02]
+    anonymized: true
+    summary: |
+      虛構 B2B 支付清算金融科技公司 MerchantFlow（客戶為中型電商平台）。
+      2025 年第二季 AML 監管指引更新後，需在六個月內升級已三年未動的 KYC
+      流程。PM Vanessa Chen 在 kickoff 階段只與 Compliance（Kevin Tan）對齊，
+      把 roadmap 視為已就緒並開 sprint，未把 Legal（Rachel Ho）與 CFO
+      （Daniel Lim）納入決策鏈——他們實際上是 KYC 收集範圍與授權邊界的
+      Approver，卻被放在 Informed 位置。法務在第五週的季度規劃會議上才出現，
+      以「過度收集個資的合規風險」為由要求重審 KYC 欄位範圍，已寫好的第一個
+      KYC 驗證 API 被迫回退。根因為三層：(1) 把「Compliance 說可以」當成最終
+      授權；(2) DACI 結構中 Approver 缺位、Legal/CFO 被降格為 Informed；
+      (3) 未在 kickoff 前做 stakeholder mapping，錯過了「需求跨部門 +
+      涉及合規/法務 + 有預算授權」三個應主動啟動分析的觸發點。Vanessa 在第五週
+      補做 Stakeholder Map（Power/Interest 分類 + DACI 對映 + 溝通計畫），
+      把「法務突然出現」從意外事件轉為可管理風險。本章用此案例展示「在需求
+      定義前先搞清楚誰說了算」的 stakeholder mapping 流程與一頁式模板。
+
+  # ========== PM Playbook Ch 28 ==========
+  - id: CASE-FIN-103
+    title: "FinCore Apex 清算遷移計畫 Q2 QBR 失效與 Executive Communication 重設計"
+    domain: fintech
+    chapters: [pm-ch-28]
+    anonymized: true
+    summary: |
+      虛構跨境 B2B 支付清算金融科技公司 FinCore，PM Lead Marcus 主導為期
+      十八個月的核心清算引擎雲端遷移計畫（代號 Apex，總預算 US$4.2M、
+      四個 Squad），目標是把自建 on-premise 批次清算系統遷移到雲端即時
+      清算架構，以支援大客戶合約中的 T+0 清算 SLA 承諾。計畫第七個月的
+      Q2 QBR，Marcus 準備了二十三頁進度報告，但 CFO、COO、Head of
+      Compliance 與 CEO 在四十分鐘內無法拿到三個核心決策所需的資訊：
+      是否追加預算加速延遲三週的 Squad C、是否啟動大客戶 SLA 保護方案、
+      是否讓 Compliance 在遷移完成前提前介入稽核。四十分鐘內 Marcus 回答
+      十一個問題，只有三個讓 Executive 拿到可決策的答案，其餘八個排到
+      兩週後 follow-up。根因不是資訊不夠，而是把 QBR 設計成進度彙報而非
+      決策場合：缺乏受眾分析、Outputs/Outcomes/Impact 三層脫節、DACI 未在
+      會前確認、Ask 未結構化。重設計後改用 QBR Ready Pack（Context →
+      Progress → Risk → Ask → Next 五格），每個 Ask 帶齊推薦做法、判斷
+      依據（NPV 分析）、若不決定的代價（合約通知條款觸發機制）與 DACI，
+      CFO 在收到草稿後十五分鐘批核核心決策。用於展示 Outputs/Outcomes/
+      Impact 三角在向上匯報的應用、QBR 五格架構與 SCQA 的選擇邏輯，以及
+      DACI 在 Executive 場合的即時確認機制。
+
+  # ========== PM Playbook Ch 20 ==========
+  - id: CASE-SAS-108
+    title: "Formly 的儀式走過場：Sprint Review 變成 Demo，Retro 沒有行動"
+    domain: saas
+    chapters: [pm-ch-20]
+    anonymized: true
+    summary: |
+      虛構 B2B SaaS Formly：PM Yuna 把 Sprint Review 當成對外客戶 Demo，
+      取消內部驗收；Retrospective 每次 30 分鐘固定格式，行動項從未指定
+      Owner 也未進入任何追蹤系統。相同的「Backlog 不清楚、refinement 做了
+      但故事沒寫完」問題連續三個 sprint 在 Retro 被提出。根因為 Yuna 把自己
+      定位成五個 Sprint Ceremonies 的「主持人」而非「決策責任者」，導致每個
+      儀式的核心判斷（Ready sign-off、可驗收 Sprint Goal、阻礙升級、Done
+      驗收、行動項追蹤）都沒有人執行。Planning 當天 PM 與 EM 對承諾量出現
+      歧見時也無明確拍板規則。後續導入一頁式 Sprint Ceremonies PM 責任卡，
+      明確五個儀式的決策點與 DACI（含 Planning 衝突時 EM feasibility 否決權），
+      問題自 Sprint 29 起不再重複。用於展示「PM 在敏捷儀式裡是決策責任者，
+      不是會議主持人」。
+
+  # ========== PM Playbook Ch 43 ==========
+  - id: CASE-SAS-115
+    title: "Notewise AI 依賴症：PM 讓 AI 寫 PRD，自己失去了問題理解"
+    domain: saas
+    chapters: [pm-ch-43]
+    anonymized: true
+    summary: |
+      虛構 SaaS 協作筆記工具 Notewise：PM Ricky 在六個月內把所有 PRD 交給
+      AI 生成第一版草稿、補使用者故事、整理競品分析，速度提升三倍，工程與
+      設計都稱讚 spec 清楚。但在季度 PRD Review 上，產品總監問「這個功能解決
+      誰的問題？你自己的理解是什麼？」時，Ricky 只能複述 AI 輸出，答不出超出
+      文件的內容。一個 AI 自動摘要功能 PRD 被退回重做，根因為功能邊界、成功
+      指標、競品失敗點三個決策從未被 PM 親自釐清——他把 Outputs 的生成與
+      Outcomes/Impact 的判斷一起外包給了 AI。後續導入「AI 工具介入邊界卡」，
+      把問題框架段落、第一手接觸確認、未驗證假設標記重新收回 PM 手上。
+      用於展示「AI 工具是外包執行，不是外包判斷」與 Augmented PM 的角色邊界。
+
+  # ========== PM Playbook Ch 34 ==========
+  - id: CASE-ECM-112
+    title: "CartFlow GMV 陷阱：North Star 達成了，利潤卻是負的"
+    domain: ecommerce
+    chapters: [pm-ch-34]
+    anonymized: true
+    summary: |
+      虛構中型電商 CartFlow：North Star Metric 設為 GMV，由成長、商品、
+      物流三個 Squad 各自追自己的 Outcome 指標。Q3 GMV 成長 35%、超標
+      十個百分點，全員週報一片綠燈，但同期稅前淨利潤為負（每賣一塊錢
+      平均虧 0.08 元）、退貨率 42%（高於行業均值 23 個百分點）、物流
+      成本佔 GMV 17.3%。根因不是「指標選錯」，而是「選 North Star 這件
+      事從未被正式做過」——GMV 因為最容易量、最容易達成、最容易在週報
+      呈現而成為預設北極星，從未經過 CPO 拍板，也沒有任何護欄指標。
+      事故後 CPO Vera 召集 PM team 與財務 BP，在兩天內重建 North Star
+      定義卡：改用活躍付費用戶數（APU）為 North Star，補上退貨率、物流
+      成本佔比、促銷折讓佔比三條帶警告/緊急門檻的護欄，並以 DACI 明確
+      Approver 為 CPO。用於展示 North Star 四維度篩選（可感知性 / 可驅動性
+      / 抗遊戲性 / 健康代理性）、Outputs/Outcomes/Impact 三層拆解、護欄
+      指標門檻設計，以及 North Star 定義的 Approver 拍板機制。
