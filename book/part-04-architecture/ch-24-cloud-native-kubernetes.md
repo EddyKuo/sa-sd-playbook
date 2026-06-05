@@ -19,7 +19,7 @@ word_count_target: 6000
 ## ⸺ 不是用 K8s 就是雲端原生
 
 > **前置閱讀**:[Ch 11 SOLID 與架構原則](../part-03-design/ch-11-architecture-principles.md)、[Ch 22 微服務拆分判準](./ch-22-microservices.md)
-> **下游章節**:[Ch 25 Service Mesh / Cell-Based](./ch-25-service-mesh-cell-based.md)、[Ch 30 Observability](../part-05-quality/ch-29-observability-otel.md)、[Ch 32 Platform Engineering](../part-06-engineering/ch-32-platform-engineering-idp.md)
+> **下游章節**:[Ch 25 Service Mesh / Cell-Based](./ch-25-service-mesh-cell-based.md)、[Ch 29 Observability](../part-05-quality/ch-29-observability-otel.md)、[Ch 32 Platform Engineering](../part-06-engineering/ch-32-platform-engineering-idp.md)
 > **延伸補章**:無
 
 ---
@@ -610,7 +610,7 @@ K8s 1.25(2022)正式移除 PodSecurityPolicy(PSP),改用 Pod Security Standards 
 
 - **回顧**:[Ch 11 SOLID 與架構原則](../part-03-design/ch-11-architecture-principles.md) ⸺ 12-Factor 是雲端時代的 SOLID 延伸;[Ch 22 微服務拆分判準](./ch-22-microservices.md) ⸺ 拆服務的判準與選平台的判準是兩件事
 - **下一章**:[Ch 25 Service Mesh / Cell-Based](./ch-25-service-mesh-cell-based.md) ⸺ K8s 之上的東西向治理
-- **Observability 完整版**:[Ch 30 Observability](../part-05-quality/ch-29-observability-otel.md)
+- **Observability 完整版**:[Ch 29 Observability](../part-05-quality/ch-29-observability-otel.md)
 - **Platform Engineering 詳述**:[Ch 32 Platform Engineering](../part-06-engineering/ch-32-platform-engineering-idp.md) ⸺ 50–500 人組織為什麼需要 Platform team
 
 ## 引用

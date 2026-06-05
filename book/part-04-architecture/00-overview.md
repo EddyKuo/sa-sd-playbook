@@ -79,4 +79,4 @@ flowchart LR
 
 - **前置**:[第 III 篇 設計基礎](../part-03-design/00-overview.md)
 - **這篇解鎖**:[第 V 篇 品質屬性](../part-05-quality/00-overview.md) — 架構定型之後,才能有效討論安全、可觀測性和可靠度的設計點
-- **長距離影響**:[Ch 36 AI-Native 架構](../part-07-ai-era/ch-37-ai-native-architecture.md)(Ch 23 的 EDA 是 AI 時代事件流的前置)、[Ch 39 Multi-Agent](../part-07-ai-era/ch-40-multi-agent.md)(Ch 18 的 Bounded Context 直接對應 Agent 的邊界劃分)
+- **長距離影響**:[Ch 37 AI-Native 架構](../part-07-ai-era/ch-37-ai-native-architecture.md)(Ch 23 的 EDA 是 AI 時代事件流的前置)、[Ch 40 Multi-Agent](../part-07-ai-era/ch-40-multi-agent.md)(Ch 18 的 Bounded Context 直接對應 Agent 的邊界劃分)

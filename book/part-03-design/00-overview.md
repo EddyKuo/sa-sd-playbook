@@ -71,4 +71,4 @@ flowchart LR
 
 - **前置**:[第 II 篇 分析](../part-02-analysis/00-overview.md)
 - **這篇解鎖**:[第 IV 篇 進階架構](../part-04-architecture/00-overview.md) — 風格選定、API 契約與儲存決策是進入 DDD / 微服務之前的必要基礎
-- **長距離影響**:[Ch 34 Fitness Functions](../part-06-engineering/ch-34-fitness-functions.md)(Ch 11 的架構原則變成可執行測試)、[Ch 37 CDE](../part-07-ai-era/ch-38-context-driven-engineering.md)(Ch 17 的 CUX 設計在 AI 工程時代的延伸)
+- **長距離影響**:[Ch 34 Fitness Functions](../part-06-engineering/ch-34-fitness-functions.md)(Ch 11 的架構原則變成可執行測試)、[Ch 38 CDE](../part-07-ai-era/ch-38-context-driven-engineering.md)(Ch 17 的 CUX 設計在 AI 工程時代的延伸)

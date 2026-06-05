@@ -18,7 +18,7 @@ word_count_target: 6000
 ## ⸺ 把決策寫成「決定的化石」
 
 > **前置閱讀**:[Ch 1 為什麼 SA/SD](../part-01-foundations/ch-01-why-sa-sd.md)、[Ch 18 DDD 戰術設計](../part-04-architecture/ch-18-ddd-strategic-tactical.md)、[Ch 20 C4 Model 與架構視覺化](../part-04-architecture/ch-20-c4-model-visualization.md)
-> **下游章節**:[Ch 34 Fitness Function 與演進式架構](./ch-34-fitness-functions.md)、[Ch 37 Context-Driven Engineering](../part-07-ai-era/ch-38-context-driven-engineering.md)
+> **下游章節**:[Ch 34 Fitness Function 與演進式架構](./ch-34-fitness-functions.md)、[Ch 38 Context-Driven Engineering](../part-07-ai-era/ch-38-context-driven-engineering.md)
 > **延伸補章**:無
 
 ---
@@ -606,7 +606,7 @@ OrbitPay 把 142 篇舊文檔(11 篇老 ADR + 47 條 Slack thread + 11 篇過期
 - **回顧**:[Ch 18 DDD 戰術設計](../part-04-architecture/ch-18-ddd-strategic-tactical.md) ⸺ Bounded Context 邊界決策常產出 ADR
 - **回顧**:[Ch 20 C4 Model](../part-04-architecture/ch-20-c4-model-visualization.md) ⸺ ADR 對應 Container 圖的整合節奏
 - **下一章**:[Ch 34 Fitness Function 與演進式架構](./ch-34-fitness-functions.md) ⸺ 把 ADR 的 invariant 變成可機器驗證的看守者
-- **AI 時代脈絡**:[Ch 37 Context-Driven Engineering](../part-07-ai-era/ch-38-context-driven-engineering.md) ⸺ ADR 作為 AI Agent 的 Skill 知識來源
+- **AI 時代脈絡**:[Ch 38 Context-Driven Engineering](../part-07-ai-era/ch-38-context-driven-engineering.md) ⸺ ADR 作為 AI Agent 的 Skill 知識來源
 
 ## 引用
 

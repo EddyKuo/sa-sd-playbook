@@ -18,8 +18,8 @@ word_count_target: 6500
 ## ⸺ 三件不該綁一起的工具
 
 > **前置閱讀**:[Ch 18 DDD 戰略與戰術](./ch-18-ddd-strategic-tactical.md)、[Ch 19 Event Storming 與 Event Modeling](./ch-19-event-storming-modeling.md)、[Ch 22 微服務拆分判準](./ch-22-microservices.md)
-> **下游章節**:[Ch 24 API Gateway 與 BFF](./ch-25-service-mesh-cell-based.md)、[Ch 31 可觀測性](../part-05-quality/ch-29-observability-otel.md)、[Ch 39 Multi-Agent 系統設計](../part-07-ai-era/ch-40-multi-agent.md)
-> **延伸補章**:[Ch 40 共識/狀態/衝突](../part-07-ai-era/ch-41-multi-agent-consensus.md)
+> **下游章節**:[Ch 25 API Gateway 與 BFF](./ch-25-service-mesh-cell-based.md)、[Ch 29 可觀測性](../part-05-quality/ch-29-observability-otel.md)、[Ch 40 Multi-Agent 系統設計](../part-07-ai-era/ch-40-multi-agent.md)
+> **延伸補章**:[Ch 41 共識/狀態/衝突](../part-07-ai-era/ch-41-multi-agent-consensus.md)
 
 ---
 
@@ -523,12 +523,12 @@ Q1 事故後從 Confluent 接受三週 onboarding 訓練)
 
 ## Cross-References
 
-- **下一章**:[Ch 24 API Gateway 與 BFF](./ch-25-service-mesh-cell-based.md) ⸺ 同步邊界與事件邊界的協作
+- **下一章**:[Ch 25 API Gateway 與 BFF](./ch-25-service-mesh-cell-based.md) ⸺ 同步邊界與事件邊界的協作
 - **事件視角承接**:[Ch 19 Event Storming 與 Event Modeling](./ch-19-event-storming-modeling.md) ⸺ 從便利貼到事件流的對齊
 - **戰術 DDD**:[Ch 18 DDD 戰略與戰術設計](./ch-18-ddd-strategic-tactical.md) ⸺ Aggregate / Bounded Context 是 EDA 的拆分基礎
 - **微服務拆分**:[Ch 22 微服務拆分判準](./ch-22-microservices.md) ⸺ EDA 是拆分後的協作介面
-- **可觀測性**:[Ch 31 可觀測性](../part-05-quality/ch-29-observability-otel.md) ⸺ 事件流的 trace / lineage / OpenLineage 整合
-- **延伸補章**:[Ch 40 共識/狀態/衝突](../part-07-ai-era/ch-41-multi-agent-consensus.md) ⸺ Multi-Agent 場景的事件流挑戰
+- **可觀測性**:[Ch 29 可觀測性](../part-05-quality/ch-29-observability-otel.md) ⸺ 事件流的 trace / lineage / OpenLineage 整合
+- **延伸補章**:[Ch 41 共識/狀態/衝突](../part-07-ai-era/ch-41-multi-agent-consensus.md) ⸺ Multi-Agent 場景的事件流挑戰
 
 ## 引用
 

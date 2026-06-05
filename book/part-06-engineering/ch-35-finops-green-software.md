@@ -19,7 +19,7 @@ word_count_target: 5800
 ## ⸺ 帳單與碳排共享 Workload Profile,但目標函式不同
 
 > **前置閱讀**:[Ch 24 雲端原生與 Kubernetes](../part-04-architecture/ch-24-cloud-native-kubernetes.md)、[Ch 29 可觀測性與 OTel](../part-05-quality/ch-29-observability-otel.md)、[Ch 30 SRE / SLO / Chaos](../part-05-quality/ch-30-sre-slo-chaos.md)
-> **下游章節**:[Ch 36 AI-Native Architecture](../part-07-ai-era/ch-37-ai-native-architecture.md)
+> **下游章節**:[Ch 37 AI-Native Architecture](../part-07-ai-era/ch-37-ai-native-architecture.md)
 > **延伸補章**:[Ch 26 邊緣 / OT-IT 融合](../part-04-architecture/ch-26-edge-ot-it.md)
 
 ---
@@ -533,7 +533,7 @@ AmpereLoom 在 Q4 把這張卡上 §5 三條動作做完,LLM 月支出回到 12,
 ## Cross-References
 
 - **回顧**:[Ch 24 雲端原生與 Kubernetes](../part-04-architecture/ch-24-cloud-native-kubernetes.md) ⸺ Kubecost 之所以能切到 namespace 級別,是 K8s 拓樸給的便利;[Ch 29 可觀測性與 OTel](../part-05-quality/ch-29-observability-otel.md) ⸺ cost / carbon 指標也是 OTel 平面上的訊號;[Ch 30 SRE / SLO / Chaos](../part-05-quality/ch-30-sre-slo-chaos.md) ⸺ Error Budget 與成本預算的雙軌管理在本章 §35.3.6 落地
-- **下一章**:[Ch 36 AI-Native Architecture](../part-07-ai-era/ch-37-ai-native-architecture.md) ⸺ LLM-specific 的 cost / carbon 卡片格式延伸
+- **下一章**:[Ch 37 AI-Native Architecture](../part-07-ai-era/ch-37-ai-native-architecture.md) ⸺ LLM-specific 的 cost / carbon 卡片格式延伸
 - **延伸補章**:[Ch 26 邊緣 / OT-IT 融合](../part-04-architecture/ch-26-edge-ot-it.md) ⸺ 邊緣場景下 Scope 2 / Scope 3 邊界與設備能耗的對齊
 - **決策制度化**:[Ch 33 架構決策紀錄(ADR)](./ch-33-adr-architecture-knowledge.md) ⸺ Cost & Carbon ADR 的觸發條件與模板
 

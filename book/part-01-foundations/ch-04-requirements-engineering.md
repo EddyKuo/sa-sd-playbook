@@ -256,7 +256,7 @@ flowchart TD
 3. **拒絕理由也是脈絡**:`out_of_scope` 區塊明確寫「不做 X,因為 Y」⸺ 這對 AI 比對 humans 更重要,因為 AI 不會「自然知道我們不做雙因素認證」。
 4. **連結 ADR**:每個需求引用其依賴的決策(`adr_refs: [ADR-0012, ADR-0017]`),讓 AI 拉脈絡時能順著引用走。
 
-這個方向會在 [Ch 37 Context-Driven Engineering](../part-07-ai-era/ch-38-context-driven-engineering.md) 整章展開。本章先把它當成下游的伏筆。
+這個方向會在 [Ch 38 Context-Driven Engineering](../part-07-ai-era/ch-38-context-driven-engineering.md) 整章展開。本章先把它當成下游的伏筆。
 
 ---
 
@@ -415,7 +415,7 @@ PRD 寫了 60 頁,但每一頁都在描述「按鈕長什麼樣、欄位幾個 p
 - **下一章**:[Ch 5 領域建模與 Bounded Context](./ch-05-uml-overview.md) ⸺ 把需求轉成領域結構
 - **用例展開**:[Ch 7 Use Case 與業務流程](../part-02-analysis/ch-07-object-oriented-analysis.md)
 - **NFR 深入**:[Ch 10 非功能性需求與品質情境](../part-02-analysis/ch-10-spec-documents.md)
-- **AI 友善 spec 完整論述**:[Ch 37 Context-Driven Engineering](../part-07-ai-era/ch-38-context-driven-engineering.md)
+- **AI 友善 spec 完整論述**:[Ch 38 Context-Driven Engineering](../part-07-ai-era/ch-38-context-driven-engineering.md)
 - **多模態 / CUX 對需求的影響**:[Ch 17](../part-03-design/ch-17-cux.md)
 
 ## 引用

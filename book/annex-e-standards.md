@@ -51,7 +51,7 @@ status: published
 | **IETF RFC 9562**(2024)| UUIDv6 / v7 / v8 | [Ch 8](part-02-analysis/ch-08-data-modeling-normalization.md) |
 | **ISO 8583:2003** | 卡組織交易訊息(fintech) | [Ch 6](part-02-analysis/ch-06-dfd-structured-analysis.md)、[Ch 11](part-03-design/ch-11-architecture-principles.md)、Ch 23 |
 | **EMVCo EMV 3-D Secure v2.2.0** | 支付認證(fintech) | Ch 6 |
-| **HL7 v2.5.1 ADT + FHIR R4** | 醫療資訊整合 | [Ch 8](part-02-analysis/ch-08-data-modeling-normalization.md)、[Ch 13](part-03-design/ch-13-architecture-styles.md)、[Ch 36](part-07-ai-era/ch-37-ai-native-architecture.md) |
+| **HL7 v2.5.1 ADT + FHIR R4** | 醫療資訊整合 | [Ch 8](part-02-analysis/ch-08-data-modeling-normalization.md)、[Ch 13](part-03-design/ch-13-architecture-styles.md)、[Ch 37](part-07-ai-era/ch-37-ai-native-architecture.md) |
 | **WHO ICD-10-CM**(2025–2026)| 疾病分類 | Ch 8 |
 
 ## 5. 安全 / 隱私 / 合規
@@ -61,7 +61,7 @@ status: published
 |---|---|---|
 | **NIST SP 800-207** | Zero Trust Architecture | [Ch 27](part-05-quality/ch-27-security-by-design.md) |
 | **NIST FIPS 203 / 204 / 205**(2024)| Post-Quantum Cryptography | Ch 27 |
-| **OWASP Top 10**(Web 2021、API 2023、LLM 2024 / 2025)| Web / API / LLM 安全 | Ch 27、[Ch 44](part-07-ai-era/ch-45-ai-eval-drift-redteam.md) |
+| **OWASP Top 10**(Web 2021、API 2023、LLM 2024 / 2025)| Web / API / LLM 安全 | Ch 27、[Ch 45](part-07-ai-era/ch-45-ai-eval-drift-redteam.md) |
 | **SLSA Framework** | Supply Chain Security | Ch 27 |
 | **Sigstore** | 軟體簽名 | Ch 27 |
 | **SPIFFE / SPIRE** | Workload Identity | Ch 27 |
@@ -70,7 +70,7 @@ status: published
 | 法規 | 範疇 | 出現章節 |
 |---|---|---|
 | **EU GDPR**(2018)| 個資保護 / DPIA Art. 35 | [Ch 28](part-05-quality/ch-28-compliance.md) |
-| **EU AI Act**(2024,Annex III 高風險系統 2026/8/2 全面執行)| AI 系統合規 | [Ch 36](part-07-ai-era/ch-37-ai-native-architecture.md)、Ch 28 |
+| **EU AI Act**(2024,Annex III 高風險系統 2026/8/2 全面執行)| AI 系統合規 | [Ch 37](part-07-ai-era/ch-37-ai-native-architecture.md)、Ch 28 |
 | **HIPAA** | 醫療資訊隱私(美國) | Ch 28 |
 | **PCI DSS v4.0**(March 2022)| 卡資料安全(fintech) | [Ch 6](part-02-analysis/ch-06-dfd-structured-analysis.md)、Ch 27 |
 | **SOC 2 Type I / II** | 服務組織控制 | Ch 28、[Ch 33](part-06-engineering/ch-33-adr-architecture-knowledge.md) |
@@ -108,7 +108,7 @@ status: published
 
 | 標準 / 模式 | 範疇 | 出現章節 |
 |---|---|---|
-| **Strangler Fig Pattern**(Martin Fowler 2004)| 漸進遷移策略 | [Ch 21](part-04-architecture/ch-21-modular-monolith.md)、[Ch 46](part-07-ai-era/ch-47-legacy-ai.md) |
+| **Strangler Fig Pattern**(Martin Fowler 2004)| 漸進遷移策略 | [Ch 21](part-04-architecture/ch-21-modular-monolith.md)、[Ch 47](part-07-ai-era/ch-47-legacy-ai.md) |
 | **Expand-Contract Migration** | Schema 演進不停機 | Ch 8 |
 
 ---

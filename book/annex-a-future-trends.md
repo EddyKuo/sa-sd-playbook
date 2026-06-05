@@ -18,19 +18,19 @@ status: published
 
 - Anthropic Claude 的 1M context、Google Gemini 2.5 Pro 的 2M context 已上線(2025)
 - 2027 預期 10M context 規模、價格降至 1/10
-- **影響章節**:[Ch 38](part-07-ai-era/ch-39-rag-memory-tool.md) RAG vs long context 的角色重劃;[Ch 45](part-07-ai-era/ch-46-agentic-qa.md) Eval Set 規模需擴大
+- **影響章節**:[Ch 39](part-07-ai-era/ch-39-rag-memory-tool.md) RAG vs long context 的角色重劃;[Ch 46](part-07-ai-era/ch-46-agentic-qa.md) Eval Set 規模需擴大
 
 ### 1.2 Agent 操作系統(Agent OS)成為部署單位(2026–2028)
 
 - LangGraph、Anthropic Sub-agents、OpenAI Agents SDK、Microsoft Magentic-One 都朝「Agent 操作系統」演化
 - 預期 2027–2028 出現「Agent OS as a Platform」(類比 K8s 之於容器)
-- **影響章節**:[Ch 24](part-04-architecture/ch-24-cloud-native-kubernetes.md)、[Ch 32](part-06-engineering/ch-32-platform-engineering-idp.md)、[Ch 39](part-07-ai-era/ch-40-multi-agent.md)
+- **影響章節**:[Ch 24](part-04-architecture/ch-24-cloud-native-kubernetes.md)、[Ch 32](part-06-engineering/ch-32-platform-engineering-idp.md)、[Ch 40](part-07-ai-era/ch-40-multi-agent.md)
 
 ### 1.3 Constitutional Classifiers / Self-checking Agent 主流化(2026+)
 
 - Anthropic 2026 提出的 Constitutional Classifiers 將推動「Agent 自帶安全護欄」
 - 預期成為合規基準(EU AI Act 高風險系統的 Art. 15 量化指標)
-- **影響章節**:[Ch 27](part-05-quality/ch-27-security-by-design.md)、[Ch 44](part-07-ai-era/ch-45-ai-eval-drift-redteam.md)、[Ch 45](part-07-ai-era/ch-46-agentic-qa.md)、[Ch 28](part-05-quality/ch-28-compliance.md)
+- **影響章節**:[Ch 27](part-05-quality/ch-27-security-by-design.md)、[Ch 45](part-07-ai-era/ch-45-ai-eval-drift-redteam.md)、[Ch 46](part-07-ai-era/ch-46-agentic-qa.md)、[Ch 28](part-05-quality/ch-28-compliance.md)
 
 ## 2. 架構側
 
@@ -64,7 +64,7 @@ status: published
 
 - ManoMano、Brevo 等公司在 2026 已把 ADR 變成 AI Pair-Programmer 的 Skill 知識來源
 - 預期 2027 出現主流工具支援(Backstage Skill plugin、Cursor / Claude Code 原生整合)
-- **影響章節**:[Ch 33](part-06-engineering/ch-33-adr-architecture-knowledge.md)、[Ch 37](part-07-ai-era/ch-38-context-driven-engineering.md)
+- **影響章節**:[Ch 33](part-06-engineering/ch-33-adr-architecture-knowledge.md)、[Ch 38](part-07-ai-era/ch-38-context-driven-engineering.md)
 
 ### 3.3 Carbon-Aware Computing 進合規(2026–2028)
 
@@ -78,7 +78,7 @@ status: published
 
 - 高風險 AI 系統 Annex III 全面執行
 - 預期 2027 出現第一波罰則案例(估計 35M 歐元 / 全球 7%)
-- **影響章節**:[Ch 27](part-05-quality/ch-27-security-by-design.md)、[Ch 36](part-07-ai-era/ch-37-ai-native-architecture.md)、[Ch 28](part-05-quality/ch-28-compliance.md)
+- **影響章節**:[Ch 27](part-05-quality/ch-27-security-by-design.md)、[Ch 37](part-07-ai-era/ch-37-ai-native-architecture.md)、[Ch 28](part-05-quality/ch-28-compliance.md)
 
 ### 4.2 Post-Quantum Cryptography 強制過渡(2026–2030)
 
@@ -90,10 +90,10 @@ status: published
 
 下一輪本書改版時(預估 2028 / 2030),最可能需要重寫的章節:
 
-1. **[Ch 38 RAG / Memory / Tool](part-07-ai-era/ch-39-rag-memory-tool.md)** ⸺ long context vs RAG 的角色可能再次反轉
+1. **[Ch 39 RAG / Memory / Tool](part-07-ai-era/ch-39-rag-memory-tool.md)** ⸺ long context vs RAG 的角色可能再次反轉
 2. **[Ch 22 微服務](part-04-architecture/ch-22-microservices.md)** ⸺ 可能從「Adopt」降到「Hold」
 3. **[Ch 25 Service Mesh / Cell](part-04-architecture/ch-25-service-mesh-cell-based.md)** ⸺ Mesh 在小規模可能完全消失
-4. **[Ch 36 AI-Native](part-07-ai-era/ch-37-ai-native-architecture.md)** ⸺ 七層架構可能重新整理
+4. **[Ch 37 AI-Native](part-07-ai-era/ch-37-ai-native-architecture.md)** ⸺ 七層架構可能重新整理
 
 ---
 
