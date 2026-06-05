@@ -228,7 +228,7 @@ flowchart TD
 
 ---
 
-## 26.5 交付清單
+## 26.5 交付清單 ⸺ 一頁式 OT/IT Edge Design Pack
 
 完成本章後,讀者應產出:
 

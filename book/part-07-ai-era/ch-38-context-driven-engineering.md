@@ -419,6 +419,20 @@ linked-adrs:
 
 **為什麼有 Hand-off Contract?** 這是 Skill 跟 Subagent 整合的關鍵。沒有 hand-off contract 的 Skill,Subagent 完成任務後產出物五花八門,Orchestrator 沒辦法可靠地把產物交給下一棒。把交付物寫成契約,等於替整條 Subagent pipeline 加了型別系統。
 
+### 38.5.2 SKILL.md 欄位注解
+
+上面這份 SKILL.md 的每個欄位都有設計意圖,第一次寫的人最常問「這欄到底要寫多細」。下面逐欄說明:
+
+| 欄位 | 為什麼必填 | 常見錯誤 | 判斷夠不夠的標準 |
+|---|---|---|---|
+| `description` | Agent 依此判斷「這次任務要不要載入本 Skill」 | 寫成任務描述(「幫忙處理退款」)而非觸發條件 | 能從 description 推論出「這種 PR 要不要載入」即可 |
+| `allowed-tools` | 防止 Agent 越權操作(改錯檔案、push prod) | 全寫 `*`(等於不設邊界) | 每個 tool 都能說出「為什麼這個 Skill 需要它」 |
+| `knowledge-sources` | 讓 Agent 知道「要讀哪些脈絡再動手」 | 只寫 `docs/` 資料夾路徑,沒有具體到檔案 | 每條路徑後面都有一句說明「這份文件解決什麼問題」 |
+| `operating-constraints` | 寫死跨任務不可違反的 invariant | 只寫業務規則敘述,沒有對應到 ADR / 程式碼 | 每條 constraint 都能追溯到一份 ADR 或一個函式 |
+| `hand-off-contract` | 讓 Orchestrator 能可靠地接收 Subagent 的產出 | 沒有 hand-off contract(產出物五花八門) | 看完這段,reviewer 知道 PR 裡應該有什麼 |
+
+放在 `.claude/skills/{domain}-{capability}/SKILL.md`,跟程式碼同 repo,Skill Index 統一在 `.claude/skills/README.md` 登記。
+
 ### 38.5.3 範例:AisleNova 第六個月覆盤後寫的 CDE Setup Card
 
 184 個救火 PR、3 位資深離職那場會議結束後,AisleNova(`CASE-ECM-008`)做的第一件事不是改 prompt、不是換工具,是**停掉所有 AI 協作 PR 兩週**,把這頁先寫出來。下面就是他們第二週末那份 v0.1:

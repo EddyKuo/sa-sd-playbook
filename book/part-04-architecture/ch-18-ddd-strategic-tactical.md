@@ -415,7 +415,7 @@ ACL 是 Context Map 八種模式裡最常被「形式上做了、實質上沒做
 
 **為什麼要寫「在其他 context 對應的詞」?** 這欄是跨 context 翻譯的 source of truth。聖維禮的 Clinical context 裡 `Encounter` 對應 Billing 的 `BillingPeriod`、對應 Scheduling 的 `Visit` ⸺ 這份對應寫在卡片上,ACL 開發時直接抄。
 
-### 18.5.1 範例:聖維禮 Clinical Context 重命名前的第一張卡
+### 18.5.1 範例：聖維禮 Clinical Context 重命名前的第一張卡
 
 聖維禮 11 個月戰略工作的起點,是把 Clinical 從「跟 Billing / Scheduling 共用 `Patient`」這個習慣裡拔出來。下面這張就是他們在第二週畫的第一張卡 ⸺ 還沒寫程式、還沒改 schema,只是把語言邊界說清楚,後面所有 ACL 與 Aggregate 設計才有東西可以抄:
 

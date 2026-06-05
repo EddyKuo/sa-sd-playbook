@@ -163,7 +163,7 @@ Agent 看了一段沒被呼叫的程式碼說「這是 dead code 可以刪」⸺
 
 ---
 
-## 47.5 交付清單
+## 47.5 交付清單 ⸺ 一頁式 Brownfield Modernization Pack
 
 完成本章後,讀者應產出:
 

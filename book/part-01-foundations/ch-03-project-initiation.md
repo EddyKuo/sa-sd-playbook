@@ -273,9 +273,7 @@ UX 團隊做了五張 persona 卡片,行銷部很滿意,丟進啟動會議時當
 
 啟動階段第一份要產出的,**不是 Project Charter,而是一頁式的 Project Initiation Brief**。Charter 是 Brief 通過後的下一份產物,Brief 是用來決定「值不值得做 Charter」。差一個層級,不要混。
 
-### 3.5.1 Project Initiation Brief 模板
-
-把它放在 `docs/initiation/brief.md`,寫不滿一頁就是寫得不對。
+這份模板用來在啟動會議前完成可行性初判,並決定是否值得進入 Charter 撰寫階段。把它放在 `docs/initiation/brief.md`,跟程式碼同 repo,寫不滿一頁就是寫得不對。
 
 ````markdown
 # Project Initiation Brief — {專案名稱}
@@ -320,13 +318,13 @@ UX 團隊做了五張 persona 卡片,行銷部很滿意,丟進啟動會議時當
 - 我們不做 X,因為 ...
 ````
 
+放在 `docs/initiation/`,跟程式碼同 repo。
+
 **為什麼 Brief 要先於 Charter?** Charter 假設「這事要做」,Brief 不假設。多數啟動失敗的案子,是 Charter 跳過 Brief 直接寫,所以「值不值得做」這個問題從來沒被認真問過。
 
 **為什麼 P 維度放最後?** 因為它最難寫,放在最後逼你不能空著交。寫不出 P 那欄,就是還沒做完啟動評估。
 
-### 3.5.2 一張可帶走的 Power-Interest Map 範例
-
-這張圖建議用 Mermaid `flowchart` 表達(quadrantChart 在多數靜態渲染器上的支援還在浮動),畫成可放進簡報、可貼進 Confluence 的版本:
+**Power-Interest Map** 建議用 Mermaid `flowchart` 表達(quadrantChart 在多數靜態渲染器上的支援還在浮動),畫成可放進簡報、可貼進 Confluence 的版本:
 
 ```mermaid
 flowchart TB
@@ -362,7 +360,7 @@ flowchart TB
 
 圖上的虛線比方框更重要 ⸺ 它畫出**象限之間的流動性**。Power-Interest 不是靜態快照:夜班護理長透過工會動員,可以在 48 小時內從「持續告知」跳到「密切管理」;病人團體經過一次媒體事件,也可以從「監看即可」直接進入高權力象限。**啟動階段的功課,是預先想好哪些虛線可能會被觸發,以及觸發時誰要在第一時間接住**。
 
-### 3.5.3 範例:聖恩醫療 EMR 替換案,kickoff 前該交出的那一頁 Brief
+### 3.5.1 範例：聖恩醫療 EMR 替換案，kickoff 前該交出的那一頁 Brief
 
 如果 MedCanvas(`CASE-HCR-001`)的 PM 在簽 12 個月 PoC 合約前先把這頁交出去、而不是直接進技術評估,那位夜班護理長的名字應該會在第 P 維度的紅旗欄裡跳出來。下面就是他們**應該**寫、卻沒寫的 Brief:
 

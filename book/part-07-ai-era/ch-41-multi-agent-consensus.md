@@ -231,7 +231,7 @@ state = llm_decision  # 把狀態本身交給 LLM 決定
 
 ---
 
-## 41.5 交付清單
+## 41.5 交付清單 ⸺ 一頁式 Multi-Agent Consensus Pack
 
 完成本章後,讀者應產出:
 
