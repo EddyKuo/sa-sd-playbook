@@ -17,15 +17,15 @@ word_count_target: 6500
 # Ch 41｜Multi-Agent 共識、狀態與衝突解決
 ## ⸺ Multi-Agent State Management & Consensus
 
-> **前置閱讀**:[Ch 22 微服務](../part-04-architecture/ch-22-microservices.md)、[Ch 23 EDA / CQRS / ES](../part-04-architecture/ch-23-event-driven-cqrs-es.md)、[Ch 39](./ch-40-multi-agent.md)
-> **下游章節**:[Ch 44 AI Eval](./ch-45-ai-eval-drift-redteam.md)
-> **延伸補章**:[Ch 45 Agentic QA](./ch-46-agentic-qa.md)
+> **前置閱讀**:[Ch 22 微服務](../part-04-architecture/ch-22-microservices.md)、[Ch 23 EDA / CQRS / ES](../part-04-architecture/ch-23-event-driven-cqrs-es.md)、[Ch 40](./ch-40-multi-agent.md)
+> **下游章節**:[Ch 45 AI Eval](./ch-45-ai-eval-drift-redteam.md)
+> **延伸補章**:[Ch 46 Agentic QA](./ch-46-agentic-qa.md)
 
 ---
 
 ## 41.1 冷觀察 ⸺ Ch 39 畫了拓樸,但沒談「他們不同意怎麼辦」
 
-[Ch 39 Multi-Agent](./ch-40-multi-agent.md) 列出了 Multi-Agent 的五種模式(Augmented LLM、Prompt Chaining、Routing、Parallelization、Orchestrator-Workers、Evaluator-Optimizer)。[Ch 22 微服務](../part-04-architecture/ch-22-microservices.md) 與 [Ch 23 EDA](../part-04-architecture/ch-23-event-driven-cqrs-es.md) 談了傳統微服務的分散式交易(Saga、Outbox)。
+[Ch 40 Multi-Agent](./ch-40-multi-agent.md) 列出了 Multi-Agent 的五種模式(Augmented LLM、Prompt Chaining、Routing、Parallelization、Orchestrator-Workers、Evaluator-Optimizer)。[Ch 22 微服務](../part-04-architecture/ch-22-microservices.md) 與 [Ch 23 EDA](../part-04-architecture/ch-23-event-driven-cqrs-es.md) 談了傳統微服務的分散式交易(Saga、Outbox)。
 
 **但兩者沒有交叉**。
 
@@ -328,9 +328,9 @@ Helmsworth(`CASE-SAS-009`)在 Ch 39 那場 23 次互相呼叫的事故後拆回 
 
 ## Cross-References
 
-- **前置**:[Ch 22 微服務](../part-04-architecture/ch-22-microservices.md)、[Ch 23 EDA](../part-04-architecture/ch-23-event-driven-cqrs-es.md)、[Ch 39 Multi-Agent](./ch-40-multi-agent.md)
-- **下游**:[Ch 44 AI Eval](./ch-45-ai-eval-drift-redteam.md)
-- **延伸補章**:[Ch 45 Agentic QA](./ch-46-agentic-qa.md)
+- **前置**:[Ch 22 微服務](../part-04-architecture/ch-22-microservices.md)、[Ch 23 EDA](../part-04-architecture/ch-23-event-driven-cqrs-es.md)、[Ch 40 Multi-Agent](./ch-40-multi-agent.md)
+- **下游**:[Ch 45 AI Eval](./ch-45-ai-eval-drift-redteam.md)
+- **延伸補章**:[Ch 46 Agentic QA](./ch-46-agentic-qa.md)
 
 ## 引用
 

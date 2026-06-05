@@ -17,9 +17,9 @@ word_count_target: 6000
 # 第 53 章|AI 程式碼的審計哲學
 ## ⸺ 從 LGTM 到意圖符合性驗證
 
-> **前置閱讀**：[Ch 49 有效使用 AI 輔助](./ch-50-effective-ai-assistance.md)、[Ch 34 架構適應度函式](../part-06-engineering/ch-34-fitness-functions.md)
-> **下游章節**：[Ch 53 工程直覺保護手冊](./ch-54-engineering-intuition.md)
-> **延伸補章**：[Ch 45 Agentic QA](../part-07-ai-era/ch-46-agentic-qa.md)
+> **前置閱讀**：[Ch 50 有效使用 AI 輔助](./ch-50-effective-ai-assistance.md)、[Ch 34 架構適應度函式](../part-06-engineering/ch-34-fitness-functions.md)
+> **下游章節**：[Ch 54 工程直覺保護手冊](./ch-54-engineering-intuition.md)
+> **延伸補章**：[Ch 46 Agentic QA](../part-07-ai-era/ch-46-agentic-qa.md)
 
 ---
 
@@ -296,9 +296,9 @@ PR：#2841 跨時區訂單狀態同步 webhook   審計者：Tech Lead Wei
 
 ## Cross-References
 
-- **前置閱讀**：[Ch 49 有效使用 AI 輔助](./ch-50-effective-ai-assistance.md)、[Ch 34 架構適應度函式](../part-06-engineering/ch-34-fitness-functions.md)
-- **下游章節**：[Ch 53 工程直覺保護手冊](./ch-54-engineering-intuition.md)
-- **延伸補章**：[Ch 45 Agentic QA](../part-07-ai-era/ch-46-agentic-qa.md)
+- **前置閱讀**：[Ch 50 有效使用 AI 輔助](./ch-50-effective-ai-assistance.md)、[Ch 34 架構適應度函式](../part-06-engineering/ch-34-fitness-functions.md)
+- **下游章節**：[Ch 54 工程直覺保護手冊](./ch-54-engineering-intuition.md)
+- **延伸補章**：[Ch 46 Agentic QA](../part-07-ai-era/ch-46-agentic-qa.md)
 
 ## 引用
 

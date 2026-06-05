@@ -16,9 +16,9 @@ word_count_target: 6000
 # 第 50 章|有效使用 AI 輔助
 ## ⸺ 委派設計與 Context Engineering
 
-> **前置閱讀**：[Ch 38 Context-Driven Engineering](../part-07-ai-era/ch-38-context-driven-engineering.md)、[Ch 48 AI 能力地圖](./ch-49-ai-capability-map.md)
-> **下游章節**：[Ch 50 人類不能外包的邊界](./ch-51-human-judgment-boundary.md)、[Ch 52 AI 程式碼的審計哲學](./ch-53-ai-code-audit.md)
-> **延伸補章**：[Ch 53 工程直覺保護手冊](./ch-54-engineering-intuition.md)
+> **前置閱讀**：[Ch 38 Context-Driven Engineering](../part-07-ai-era/ch-38-context-driven-engineering.md)、[Ch 49 AI 能力地圖](./ch-49-ai-capability-map.md)
+> **下游章節**：[Ch 51 人類不能外包的邊界](./ch-51-human-judgment-boundary.md)、[Ch 53 AI 程式碼的審計哲學](./ch-53-ai-code-audit.md)
+> **延伸補章**：[Ch 54 工程直覺保護手冊](./ch-54-engineering-intuition.md)
 
 ---
 
@@ -322,9 +322,9 @@ GridForge 是一個 B2B SaaS 工作流自動化平台，服務對象是中型製
 
 ## Cross-References
 
-- **前置閱讀**：[Ch 38 Context-Driven Engineering](../part-07-ai-era/ch-38-context-driven-engineering.md)、[Ch 48 AI 能力地圖](./ch-49-ai-capability-map.md)
-- **下游章節**：[Ch 50 人類不能外包的邊界](./ch-51-human-judgment-boundary.md)、[Ch 52 AI 程式碼的審計哲學](./ch-53-ai-code-audit.md)
-- **延伸補章**：[Ch 53 工程直覺保護手冊](./ch-54-engineering-intuition.md)
+- **前置閱讀**：[Ch 38 Context-Driven Engineering](../part-07-ai-era/ch-38-context-driven-engineering.md)、[Ch 49 AI 能力地圖](./ch-49-ai-capability-map.md)
+- **下游章節**：[Ch 51 人類不能外包的邊界](./ch-51-human-judgment-boundary.md)、[Ch 53 AI 程式碼的審計哲學](./ch-53-ai-code-audit.md)
+- **延伸補章**：[Ch 54 工程直覺保護手冊](./ch-54-engineering-intuition.md)
 
 ## 引用
 

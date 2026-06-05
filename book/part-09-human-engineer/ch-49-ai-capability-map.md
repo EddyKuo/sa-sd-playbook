@@ -17,9 +17,9 @@ word_count_target: 6000
 # 第 49 章|AI 能力地圖
 ## ⸺ 知道你在用什麼
 
-> **前置閱讀**：[Ch 36 AI-Native 架構](../part-07-ai-era/ch-37-ai-native-architecture.md)、[Ch 44 AI Eval / Drift / Red Team](../part-07-ai-era/ch-45-ai-eval-drift-redteam.md)
-> **下游章節**：[Ch 49 有效使用 AI 輔助](./ch-50-effective-ai-assistance.md)、[Ch 51 主動研究 AI 弱點](./ch-52-ai-weakness-research.md)
-> **延伸補章**：[Ch 53 工程直覺保護手冊](./ch-54-engineering-intuition.md)
+> **前置閱讀**：[Ch 37 AI-Native 架構](../part-07-ai-era/ch-37-ai-native-architecture.md)、[Ch 45 AI Eval / Drift / Red Team](../part-07-ai-era/ch-45-ai-eval-drift-redteam.md)
+> **下游章節**：[Ch 50 有效使用 AI 輔助](./ch-50-effective-ai-assistance.md)、[Ch 52 主動研究 AI 弱點](./ch-52-ai-weakness-research.md)
+> **延伸補章**：[Ch 54 工程直覺保護手冊](./ch-54-engineering-intuition.md)
 
 ---
 
@@ -270,9 +270,9 @@ Sprint: 2026-Q1 W3   日期: 2026-02-09
 
 ## Cross-References
 
-- **前置閱讀**：[Ch 36 AI-Native 架構](../part-07-ai-era/ch-37-ai-native-architecture.md)、[Ch 44 AI Eval / Drift / Red Team](../part-07-ai-era/ch-45-ai-eval-drift-redteam.md)
-- **下游章節**：[Ch 49 有效使用 AI 輔助](./ch-50-effective-ai-assistance.md)、[Ch 51 主動研究 AI 弱點](./ch-52-ai-weakness-research.md)
-- **延伸補章**：[Ch 53 工程直覺保護手冊](./ch-54-engineering-intuition.md)
+- **前置閱讀**：[Ch 37 AI-Native 架構](../part-07-ai-era/ch-37-ai-native-architecture.md)、[Ch 45 AI Eval / Drift / Red Team](../part-07-ai-era/ch-45-ai-eval-drift-redteam.md)
+- **下游章節**：[Ch 50 有效使用 AI 輔助](./ch-50-effective-ai-assistance.md)、[Ch 52 主動研究 AI 弱點](./ch-52-ai-weakness-research.md)
+- **延伸補章**：[Ch 54 工程直覺保護手冊](./ch-54-engineering-intuition.md)
 
 ## 引用
 

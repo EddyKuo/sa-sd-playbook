@@ -18,9 +18,9 @@ word_count_target: 6500
 # Ch 47｜遺留系統現代化與 AI 逆向工程
 ## ⸺ Brownfield Modernization with Agent-Assisted Reverse Engineering
 
-> **前置閱讀**:[Ch 18 DDD](../part-04-architecture/ch-18-ddd-strategic-tactical.md)、[Ch 21 Modular Monolith](../part-04-architecture/ch-21-modular-monolith.md)、[Ch 37 CDE](./ch-38-context-driven-engineering.md)、[Ch 43 Coding Agent](./ch-44-coding-agent.md)
-> **下游章節**:[Ch 47 Capstone](../part-08-synthesis/ch-48-capstone.md)
-> **延伸補章**:[Ch 45 Agentic QA](./ch-46-agentic-qa.md)
+> **前置閱讀**:[Ch 18 DDD](../part-04-architecture/ch-18-ddd-strategic-tactical.md)、[Ch 21 Modular Monolith](../part-04-architecture/ch-21-modular-monolith.md)、[Ch 38 CDE](./ch-38-context-driven-engineering.md)、[Ch 44 Coding Agent](./ch-44-coding-agent.md)
+> **下游章節**:[Ch 48 Capstone](../part-08-synthesis/ch-48-capstone.md)
+> **延伸補章**:[Ch 46 Agentic QA](./ch-46-agentic-qa.md)
 
 ---
 
@@ -72,7 +72,7 @@ flowchart LR
 
 ### 47.3.1 IDE / Agent 工具取捨(2026 現實)
 
-[Ch 37 CDE](./ch-38-context-driven-engineering.md) 與 [Ch 43 Coding Agent](./ch-44-coding-agent.md) 提到了 Context-Driven Engineering 與工具,但沒針對「逆向工程」場景做選型。這裡補上:
+[Ch 38 CDE](./ch-38-context-driven-engineering.md) 與 [Ch 44 Coding Agent](./ch-44-coding-agent.md) 提到了 Context-Driven Engineering 與工具,但沒針對「逆向工程」場景做選型。這裡補上:
 
 | 工具 | 上下文視窗 | Brownfield 適合度 | 取捨 |
 |---|---|---|---|
@@ -253,9 +253,9 @@ Agent 看了一段沒被呼叫的程式碼說「這是 dead code 可以刪」⸺
 
 ## Cross-References
 
-- **前置**:[Ch 18 DDD](../part-04-architecture/ch-18-ddd-strategic-tactical.md)、[Ch 21 Modular Monolith](../part-04-architecture/ch-21-modular-monolith.md)、[Ch 37 CDE](./ch-38-context-driven-engineering.md)、[Ch 43 Coding Agent](./ch-44-coding-agent.md)
-- **下游**:[Ch 47 Capstone](../part-08-synthesis/ch-48-capstone.md)
-- **延伸補章**:[Ch 45 Agentic QA](./ch-46-agentic-qa.md)
+- **前置**:[Ch 18 DDD](../part-04-architecture/ch-18-ddd-strategic-tactical.md)、[Ch 21 Modular Monolith](../part-04-architecture/ch-21-modular-monolith.md)、[Ch 38 CDE](./ch-38-context-driven-engineering.md)、[Ch 44 Coding Agent](./ch-44-coding-agent.md)
+- **下游**:[Ch 48 Capstone](../part-08-synthesis/ch-48-capstone.md)
+- **延伸補章**:[Ch 46 Agentic QA](./ch-46-agentic-qa.md)
 
 ## 引用
 

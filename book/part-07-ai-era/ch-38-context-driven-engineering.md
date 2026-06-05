@@ -18,7 +18,7 @@ word_count_target: 6500
 ## ⸺ 從 Vibe Coding 到可被傳遞的脈絡
 
 > **前置閱讀**:[Ch 1 為什麼 SA/SD](../part-01-foundations/ch-01-why-sa-sd.md)、[Ch 33 ADR 與架構知識管理](../part-06-engineering/ch-33-adr-architecture-knowledge.md)
-> **下游章節**:[Ch 38 Skill 工程與 Subagent 設計](./ch-39-rag-memory-tool.md)、[Ch 39 AI 時代的 SA 角色重構](./ch-40-multi-agent.md)、[Ch 43 工程治理與責任邊界](./ch-44-coding-agent.md)
+> **下游章節**:[Ch 39 Skill 工程與 Subagent 設計](./ch-39-rag-memory-tool.md)、[Ch 40 AI 時代的 SA 角色重構](./ch-40-multi-agent.md)、[Ch 44 工程治理與責任邊界](./ch-44-coding-agent.md)
 > **延伸補章**:無
 
 ---
@@ -488,7 +488,7 @@ linked-adrs:
 - [ ] 在 review 一份 Skill 時認得出它是「prompt 集合」還是「能力 + 工具 + 知識來源契約」,並有四個反模式的修正方向可以接著說。
 - [ ] 為手上的專案寫好一份 `docs/cde-setup.md`(CDE Setup Card)+ 至少一份完整的 `SKILL.md`,並把對應 ADR 的 `cde-skill-binding` 雙向連結補上。
 
-如果四項中先挑一項做完就好,建議是最後那一項 ⸺ 找出專案中最常被反覆觸發的那項能力(電商通常是訂單狀態變更、fintech 通常是金流結算、SaaS 通常是計費邏輯),把它寫成第一份 SKILL.md。Ch 33 的 ADR 是「為什麼是這個形狀」,本章的 Skill 是「Agent 在這個形狀裡能做什麼」。下一章 Ch 38 會把 Skill 工程與 Subagent 設計拆得更細,本章先把那一份基礎契約交到你手上。
+如果四項中先挑一項做完就好,建議是最後那一項 ⸺ 找出專案中最常被反覆觸發的那項能力(電商通常是訂單狀態變更、fintech 通常是金流結算、SaaS 通常是計費邏輯),把它寫成第一份 SKILL.md。Ch 33 的 ADR 是「為什麼是這個形狀」,本章的 Skill 是「Agent 在這個形狀裡能做什麼」。下一章 Ch 39 會把 Skill 工程與 Subagent 設計拆得更細,本章先把那一份基礎契約交到你手上。
 
 ---
 
@@ -496,9 +496,9 @@ linked-adrs:
 
 - **回顧**:[Ch 1 §1.2 SA/SD 是製造可被傳遞的理解](../part-01-foundations/ch-01-why-sa-sd.md) ⸺ CDE 是這句話在 AI 時代的具體實踐形式
 - **回顧**:[Ch 33 ADR 與架構知識管理](../part-06-engineering/ch-33-adr-architecture-knowledge.md) ⸺ ADR 是 CDE Skill 的 Knowledge Source 骨幹
-- **下一章**:[Ch 38 Skill 工程與 Subagent 設計](./ch-39-rag-memory-tool.md) ⸺ 把本章的契約展開到實作層級
-- **延伸**:[Ch 39 AI 時代的 SA 角色重構](./ch-40-multi-agent.md) ⸺ SA 在 CDE 流程裡的職責變化
-- **延伸**:[Ch 43 工程治理與責任邊界](./ch-44-coding-agent.md) ⸺ Subagent 出錯時誰負責
+- **下一章**:[Ch 39 Skill 工程與 Subagent 設計](./ch-39-rag-memory-tool.md) ⸺ 把本章的契約展開到實作層級
+- **延伸**:[Ch 40 AI 時代的 SA 角色重構](./ch-40-multi-agent.md) ⸺ SA 在 CDE 流程裡的職責變化
+- **延伸**:[Ch 44 工程治理與責任邊界](./ch-44-coding-agent.md) ⸺ Subagent 出錯時誰負責
 
 ## 引用
 
