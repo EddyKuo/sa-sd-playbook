@@ -8,7 +8,7 @@ skills_used:
   - sa/arch-event-driven
   - sa/api-openapi
   - shared/domain-saas
-domain_case: CASE-SAS-013
+domain_case: CASE-SAS-016
 reviewers: [PM, QA, Orchestrator]
 status: draft
 word_count_target: 6500
@@ -29,7 +29,7 @@ word_count_target: 6500
 
 「我被拉進來做需求稽核，想確認幾個 Agent 的職責邊界和需求規格書對不對得起來。結果我翻了兩天的程式碼，找不到任何可以閱讀的東西。」
 
-她服務的公司是做企業 ERP 整合的 **Caldwell Systems**（`CASE-SAS-013`）。CTO 找了三個工程師，兩週後交出一個「可以動的版本」：Python 寫的四個 Agent，每個 Agent 的 `instructions` 字串硬塞在程式碼裡，總長度約 4,000 字。沒有文件，沒有版本歷史。每次需求變更，工程師直接改字串再重新部署。
+她服務的公司是做企業 ERP 整合的 **Caldwell Systems**（`CASE-SAS-016`）。CTO 找了三個工程師，兩週後交出一個「可以動的版本」：Python 寫的四個 Agent，每個 Agent 的 `instructions` 字串硬塞在程式碼裡，總長度約 4,000 字。沒有文件，沒有版本歷史。每次需求變更，工程師直接改字串再重新部署。
 
 她花了兩天才拼湊出一份「Agent 行為現況表」。那份表格在下一次 sprint 之後就過期了。
 
@@ -455,7 +455,7 @@ Agent 設定語言正在快速演進。已知的高變動風險點：
 
 ### 42.5.1 範例：Caldwell Systems 退款 Agent 該過卻沒過的那五層審查
 
-如果 Caldwell Systems（`CASE-SAS-013`）那位 SA 主管被拉進來時，手上有一份這樣填好的審查表，她不必花兩天翻程式碼——兩小時就能指出哪幾個 Agent 還沒準備好上線。下面是事故覆盤後補做的 `RefundAgent` 那一張：
+如果 Caldwell Systems（`CASE-SAS-016`）那位 SA 主管被拉進來時，手上有一份這樣填好的審查表，她不必花兩天翻程式碼——兩小時就能指出哪幾個 Agent 還沒準備好上線。下面是事故覆盤後補做的 `RefundAgent` 那一張：
 
 ````markdown
 ## SA Agent 設計審查清單
@@ -558,7 +558,7 @@ citations:
   - id: CIT-H03
     body: "Google. Agent Development Kit (ADK) Documentation: Agent Config, Sequential/Parallel/Loop Agents. 2025."
 cases:
-  - id: CASE-SAS-013
+  - id: CASE-SAS-016
     title: "Caldwell Systems — ERP 整合平台 Agent 規格零文件事件"
     domain: saas
     chapters: [42]

@@ -253,7 +253,7 @@ cases:
   - id: CASE-HCR-004
     title: "居家視訊看護:跌倒偵測的 SDC 多模態系統"
     domain: healthcare
-    chapters: [chF]
+    chapters: [ch-17]
     anonymized: true
     summary: |
       虛構居家看護場景:長者在客廳,系統用攝影機 + 語音助理持續監看。
@@ -744,8 +744,20 @@ cases:
       兩年後遭遇 AI 工具全線中斷(API outage),發現自己在六小時內
       無法獨立定位一個原本應該三十分鐘就能解決的記憶體洩漏問題。
 
+  # ========== Ch 42–43 ==========
+  - id: CASE-SAS-016
+    title: "Caldwell Systems — ERP 整合平台 Agent 規格零文件事件"
+    domain: saas
+    chapters: [ch-42, ch-43]
+    anonymized: true
+    summary: |
+      虛構企業 ERP 整合公司 Caldwell Systems 把客戶服務系統升級為 Multi-Agent 架構，
+      工程師把 Agent instructions 直接硬寫在程式碼字串中，長達 4,000 字，沒有版控、
+      沒有文件、沒有可審查的規格。SA 主管被拉進來時需花兩天翻程式碼才能理解系統行為。
+      展示「Agent 規格（Agent Spec）不是可選文件」的核心論點。
+
   # ========== Ch 46 ==========
-  - id: CASE-SAS-013
+  - id: CASE-SAS-015
     title: "ClauseGenie — AI 合約條款助手兩週後在生產環境靜默輸出錯誤條款"
     domain: saas
     chapters: [ch-46]

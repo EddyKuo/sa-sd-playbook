@@ -565,7 +565,7 @@ Cresvale Engineering Cloud（`CASE-SAS-014`）那 14 個百分點的內部評測
 
 <!-- PROPOSED-REFS
 # QA 注意:
-# 1. CASE-SAS-014 依賴於Ch 41 的 CASE-SAS-013（Caldwell Systems）先合併進
+# 1. CASE-SAS-014 依賴於Ch 41 的 CASE-SAS-016（Caldwell Systems）先合併進
 #    case-registry.yaml。合併順序:chH 的 CASE-SAS-013 → 本章的 CASE-SAS-014。
 # 2. glossary anchor `harness-engineering-discipline` 用以避免與本章 slug
 #    `harness-engineering` 在跨參考工具上的潛在衝突。

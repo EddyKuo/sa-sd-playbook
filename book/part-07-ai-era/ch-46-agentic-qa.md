@@ -9,7 +9,7 @@ skills_used:
   - qa/strategy-chaos-engineering
   - qa/strategy-security
   - shared/domain-saas
-domain_case: CASE-SAS-013
+domain_case: CASE-SAS-015
 reviewers: [PM, QA, Orchestrator]
 status: migrated
 word_count_target: 6500
@@ -25,7 +25,7 @@ word_count_target: 6500
 
 ## 46.1 冷觀察 ⸺「LGTM」不能再是一個動詞
 
-2025 年 Q4,虛構 B2B 法律科技公司 **ClauseGenie**(`CASE-SAS-013`)的 8 人工程團隊在凌晨兩點被一封客戶律師的電子郵件叫醒。
+2025 年 Q4,虛構 B2B 法律科技公司 **ClauseGenie**(`CASE-SAS-015`)的 8 人工程團隊在凌晨兩點被一封客戶律師的電子郵件叫醒。
 
 ClauseGenie 是一個多租戶 SaaS 合約審查平台,核心功能是「合約條款 AI 助手」:用戶上傳草稿合約,AI Agent 自動標記風險條款並建議替代措辭。技術棧是 FastAPI 0.115 + LangGraph 0.2.28 + Claude Sonnet 3.7,向量資料庫用 pgvector(PostgreSQL 17),部署在 AWS EKS 1.31。上線前,CI pipeline 共有 847 個測試,全數綠燈;PM 手測了 23 個真實合約場景,逐一確認無誤。
 

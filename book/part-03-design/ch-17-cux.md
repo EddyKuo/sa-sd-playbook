@@ -7,7 +7,7 @@ agent: UI/UX
 skills_used:
   - uiux/design-material
   - shared/domain-healthcare
-domain_case: CASE-HCR-004
+domain_case: CASE-SAS-013
 reviewers: [PM, QA, Orchestrator]
 status: migrated
 word_count_target: 6500
