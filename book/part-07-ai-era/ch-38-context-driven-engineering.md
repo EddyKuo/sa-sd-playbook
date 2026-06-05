@@ -349,6 +349,9 @@ linked-adrs:
 
 # Skill: Ecommerce Order State Transition
 
+> 版本:v1.4.0 | 撰寫日期:2026-04-15 | 擁有人:@payments-team
+
+<!-- 為什麼這欄:Description 決定 Agent 何時載入本 Skill；寫錯觸發條件等於讓 Agent 在錯誤任務帶入錯誤脈絡。 -->
 ## Description
 
 當任務涉及以下任一情境時載入本 Skill:
@@ -364,6 +367,7 @@ linked-adrs:
 - 訂單列表查詢、報表、analytics
 - 庫存管理(走 `ecommerce-inventory-allocation` Skill)
 
+<!-- 為什麼這欄:Allowed Tools 是 Skill 的安全邊界；沒有白名單等於授予 Agent 無限操作權，一旦越權修改 production 無法追責。 -->
 ## Allowed Tools
 
 - `Read`(讀任何檔案)

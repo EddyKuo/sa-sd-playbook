@@ -336,6 +336,8 @@ ai-skill-hint: |
 
 # ADR-NNNN: {標題}
 
+> 版本:v0.1 | 撰寫日期:YYYY-MM-DD | 擁有人:{名字}
+
 ## TL;DR(Y-Statement)
 
 > In the context of **{場景}**, facing **{問題}** we decided **for {選擇}**
@@ -418,6 +420,8 @@ ai-skill-hint: |
 ---
 
 # ADR-0042: 採用 AWS KMS 而非自管 HashiCorp Vault
+
+> 版本:v0.1 | 撰寫日期:2026-03-12 | 擁有人:@cto
 
 ## TL;DR(Y-Statement)
 <!-- 為什麼這欄:Y-Statement 強迫作者把「在什麼情境下、為了什麼、放棄什麼」

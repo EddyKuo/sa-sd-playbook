@@ -255,6 +255,7 @@ C4 的價值是 **zoom**,不是「全部塞進去」。當一個系統真的有 
 
 ````markdown
 # C4 Diagram Card — {view 名稱}
+> 版本:v0.1 | 撰寫日期:YYYY-MM-DD | 擁有人:{名字}
 
 > 對應檔:docs/architecture/c4/workspace.dsl(view: `{viewKey}`)
 > 對應 ADR:`docs/adr/00XX-*.md`(逗號分隔)
@@ -385,6 +386,7 @@ workspace "PaySpan" "東南亞 e-wallet 與 SME 收單支付平台" {
 
 ````markdown
 # C4 Diagram Card — L2_Container(PaySpan 內部 8 個 container)
+> 版本:v1.0 | 撰寫日期:2026-01-29 | 擁有人:Hsin(@arch-team)
 
 > 對應檔:docs/architecture/c4/workspace.dsl(view: `L2_Container`)
 > 對應 ADR:docs/adr/0017-fraud-engine-split.md, docs/adr/0024-ledger-pg17.md

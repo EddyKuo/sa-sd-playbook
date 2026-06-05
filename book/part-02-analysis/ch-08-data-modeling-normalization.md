@@ -317,6 +317,7 @@ JSONB 是好工具,但**它是「結構化資料的逃生口」,不是「拒絕 
 ````markdown
 # Schema Decision Card — {table_name}
 
+> 版本:v0.1 | 撰寫日期:YYYY-MM-DD | 擁有人:{名字}
 > 對應 migration:`db/migrations/{timestamp}_{table_name}.sql`
 > 對應 ERD:`docs/diagrams/erd-{bounded_context}.mmd`
 
@@ -370,6 +371,7 @@ JSONB 是好工具,但**它是「結構化資料的逃生口」,不是「拒絕 
 ````markdown
 # Schema Decision Card — inpatient_episode
 
+> 版本:v0.1 | 撰寫日期:2026-01-15 | 擁有人:MedCanvas DBA Team
 > 對應 migration:`db/migrations/20251015_rename_patient_id_to_episode_id.sql`
 > 對應 ERD:`docs/diagrams/erd-inpatient-bc.mmd`
 

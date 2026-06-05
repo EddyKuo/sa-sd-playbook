@@ -165,10 +165,11 @@ Agent 看了一段沒被呼叫的程式碼說「這是 dead code 可以刪」⸺
 
 ## 47.5 交付清單 ⸺ 一頁式 Brownfield Modernization Pack
 
-完成本章後,讀者應產出:
+每當工程師第一次打開一個十年老系統,最危險的不是「不知道怎麼改」,而是「以為自己知道了」。這份 Brownfield Modernization Pack 是考古工作的收斂點——把 Agent 逆向工程的四層輸出、訪談矛盾、並行驗證結果全部匯入同一份文件,讓 Strangler Fig 的第一刀有據可查。
 
 ````markdown
 # Brownfield Modernization Pack — {專案名稱}
+> 版本:v0.1 | 撰寫日期:YYYY-MM-DD | 擁有人:{名字}
 
 ## 1. As-Is Bounded Context Map
 - [ ] 從程式碼考古推回的領域模型
@@ -205,6 +206,7 @@ Agent 看了一段沒被呼叫的程式碼說「這是 dead code 可以刪」⸺
 
 ````markdown
 # Brownfield Modernization Pack — 個金放款計息核心(WebLogic 7y)
+> 版本:v0.1 | 撰寫日期:2026-01-15 | 擁有人:Pricing 現代化小組
 
 ## 1. As-Is Bounded Context Map
 <!-- 為什麼這欄:沒這張圖,Strangler Fig 第一刀往哪切都是賭;

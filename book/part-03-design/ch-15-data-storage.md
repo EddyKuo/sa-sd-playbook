@@ -330,7 +330,7 @@ MongoDB 4.0 起支援 multi-document transaction,但**它不是免費的** ⸺ r
 # Storage Selection Card — {決策名稱}
 
 > 對應 ADR:`docs/adr/NNNN-{slug}.md`
-> 撰寫日期:YYYY-MM-DD | 擁有人:{名字}
+> 版本:v0.1 | 撰寫日期:YYYY-MM-DD | 擁有人:{名字}
 > 對齊章節:Ch 8 模型、Ch 15 引擎、Ch 23 事件流、Ch 31 治理
 
 ## 1. Workload Profile(五維量化)
@@ -395,7 +395,7 @@ MongoDB 4.0 起支援 multi-document transaction,但**它不是免費的** ⸺ r
 # Storage Selection Card — SunLedger telemetry 引擎評估
 
 > 對應 ADR:`docs/adr/0011-stay-on-pg-with-timescaledb.md`
-> 撰寫日期:2026-03-04(覆盤補做)| 擁有人:@yu(資料工程)
+> 版本:v0.1 | 撰寫日期:2026-03-04(覆盤補做)| 擁有人:@yu(資料工程)
 > 對齊章節:Ch 8 模型、Ch 15 引擎、Ch 32 FinOps
 
 ## 1. Workload Profile(五維量化)

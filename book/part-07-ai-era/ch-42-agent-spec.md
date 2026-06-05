@@ -420,11 +420,12 @@ Agent 設定語言正在快速演進。已知的高變動風險點：
 
 ## 42.5 交付清單 ⸺ 一頁式 Agent 設計審查清單（5 層）
 
-**可帶走 Artifact：SA Agent 設計審查清單**
+每當工程師準備讓一批 Multi-Agent 上線，第一份要交出的不是架構圖，而是一張能讓任何人在兩小時內看懂「每個 Agent 被授權做什麼、不能做什麼」的審查清單。把它存在 `docs/agent-specs/`，跟程式碼同 repo，跟 README 同層。
 
-```markdown
+````markdown
 ## SA Agent 設計審查清單
 系統：______  審查者：______  日期：______
+> 版本:v0.1 | 撰寫日期:YYYY-MM-DD | 擁有人:{名字}
 
 ### Identity 層
 - [ ] 每個 Agent 有唯一的 `name` 和清晰的 `description`（說明何時啟動）
@@ -451,7 +452,7 @@ Agent 設定語言正在快速演進。已知的高變動風險點：
 ### Progressive Disclosure
 - [ ] 各 Agent 設定文件已區分 Layer 1 / Layer 2 / Layer 3
 - [ ] Layer 2 的 token 預估值在可接受範圍內（< 5,000 tokens / agent）
-```
+````
 
 ### 42.5.1 範例：Caldwell Systems 退款 Agent 該過卻沒過的那五層審查
 
@@ -460,6 +461,7 @@ Agent 設定語言正在快速演進。已知的高變動風險點：
 ````markdown
 ## SA Agent 設計審查清單
 系統：Caldwell ERP 客服 Agent 群（v0.4）   審查者：SA Lead   日期：2026-02-18
+> 版本:v0.4 | 撰寫日期:2026-02-18 | 擁有人:SA Lead
 
 ### Identity 層
 <!-- 為什麼這欄：兩個 Agent 同時認領一張退款單，比兩個都不認領更貴；

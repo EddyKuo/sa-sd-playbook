@@ -387,8 +387,8 @@ public class IsoAuthorizationAdapter {
 ````markdown
 # Coupling Audit Card — {module_name}
 
+> 版本:v0.1 | 撰寫日期:YYYY-MM-DD | 擁有人:{名字 / team handle}
 > 對應目錄:`src/main/{lang}/{path}/`
-> 撰寫日期:YYYY-MM-DD | 擁有人:{名字 / team handle}
 > 對應 ADR:`docs/adr/00NN-*.md`
 
 ## 1. 模組職責(SRP 視角)
@@ -445,8 +445,8 @@ public class IsoAuthorizationAdapter {
 ````markdown
 # Coupling Audit Card — RuleEngine
 
+> 版本:v0.1 | 撰寫日期:2026-02-09 | 擁有人:@hwang(風控 Tech Lead)
 > 對應目錄:`src/main/java/com/axispay/fraud/rules/`
-> 撰寫日期:2026-02-09 | 擁有人:@hwang(風控 Tech Lead)
 > 對應 ADR:`docs/adr/0019-fraudguardcore-clean-arch-split.md`
 
 ## 1. 模組職責(SRP 視角)

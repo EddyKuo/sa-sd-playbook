@@ -222,11 +222,15 @@ GridForge 是一個 B2B SaaS 工作流自動化平台，服務對象是
 
 ## 50.5 交付清單 ⸺ 一頁式 CLAUDE.md + 委派配置卡
 
+每當團隊決定引入 AI coding assistant，第一份要產出的不是功能清單，而是一份讓 AI 知道「自己在哪個業務脈絡」的 CLAUDE.md——沒有它，每次對話都從第一天 onboarding 重新開始。
+
 **可帶走 Artifact：GridForge 式 CLAUDE.md 模板**
 
-```markdown
+把它存在 `docs/ai-context/`，跟程式碼同 repo，跟 README 同層。
+
+````markdown
 # [專案名] — CLAUDE.md
-> 版本: v[X]  最後更新: YYYY-MM-DD  維護者: [team]
+> 版本:v0.1 | 撰寫日期:YYYY-MM-DD | 擁有人:{名字}
 
 ## 1. 專案定位（一段話）
 [讓 AI 知道它在哪個業務脈絡]
@@ -255,7 +259,7 @@ GridForge 是一個 B2B SaaS 工作流自動化平台，服務對象是
 ## 6. 本 Sprint 優先級（每 Sprint 更新）
 > 當前 Sprint 目標:
 > 本 Sprint 不做:
-```
+````
 
 ---
 

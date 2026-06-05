@@ -446,8 +446,8 @@ checks:
 ````markdown
 # Data Architecture Decision Card — {決策名稱}
 
+> 版本:v0.1 | 撰寫日期:YYYY-MM-DD | 擁有人:{名字}
 > 對應 ADR:`docs/adr/NNNN-{slug}.md`
-> 撰寫日期:YYYY-MM-DD | 擁有人:{名字}
 > 對齊章節:Ch 6 資料血緣、Ch 8 模型、Ch 15 引擎、Ch 23 事件流、Ch 31 資料架構
 
 ## 1. 三層問題對照(這個決定處理哪一層?)
@@ -528,8 +528,8 @@ MedNexus(`CASE-HCR-006`)第三年那場 retro 之後,聯盟 PM 把他們**真正
 ````markdown
 # Data Architecture Decision Card — 七院 EMR 共享平台 v2
 
+> 版本:v0.1 | 撰寫日期:2026-03-12 | 擁有人:平台 PM(Hsin)
 > 對應 ADR:`docs/adr/0031-data-mesh-org-first.md`
-> 撰寫日期:2026-03-12 | 擁有人:平台 PM(Hsin)
 > 對齊章節:Ch 28 合規、Ch 31 資料架構
 
 ## 1. 三層問題對照

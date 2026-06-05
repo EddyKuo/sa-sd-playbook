@@ -233,10 +233,11 @@ state = llm_decision  # 把狀態本身交給 LLM 決定
 
 ## 41.5 交付清單 ⸺ 一頁式 Multi-Agent Consensus Pack
 
-完成本章後,讀者應產出:
+每當工程師第一次把兩個 Subagent 接在同一張工單上,第一份要交出的不是架構圖,而是這份一頁式 Consensus Pack ⸺ 它逼迫團隊在寫程式之前先回答「這個衝突到底是哪一種共識問題」。
 
 ````markdown
 # Multi-Agent Consensus Pack — {專案名稱}
+> 版本:v0.1 | 撰寫日期:YYYY-MM-DD | 擁有人:{名字}
 
 ## 1. 共識需求分類表
 - [ ] 系統中需要哪幾類共識(資料 / 權威 / 意義)
@@ -274,6 +275,7 @@ Helmsworth(`CASE-SAS-009`)在 Ch 39 那場 23 次互相呼叫的事故後拆回 
 
 ````markdown
 # Multi-Agent Consensus Pack — Helmsworth Ticket Reply
+> 版本:v0.1 | 撰寫日期:2026-01-15 | 擁有人:Helmsworth Infra Team
 
 ## 1. 共識需求分類表
 <!-- 為什麼這欄:不分類就會用 Saga 的腦圖去解 Refund vs Contract 之爭;

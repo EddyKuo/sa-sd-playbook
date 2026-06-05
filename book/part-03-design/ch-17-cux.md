@@ -303,6 +303,7 @@ flowchart TD
 
 ````markdown
 # CUX/Multimodal Design Pack — {專案名稱}
+> 版本:v0.1 | 撰寫日期:YYYY-MM-DD | 擁有人:{名字}
 
 ## 1. Interaction Mode Catalog(互動模式分類)
 - [ ] 列出本系統所有互動模式(GUI / Voice / Chat / Vision / Spatial 至少標一個)
