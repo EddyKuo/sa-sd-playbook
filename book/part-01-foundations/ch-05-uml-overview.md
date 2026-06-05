@@ -18,7 +18,7 @@ word_count_target: 5500
 # 第 5 章|UML 模型語言全景
 ## ⸺ 14 種圖,你只需要 3 種
 
-> **前置閱讀**:[Ch 1 為什麼 SA/SD](./ch-01-why-sa-sd.md)、[Ch 4 系統思考與抽象層次](./ch-04-requirements-engineering.md)
+> **前置閱讀**:[Ch 1 為什麼 SA/SD](./ch-01-why-sa-sd.md)、[Ch 4 需求工程基礎](./ch-04-requirements-engineering.md)
 > **下游章節**:[Ch 6 需求工程](../part-02-analysis/ch-06-dfd-structured-analysis.md)、[Ch 7 領域建模](../part-02-analysis/ch-07-object-oriented-analysis.md)、[Ch 18 DDD 戰術設計](../part-04-architecture/ch-18-ddd-strategic-tactical.md)、[Ch 20 C4 模型](../part-04-architecture/ch-20-c4-model-visualization.md)
 > **延伸補章**:無
 
@@ -154,7 +154,7 @@ flowchart TD
     classDef goal fill:#efe,stroke:#3a3
     classDef cold fill:#eef,stroke:#36c
     class Seq,Cls,Sta,C4 goal
-    class ER,BPMN cold
+    class ER,BPMN,AM,TM cold
 ```
 
 **這張圖的關鍵是綠色那四個出口**(Sequence / Class / State / C4)。八成的工程現場場景在這四個出口就能解決。剩下兩成才需要 ER、BPMN、ArchiMate、Timing 出場。
@@ -302,7 +302,7 @@ VoltKnit(`CASE-ENR-001`)能用三張 Mermaid 圖過台電 dReg 0.25 秒併網測
 
 ## Cross-References
 
-- **回顧**:[Ch 1 為什麼 SA/SD](./ch-01-why-sa-sd.md)、[Ch 4 系統思考與抽象層次](./ch-04-requirements-engineering.md)
+- **回顧**:[Ch 1 為什麼 SA/SD](./ch-01-why-sa-sd.md)、[Ch 4 需求工程基礎](./ch-04-requirements-engineering.md)
 - **下一章**:[Ch 6 需求工程](../part-02-analysis/ch-06-dfd-structured-analysis.md) ⸺ 從 Use Case 走向 User Story Map
 - **領域建模深入**:[Ch 7 領域建模](../part-02-analysis/ch-07-object-oriented-analysis.md)、[Ch 18 DDD 戰術設計](../part-04-architecture/ch-18-ddd-strategic-tactical.md)
 - **架構視覺化**:[Ch 20 C4 模型](../part-04-architecture/ch-20-c4-model-visualization.md)

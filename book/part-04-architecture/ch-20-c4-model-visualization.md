@@ -58,9 +58,11 @@ flowchart LR
     E --> W[CTO 講了 23 張<br/>程式碼細節]
 
     classDef hot fill:#fee,stroke:#c33
+    classDef cold fill:#eef,stroke:#36c
     classDef goal fill:#efe,stroke:#3a3
     class B,C,D,X,Y,Z hot
-    class E,W goal
+    class A cold
+    class E,W hot
 ```
 
 那次會議後 B 輪 term sheet 砍了一輪,估值修正幅度兩位數百分點。事後復盤,工程主管在內部信裡寫了一段話:
@@ -180,8 +182,7 @@ flowchart TD
     classDef cold fill:#eef,stroke:#36c
     classDef hot fill:#fee,stroke:#c33
     class L1,L2,L2D goal
-    class L3,Dyn,LS cold
-    class Skip,L1note hot
+    class L3,Dyn,LS,Skip,L1note cold
 ```
 
 **這張圖的關鍵是綠色那三個出口**(Level 1、Level 2、Level 2 + Deployment)。八成的對外與跨團隊溝通需求在這三個出口就解決了。Level 3 與 Dynamic / Landscape 屬於「進階補充」,真的需要才畫。

@@ -17,7 +17,7 @@ word_count_target: 6000
 ## ⸺ 從訪談到拒絕清單
 
 > **前置閱讀**:[Ch 1 為什麼 SA/SD](./ch-01-why-sa-sd.md)、[Ch 3 利害關係人地圖](./ch-03-project-initiation.md)
-> **下游章節**:[Ch 5 領域建模](./ch-05-uml-overview.md)、[Ch 7 用例與流程](../part-02-analysis/ch-07-object-oriented-analysis.md)、[Ch 10 NFR 與品質情境](../part-02-analysis/ch-10-spec-documents.md)
+> **下游章節**:[Ch 5 UML 模型語言全景](./ch-05-uml-overview.md)、[Ch 7 用例與流程](../part-02-analysis/ch-07-object-oriented-analysis.md)、[Ch 10 NFR 與品質情境](../part-02-analysis/ch-10-spec-documents.md)
 > **延伸補章**:[Ch 17 多模態 UX 與需求](../part-03-design/ch-17-cux.md)
 
 ---

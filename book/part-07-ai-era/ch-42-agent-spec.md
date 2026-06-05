@@ -17,9 +17,9 @@ word_count_target: 6500
 # Ch 42｜Agent 設定語言 ⸺ SA 的新交付物
 ## ⸺ CLAUDE.md、agent.md、skill.md 與跨廠商通用設計框架
 
-> **前置閱讀**：[Ch 39 Multi-Agent 系統設計](./ch-40-multi-agent.md)、[Ch 43 AI Coding Agent](./ch-44-coding-agent.md)、[Ch 40](./ch-41-multi-agent-consensus.md)
-> **下游章節**：[Ch 47 Capstone](../part-08-synthesis/ch-48-capstone.md)
-> **延伸補章**：[Ch 45 Agentic QA](./ch-46-agentic-qa.md)、[Ch 40](./ch-41-multi-agent-consensus.md)
+> **前置閱讀**：[Ch 40 Multi-Agent 系統設計](./ch-40-multi-agent.md)、[Ch 44 AI Coding Agent](./ch-44-coding-agent.md)、[Ch 41 Multi-Agent 共識](./ch-41-multi-agent-consensus.md)
+> **下游章節**：[Ch 48 Capstone](../part-08-synthesis/ch-48-capstone.md)
+> **延伸補章**：[Ch 46 Agentic QA](./ch-46-agentic-qa.md)、[Ch 41 Multi-Agent 共識](./ch-41-multi-agent-consensus.md)
 
 ---
 
@@ -512,9 +512,9 @@ Agent 設定語言正在快速演進。已知的高變動風險點：
 
 ## Cross-References
 
-- **前置閱讀**：[Ch 39 Multi-Agent 系統設計](./ch-40-multi-agent.md)、[Ch 43 AI Coding Agent](./ch-44-coding-agent.md)、[Ch 40](./ch-41-multi-agent-consensus.md)
-- **下游章節**：[Ch 47 Capstone](../part-08-synthesis/ch-48-capstone.md)
-- **強連結**：[Ch 45 Agentic QA](./ch-46-agentic-qa.md)、[Ch 40](./ch-41-multi-agent-consensus.md)
+- **前置閱讀**：[Ch 40 Multi-Agent 系統設計](./ch-40-multi-agent.md)、[Ch 44 AI Coding Agent](./ch-44-coding-agent.md)、[Ch 41 Multi-Agent 共識](./ch-41-multi-agent-consensus.md)
+- **下游章節**：[Ch 48 Capstone](../part-08-synthesis/ch-48-capstone.md)
+- **強連結**：[Ch 46 Agentic QA](./ch-46-agentic-qa.md)、[Ch 41 Multi-Agent 共識](./ch-41-multi-agent-consensus.md)
 
 ## 引用
 
@@ -561,7 +561,7 @@ cases:
   - id: CASE-SAS-013
     title: "Caldwell Systems — ERP 整合平台 Agent 規格零文件事件"
     domain: saas
-    chapters: [chH]
+    chapters: [42]
     summary: |
       虛構企業 ERP 整合公司 Caldwell Systems 把客戶服務系統升級為 Multi-Agent 架構，
       所有 Agent instructions 硬塞在 Python 字串中，無文件無版控。SA 主管三個月後
@@ -571,6 +571,5 @@ conventions_update:
   - file: book/conventions.md
     section: "1. 檔案命名"
     change: |
-      補章字母範圍從 A–F 擴展至 A–H，以涵蓋 Part IX 的 chG 與 Part VII 的 chH。
-      更新說明：「補章：對應篇下 ch{A-H}-{kebab-slug}.md」
+      本章（Ch 42）已整合進主章節編號體系，無需更新補章字母範圍。
 -->

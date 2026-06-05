@@ -19,7 +19,7 @@ word_count_target: 6500
 ## ⸺ 分散式系統的稅金與其抵稅條件
 
 > **前置閱讀**:[Ch 18 DDD 戰術設計](./ch-18-ddd-strategic-tactical.md)、[Ch 21 Modular Monolith](./ch-21-modular-monolith.md)
-> **下游章節**:[Ch 23 Event-Driven 架構](./ch-23-event-driven-cqrs-es.md)、[Ch 24 Kubernetes 實戰](./ch-24-cloud-native-kubernetes.md)、[Ch 25 Service Mesh / Cell-Based](./ch-25-service-mesh-cell-based.md)、[Ch 30 可觀測性](../part-05-quality/ch-29-observability-otel.md)
+> **下游章節**:[Ch 23 Event-Driven 架構](./ch-23-event-driven-cqrs-es.md)、[Ch 24 Kubernetes 實戰](./ch-24-cloud-native-kubernetes.md)、[Ch 25 Service Mesh / Cell-Based](./ch-25-service-mesh-cell-based.md)、[Ch 29 可觀測性](../part-05-quality/ch-29-observability-otel.md)
 > **延伸補章**:無
 
 ---
@@ -517,7 +517,7 @@ API 版本管理走 SemVer:major 是破壞性變更(必須跑棄用節奏),minor
 - **回顧**:[Ch 18 DDD 戰術設計](./ch-18-ddd-strategic-tactical.md) ⸺ Bounded Context 是服務邊界的來源;[Ch 21 Modular Monolith](./ch-21-modular-monolith.md) ⸺ 預設值在這裡,本章是它的延伸決策
 - **下一章**:[Ch 23 Event-Driven 架構](./ch-23-event-driven-cqrs-es.md) ⸺ 把 §22.3.5 / §22.3.6 的非同步通訊延伸到完整的事件驅動拓樸
 - **平台支撐**:[Ch 24 Kubernetes 實戰](./ch-24-cloud-native-kubernetes.md)、[Ch 25 Service Mesh / Cell-Based](./ch-25-service-mesh-cell-based.md)
-- **觀測稅怎麼付**:[Ch 30 可觀測性](../part-05-quality/ch-29-observability-otel.md)
+- **觀測稅怎麼付**:[Ch 29 可觀測性](../part-05-quality/ch-29-observability-otel.md)
 
 ## 引用
 

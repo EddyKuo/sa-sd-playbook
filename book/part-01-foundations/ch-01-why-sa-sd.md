@@ -20,7 +20,7 @@ word_count_target: 5500
 
 > **前置閱讀**:無(本書起點)
 > **下游章節**:[Ch 2 SDLC 演進](./ch-02-sdlc-evolution.md)、[Ch 33 ADR](../part-06-engineering/ch-33-adr-architecture-knowledge.md)
-> **延伸補章**:[Ch 46 遺留現代化](../part-07-ai-era/ch-47-legacy-ai.md)
+> **延伸補章**:[Ch 47 遺留現代化](../part-07-ai-era/ch-47-legacy-ai.md)
 
 ---
 
@@ -332,8 +332,8 @@ PayLoop 的故事告訴我們:**這頁不寫,18 天可以上線,180 天會崩。
 
 - **下一章**:[Ch 2 SDLC 與方法論演進](./ch-02-sdlc-evolution.md) ⸺ 從瀑布到 CDE 的脈絡
 - **深入決策紀錄**:[Ch 33 架構決策紀錄(ADR)](../part-06-engineering/ch-33-adr-architecture-knowledge.md)
-- **AI 時代的脈絡工程**:[Ch 37 Context-Driven Engineering](../part-07-ai-era/ch-38-context-driven-engineering.md)
-- **遺留系統如何補做 SA/SD**:[Ch 46](../part-07-ai-era/ch-47-legacy-ai.md)
+- **AI 時代的脈絡工程**:[Ch 38 Context-Driven Engineering](../part-07-ai-era/ch-38-context-driven-engineering.md)
+- **遺留系統如何補做 SA/SD**:[Ch 47](../part-07-ai-era/ch-47-legacy-ai.md)
 
 ## 引用
 

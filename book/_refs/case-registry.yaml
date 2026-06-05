@@ -296,11 +296,11 @@ cases:
       Outcome Card 模板與 Hotspot follow-up 機制。展示「停在 Big Picture
       不走下去」與「便利貼到 spec」斷層的代價。
 
-  # ========== Ch 19 ==========
+  # ========== Ch 20 ==========
   - id: CASE-FIN-005
     title: "PaySpan 募資前架構審查的 47 張投影片事故"
     domain: fintech
-    chapters: [ch-19]
+    chapters: [ch-20]
     anonymized: true
     summary: |
       虛構東南亞支付平台 PaySpan(84 人,Spring Boot 3.3 + PG 17 + Kafka
@@ -317,7 +317,7 @@ cases:
   - id: CASE-ECM-005
     title: "TideCart 黑五 inventory cascade failure 事故"
     domain: ecommerce
-    chapters: [ch-21]
+    chapters: [ch-21, ch-22]
     anonymized: true
     summary: |
       虛構東南亞快時尚電商 TideCart(GMV 4.8 億美元),2023 年從 Rails monolith
@@ -374,7 +374,7 @@ cases:
   - id: CASE-ENR-005
     title: "雲原生工程師遇到 200kW/400kWh 儲能櫃 PoC 失敗"
     domain: energy
-    chapters: [chA]
+    chapters: [ch-26]
     anonymized: true
     summary: |
       虛構案例:雲端架構師被指派設計結合儲能(ESS)、PV 逆變器與電網的 EMS,

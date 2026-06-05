@@ -466,7 +466,7 @@ flowchart LR
 ## Cross-References
 
 - **回顧**:[Ch 11 設計原則(SOLID / GRASP)](./ch-11-architecture-principles.md)、[Ch 12 元件與模組化](./ch-12-design-patterns.md)
-- **下一章**:[Ch 14 設計模式(GoF + 現代延伸)](./ch-12-design-patterns.md)
+- **下一章**:[Ch 14 API 設計](./ch-14-api-design.md)
 - **DDD 戰術設計**:[Ch 18](../part-04-architecture/ch-18-ddd-strategic-tactical.md) ⸺ Aggregate / Repository / Domain Service 在 Hexagonal/Onion 裡的位置
 - **模組化單體**:[Ch 21](../part-04-architecture/ch-21-modular-monolith.md) ⸺ 多模組系統內部如何混用不同風格
 - **AI-Native 架構**:[Ch 37](../part-07-ai-era/ch-37-ai-native-architecture.md) ⸺ AI Agent 作為 Adapter 的進階實踐

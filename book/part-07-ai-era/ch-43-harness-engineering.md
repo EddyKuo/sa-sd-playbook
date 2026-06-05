@@ -17,9 +17,9 @@ word_count_target: 8500
 # Ch 43｜Agent Harness 工程
 ## ⸺ 從模型到可用代理的執行層設計
 
-> **前置閱讀**：[Ch 38 RAG / Memory / Tool 設計](./ch-39-rag-memory-tool.md)、[Ch 39 Multi-Agent 系統設計](./ch-40-multi-agent.md)、[Ch 44 AI Eval / Drift / Red Team](./ch-45-ai-eval-drift-redteam.md)、[Ch 41 Agent 設定語言](./ch-42-agent-spec.md)
-> **下游章節**：[Ch 47 Capstone](../part-08-synthesis/ch-48-capstone.md)
-> **延伸補章**：[Ch 45 Agentic QA](./ch-46-agentic-qa.md)、[Ch 40 Multi-Agent 共識](./ch-41-multi-agent-consensus.md)
+> **前置閱讀**：[Ch 39 RAG / Memory / Tool 設計](./ch-39-rag-memory-tool.md)、[Ch 40 Multi-Agent 系統設計](./ch-40-multi-agent.md)、[Ch 45 AI Eval / Drift / Red Team](./ch-45-ai-eval-drift-redteam.md)、[Ch 42 Agent 設定語言](./ch-42-agent-spec.md)
+> **下游章節**：[Ch 48 Capstone](../part-08-synthesis/ch-48-capstone.md)
+> **延伸補章**：[Ch 46 Agentic QA](./ch-46-agentic-qa.md)、[Ch 41 Multi-Agent 共識](./ch-41-multi-agent-consensus.md)
 
 ---
 
@@ -118,7 +118,7 @@ flowchart LR
 
 一個粗略但實用的劃線：
 
-- **Scaffolding** 是「在第一個 prompt 之前你先寫好的東西」⸺ Ch 41 整章在講這層，包括 CLAUDE.md、agent.md、tool 描述、skill。它是**靜態宣告**，可以放進 Git，可以版控，可以審查。
+- **Scaffolding** 是「在第一個 prompt 之前你先寫好的東西」⸺ Ch 42 整章在講這層，包括 CLAUDE.md、agent.md、tool 描述、skill。它是**靜態宣告**，可以放進 Git，可以版控，可以審查。
 - **[Harness](../annex-f-glossary.md#agent-harness)** 是「第一個 prompt 之後，跑起來會發生的事」⸺ 模型回了什麼、要不要呼叫工具、結果怎麼裁切、要不要壓縮 context、要不要重試、要不要轉手給子代理、要不要把這次互動寫進 trace 與 eval。它是**動態執行**，只在 runtime 存在。
 
 兩件事的工程責任本來就不同。Scaffolding 的問題是「規格寫得對不對」，Harness 的問題是「規格被執行得對不對」。**SRS 寫得再清楚，runtime 不照著跑，東西還是壞的**。
@@ -271,7 +271,7 @@ flowchart LR
 
 ### 43.3.4 Multi-Agent Harness 模式
 
-當任務本質要求多代理時（呼應Ch 40 的多代理共識章），harness 設計變成「在多個獨立 context 之間協調」。Anthropic 的 multi-agent research system[^CIT-I03] 給了一個現在已被廣泛複製的範式。
+當任務本質要求多代理時（呼應Ch 41 的多代理共識章），harness 設計變成「在多個獨立 context 之間協調」。Anthropic 的 multi-agent research system[^CIT-I03] 給了一個現在已被廣泛複製的範式。
 
 **核心模式：Lead-researcher + Sub-research workers**
 
@@ -303,7 +303,7 @@ flowchart TD
 
 4. **代價**：Anthropic 報告 lead-researcher（Opus 4）配 sub-agents（Sonnet 4）的設計，比單代理 Opus 4 高 90.2% 的內部研究評測分數，但**消耗的 token 數約 15 倍**。token 用量解釋了瀏覽評測上 80% 的表現變異。SA 在規格 multi-agent 時，必須把這個倍率寫進預算控制。
 
-5. **何時不該走多代理**：Ch 40 與 Ch 39 都討論過 ⸺ 任務本質是序列依賴、上下文需要連續累積、結果需要極強一致性時，硬拆多代理會讓 token 倍增同時品質下降。Multi-agent 適合「可平行探索 + 結果可獨立驗證」的場景：研究、跨庫搜尋、多視角生成。
+5. **何時不該走多代理**：Ch 41 與 Ch 40 都討論過 ⸺ 任務本質是序列依賴、上下文需要連續累積、結果需要極強一致性時，硬拆多代理會讓 token 倍增同時品質下降。Multi-agent 適合「可平行探索 + 結果可獨立驗證」的場景：研究、跨庫搜尋、多視角生成。
 
 ### 43.3.5 SA 的 Harness 規格交付物
 
@@ -551,9 +551,9 @@ Cresvale Engineering Cloud（`CASE-SAS-014`）那 14 個百分點的內部評測
 
 ## Cross-References
 
-- **前置閱讀**：[Ch 38 RAG / Memory / Tool 設計](./ch-39-rag-memory-tool.md)、[Ch 39 Multi-Agent 系統設計](./ch-40-multi-agent.md)、[Ch 44 AI Eval / Drift / Red Team](./ch-45-ai-eval-drift-redteam.md)、[Ch 41 Agent 設定語言](./ch-42-agent-spec.md)
-- **下游章節**：[Ch 47 Capstone](../part-08-synthesis/ch-48-capstone.md)
-- **強連結**：[Ch 45 Agentic QA](./ch-46-agentic-qa.md)、[Ch 40 Multi-Agent 共識](./ch-41-multi-agent-consensus.md)
+- **前置閱讀**：[Ch 39 RAG / Memory / Tool 設計](./ch-39-rag-memory-tool.md)、[Ch 40 Multi-Agent 系統設計](./ch-40-multi-agent.md)、[Ch 45 AI Eval / Drift / Red Team](./ch-45-ai-eval-drift-redteam.md)、[Ch 42 Agent 設定語言](./ch-42-agent-spec.md)
+- **下游章節**：[Ch 48 Capstone](../part-08-synthesis/ch-48-capstone.md)
+- **強連結**：[Ch 46 Agentic QA](./ch-46-agentic-qa.md)、[Ch 41 Multi-Agent 共識](./ch-41-multi-agent-consensus.md)
 
 ## 引用
 

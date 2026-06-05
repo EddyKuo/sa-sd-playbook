@@ -20,7 +20,7 @@ word_count_target: 5800
 ## ⸺ REST、GraphQL、gRPC、Webhook、AsyncAPI 各自定義不同的信任邊界
 
 > **前置閱讀**:[Ch 11 架構風格與選型](../part-03-design/ch-11-architecture-principles.md)、[Ch 13 介面與整合設計](../part-03-design/ch-13-architecture-styles.md)
-> **下游章節**:[Ch 22 微服務拆分](../part-04-architecture/ch-22-microservices.md)、[Ch 23 Event-Driven 架構](../part-04-architecture/ch-23-event-driven-cqrs-es.md)、[Ch 36 AI Agent 友善架構](../part-07-ai-era/ch-37-ai-native-architecture.md)
+> **下游章節**:[Ch 22 微服務拆分](../part-04-architecture/ch-22-microservices.md)、[Ch 23 Event-Driven 架構](../part-04-architecture/ch-23-event-driven-cqrs-es.md)、[Ch 37 AI-Native 架構](../part-07-ai-era/ch-37-ai-native-architecture.md)
 > **延伸補章**:無
 
 ---
@@ -215,8 +215,7 @@ flowchart TD
     classDef cold fill:#eef,stroke:#36c
     classDef goal fill:#efe,stroke:#3a3
     class GRPC,GQL cold
-    class REST_PUB,REST_INT,WEBHOOK,ASYNC,SSE goal
-    class AGENT_REST,AGENT_GQL hot
+    class REST_PUB,REST_INT,WEBHOOK,ASYNC,SSE,AGENT_REST,AGENT_GQL goal
 ```
 
 **這張圖的關鍵不是分支,是「對方是誰」這個第一問**。協定的選擇被「對方」決定,不是被「我們有什麼技術棧」決定。HarborGate 的問題是反過來:他們先有 REST(因為 2019 年大家都做 REST)、再有 GraphQL(因為 2022 年某工程師喜歡)、再有 Webhook(因為 2024 年支付組趕),三次都先選協定再回頭設計,而沒有先問「partner 是誰、partner 要做什麼」。
@@ -513,7 +512,7 @@ HarborGate 用這份卡的格式產出 47 條,佔他們宣稱 200 條 API 的 23
 - **下一章**:[Ch 15 資料庫與儲存設計](./ch-15-data-storage.md) ⸺ schema 設計的另一面
 - **微服務拆分後的 API 邊界**:[Ch 22 微服務拆分](../part-04-architecture/ch-22-microservices.md)
 - **Webhook 與 AsyncAPI 在事件架構的位置**:[Ch 23 Event-Driven 架構](../part-04-architecture/ch-23-event-driven-cqrs-es.md)
-- **AI Agent 友善 API 在 AI-Native 架構的角色**:[Ch 36 AI Agent 友善架構](../part-07-ai-era/ch-37-ai-native-architecture.md)
+- **AI Agent 友善 API 在 AI-Native 架構的角色**:[Ch 37 AI-Native 架構](../part-07-ai-era/ch-37-ai-native-architecture.md)
 - **架構決策紀錄**:[Ch 33 ADR](../part-06-engineering/ch-33-adr-architecture-knowledge.md)
 
 ## 引用

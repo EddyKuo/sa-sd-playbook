@@ -18,9 +18,9 @@ word_count_target: 6500
 # 第 39 章|RAG、Memory 與 Tool 設計
 ## ⸺ Agent 系統的三組記憶與三種能力
 
-> **前置閱讀**:[Ch 14 API 設計](../part-03-design/ch-14-api-design.md)、[Ch 15 資料儲存設計](../part-03-design/ch-15-data-storage.md)、[Ch 36 AI-Native Architecture](./ch-37-ai-native-architecture.md)、[Ch 37 Context-Driven Engineering](./ch-38-context-driven-engineering.md)
-> **下游章節**:[Ch 39 Agent 編排與多代理協作](./ch-40-multi-agent.md)、[Ch 44 AI-Era SA/SD 心法](./ch-45-ai-eval-drift-redteam.md)
-> **延伸補章**:[Ch 45 Agentic QA](./ch-46-agentic-qa.md)、[Ch 28 Compliance by Design](../part-05-quality/ch-28-compliance.md)
+> **前置閱讀**:[Ch 14 API 設計](../part-03-design/ch-14-api-design.md)、[Ch 15 資料儲存設計](../part-03-design/ch-15-data-storage.md)、[Ch 37 AI-Native Architecture](./ch-37-ai-native-architecture.md)、[Ch 38 Context-Driven Engineering](./ch-38-context-driven-engineering.md)
+> **下游章節**:[Ch 40 Agent 編排與多代理協作](./ch-40-multi-agent.md)、[Ch 45 AI-Era SA/SD 心法](./ch-45-ai-eval-drift-redteam.md)
+> **延伸補章**:[Ch 46 Agentic QA](./ch-46-agentic-qa.md)、[Ch 28 Compliance by Design](../part-05-quality/ch-28-compliance.md)
 
 ---
 
@@ -103,7 +103,7 @@ flowchart LR
 
 多數團隊只把 RAG 當主線在投資,理由很合理 ⸺ RAG 是 2023 年第一個被廣泛 demo 的模式,有清楚的論文(Lewis et al. NeurIPS 2020 [^CIT-350])、清楚的 stack(向量 DB + embedding + retrieval)、清楚的指標(precision@k、MRR、NDCG)。Memory 與 Tool 沒這麼乾淨:Memory 涉及 user identity、跨服務 state、PII;Tool 涉及 idempotency、failure handling、權限。投資 RAG 看起來「比較像在做 AI」,投資 Memory 與 Tool 看起來「只是在寫後端」⸺ 但 Agent 真正讓人覺得「能用」的瞬間,八成發生在 Memory 與 Tool 的設計細節上。
 
-[Ch 36](./ch-37-ai-native-architecture.md) 把 AI-Native 的拓樸講完了,[Ch 37](./ch-38-context-driven-engineering.md) 把 Context-Driven Engineering 的工程實踐講完了。本章把鏡頭縮到 Agent 內部,看這三個子系統各自怎麼設計、怎麼決策、怎麼避免變成那種「答得很流暢但記不住客戶是誰」的健忘聊天機器人。
+[Ch 37](./ch-37-ai-native-architecture.md) 把 AI-Native 的拓樸講完了,[Ch 38](./ch-38-context-driven-engineering.md) 把 Context-Driven Engineering 的工程實踐講完了。本章把鏡頭縮到 Agent 內部,看這三個子系統各自怎麼設計、怎麼決策、怎麼避免變成那種「答得很流暢但記不住客戶是誰」的健忘聊天機器人。
 
 ---
 
@@ -500,15 +500,15 @@ HavenAxis(`CASE-FIN-009`)在「同一個客戶被當新客戶三次」事故後,
 - [ ] 用 Tool 四原則(Selection / Composition / Failure / Least Privilege)重審現有的 tool 列表,把「直接包 REST」收斂成「task-oriented tools」
 - [ ] 為手上的 Agent 寫好一份 Agent System Card(一頁,放 `docs/agents/{name}.md`)
 
-四項中先挑一項做的話,建議是最後那一項 ⸺ Card 寫完之後,前面四項的缺口會自然浮上來。下一步可以接 [Ch 39](./ch-40-multi-agent.md) 學多 Agent 協作,或先跳到 [Ch 45 Agentic QA](./ch-46-agentic-qa.md) 學怎麼把 Agent 的品質量化(RAGAS [^CIT-358]、TruLens、DeepEval),再回來把 [Ch 28](../part-05-quality/ch-28-compliance.md) 的細粒度存取補上。本章留給你的就是那一頁 Card,把它寫出來,Agent 會少健忘八成。
+四項中先挑一項做的話,建議是最後那一項 ⸺ Card 寫完之後,前面四項的缺口會自然浮上來。下一步可以接 [Ch 40](./ch-40-multi-agent.md) 學多 Agent 協作,或先跳到 [Ch 46 Agentic QA](./ch-46-agentic-qa.md) 學怎麼把 Agent 的品質量化(RAGAS [^CIT-358]、TruLens、DeepEval),再回來把 [Ch 28](../part-05-quality/ch-28-compliance.md) 的細粒度存取補上。本章留給你的就是那一頁 Card,把它寫出來,Agent 會少健忘八成。
 
 ---
 
 ## Cross-References
 
-- **下一章**:[Ch 39 Agent 編排與多代理協作](./ch-40-multi-agent.md) ⸺ 多 Agent 之間的 context 傳遞與職責分工
-- **AI 時代的 SA/SD 心法**:[Ch 44 AI-Era SA/SD](./ch-45-ai-eval-drift-redteam.md)
-- **品質量化**:[Ch 45 Agentic QA](./ch-46-agentic-qa.md)
+- **下一章**:[Ch 40 Agent 編排與多代理協作](./ch-40-multi-agent.md) ⸺ 多 Agent 之間的 context 傳遞與職責分工
+- **AI 時代的 SA/SD 心法**:[Ch 45 AI-Era SA/SD](./ch-45-ai-eval-drift-redteam.md)
+- **品質量化**:[Ch 46 Agentic QA](./ch-46-agentic-qa.md)
 - **合規與隔離**:[Ch 28 Compliance by Design](../part-05-quality/ch-28-compliance.md)
 - **儲存引擎選型**:[Ch 15 資料儲存設計](../part-03-design/ch-15-data-storage.md)
 

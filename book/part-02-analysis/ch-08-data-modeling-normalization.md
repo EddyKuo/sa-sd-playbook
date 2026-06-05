@@ -27,7 +27,7 @@ word_count_target: 6000
 
 我在 2025 年第二季,陪一家虛構的住院資訊系統廠商 **MedCanvas Inpatient**(`CASE-HCR-002`)做 schema 健康度檢查。他們前一年靠 HL7 v2.5 ADT 訊息接通了三家區域醫院的 HIS(Hospital Information System),拿到了第四家、也是規模最大的合約 ⸺ 一家 1,800 床的醫學中心。導入第 11 週,他們的住院帳務模組開始出問題:出院結算單上的 ICD-10-CM 主診斷碼,有 6.4% 對不上實際病房紀錄。
 
-我把他們的 schema 拉出來看,事情很快清楚。在他們的核心 Postgres 資料庫裡,**「patient_id」這個欄位名字出現了四次,在四張不同的表上,語意完全不同**:
+我把他們的 schema 拉出來看,事情很快清楚。在他們的核心 PostgreSQL 17 資料庫裡,**「patient_id」這個欄位名字出現了四次,在四張不同的表上,語意完全不同**:
 
 | 表名 | 欄位 | 真實語意 |
 |---|---|---|
@@ -169,7 +169,7 @@ ERD 的兩種主流標記法 ⸺ Chen 1976 [^CIT-081] 的菱形/橢圓符號,以
 | 為了「歷史快照」 | **建議** | 事件溯源(Event Sourcing)+ 投影 | 事件 schema 本身要做版本控管 |
 | 為了「報表跑不動」 | **先看索引** | 索引、partition、分析型副本 | 反正規化是最後手段,不是第一手段 |
 
-**核心原則**:反正規化的對象是**讀路徑**,不是**寫路徑**。寫路徑保持高度正規化(One Fact in One Place),讀路徑按查詢需求做投影,中間用事件流(CDC / outbox / Kafka / Debezium)把兩邊接起來。這也是為什麼 CQRS 在 2026 年仍然是主流模式 [^CIT-085]。
+**核心原則**:反正規化的對象是**讀路徑**,不是**寫路徑**。寫路徑保持高度正規化(One Fact in One Place),讀路徑按查詢需求做投影,中間用事件流(CDC / outbox / Kafka / Debezium(Red Hat))把兩邊接起來。這也是為什麼 CQRS 在 2026 年仍然是主流模式 [^CIT-085]。
 
 ### 8.3.3 主鍵策略取捨表(2026 版)
 
@@ -222,8 +222,8 @@ CREATE INDEX idx_episode_admit_at ON inpatient_episode (admit_at);
 |---|---|---|
 | **發生位置** | 單一資料庫實例內 | 跨多個資料庫實例 |
 | **目的** | 改善單表掃描、過期資料下架、索引大小 | 突破單實例容量/吞吐上限 |
-| **跨片 join** | 同庫,DB 引擎處理 | 應用層或 query router(Vitess / Citus) |
-| **PostgreSQL 17 原生** | ✓ Range / List / Hash | ✗(靠 Citus / 自建) |
+| **跨片 join** | 同庫,DB 引擎處理 | 應用層或 query router(Vitess(PlanetScale) / Citus(Microsoft)) |
+| **PostgreSQL 17 原生** | ✓ Range / List / Hash | ✗(靠 Citus(Microsoft) / 自建) |
 | **何時使用** | 單表 > 1 億 row、有時間維度 | 單實例已撐不住寫入或容量 |
 
 ```sql
@@ -246,7 +246,7 @@ CREATE TABLE inpatient_episode_2026q2
     FOR VALUES FROM ('2026-04-01') TO ('2026-07-01');
 ```
 
-**現場節奏**:先做 Partitioning,做不夠才考慮 Sharding。Sharding 是把 schema 問題升級成分散式系統問題,不是免費的午餐。需要原生時序壓縮的話,TimescaleDB(PostgreSQL extension)[^CIT-087]在 hypertable 上自動處理 chunk 分割,在住院監測、ICU 生命徵象這類時序場景比手切 partition 省事。
+**現場節奏**:先做 Partitioning,做不夠才考慮 Sharding。Sharding 是把 schema 問題升級成分散式系統問題,不是免費的午餐。需要原生時序壓縮的話,TimescaleDB(Timescale, PostgreSQL extension)[^CIT-087]在 hypertable 上自動處理 chunk 分割,在住院監測、ICU 生命徵象這類時序場景比手切 partition 省事。
 
 ### 8.3.5 決策樹:這張表現在該不該拆?
 

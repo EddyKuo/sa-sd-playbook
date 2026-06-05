@@ -18,7 +18,7 @@ word_count_target: 6500
 ## ⸺ Data Mesh、Lakehouse、Lakebase 是不同層級的問題,不要混為一談
 
 > **前置閱讀**:[Ch 6 DFD 與資料血緣](../part-02-analysis/ch-06-dfd-structured-analysis.md)、[Ch 8 資料模型與正規化](../part-02-analysis/ch-08-data-modeling-normalization.md)、[Ch 15 資料儲存設計](../part-03-design/ch-15-data-storage.md)、[Ch 23 事件驅動架構](../part-04-architecture/ch-23-event-driven-cqrs-es.md)
-> **下游章節**:[Ch 36 AI-Native 架構](../part-07-ai-era/ch-37-ai-native-architecture.md)
+> **下游章節**:[Ch 37 AI-Native 架構](../part-07-ai-era/ch-37-ai-native-architecture.md)
 > **延伸補章**:[Ch 28 Compliance by Design](../part-05-quality/ch-28-compliance.md)
 
 ---
@@ -434,6 +434,11 @@ checks:
 
 ## 31.5 交付清單 ⸺ 一頁式 Data Architecture Decision Card
 
+本章對應的可帶走 artifact:
+
+- **Data Architecture Decision Card**:一頁 Markdown,三層問題對照 + Data Mesh 四原則體檢 + 儲存層決定 + 存取層決定 + Data Contract CI 機制 + Owner 表 + Reassessment Trigger
+- **Data Contract YAML**:以機讀格式描述 schema、品質規則與 SLO,進 CI 後每次 PR 自動驗證
+
 每次要做資料架構決定前,**第一份要產出的不是廠商評估表,是 Data Architecture Decision Card**。它是一頁 Markdown,寫不滿就是還沒 ready 做這個決定。
 
 把它存在 `docs/data-architecture/{decision_name}.md`,跟對應的 ADR 同 PR、跟下游消費者一起 review。
@@ -579,7 +584,7 @@ MedNexus 把這張卡釘在會議室白板上 14 個月。儲存層沒動一行,
 - [ ] 在 Lakehouse 三大格式(Iceberg / Delta / Hudi)中,用「中立 vs Databricks 整合 vs streaming-first」三條取捨軸選一個主格式,**避免三家同時用**
 - [ ] 為手上的資料平台決定寫好一份 Data Architecture Decision Card,並把 Data Contract 寫成 YAML 進 CI
 
-如果四項中先挑一項做完就好,建議是最後那一項 ⸺ 把目前團隊正在討論「我們是不是要做 Data Mesh / 換 Lakehouse」的那個決定,寫成一張 Data Architecture Decision Card。寫到第 1 節「三層問題對照」就卡住的話,**那個決定本來就還沒到該做的時候**。下游 Ch 36 會接著談 AI-Native 架構,把這一章的 Lakebase 與 Data Contract 接到 AI Agent 自助查詢的場景。
+如果四項中先挑一項做完就好,建議是最後那一項 ⸺ 把目前團隊正在討論「我們是不是要做 Data Mesh / 換 Lakehouse」的那個決定,寫成一張 Data Architecture Decision Card。寫到第 1 節「三層問題對照」就卡住的話,**那個決定本來就還沒到該做的時候**。下游 Ch 37 會接著談 AI-Native 架構,把這一章的 Lakebase 與 Data Contract 接到 AI Agent 自助查詢的場景。
 
 ---
 
@@ -589,7 +594,7 @@ MedNexus 把這張卡釘在會議室白板上 14 個月。儲存層沒動一行,
 - **回顧**:[Ch 8 資料模型與正規化](../part-02-analysis/ch-08-data-modeling-normalization.md) ⸺ patient_id 語意對齊是跨院 encounter 表的前置
 - **回顧**:[Ch 15 資料儲存設計](../part-03-design/ch-15-data-storage.md) ⸺ Workload Profile 與引擎選型,Lakebase 在那章已埋下伏筆
 - **回顧**:[Ch 23 事件驅動架構](../part-04-architecture/ch-23-event-driven-cqrs-es.md) ⸺ Streaming ETL 是 EDA 在資料層的延伸
-- **下游**:[Ch 36 AI-Native 架構](../part-07-ai-era/ch-37-ai-native-architecture.md) ⸺ AI Agent 自助查詢時,Lakebase / Data Contract / Vector Index 三件事如何整合
+- **下游**:[Ch 37 AI-Native 架構](../part-07-ai-era/ch-37-ai-native-architecture.md) ⸺ AI Agent 自助查詢時,Lakebase / Data Contract / Vector Index 三件事如何整合
 - **延伸補章**:[Ch 28 Compliance by Design](../part-05-quality/ch-28-compliance.md) ⸺ 跨院資料、PII、HIPAA / 個資法的合規路徑
 
 ## 引用

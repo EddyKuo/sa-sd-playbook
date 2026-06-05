@@ -311,11 +311,10 @@ flowchart TD
     classDef cold fill:#eef,stroke:#36c
     classDef goal fill:#efe,stroke:#3a3
     class Skip cold
-    class Light,Strat goal
-    class Full hot
+    class Light,Strat,Full goal
 ```
 
-這張圖的關鍵是綠色那兩個出口 ⸺ **多數現場走「只做戰略」或「戰略 + Modular Monolith」就夠**。Full DDD(戰略 + 戰術 + 微服務)留給「業務節奏真的要求每個 context 獨立部署」的場景(銀行核心、健保申報、保險理賠)。新建系統第一年走「Light」(只畫 Context Map),已經能避免 80% 的失敗模式,因為失敗的根因從來都在戰略,不在戰術。
+這張圖的關鍵是綠色那兩個出口 ⸺ **多數現場走「只做戰略」或「戰略 + Modular Monolith」就夠**。Full DDD(戰略 + 戰術 + 微服務)留給「業務節奏真的要求每個 context 獨立部署」的場景(銀行核心、健保申報、保險理賠)。新建系統第一年走「Light」(只畫 Context Map),已經能擋掉多數失敗模式,因為失敗的根因從來都在戰略,不在戰術。
 
 ---
 

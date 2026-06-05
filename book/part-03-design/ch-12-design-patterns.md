@@ -17,9 +17,9 @@ word_count_target: 6000
 # 第 12 章|設計模式
 ## ⸺ GoF 與整合模式 (EIP),為已知問題命名的工具
 
-> **前置閱讀**:[Ch 7 物件導向分析](../part-02-analysis/ch-07-object-oriented-analysis.md)、[Ch 11 設計原則](./ch-11-architecture-principles.md)
-> **下游章節**:[Ch 13 軟體架構樣式](./ch-13-architecture-styles.md)、[Ch 19 Event Storming](../part-04-architecture/ch-19-event-storming-modeling.md)、[Ch 23 Event-Driven 與事件溯源](../part-04-architecture/ch-23-event-driven-cqrs-es.md)、[Ch 39 Multi-Agent 系統設計](../part-07-ai-era/ch-40-multi-agent.md)
-> **延伸補章**:[Ch 40 共識/狀態/衝突](../part-07-ai-era/ch-41-multi-agent-consensus.md)
+> **前置閱讀**:[Ch 7 物件導向分析](../part-02-analysis/ch-07-object-oriented-analysis.md)、[Ch 11 軟體架構原則](./ch-11-architecture-principles.md)
+> **下游章節**:[Ch 13 架構風格實戰](./ch-13-architecture-styles.md)、[Ch 19 Event Storming](../part-04-architecture/ch-19-event-storming-modeling.md)、[Ch 23 Event-Driven 與事件溯源](../part-04-architecture/ch-23-event-driven-cqrs-es.md)、[Ch 40 Multi-Agent 系統設計](../part-07-ai-era/ch-40-multi-agent.md)
+> **延伸閱讀**:[Ch 41 共識/狀態/衝突](../part-07-ai-era/ch-41-multi-agent-consensus.md)
 
 ---
 
@@ -458,17 +458,17 @@ MeshConduit 用同樣這張卡格式,把 `AbstractRetryStrategyFactory`、`Compo
 - [ ] 對 EIP 的常用六模式(Saga / Process Manager / Aggregator / Splitter / Content-Based Router / Idempotent Receiver)說得出「我的系統有沒有真實 broker」這個入場券
 - [ ] 為手上正在考慮的模式寫一份 Pattern Adoption Card(放 `docs/patterns/{pattern}.md`)
 
-四項中先挑一項做完就好,建議是最後那一項 ⸺ 把手上最想用、最有衝動套下去的那個模式,先開一張 Pattern Adoption Card,逼自己回答「解什麼問題」「替代方案」「退場策略」三題,再往下讀 [Ch 13 軟體架構樣式](./ch-13-architecture-styles.md)。本章留給你的,就是那一頁卡片。
+四項中先挑一項做完就好,建議是最後那一項 ⸺ 把手上最想用、最有衝動套下去的那個模式,先開一張 Pattern Adoption Card,逼自己回答「解什麼問題」「替代方案」「退場策略」三題,再往下讀 [Ch 13 架構風格實戰](./ch-13-architecture-styles.md)。本章留給你的,就是那一頁卡片。
 
 ---
 
 ## Cross-References
 
-- **下一章**:[Ch 13 軟體架構樣式](./ch-13-architecture-styles.md) ⸺ 從模式語言往上一層,進到架構樣式
+- **下一章**:[Ch 13 架構風格實戰](./ch-13-architecture-styles.md) ⸺ 從模式語言往上一層,進到架構風格
 - **領域探索**:[Ch 19 Event Storming](../part-04-architecture/ch-19-event-storming-modeling.md) ⸺ 在事件層次找到 EIP 模式的問題情境
 - **事件驅動**:[Ch 23 Event-Driven 與事件溯源](../part-04-architecture/ch-23-event-driven-cqrs-es.md) ⸺ EIP 模式真的能落地的前提
-- **Multi-Agent 模式語言**:[Ch 39 Multi-Agent 系統設計](../part-07-ai-era/ch-40-multi-agent.md) ⸺ Anthropic 五個 Agent 模式的展開
-- **Multi-Agent 共識**:[Ch 40](../part-07-ai-era/ch-41-multi-agent-consensus.md) ⸺ Agent 之間的衝突解決也走 EIP 模式語言
+- **Multi-Agent 模式語言**:[Ch 40 Multi-Agent 系統設計](../part-07-ai-era/ch-40-multi-agent.md) ⸺ Anthropic 五個 Agent 模式的展開
+- **Multi-Agent 共識**:[Ch 41 Multi-Agent 共識、狀態與衝突解決](../part-07-ai-era/ch-41-multi-agent-consensus.md) ⸺ Agent 之間的衝突解決也走 EIP 模式語言
 
 ## 引用
 
