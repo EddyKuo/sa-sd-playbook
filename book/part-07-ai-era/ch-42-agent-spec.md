@@ -47,19 +47,23 @@ word_count_target: 6500
 
 ### 42.2.1 四個分析問題，都需要文件化
 
+熟悉 SRS 的讀者看到下面四個問題，會有一種強烈的既視感——這些問題並不新。它們是 SA 本來就在問的老問題，只是現在需要寫進一種新的載體：Agent 設定文件。
+
+過去你在 SRS 裡寫「Actor: 帳務專員，Capability: 審核退款申請」，現在你把同樣的判斷寫成一個 `agent.md` 的 frontmatter。**思考方式沒有變；執行層變了。** 理解這一點，才能把現有的 SA 能力延伸進 Agent 時代，而不是從零學起。
+
 面對一個 Multi-Agent 系統，SA 需要能夠回答四個問題：
 
 **問題一：這個 Agent 是誰？（Identity）**
-它叫什麼名字？它在什麼情境下被啟動？它代表哪個業務角色？沒有這層定義，兩個 Agent 可能同時試圖處理同一件事，或都認為那件事不是自己負責的。
+它叫什麼名字？它在什麼情境下被啟動？它代表哪個業務角色？——這對應 Use Case 圖裡的 Actor 定義。沒有這層定義，兩個 Agent 可能同時試圖處理同一件事，或都認為那件事不是自己負責的。
 
 **問題二：它被允許做什麼？（Capabilities）**
-它可以呼叫哪些工具？哪些資料來源它有讀寫權限？哪些操作被明確禁止？這是 Agent 等級的最小授權原則（Principle of Least Privilege）。
+它可以呼叫哪些工具？哪些資料來源它有讀寫權限？哪些操作被明確禁止？——這對應 API 規格與功能權限矩陣。這是 Agent 等級的最小授權原則（Principle of Least Privilege）。
 
 **問題三：它應該怎麼行動？（Instruction）**
-[系統提示](../annex-f-glossary.md#system-prompt)（System Prompt）本身就是規格。「你是帳務專員，處理退款申請時必須確認客戶身份後才能執行」這句話不只是提示工程，它是業務規則的陳述——和 SRS 裡的業務邏輯條文是同一層次的東西。
+[系統提示](../annex-f-glossary.md#system-prompt)（System Prompt）本身就是規格。「你是帳務專員，處理退款申請時必須確認客戶身份後才能執行」這句話不只是提示工程，它是業務規則的陳述——對應 SRS 裡的 BR-XXX 業務規則條文，是同一層次的東西。
 
 **問題四：它如何和其他 Agent 協作？（Coordination）**
-哪些任務可以委派出去？委派給誰？委派之後，對話的控制權在哪裡？結果如何回傳？這是 Agent 等級的介面設計。
+哪些任務可以委派出去？委派給誰？委派之後，對話的控制權在哪裡？結果如何回傳？——這對應 Sequence Diagram 裡的系統互動設計，是 Agent 等級的介面定義。
 
 這四個問題的答案，就是 **Universal Agent Spec（通用 Agent 規格）** 的四要素：**Identity、Capabilities、Instruction、Coordination**。
 

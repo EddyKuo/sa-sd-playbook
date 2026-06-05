@@ -28,6 +28,10 @@ word_count_target: 6500
 
 我在 2026 年第一季看過一家虛構亞太數位銀行 **HavenAxis Bank**(`CASE-FIN-009`)的合規客服 Agent 上線案。這家銀行 320 萬個 KYC 通過用戶,跨 SG / HK / TW / JP 四市場,2025 Q4 上線一個叫 **ComplianceCopilot** 的客服 Agent,主打三件事:回答客戶 KYC 補件問題、回答 AML 警示通知的疑問、引導客戶完成補件。技術棧:Anthropic Claude Sonnet 4.7 + pgvector(PostgreSQL 17 + `pgvector` 0.8)+ BM25(`pg_trgm` + 自製 tsvector pipeline)+ Cohere Rerank v3 + LangGraph 0.2。
 
+從技術指標看,RAG 做得相當好:11 個月的投資帶來 92% 的合規規則查詢準確率、retrieval latency P95 240ms、每一句答案都能回指 `chunk_id` 可審計。「KYC 補件規則是什麼?」「AML 警示代碼 304 代表什麼?」⸺ ComplianceCopilot 都回答得了。RAG 解決了它被要求解決的問題。
+
+問題是團隊沒有意識到 RAG 之外還有另外兩件獨立的事沒有被設計:**這個客戶是誰**,以及**他過去七天發生過什麼**。
+
 上線後第六週,合規長把客服主管叫進會議室,桌上攤了一份逐字稿。一位來自台灣的客戶,過去七天打過三通客服電話,Agent 三次都把他當成新客戶在對話:
 
 > **第一通(週一)**:「您好,看到您的居住地址證明照片模糊,請補上六個月內的水電費或銀行對帳單。」
@@ -42,7 +46,9 @@ word_count_target: 6500
 
 > 「我們花了 11 個月做這套 RAG,搜尋準確度 92%、引用可審計、retrieval latency P95 240ms ⸺ 那為什麼它會把同一個客戶當成第一次來?」
 
-事故覆盤翻出三件事。第一,這套 Agent 的「Memory」其實是 LangGraph 預設的 `MemorySaver`,只在單次 session 內保存對話 state,session 結束就丟。第二,客戶每次打進來都是新的 session,Agent 完全不知道這個客戶是誰、過去七天問過什麼、上傳過什麼文件、被退件幾次。第三,**Agent 能查到「KYC 補件規則」的 RAG 知識庫**,因為那是合規團隊重點投資的部分;**但查不到「這個客戶 KYC 進度」的客戶資料**,因為「那不是 RAG 範圍」。
+這個問題問錯了對象。RAG 被要求記住「KYC 補件規則」,它做到了;但沒有人要求它記住「這位客戶本人的狀態」⸺ 因為那不在 RAG 的設計範圍內,也不在任何人的設計範圍內。
+
+事故覆盤翻出三件事。第一,這套 Agent 的「Memory」其實是 LangGraph 預設的 `MemorySaver`,只在單次 session 內保存對話 state,session 結束就丟。第二,客戶每次打進來都是新的 session,Agent 完全不知道這個客戶是誰、過去七天問過什麼、上傳過什麼文件、被退件幾次。第三,**Agent 能查到「KYC 補件規則」的 RAG 知識庫**,因為那是合規團隊重點投資的部分;**但查不到「這個客戶 KYC 進度」的客戶資料**,因為沒有人設計這一層 ⸺ 它既不是 RAG 的職責,也不是任何已部署子系統的職責。
 
 ```mermaid
 flowchart LR

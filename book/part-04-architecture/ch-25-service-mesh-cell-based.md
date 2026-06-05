@@ -94,9 +94,23 @@ sequenceDiagram
 
 四件事裡,前兩件是「平台側收益」⸺ 不寫業務碼就有的能力;後兩件是「平台側風險」⸺ 寫錯一條 VirtualService 規則,整個服務鏈卡死。
 
-2024–2025 一個重要訊號是 **Istio Ambient Mode**[^CIT-240] 的 GA。Ambient 把原本的 sidecar 拆成兩層:**ztunnel**(處理 L4 + mTLS,共用 node 級)+ **waypoint proxy**(處理 L7 規則,選用)。對於只想要 mTLS、不想要 L7 規則複雜度的團隊,ztunnel-only 模式可以把入場成本砍掉一大半 ⸺ 沒有 sidecar 注入、沒有 pod 啟動延遲、控制面失效時影響範圍也明顯比舊的 sidecar 模式小。
+2024–2025 一個重要訊號是 **Istio Ambient Mode**[^CIT-240] 的 GA。Ambient 把原本的 sidecar 拆成兩層:**ztunnel**(處理 L4 + mTLS,共用 node 級)+ **waypoint proxy**(處理 L7 規則,選用)。對於只想要 mTLS、不想要 L7 規則複雜度的團隊,ztunnel-only 模式可以把入場成本砍掉一大半 ⸺ 沒有 sidecar 注入、沒有 pod 啟動延遲。
 
-換句話說,2026 年「要不要上 Mesh」這個問題,答案不再是二元的。可能是「上 ztunnel-only」、「上 ztunnel + 部分 waypoint」、「上完整 sidecar」⸺ 三種劑量,對應三種規模與需求。
+**但最關鍵的差異是控制面失效時的行為**。這裡需要把機制說清楚,否則「影響範圍比較小」只是一句含糊的保證。
+
+舊的 sidecar 模式裡,每個 pod 有自己的 Envoy sidecar,每個 sidecar 都必須定期連回 istiod 取得最新的 mTLS 憑證與 xDS 設定。Istio 1.20 的 sidecar 在 control plane 失聯後會 **fail-closed**:一旦本地快取的憑證過期、或 xDS stream 斷線超過設定的 grace period,握手停止。GridPulse 的 24 個 sidecar 因此在同一個 istiod 崩潰事件中**全部同時**進入 fail-closed。
+
+ztunnel-only 模式的行為不同,差異來自兩個機制:
+
+1. **憑證快取在 node 層級**:ztunnel 是跑在 DaemonSet 的 node 級 proxy,而不是每個 pod 一個。ztunnel 向 istiod 取得的 SVID(SPIFFE Verifiable Identity Document)憑證會快取在本地;Istio Ambient 1.22+ 預設 SVID 有效期 24 小時,快取存活與 control plane 連線狀態解耦[^CIT-240]。control plane 失聯時,**ztunnel 繼續用快取憑證維持 mTLS**,直到憑證真正到期為止。GridPulse 2026-03 的演練印證這個行為:istiod 關掉 30 分鐘,east-west mTLS 未中斷。
+
+2. **故障域限縮在 node**:如果某個 node 上的 ztunnel 本身故障(例如 ztunnel pod crash),影響範圍是那個 node 上的 pod,而不是整個 cluster。sidecar 模式的 blast radius 是「istiod 一掛,cluster 所有 sidecar 全掉」;ztunnel-only 的 blast radius 是「一個 node 的 ztunnel 掛,那個 node 的 pod 受影響」。
+
+這個機制澄清了一件重要的事:**ztunnel-only 並不是「sidecar 的輕量版但問題一樣」**,而是在 control plane 失效這個具體場景上,提供了明確更好的降級行為。它沒有消除 control plane 的依賴(ztunnel 仍然需要 istiod 來更新 SPIFFE 身份與 AuthorizationPolicy),但它把「control plane 短暫失聯」的代價從「全 cluster 斷線」降到「快取憑證過期前自動 failover」。
+
+ztunnel-only 仍然有侷限:它只處理 L4 + mTLS,L7 規則(canary、retry 策略、細粒度 authz policy)必須加 waypoint proxy 才能做到。如果系統已需要 L7 規則,ztunnel-only 就不夠,必須評估是否加 waypoint(成本接近完整 sidecar)或改用其他方案。
+
+換句話說,2026 年「要不要上 Mesh」這個問題,答案不再是二元的。可能是「上 ztunnel-only」、「上 ztunnel + 部分 waypoint」、「上完整 sidecar」⸺ 三種劑量,對應三種規模與需求。選劑量的核心問題不是「功能清單」,而是「control plane 失效時,我能接受哪個 blast radius」。
 
 ### 25.2.3 Cell-Based 真正在處理什麼
 

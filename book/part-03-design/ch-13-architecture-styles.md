@@ -18,7 +18,7 @@ word_count_target: 6000
 ## ⸺ 分層、六角、洋蔥、Clean,各擋哪一種變動
 
 > **前置閱讀**:[Ch 11 設計原則(SOLID / GRASP)](./ch-11-architecture-principles.md)、[Ch 12 元件與模組化](./ch-12-design-patterns.md)
-> **下游章節**:[Ch 18 DDD 戰術設計](../part-04-architecture/ch-18-ddd-strategic-tactical.md)、[Ch 21 Modular Monolith](../part-04-architecture/ch-21-modular-monolith.md)、[Ch 36 AI-Native 架構](../part-07-ai-era/ch-37-ai-native-architecture.md)
+> **下游章節**:[Ch 18 DDD 戰術設計](../part-04-architecture/ch-18-ddd-strategic-tactical.md)、[Ch 21 Modular Monolith](../part-04-architecture/ch-21-modular-monolith.md)、[Ch 37 AI-Native 架構](../part-07-ai-era/ch-37-ai-native-architecture.md)
 > **延伸補章**:無
 
 ---
@@ -83,7 +83,13 @@ flowchart LR
 | **依賴方向錯置** | 領域模型反過來依賴框架 / DB | ORM 換版、ASP.NET → Minimal API,核心模型也要改 | **洋蔥架構(Onion)** |
 | **跨層次同時變動** | 規則、整合、儲存全在動 | 拆服務 / 換 DB / 換認證,所有層一起重寫 | **Clean Architecture** |
 
-換句話說,選擇架構風格的第一個問題不是「哪個最好」,而是**這次最怕誰變**。CareLattice 的故事是個好範例:他們選分層架構,在 2018 年是對的,因為當時他們最怕的是業務邏輯混亂。到了 2025 年,第 9 個外部 EMR 站在門口,最怕的事換成「邊界變動」⸺ 而分層架構恰好是四種風格裡,**對邊界變動最沒抵抗力**的那種。
+換句話說,選擇架構風格的第一個問題不是「哪個最好」,而是**這次最怕誰變**。CareLattice 的故事是個好範例,但要仔細讀。
+
+他們 2025 年的問題,嚴格來說不是「分層架構天生不擋邊界變動」,而是**分層架構下的「業務邏輯層」從來沒有設計抽象邊界**。分層 ≠ 沒有介面;一個在 Business Layer 內正確建立 Adapter 介面與實作的分層系統,同樣能換掉外部 API。理論上,CareLattice 可以不換架構風格,只在三層架構裡補一組 `IPatientChartGateway` + 各家實作,把三個直接引用封裝掉,問題就解決了一半。
+
+那為什麼還要換六角?**差別在「哪種風格讓這件事更顯眼、更難偷懶」**。分層架構的概念中心是「責任垂直分群」(Presentation / Business / Data),它沒有一個名詞叫「Port」或「Adapter」,也沒有明確的結構要求強迫你在業務邏輯與外部之間劃介面。所以當業務快速成長、工程師輪替的時候,分層系統裡最容易被省略的正好是這層隔離 ⸺ `MedicationOrderService` 直接 `using EpicBridgesClient` 在分層的命名空間裡「感覺沒那麼違規」。六角架構的結構語言就是 Port + Adapter,少了 Port,架構圖本身就少了一塊,Code review 時立刻顯眼。**選擇架構風格,同時也在選擇你想讓哪一類問題最難被忽視。**
+
+CareLattice 在 2018 年選分層是對的,因為當時最怕業務邏輯混亂。到了 2025 年,邊界變動成為主威脅,分層的命名結構對這類問題沒有視覺約束力 ⸺ 那是他們該升級風格的時刻。
 
 ### 13.2.2 四種風格的本質
 
@@ -123,7 +129,9 @@ flowchart LR
 | **可測試性(無 mock 框架)** | ★ 須整合測 | ★★★ Adapter 全 mock | ★★★ 從外往內 mock | ★★★ 完整 Test Pyramid |
 | **新人上手** | ★★★ 一週懂 | ★★ 兩三週懂 Port/Adapter | ★★ 兩三週懂依賴規則 | ★ 一個月以上 |
 
-**這張表的關鍵不是行,是列**:從「最怕誰變」那一欄往下看,在你最怕的那一行找最高分,通常就是這次該選的風格。CareLattice 在 2018 年最怕「業務邏輯變動」,分層 ★★★ 對;2025 年最怕變成「邊界系統變動」,分層 ★、六角 ★★★ ⸺ 那是他們該換的時刻。
+**這張表的關鍵不是行,是列**:從「最怕誰變」那一欄往下看,在你最怕的那一行找最高分,通常就是這次該選的風格。CareLattice 在 2018 年最怕「業務邏輯變動」,分層 ★★★ 對;2025 年最怕變成「邊界系統變動」,六角 ★★★ ⸺ 那是他們該換的時刻。
+
+這裡要補充一個細節:「邊界變動」那一行,六角(★★★)和 Clean(★★★)分數相同。那 CareLattice 為什麼選六角而不選 Clean?答案不在這張表的行,而在下一張表的成本列。他們是 7 人團隊、只有一個 Web UI、系統壽命預估 5–7 年 ⸺ 對照 §13.3.2 入場成本表,Clean 的同心圓在這個規模上 ROI 收不回來。六角已經足夠。**抗變動對照表選出候選人,成本表做最終決定。**
 
 ### 13.3.2 入場成本對照表
 
@@ -145,11 +153,11 @@ flowchart LR
 ```mermaid
 flowchart TD
     Start([新系統 / 重構決策]) --> Q1{有 ≥ 2 個外部<br/>系統要對接?}
-    Q1 -->|是| Q2{核心業務邏輯<br/>複雜度高?}
+    Q1 -->|是| Q2{業務規則是否跨越<br/>多個獨立決策領域?<br/>例如:定價 × 合規 × 履約}
     Q1 -->|否| Q3{壽命 > 5 年?}
 
-    Q2 -->|很高 跨多 BC| Clean[Clean Architecture<br/>同心圓 4 層]
-    Q2 -->|中等| Hex[Hexagonal<br/>Ports & Adapters]
+    Q2 -->|是,跨多 BC / Aggregate| Clean[Clean Architecture<br/>同心圓 4 層]
+    Q2 -->|否,單一領域| Hex[Hexagonal<br/>Ports & Adapters]
 
     Q3 -->|是| Q4{框架 / DB<br/>選型未定?}
     Q3 -->|否| Layer[Layered 三層<br/>夠用且便宜]
@@ -165,7 +173,9 @@ flowchart TD
     class Layer cold
 ```
 
-這張圖的關鍵是綠色那兩個出口 ⸺ **多數現場走 Hexagonal 或 Onion 就夠**。Clean 留給「核心業務邏輯複雜到要拆 Use Case 圈」的場景(銀行核心、保險理賠、健保 DRG 結算引擎)。Layered 留給「邊界穩定 + 短壽命」⸺ 這個組合在 2026 年比想像中常見:內部 BI 後台、行政流程系統、一次性遷移工具。
+這張圖有一個關鍵設計選擇值得說明:**Q1(外部系統數)和 Q2(業務規則跨 BC)是兩個獨立維度**。一個對接 20 個外部系統但業務邏輯只是資料搬運的同步工具,Q2 回答「否」⸺ 走 Hexagonal 就夠,不需要 Clean。Clean 的 Use Case 圈成本是真實的,它的 ROI 只在「業務規則本身要跨越多個獨立決策領域(各自有 Aggregate、各自有不變量)」時才收得回來。跨 BC 的例子:用藥安全規則同時依賴「藥局庫存 Aggregate」「患者病史 Aggregate」「保險給付規則 Aggregate」,任何一個改都會影響核心流程。這種才算 Q2 = 是。
+
+這張圖的關鍵是綠色那兩個出口 ⸺ **多數現場走 Hexagonal 或 Onion 就夠**。Clean 留給「業務規則確實橫跨多個獨立決策領域」的場景(銀行核心、保險理賠、健保 DRG 結算引擎)。Layered 留給「邊界穩定 + 短壽命」⸺ 這個組合在 2026 年比想像中常見:內部 BI 後台、行政流程系統、一次性遷移工具。
 
 ### 13.3.4 程式碼長相:Port + Adapter 的最小骨架
 
@@ -449,7 +459,7 @@ flowchart LR
 - [ ] 在會議上認得出四個反模式(Controller 肥、Port 沒 Adapter、Onion 同 module、Clean 過度抽象),並有一句話的修正方向
 - [ ] 為手上的專案寫好一份 Architecture Style Selection Card,並把半年後驗證指標寫死
 
-如果四項中先挑一項做完就好,建議從最後那一項 ⸺ 把目前主系統的 style selection card 補出來,**寫不出主威脅或寫不出半年驗證指標**的那個系統,就是下一輪該做架構檢視的對象。本書 Ch 18 會接著談 DDD 戰術設計,Ch 21 會展開 Modular Monolith 的內部風格組合,Ch 36 會把 AI-Native 架構接到本章六角的延伸視角上。
+如果四項中先挑一項做完就好,建議從最後那一項 ⸺ 把目前主系統的 style selection card 補出來,**寫不出主威脅或寫不出半年驗證指標**的那個系統,就是下一輪該做架構檢視的對象。本書 Ch 18 會接著談 DDD 戰術設計,Ch 21 會展開 Modular Monolith 的內部風格組合,Ch 37 會把 AI-Native 架構接到本章六角的延伸視角上。
 
 ---
 
@@ -459,7 +469,7 @@ flowchart LR
 - **下一章**:[Ch 14 設計模式(GoF + 現代延伸)](./ch-12-design-patterns.md)
 - **DDD 戰術設計**:[Ch 18](../part-04-architecture/ch-18-ddd-strategic-tactical.md) ⸺ Aggregate / Repository / Domain Service 在 Hexagonal/Onion 裡的位置
 - **模組化單體**:[Ch 21](../part-04-architecture/ch-21-modular-monolith.md) ⸺ 多模組系統內部如何混用不同風格
-- **AI-Native 架構**:[Ch 36](../part-07-ai-era/ch-37-ai-native-architecture.md) ⸺ AI Agent 作為 Adapter 的進階實踐
+- **AI-Native 架構**:[Ch 37](../part-07-ai-era/ch-37-ai-native-architecture.md) ⸺ AI Agent 作為 Adapter 的進階實踐
 
 ## 引用
 

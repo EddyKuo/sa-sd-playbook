@@ -37,11 +37,13 @@ word_count_target: 5800
 
 兩個月後,沒有任何一個 service 寫出第一行程式。
 
+事後覆盤才拼出完整的故事。那兩個月並不是完全靜止的:有幾位工程師開了分支、按照自己對貼紙的理解動手寫;有兩個工程組因為「`SubscriptionRenewed` 到底由誰 emit」產生衝突,各自停工等對方妥協;CTO 在第六週批出的架構審查會要等到第九週才開得成;Legacy engine 的讀寫鎖問題讓並行開發更加複雜。每個人都在等別人確認某件事 ⸺ 而那件事應該在工作坊結束後的第二場、第三場被釐清,但那幾場從來沒有被排上日程。
+
 事故覆盤會上,Lead Engineer 把那張照片秀給 CTO 看。CTO 問了一句被原樣記下來的話:
 
 > 「這張照片裡,哪一張橘色便利貼,對應到我下週要 deploy 的那個 endpoint?」
 
-沒有人答得出來。便利貼是事件的描述,但便利貼沒有對應到任何一個檔名、一個 schema、一個 API endpoint。工作坊結束的那一刻,大家對「這是什麼系統」有共識;但「我寫程式時要從哪一張貼紙開始」這件事,牆沒有回答。
+沒有人答得出來。這個問題問到了核心:便利貼描述的是「這個領域裡有哪些事實」,但它不描述「誰負責、輸入什麼、輸出什麼、寫進哪張表」。Big Picture 工作坊本來就不被設計來回答這個問題 ⸺ 它是探索工具,不是實作規格。問題不在於牆不夠完整,而在於**沒有人意識到工作坊結束之後還有下一場要開**:Process Modelling、Software Design、Event Modeling。探索期的工具被拿來當沉澱期的唯一產出,接力棒在第一棒就被放下了。
 
 ```mermaid
 sequenceDiagram
@@ -61,9 +63,9 @@ sequenceDiagram
     Note over RD,Spec: 兩個月後,零個 service 上線
 ```
 
-接下來的兩個月,大家以「Event Storming 已經做過了」為由,跳過了寫 spec、跳過了畫 sequence、跳過了定義 schema,直接開分支寫 code。寫到第三週,兩個工程組對「`SubscriptionRenewed` 這個事件由誰 emit」吵起來,Lead 才發現:**牆只描述了「有這件事」,沒有描述「誰負責、輸入什麼、輸出什麼、寫進哪張表」**。
+那場 Event Storming 的牆很美。**但 Big Picture 本來就是探索工具,不是實作規格** ⸺ 它識別出領域裡有哪些事件,識別出哪些地方有矛盾(紅貼),這已經是它份內能做到的事。它的設計從來不包含「告訴工程師從哪個檔名開始寫」。
 
-那場 Event Storming 的牆很美。但它停在 Big Picture 那一層,沒有走到 Process Modelling、更沒有走到 Software Design。它變成「漂亮的牆,但沒人接得下去」。
+問題出在下游:沒有人主持 Process Modelling、沒有人排 Software Design、沒有人把紅貼指定 owner。工程師在沒有 spec 的情況下各自憑印象開分支,接力棒沒人傳遞。「Event Storming 已經做過了」這句話成為跳過後面幾層工作坊的藉口,而那幾層才是把領域知識轉成可實作規格的地方。
 
 ---
 

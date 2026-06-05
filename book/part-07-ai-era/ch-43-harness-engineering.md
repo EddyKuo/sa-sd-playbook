@@ -37,24 +37,44 @@ CTO 在月會上問了那個讓會議室安靜十秒鐘的問題：
 
 > 「我們的內部評測通過率漲了 14 個百分點，merge 率漲了 0%。如果我們再升一次模型，這個差距會變多少？」
 
-沒有人答得出來。
+沒有人答得出來。但 CTO 追問的方式值得注意——他問的不是「為什麼分數沒有轉換成 merge 率」，而是「如果我們再升一次，這個差距會變多少」。這個問法把問題的本質說出來了：這個 gap 是結構性的，還是暫時的？
 
-於是團隊花了三週去拆這個 gap。拆出來的東西讓所有人冷汗：
+於是團隊花了三週去拆這個 gap，不是為了找一個可以解釋的理由，而是為了弄清楚這個 gap 的成因屬於哪一類——因為不同類型的成因，要修的東西完全不同。
 
-1. **評測 harness 跑的事**：模型生成 patch，patch 套進 sandbox，跑單元測試，過了就算通過。
-2. **生產 harness 跑的事**：模型生成 patch，patch 開 PR，maintainer 看，maintainer 看的東西包含 ⸺ 程式碼風格是否與既有 codebase 一致、改動有沒有踩到那些「沒寫測試但大家都知道不要碰」的部分、commit message 講不講得出 why、改動的影響半徑有沒有被分析、有沒有把可重構的部分提出來但沒做的標記成 follow-up。
+在說後面挖出什麼之前，先說清楚三週的調查是怎麼展開的——因為這套診斷邏輯，比最後挖出的問題本身更值得學。
 
-評測的 harness 完全沒有量這些。生產的 harness 也沒有量這些 ⸺ 但 maintainer 的 review 標準在量。所以**模型再強，跑的迴圈如果不知道 maintainer 在乎什麼，分數和 merge 率就是兩條平行線**。
+面對「eval 漲 14%、merge 率不動」，Cresvale 的調查組把可能原因分成三類來排查：
 
-三週的調查還挖出兩件事：
+1. **Eval Harness Mismatch（評測量錯了東西）**：280 題評測的 grader 只測「patch 能讓單元測試通過」，但 maintainer 看 PR 時量的是另一個向度——如果這個向度根本沒被評測覆蓋，分數漲多少都不會轉成 merge 率。
+2. **Execution Harness Gap（執行層讓模型輸出品質打折）**：模型生成的程式碼其實是對的，但 harness 在 context 管理、工具結果處理上有問題，導致模型在跑生產任務時拿到的資訊比跑評測時差——評測高分無法複製到生產。
+3. **Expectations Mismatch（模型輸出對了，但 maintainer 要的不是這個）**：模型按評測規格做出了正確的 patch，maintainer 也確認程式碼品質沒問題，但就是不 merge——這是對齊問題，跟 harness 無關。
 
-**一件是 Tool 結果在炸 context window**。LangGraph 的 ToolNode 預設把 grep / search / file-read 的結果原封不動塞回 message 列表，一次跨庫 grep 可以拉回 60,000 token 的字串，跑兩三次 tool call 就把 200,000 token 預算燒掉超過一半。模型「失憶」、開始重複問同樣的問題、進入無效迴圈。
+調查組的第一步是把五個月的 rejected PR 和通過 eval grader 的樣本做對比，把 maintainer 留下的 review comments 分類。結論在第三天就出來了：**第三類（Expectations Mismatch）幾乎不存在**——maintainer 的拒絕理由都是具體的技術問題，不是「我覺得這個方向不對」。排除第三類後，問題收窄到一和二。
 
-**另一件是觀測零位**。團隊只有 LangSmith 預設 trace，但沒有任何人盯這些 trace。那 280 題評測會留 trace 但沒人看；生產 PR 開出來會留 trace 但跟 PR review comment 沒接起來。merge rate 為什麼是 41%、為什麼不是 30% 也不是 60%、五個月有沒有任何一次趨勢變化 ⸺ 沒有任何儀表板看得到。
+接著是比對評測題目與 maintainer 拒絕原因的交集。以下是兩邊最常出現的評斷維度：
+
+| 維度 | 在 280 題評測中被量？ | 在 maintainer 拒絕 comment 裡出現頻率 |
+|---|---|---|
+| patch 能讓既有單元測試通過 | 是（100%） | 低（maintainer 預設測試會過） |
+| 程式碼風格與既有 codebase 一致 | 否 | 高（37% 的被拒 PR 提到） |
+| commit message 說清楚 why | 否 | 高（29%） |
+| 影響半徑有被分析、高風險部分有標記 | 否 | 高（44%） |
+| 「大家都知道不要碰」的隱性邊界沒被踩 | 否 | 中（21%） |
+| 可重構部分有 follow-up 標記 | 否 | 中（18%） |
+
+這個對比表讓第一類確診：**評測的 grader 量的東西，和 maintainer 真正在乎的東西，交集幾乎只有「測試通過」一條**。eval 漲 14% 是真的，但那 14% 量的是 maintainer 根本不看的維度。
+
+確認第一類之後，調查組繼續往下挖第二類，發現生產 harness 上還有兩個獨立問題讓情況更糟：
+
+**一件是 Tool 結果在炸 context window**。LangGraph 的 ToolNode 預設把 grep / search / file-read 的結果原封不動塞回 message 列表，一次跨庫 grep 可以拉回 60,000 token 的字串，跑兩三次 tool call 就把 200,000 token 預算燒掉超過一半。模型「失憶」、開始重複問同樣的問題、進入無效迴圈。這是第二類：eval 在沙箱裡跑小型 patch 不會觸發這個問題，但真實 monorepo 的 PR 任務會。
+
+**另一件是觀測零位**。團隊只有 LangSmith 預設 trace，但沒有任何人盯這些 trace。那 280 題評測會留 trace 但沒人看；生產 PR 開出來會留 trace 但跟 PR review comment 沒接起來。merge rate 為什麼是 41%、為什麼不是 30% 也不是 60%、五個月有沒有任何一次趨勢變化——沒有任何儀表板看得到。這讓第一類和第二類都沒辦法被早期發現。
+
+三週調查的結論是：**Cresvale 同時中了第一類和第二類，第三類不是問題**。換個說法：不是模型能力不足，而是「量的東西」和「生產跑的東西」都跟真正要的結果有 structural gap。
 
 CTO 在那場月會結尾下了一段結論，被會議紀錄原樣記下來：
 
-> 「我們花了五個月研究怎麼把更好的模型塞進 harness。現在看起來，我們真正應該研究的，是 harness 本身。」
+> 「我們花了五個月研究怎麼把更好的模型塞進 harness。現在看起來，我們真正應該研究的，是 harness 本身——而且要分兩件事修：評測在量什麼，以及生產跑起來的時候 context 在燒什麼。」
 
 ---
 

@@ -83,7 +83,49 @@ flowchart LR
 
 BPMN 的活動框與決策菱形,完全表達不出**「機率性訊號」「持續推論」「跨模態融合」「不確定下的決策」** 這四件事。語意太離散、太線性、太確定。
 
-換句話說,CUX / 多模態系統需要一套新的分析語彙 ⸺ 不是要丟掉 BPMN(它在 [Ch 9](../part-02-analysis/ch-09-process-modeling.md) 仍然好用),是要承認 BPMN 適合的層次到「業務工作流」為止,**「感知 → 推論 → 決策」這一層需要不同工具**。
+換句話說,CUX / 多模態系統需要一套新的分析語彙 ⸺ 不是要丟掉 BPMN(它在 [Ch 9](../part-02-analysis/ch-09-process-modeling.md) 仍然好用),是要承認 **BPMN 與 SDC 負責不同的層次,各自維護,並有明確的接合點**。
+
+具體來說,這兩個工具形成垂直分工:
+
+- **SDC 層(感知 → 推論 → 決策)**:接收攝影機、麥克風、IoT 的連續訊號,輸出一個帶信心度的結論 ⸺ 例如「跌倒信心 0.82,進二次確認」。這個輸出是一個**結構化事件**,不是一條線性步驟。
+- **BPMN 層(業務工作流)**:以 SDC 輸出的結構化事件作為**觸發條件**,啟動業務邏輯 ⸺ 例如「收到『跌倒確認』事件 → 執行通報流程:通知家屬、更新 CRM 記錄、決定是否撥 119」。
+
+用一個比喻:SDC 是感應器的「翻譯官」,把機率性的連續世界轉換成業務層能讀懂的離散事件;BPMN 則接管這個事件之後發生的跨人、跨系統協作。**兩張圖不能合一,但接合點必須明文定義**。
+
+```mermaid
+flowchart TD
+    subgraph SDC層["SDC 層 — 感知 · 推論 · 決策 (本章工具)"]
+      direction TB
+      S1[連續訊號<br/>攝影機 / 麥克風 / IoT] --> F[多模態融合]
+      F --> CD{"信心度<br/>Confidence"}
+      CD -->|≥ 0.95| EV1["結構化事件<br/>fall_confirmed<br/>confidence=0.97"]
+      CD -->|0.7–0.95| EV2["結構化事件<br/>fall_suspected<br/>confidence=0.82"]
+      CD -->|< 0.7| EV3[忽略或留意]
+    end
+
+    subgraph BPMN層["BPMN 層 — 業務工作流 (Ch 9 工具)"]
+      direction TB
+      GW{{"事件閘道"}}
+      EV1 --> GW
+      EV2 --> GW
+      GW -->|fall_confirmed| P1[撥 119<br/>通知緊急聯絡人]
+      GW -->|fall_suspected| P2["語音問候<br/>「您還好嗎?」"]
+      P1 --> P3[更新 CRM 記錄<br/>記錄事件時戳]
+      P2 -->|長者確認 OK| P4[恢復正常監看<br/>記錄 false alert]
+      P2 -->|沉默 60s| P1
+    end
+
+    classDef cold fill:#eef,stroke:#36c
+    classDef goal fill:#efe,stroke:#3a3
+    classDef hot fill:#fee,stroke:#c33
+    class S1,F cold
+    class CD,EV1,EV2 goal
+    class EV3,P3,P4 cold
+    class P1 hot
+    class GW goal
+```
+
+圖中可以清楚看到:**SDC 的輸出(`fall_confirmed` / `fall_suspected`)就是 BPMN 的輸入事件**。SA 階段需要明確定義這條接縫:事件名稱、schema、信心度欄位、時戳格式 ⸺ 這是兩個層次能獨立演進又不互相破壞的關鍵。
 
 ## 17.3 決策框架 ⸺ Signal-Decision-Confidence(SDC)模型
 
@@ -140,6 +182,8 @@ SDC 模型對應到 SA 階段的產出物,是新的:
 | Multi-Modal Fusion | **Fusion Rule Table**(融合規則表) | 多訊號的權重、衝突解決、降級策略 |
 | Decision with Confidence | **Confidence Decision Tree** | 不同信心區間的行動邏輯 |
 | Action with Reversibility | **Irreversible Action List** | 哪些動作必須極高信心 + 多重驗證(撥 119、扣款、發送通知給家屬) |
+
+> **SDC 與 BPMN 的接合點**:SDC 的 Layer 4(Decision with Confidence)輸出的不是直接操作,而是帶信心度的**結構化事件**(例如 `{event: "fall_confirmed", confidence: 0.97, timestamp: …}`)。這個事件才是 BPMN 業務流程的起點 ⸺ 由 BPMN 負責接管之後的跨人/跨系統協作:通知誰、更新哪張表、走哪條審批鏈。**兩層各自版本控制,接縫處的事件 schema 就是兩層的契約**。詳見 §17.2 的垂直分工圖。
 
 ### 17.3.1 對話式介面(CUX)的特殊分析語彙
 
@@ -219,7 +263,7 @@ flowchart TD
 
 把連續訊號 + 機率性推論硬塞進活動框 + 決策菱形,結果是「程式碼跟 BPMN 圖完全對不起來」,圖變裝飾。
 
-> ✅ **修正方向**:BPMN 留給跨人/跨系統的工作流(報警後通知誰、下一步流程);感知層用 SDC 模型 + Signal Catalog + Confidence Decision Tree。兩個層次的圖**分開維護**,各自版本控制。
+> ✅ **修正方向**:BPMN 留給跨人/跨系統的工作流(報警後通知誰、下一步流程);感知層用 SDC 模型 + Signal Catalog + Confidence Decision Tree。兩個層次的圖**分開維護**,各自版本控制。接縫處定義結構化事件 schema(事件名稱、信心度欄位、時戳)作為兩層的契約 ⸺ SDC 輸出這個事件,BPMN 以它為觸發條件,兩側可以獨立演進。
 
 ### 反模式 2:相信單張 frame / 單句語音
 

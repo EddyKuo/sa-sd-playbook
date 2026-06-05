@@ -78,13 +78,23 @@ sequenceDiagram
 
 > 「我們以為 Multi-Agent 是『更多 Agent 解決問題』。它不是。它是『更窄的 Agent 解決問題』⸺ 而我們從來沒讓任何一個 Agent 變窄。」
 
-刺耳的不是「拆錯了」,是 ⸺ 這個團隊以為自己在做架構升級,實際上他們把一個邊界不清的 monolithic prompt,**換成七個邊界更不清的 Multi-Agent prompt**。Ch 36 的 NorthVale 是把 LLM 用錯地方;這一章的 Helmsworth 是把 Multi-Agent 拆錯時機。**錯位的不是工具,是判斷拆分時機的能力**。
+刺耳的不是「拆錯了」,是 ⸺ 事故後的根因分析顯示,Helmsworth 同時碰到了**三種不同性質的失敗**,卻在架構會議上被混成同一個問題:
+
+1. **效能失敗(P95 8s → 47s)**:根因是 Agent 之間的同步 Direct Call 串成了 23 跳,每跳都要等回傳。這本質上是 **coordination overhead + 沒有 circuit breaker**,跟「要不要用 Multi-Agent」是不同的問題 ⸺ 即使是設計良好的 Multi-Agent 系統,如果改用非同步 message queue + 嚴格 budget 上限,47s 是可以壓回去的。
+
+2. **品質失敗(0.81 → 0.56)**:根因是七個 Agent 的 prompt **各自設計得不夠窄** ⸺ Triage Agent 和 Drafter Agent 各自對同一封工單做了獨立的「意圖判斷」,結論不一致卻沒有仲裁機制,導致 Drafter 起草時依賴的前提錯誤。這是 **Agent prompt 設計問題**,不是 Multi-Agent 架構本身的問題。如果每個 Agent 有明確的輸入 schema 並嚴格讀取前一個 Agent 已寫進 state 的結論(而非重新推理),品質降幅會小得多。
+
+3. **工作流程失敗(Sentiment + Triage 重複討論優先級)**:那 9 次重複呼叫的根因是**兩個 Agent 的職責邊界未分清**。Sentiment 判情緒,Triage 判優先級 ⸺ 這本來可以是兩個獨立的 prompt chaining step,而非兩個互相查詢對方的 Agent。這是 **workflow 設計問題**,對應的解是讓 Sentiment 先執行、把情緒分數寫進 state,Triage 直接讀數字做決策,不需要問 Sentiment「你確定嗎」。
+
+這三種失敗分別對應三個不同的修正方向。把它們混在一起說「Multi-Agent 拆錯了」是不精確的 ⸺ 準確的診斷是:**Helmsworth 在沒有工程把關的情況下同時犯了三個錯,任何一個單獨修正都只能解決部分問題**。他們確實不需要七個 Agent,但結論「Multi-Agent 本身是錯的」仍是過度推論 ⸺ 真正的問題是沒有走完判斷流程就動手。
+
+Ch 36 的 NorthVale 是把 LLM 用錯地方;這一章的 Helmsworth 是把 Multi-Agent 拆錯時機。**錯位的不是工具,是判斷拆分時機的能力**。
 
 ---
 
 ## 40.2 真問題 ⸺ Multi-Agent 不是更多 Agent,是 Anthropic 的決定階梯
 
-把 Helmsworth 的事拆開來看,問題不是 LangGraph 不夠好、也不是 Claude 不夠強 ⸺ 問題是團隊**跳過了 Anthropic 在 *Building Effective Agents* 裡反覆強調的決定階梯**[^CIT-360]。Anthropic 在那篇文章裡說得很直接:**Agentic 系統的複雜度應該逐級遞增,不是一步到位**。具體階梯有五級,從最簡單到最複雜依序是:
+把 Helmsworth 的事拆開來看,問題不是 LangGraph 不夠好、也不是 Claude 不夠強 ⸺ 問題是團隊**跳過了 Anthropic 在 *Building Effective Agents* 裡反覆強調的核心原則**[^CIT-360]。Anthropic 在那篇文章裡說得很直接:**從最簡單可行的方案開始;只有當你已經嘗試更簡單的選項並能說清楚它為什麼不夠用時,才往更複雜的方向走**。把這個原則落地,可以排出下面這個從簡單到複雜的決定序列:
 
 ```
 Augmented LLM     →  Workflow         →  Workflow            →  Workflow            →  Multi-Agent
@@ -99,7 +109,11 @@ Augmented LLM     →  Workflow         →  Workflow            →  Workflow  
 最便宜               便宜                  中等                     中等                     昂貴
 ```
 
-這個階梯的核心原則只有一句話:**先嘗試最簡單能解決問題的方案,只在前一級無法解決時才往下一級走**。Helmsworth 直接從 Augmented LLM 跳到 Orchestrator-Workers Multi-Agent,中間三級 Workflow 完全沒試過 ⸺ 這在 Anthropic 的指引裡屬於明確不建議的做法。
+**這個序列不是你必須依序走過的升級路徑。** 它是一份「排除清單」⸺ 你應該從左邊開始考慮,如果最左邊的選項已經足夠,就停在那裡,不管 Multi-Agent 聽起來多先進。只有在你能明確回答「**我試過 Prompt Chaining,它卡在 X;我試過 Routing,它卡在 Y;Parallelization 也不夠,因為 Z**」之後,Multi-Agent 才是合理的選項。
+
+Anthropic 的原始文章甚至用更強烈的措辭:「Multi-Agent 架構帶來顯著的複雜度與成本,應該在更簡單的方案確實不夠用之後才採用。」[^CIT-360] 這不是謹慎的建議,是設計準則。Helmsworth 直接從 Augmented LLM 跳到 Orchestrator-Workers Multi-Agent,中間三級 Workflow 完全沒試過 ⸺ 換言之,他們的問題不是選錯了工具,是**連「應不應該選這個工具」這個問題都沒問過**。
+
+要具體理解這個跳躍有多危險:如果 Helmsworth 當時走完排除清單,他們會在哪一格停下來?答案很可能是 Routing ⸺ 工單依類型分流(退款 / 合約 / 帳號合併),每條路走獨立的 Prompt Chaining。這不需要七個 Agent 互相溝通,只需要一個 Router LLM 跟三條固定子流程。品質問題會用「每條路的 prompt 針對該類型工單調校」解決,而不是靠 Agent 之間的協調。
 
 ### 40.2.1 為什麼「拆成 Multi-Agent」常常變成把問題搬家
 

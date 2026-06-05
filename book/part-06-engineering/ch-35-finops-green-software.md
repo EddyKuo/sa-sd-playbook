@@ -1,7 +1,7 @@
 ---
 chapter: 35
 part: VI
-title: FinOps、永續工程與綠色軟體 — 帳單與碳排是同一個 Workload Profile
+title: FinOps、永續工程與綠色軟體 — 帳單與碳排共享 Workload Profile,但目標函式不同
 slug: finops-green-software
 agent: RD
 skills_used:
@@ -16,7 +16,7 @@ word_count_target: 5800
 ---
 
 # 第 35 章|FinOps、永續工程與綠色軟體
-## ⸺ 帳單與碳排是同一個 Workload Profile
+## ⸺ 帳單與碳排共享 Workload Profile,但目標函式不同
 
 > **前置閱讀**:[Ch 24 雲端原生與 Kubernetes](../part-04-architecture/ch-24-cloud-native-kubernetes.md)、[Ch 29 可觀測性與 OTel](../part-05-quality/ch-29-observability-otel.md)、[Ch 30 SRE / SLO / Chaos](../part-05-quality/ch-30-sre-slo-chaos.md)
 > **下游章節**:[Ch 36 AI-Native Architecture](../part-07-ai-era/ch-37-ai-native-architecture.md)
@@ -83,7 +83,9 @@ sequenceDiagram
 
 最後一列最關鍵 ⸺ **被影響的決定欄位幾乎是同一組**。換句話說,FinOps 小組在做的 99% 的最佳化動作(rightsizing、spot、reserved capacity、caching、batching、移除孤兒資源),同時也是 Green Software 小組在做的事。差別只在前者用 dollar 量、後者用 gCO2e 量,而**單位之間有一條可計算的關係:`cost = (resource × $rate)`、`carbon = (resource × carbon_intensity)`,共用同一個 resource 變數**。
 
-把這個事情整理成一句話:**FinOps 與 Green Software 不是兩件事,是同一份 Workload Profile 的兩個輸出欄位**。把它們分到兩個小組、用兩套儀表板治理,等於要兩個團隊各自重建同一份 workload 拓樸 ⸺ 重複造輪子,而且兩邊得出的最佳化建議還可能互相打架(FinOps 推「全面 spot」、Green Software 推「等綠電多的時段才跑」,兩個建議落在同一個 batch job 上,沒人對齊就誰先說話誰贏)。
+把這個事情整理成兩句話:**FinOps 與 Green Software 共享同一組資源輸入變數(CPU、記憶體、region、執行時段、token 量),但各自最佳化不同的目標函式** ⸺ FinOps 最小化 cost/benefit ratio,Green Software 最小化 gCO2e/benefit ratio。這兩個目標函式在多數情境下方向一致(省計算 = 省錢 = 省碳),但並不永遠一致:若電網是煤電為主的時段,把 batch job 跑在「spot 最便宜的深夜尖峰」反而讓碳排上升,而非下降。換句話說,**共享輸入、不同目標函式**,不是「同一份 profile 的兩個輸出欄位」。
+
+正確的治理結論因此不是「合併成一組,看同一個數字就好」,而是:**建立聯合治理(joint governance)——兩個目標共用同一份 workload profile 做為事實基礎,但在決策點上明確審查兩欄,確保任何最佳化動作在 cost 與 carbon 兩個目標函式上都不退步(或有文件說明為何接受其中一欄的犧牲)**。把兩個小組分開且從不對話,等於兩個團隊各自重建同一份 workload 拓樸 ⸺ 重複造輪子,且最佳化建議可能互相打架(FinOps 推「全面 spot」、Green Software 推「等綠電多的時段才跑」,落在同一個 batch job 上誰先動誰贏,最後可能成本省了碳排卻升)。
 
 ### 35.2.1 為什麼 2026 年才變成必需
 
@@ -97,7 +99,7 @@ sequenceDiagram
 
 ### 35.2.2 Workload-Aware Engineering 是新的預設值
 
-把 FinOps 與 Green Software 統一成「同一份 workload profile 的兩個輸出」之後,工程實踐的預設值會跟著換 ⸺ 這個新預設值在文獻裡逐漸被稱為 **Workload-Aware Engineering**:每一份 workload(API、batch、stream、LLM call)都有一張對外的卡片,寫清楚它的成本基線、碳排基線、Top 3 最佳化動作、SLO 互動,然後 FinOps、ESG、SRE 三個視角共用這張卡。
+把 FinOps 與 Green Software 統一成「共享同一份 workload profile 作為事實基礎、聯合治理兩個目標函式」之後,工程實踐的預設值會跟著換 ⸺ 這個新預設值在文獻裡逐漸被稱為 **Workload-Aware Engineering**:每一份 workload(API、batch、stream、LLM call)都有一張對外的卡片,寫清楚它的成本基線、碳排基線、Top 3 最佳化動作、SLO 互動,然後 FinOps、ESG、SRE 三個視角共用這張卡。
 
 這個視角的好處是:三邊吵架時有同一份事實基礎。SRE 說「我要把 P99 從 1.2 秒壓到 800ms,需要加兩個 replica」,FinOps 與 ESG 在同一張卡上都能看到「會多花 $1,400/月、多 18 kgCO2e/月」 ⸺ 然後三邊用同一份數字討論,而不是各自拉自己的 dashboard 互相說服。
 
@@ -200,11 +202,52 @@ def grid_intensity(zone: str) -> float:
         headers={"auth-token": ELEC_MAPS_KEY}).json()
     return r["carbonIntensity"]  # gCO2e/kWh, marginal where available
 
-def amortized_embodied_g(ns: str) -> float:
-    # Cloud-managed: pull provider-published numbers (here: rough placeholder)
-    # AWS m6i.large embodied ~ 580 kgCO2e over ~6 yr lifetime
-    # workload share = pod-hours / (instance-hours × 6yr-hours)
-    return 12.0  # gCO2e for the 24h window, placeholder
+def amortized_embodied_g(ns: str, window_hours: int = 24) -> float:
+    """
+    內含碳(Embodied carbon, M)估算 — 攤提至本次量測視窗。
+
+    公式:M = device_lifetime_gCO2e × (pod_hours / instance_total_hours)
+         pod_hours       = namespace 在 window 內佔用的 pod-hour 總量   (Kubecost)
+         instance_hours  = 該 window 內每台底層 EC2 實際運轉小時        (Kubecost node 資料)
+         device_lifetime = 設備整個壽命的總 instance-hours (4–6 年攤提)
+
+    AWS 公開數字(2024 hardware report):
+      m6i.large  製造 + 運輸 + 報廢 ≈ 580 kgCO2e
+      壽命假設   4 年 = 35,040 instance-hours
+
+    注意:雲端伺服器為多租戶共用,你的 workload 只攤提「你用了多少比例」。
+    M 通常僅佔 (E×I) 的 2–8%,若 Kubecost 暫時無法提供節點資料,
+    可先以 E×I × 0.05 做粗估,並在 Workload Card 上標注「估算」。
+    """
+    # ── 從 Kubecost 取 namespace 在本 window 的 pod-hours ──────────────────
+    r = requests.get(f"{KUBECOST}/model/allocation",
+        params={"window": f"{window_hours}h", "aggregate": "namespace",
+                "filterNamespaces": ns, "accumulate": "true"}).json()
+    ns_data = r["data"][0].get(ns, {})
+    pod_hours: float = ns_data.get("cpuCoreHours", 0.0)  # vCPU-hours as proxy
+
+    # ── 底層節點總 instance-hours(粗估:取 Kubecost node 彙總) ─────────────
+    r2 = requests.get(f"{KUBECOST}/model/node",
+        params={"window": f"{window_hours}h"}).json()
+    # 每個節點貢獻 window_hours instance-hours;取總 vCPU-hours
+    total_instance_vcpu_hours: float = sum(
+        n.get("cpuCount", 0) * window_hours for n in r2.get("data", [])
+    ) or 1.0  # 防止除零
+
+    # ── 攤提計算 ───────────────────────────────────────────────────────────
+    DEVICE_LIFETIME_GRAMS = 580_000          # 580 kgCO2e → 580,000 gCO2e (m6i.large)
+    DEVICE_LIFETIME_HOURS = 4 * 365.25 * 24  # 4 年 ≈ 35,064 h
+    DEVICE_VCPUS          = 2                # m6i.large = 2 vCPU
+
+    # 每 vCPU-hour 的內含碳
+    g_per_vcpu_hour = DEVICE_LIFETIME_GRAMS / (DEVICE_LIFETIME_HOURS * DEVICE_VCPUS)
+
+    # namespace 佔用的 vCPU-hours × 每 vCPU-hour 內含碳
+    # workload_share(= pod_hours / total_instance_vcpu_hours)反映多租戶攤比,
+    # 已隱含在以 pod_hours 為計算基礎中(而非以 instance 總量為基礎)。
+    M_grams = g_per_vcpu_hour * pod_hours
+
+    return M_grams  # gCO2e for the measurement window
 
 def api_calls_24h(ns: str) -> int:
     # pull from Prometheus / OTel; placeholder
@@ -478,7 +521,7 @@ AmpereLoom 在 Q4 把這張卡上 §5 三條動作做完,LLM 月支出回到 12,
 
 讀完本章,你應該已經能做到:
 
-- [ ] 講清楚「FinOps 與 Green Software 不是兩件事」⸺ 帳單與碳排是同一份 Workload Profile 的兩個輸出欄位,被影響的決定欄位幾乎全重疊
+- [ ] 講清楚「FinOps 與 Green Software 共享同一組資源輸入,但目標函式不同」⸺ 帳單($/benefit)與碳排(gCO2e/benefit)在資源輸入端高度重疊,但優化方向可能衝突(如煤電時段的 spot 省錢但增碳);正確做法是聯合治理、雙欄審查,而非假設兩者永遠一致
 - [ ] 用 §35.3.5 決策樹回答「這個 workload 該怎麼最佳化」⸺ 不會跳過 Q0(沒 baseline 就先做 Inform),LLM 走四招優先序 1→4→3→2
 - [ ] 在會議上認得出四個反模式的修正方向 ⸺ 特別是「FinOps 與 Green 各做各的(目標互打)」與「LLM 沒做 Prompt Caching」這兩個 2026 年最常見的隱形成本黑洞
 - [ ] 為手上一個 production workload 寫好一張 Workload Cost & Carbon Card,跑出第一個粗略的 SCI 數字(用 §35.3.3 的腳本基底,接 Kubecost + Electricity Maps)

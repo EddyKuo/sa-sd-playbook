@@ -103,13 +103,13 @@ erDiagram
 
 但 3NF 通過為何不夠?把 MedCanvas 的事故再拆一層就清楚了。
 
-### 8.2.1 模型(Model)不是 Schema
+### 8.2.1 命名是模型約束,不是 Schema 裝飾
 
-這是最常被混為一談的兩件事。模型是「對業務世界的理解」,schema 是「在某個資料庫引擎上的物理實作」。兩者之間有距離,而距離本身需要被設計。
+這是 MedCanvas 事故最容易被誤讀的地方。表面上看像是「Model 與 Schema 脫節」,但真正的問題更早發生:在建模階段,四個不同的業務概念從來沒有被強制給出四個不同的名字。
 
-把 MedCanvas 那四個 `patient_id` 拆回模型層看,真正的業務概念有四個:**Pre-Registration Token**(預掛號臨時權證)、**Episode**(這次住院)、**Medical Record Number / MRN**(病人在本院的終身識別)、**External Patient ID**(他院的對應)。這四個概念在業務上的生命週期、發證單位、信任邊界都不同。它們投射到 schema 時應該是四種不同型別的識別碼,而不是四個共用 `bigint` 命名為 `patient_id` 的欄位。
+把 MedCanvas 那四個 `patient_id` 拆回模型層看,真正的業務概念有四個:**Pre-Registration Token**(預掛號臨時權證)、**Episode**(這次住院)、**Medical Record Number / MRN**(病人在本院的終身識別)、**External Patient ID**(他院的對應)。這四個概念在業務上的生命週期、發證單位、信任邊界都不同。如果建模時就把命名約束做對 ⸺ `pre_reg_id`、`episode_id`、`mrn`、`external_pid` ⸺ 工程師在寫 schema 時自然就無法把四張表的識別碼對齊成同一型別、同一名稱。命名紀律不是風格偏好,它是模型約束的第一道閘門:迫使建模者在 schema 成形之前,先把「這四件事到底是不是同一件事」這個問題答清楚。
 
-> 模型告訴你「這四件事不是同一件事」,schema 是這個告訴的物理證據。當證據看起來四件事是同一件事,模型就被 schema 出賣了。
+> 四個概念應該用四個不同的識別碼名稱 ⸺ 這樣 schema 才會自動把它們保持在四個獨立的語意空間。Schema 沒有出賣 Model;是 Model 本身從未被足夠明確地表達成「四個不同實體」,Schema 只是忠實地繼承了這個模糊。
 
 ### 8.2.2 3NF 檢查的盲點
 

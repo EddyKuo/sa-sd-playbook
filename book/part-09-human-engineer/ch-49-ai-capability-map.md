@@ -27,7 +27,22 @@ word_count_target: 6000
 
 2026 年初，虛構多租戶 SaaS 平台 **VaultStack**（`CASE-SAS-010`）的工程團隊決定用 AI 設計一個新的訂閱計費模組。
 
-VaultStack 做的是給中型企業用的內部工具平台，18 個客戶，月經常性收入（MRR, Monthly Recurring Revenue）約 USD 140 萬。計費模組要支援三種方案（Starter / Growth / Enterprise），每種有不同的功能開關、用量上限、與升降方案（Plan Change）紀錄。Tech Lead 把需求描述貼進 Claude Opus 4.7，加了一段說明：「幫我設計一個 PostgreSQL 17 的訂閱計費 schema，要支援方案升降歷程、帳單週期、用量計費。」
+VaultStack 做的是給中型企業用的**存取控制與稽核日誌平台**——IT 管理員用它設定「誰能看哪些系統、操作紀錄保留幾年、異常存取即時告警」。18 個客戶全是金融或製造業的法遵部門，月經常性收入（MRR, Monthly Recurring Revenue）約 USD 140 萬。計費模組要支援三種方案（Starter / Growth / Enterprise），每種有不同的功能開關（例如 Enterprise 才能開 SIEM 整合）、用量上限（每日日誌筆數上限）、與升降方案（Plan Change）紀錄。
+
+Tech Lead 把需求描述貼進 Claude Opus 4.7。送出的 prompt 是：
+
+```
+你好，幫我設計一個 PostgreSQL 17 的訂閱計費 schema。
+背景：SaaS 平台，多租戶，三種方案 Starter / Growth / Enterprise。
+需求：
+- 紀錄每個租戶的當前訂閱方案
+- 支援方案升降的歷程紀錄
+- 帳單週期（月付 / 年付）
+- 用量計費欄位（每日日誌筆數）
+請輸出 CREATE TABLE SQL，加上簡短說明。
+```
+
+注意這個 prompt 沒有提到：升降方案事件發生後，誰負責更新「當前生效方案」？`plan_changes` 和 `subscriptions` 之間的同步責任由誰承擔？這個問題在 prompt 裡是空白的。
 
 AI 在四十秒內給出了一份乾淨的 schema：
 
@@ -121,7 +136,7 @@ flowchart TD
 | 技術文件撰寫（API doc、README） | 🟢 高 | 委派初稿 | 人工校對 |
 | 測試案例生成（happy path） | 🟡 中 | 委派起草 | 人補邊界條件 |
 | 錯誤處理邏輯 | 🟡 中 | 委派起草 | 人重點 review |
-| Schema / 資料模型設計 | 🟡 中 | 人主導 + AI 輔助 | 業務語義驗證 |
+| Schema / 資料模型設計 | 🟡 中（若確實執行假設清單可達 🟢）| 人主導 + AI 輔助 | 業務語義驗證 + 假設清單逐項確認（見 §49.5）|
 | 架構選型決策 | 🟠 低 | AI 提供選項 | 人決策 |
 | 安全設計 | 🟠 低 | AI 識別已知模式 | 人做 Threat Model |
 | 業務規則實作 | 🟠 低 | 人主導 | AI 輔助起草 |
@@ -129,6 +144,8 @@ flowchart TD
 | 事故根因分析 | 🔴 極低 | 人主導 | AI 協助整理資訊 |
 
 **判斷原則**：任務的不可逆性越高、業務語義越深、隱性約束越多，AI 的可靠性越低。可靠性低不代表 AI 沒用——代表 AI 的角色要從「決策者」換成「起草者」。
+
+> **關於 Schema 設計的 🟡 評級**：這個分級是在「沒有執行額外驗收流程」時的基準值。VaultStack 的案例說明，Schema 設計的真正風險不在 AI 生成的語法或正規化，而在 AI 默默填補的隱性業務假設。如果團隊在委派前確實填寫了 §49.5 的假設清單（把「plan_changes 和 subscriptions 的同步責任」這類問題拉到桌面），可靠性可以接近 🟢。這個評級衡量的是「流程合規度」，不是「AI 輸出品質」——兩者不是同一件事。
 
 ### 49.3.1 可靠性的動態性：模型更新會改變地圖
 

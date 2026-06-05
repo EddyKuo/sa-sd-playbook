@@ -90,7 +90,9 @@ Cassandra 沒有失敗,**是 SunLedger 把「擔心 PG 撐不住」這個情緒,
 | **Workload** | 系統怎麼被讀、怎麼被寫 | 五維 workload profile、查詢前 10 名 | 沒量化就換引擎 = 賭博 |
 | **引擎** | 物理實作的取捨 | RDBMS / KV / Doc / Wide Column / Time-series / Vector | 選錯只是症狀,不是根因 |
 
-SunLedger 的事故,根因在第二層 ⸺ 沒做 workload profile,直接從第三層下手。換句話說,**他們在沒有體溫計的情況下吃退燒藥**。
+SunLedger 的事故,根因在第二層 ⸺ 沒做 workload profile,直接從第三層下手。
+
+Workload profile 不是神器,它本身不會阻止壞決定。它的真正作用是把直覺逼成可辯論的問題:「我們的查詢模式是 60% 範圍掃描 + 30% 聚合,哪個引擎的設計讓這兩類查詢快?」這個問題一旦被寫下來,Cassandra 作為候選就會立刻接受檢驗——因為 Cassandra 的 partition key 設計讓跨 partition 範圍查詢退化成應用層聚合,這是它的已知設計取捨,不是隱藏的地雷。如果這個問題在那場週會上被問出來,任何讀過 Cassandra 文件的工程師都能回答它。Profile 做的事,是**強制這個對話發生**,而不是自動算出正確答案。SunLedger 的案例裡,正確答案是 TimescaleDB hypertable + continuous aggregate ⸺ 但這個答案需要有人先問出那個問題。
 
 ### 15.2.2 CAP / PACELC / BASE 不是教條,是分類軸
 

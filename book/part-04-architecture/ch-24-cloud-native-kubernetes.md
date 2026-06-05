@@ -132,7 +132,24 @@ TenantForge 真正需要的是 1、2、3,可能加一點點 4 的安心感。他
 | **50–500 人 / 多產品線** | 自管 K8s + Platform team(Backstage / 內部 PaaS 抽象) | 開始有「跨團隊基礎設施重複」問題,K8s 的 CRD + Operator 才有價值 |
 | **> 500 人 / 多區域多雲** | K8s + 自建 control plane / 多 cluster federation | 此時 K8s 的可移植性才會被真正使用,且需要 30+ 人專職 Platform |
 
-兩道線分別是 50 跟 500。50 以下,PaaS 預設;50–500,K8s + Platform Engineering(下章 §29 詳述);500 以上,才考慮自建 control plane。**TenantForge 12 人,這條線清清楚楚**。
+兩道線分別是 50 跟 500,但這不是拍腦袋的經驗法則 ⸺ 背後有兩條各自可以計算的拐點邏輯。
+
+**50 人線:Platform team 的 ROI 拐點**
+
+在 50 人以下,基礎設施的重複成本還沒高過 K8s 的學習與維運成本。一個典型的 30 人 SaaS 團隊可能有五支 feature team,每支 6 人;logging、secrets、metrics 的方案由各 team 自己搞定,加起來每人每週頂多浪費 1 小時 ⸺ 折算成 SRE 工時大概 2–4%,跟 PaaS 的「平台稅金」差不多,沒有明顯痛點。
+
+規模到 50 人左右時,兩件事同時發生:
+
+1. **基礎設施重複成本開始超線性增長**:五支以上的 feature team 各自維護一套 logging pipeline、secrets rotation、metrics exporter,複製貼上的設定差異開始釀成事故。這時共用一套 K8s 基礎並由 Platform team 維護成本已低於各自維護。
+2. **Platform team 的 ROI 開始為正**:假設 50 人裡組一個 4 人 Platform team(佔 8% 工程人力)。這 4 人把 K8s 維運、Helm 抽象、GitOps 管線統一做好,讓其餘 46 人(8–10 支 feature team)的 SRE 工時從平均 15% 降到 5%。省下的 (15% − 5%) × 46 人 = 4.6 人工,恰好覆蓋那 4 人 Platform team 的成本。換句話說,**Platform team 讓整體 K8s 稅金從分散的 15% 收斂到集中的 8%,並且持續遞減**。對比 PaaS 的 3–5% 平台稅,差距縮到值得換取 K8s 帶來的靈活性。
+
+相反地,在 12 人的 TenantForge,根本無法組出這個 4 人 Platform team ⸺ 養一個專職 Platform 工程師就是 8% 人力,換來的只是稍微整齊一點的 Helm chart,K8s ROI 是負的。這就是 35% SRE 工時的根源:把 Platform team 的成本(K8s 維運)壓在 feature team 上,卻沒有 Platform team 帶來的規模效益。
+
+**500 人線:多叢集 federation 的必要性拐點**
+
+500 人以上的組織通常已有多個獨立事業單位或多區域佈點,這時開始出現 K8s control plane 本身不夠用的場景:合規要求資料落地在特定區域、不同事業單位需要獨立的 audit log、同一叢集的 blast radius 太大。這才是多叢集 federation 與自建 control plane 的真實觸發條件 ⸺ 而不是「我們在多個雲上跑了一些 workload」。
+
+**TenantForge 12 人,這條線清清楚楚**。50 以下,PaaS 預設;50–500,K8s + Platform Engineering(Ch 32 詳述);500 以上,才考慮自建 control plane。
 
 「但客戶在問我們有沒有跑在 K8s」這句話 ⸺ 在 2026 年的 B2B SaaS 採購流程裡,實際被認真當合規條款的比例,落在 RFP 第 47 個欄位的「資安問卷」附近。被認真檢查的是 SOC 2、ISO 27001、資料駐留、加密金鑰管理。「是否跑在 K8s」幾乎只在新創 founder 之間互相詢問,客戶不在乎。這是 § 23.4 第一條反模式要處理的事。
 

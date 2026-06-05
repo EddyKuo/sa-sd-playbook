@@ -41,7 +41,11 @@ partner 的工程師補了一句:
 
 事故會議室白板上貼了三張截圖。第一張是 REST `/v2/orders/{id}` 的 OpenAPI 文件,`status` 是 enum string(`paid` / `shipped` / `delivered`),`total` 是浮點數美元。第二張是 GraphQL Schema,`OrderNode.status` 是 enum,但值是 `PAID` / `SHIPPED` / `FULFILLED`(注意,fulfilled 不是 delivered),`total` 是 `Money` 型別(`{ amount: Int, currency: String }`,以最小貨幣單位儲存)。第三張是 Webhook 推 partner 的 `order.updated` payload,`status` 直接是中文字串「已付款」「已出貨」,`total` 是字串 "$129.00"。
 
-三個 team 各做各的。REST 是 2019 年第一版開放平台的時候做的;GraphQL 是 2022 年某個前端工程師為了減少 mobile app 的請求次數加上的;Webhook 是 2024 年支付組為了 partner 對帳趕著上的。**沒有人是這三套 schema 的 owner**,也沒有人是「order 這個概念在開放平台上長什麼樣」的 owner。
+三套 schema 的分歧不是一次性的設計錯誤,而是**時間跨度五年的逐層沉積**。REST 是 2019 年第一版開放平台的時候做的,那時候的 `status` enum 對應倉庫術語(`paid` / `shipped` / `delivered`)。GraphQL 是 2022 年某個前端工程師為了減少 mobile app 的請求次數加上的,她沿用了前端團隊自己的命名慣例(`PAID` / `SHIPPED` / `FULFILLED`,注意 fulfilled 不是 delivered),Money 型別也改成最小貨幣單位整數以避免浮點誤差。Webhook 是 2024 年支付組為了 partner 對帳趕著上的,當時 PM 說「partner 都是台灣人,用中文比較直覺」,於是 `status` 變成「已付款」「已出貨」。
+
+每一次變動都有局部的合理性;問題是**每一次都沒有回頭對齊前兩套**。三次決策是三個不同 team 在三個不同時間點各自做出的,沒有一次有人被指定負責「order 這個概念在開放平台上長什麼樣」。**沒有人是這三套 schema 的 owner**——時間距離加上治理缺位,造就了這三本不同的書。
+
+這個差異不只是命名麻煩。它製造了真實的業務事故:某家物流 partner 的對帳系統是用 GraphQL 的 `FULFILLED` 作為「訂單完成,可請款」的觸發條件。2025 年 Q3 他們換成訂閱 Webhook 後,系統收到的 `status` 是「已出貨」,而他們的狀態機從來不認識這個值,於是所有 Webhook 事件都被丟進 fallback 路徑靜默忽略。那個季度有 1,200 筆訂單從未觸發請款,partner 財務三個月後對帳才發現差額。根因不是 partner 的程式寫壞,**而是同一個業務狀態在三套 schema 裡有三種表達,而 Webhook 切換沒有人通知下游消費方要更新解析邏輯**。
 
 ```mermaid
 flowchart LR
@@ -133,7 +137,9 @@ server 內部該怎麼編排是 server 的事。Agent 看到的是一個**完整
 
 放在 HarborGate 的視角:partner 的整合工程師不抱怨「API 不夠細」,他們抱怨的是「我必須學會你的業務流程才能用你的 API」。Agent 不抱怨「沒有 list/create/update/delete」,Agent 抱怨的是「我不知道這 47 個 endpoint 哪幾個要照順序呼叫」。
 
-API 設計的本質,從來不是「協定」,**是「我把多少業務流程暴露給對方」**。協定只是表達這個決定的工具。
+**這個顆粒度建議有一個前提需要點明:它假設這條 API 的主要 consumer 是 Agent 或 batch partner 系統。** 如果 API 同時服務 Web UI(使用者在結帳頁面一步步填資料,需要即時反饋每個步驟是否成功,或在付款前撤銷某個品項),那麼細顆粒端點仍然有存在的必要。常見的解法不是非此即彼,而是**分層暴露**:對外公開一條粗顆粒的 `POST /v3/orders`(給 partner 系統與 Agent),同時保留細顆粒的內部 API(如 `/internal/v2/orders/draft`、`/internal/v2/inventory/reserve`)給自家 Web UI 使用。別因為「Agent 喜歡粗顆粒」就把所有細顆粒端點對外關掉——那只是把協調責任從 client 端轉移進了 server 端,並不代表細顆粒的業務步驟消失了。
+
+API 設計的本質,從來不是「協定」,**是「我把多少業務流程暴露給哪一種對方」**。協定與顆粒度都是表達這個決定的工具。
 
 ---
 

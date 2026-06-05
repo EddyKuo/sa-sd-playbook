@@ -37,6 +37,8 @@ PR 的檔案結構長這樣:`AbstractRetryStrategyFactory`、`RetryStrategyBuild
 
 新人花了兩小時讀,讀懂了**模式名稱**,沒讀懂**業務規則**。
 
+Code review 之後,有人私下問那位資深 RD:「這八個模式,你能各用一句話說出它解決什麼問題嗎?」RD 回答了兩個 ⸺ Strategy 與 Chain of Responsibility,因為這兩個在重試分流邏輯裡確實有對應問題。其餘六個,RD 想了很久,最後說:「這些是我從一篇講『advanced error handling』的技術部落格裡改過來的,原作者有用,我就跟著用了。」這句話後來被 CTO 在 Q4 回顧上稱為「MeshConduit 最誠實的工程告白」。問題不是那位 RD 的技術能力,而是模式被當成**參照物(reference artifact)**而非**問題的解法**來使用 ⸺ 有沒有對應的問題,沒人在動手前問過。
+
 ```mermaid
 flowchart LR
     subgraph cold["新人在 PR 上看到的東西"]

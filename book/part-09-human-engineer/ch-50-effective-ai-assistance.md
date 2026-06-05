@@ -16,7 +16,7 @@ word_count_target: 6000
 # 第 50 章|有效使用 AI 輔助
 ## ⸺ 委派設計與 Context Engineering
 
-> **前置閱讀**：[Ch 37 Context-Driven Engineering](../part-07-ai-era/ch-38-context-driven-engineering.md)、[Ch 48 AI 能力地圖](./ch-49-ai-capability-map.md)
+> **前置閱讀**：[Ch 38 Context-Driven Engineering](../part-07-ai-era/ch-38-context-driven-engineering.md)、[Ch 48 AI 能力地圖](./ch-49-ai-capability-map.md)
 > **下游章節**：[Ch 50 人類不能外包的邊界](./ch-51-human-judgment-boundary.md)、[Ch 52 AI 程式碼的審計哲學](./ch-53-ai-code-audit.md)
 > **延伸補章**：[Ch 53 工程直覺保護手冊](./ch-54-engineering-intuition.md)
 
@@ -36,7 +36,13 @@ word_count_target: 6000
 
 結果觸目驚心。
 
-28 個工程師，有 23 種不同的 CLAUDE.md 設定（有 5 個人根本沒有 CLAUDE.md，直接用預設）。有人在 CLAUDE.md 裡寫了「prefer functional programming style」，有人寫了「always use TypeScript strict mode」，有人完全沒有寫技術偏好，只寫了「you are a helpful assistant」。更重要的是：**沒有人把產品的核心業務規則、架構決策、或 API 約定寫進任何 AI 可讀的文件**。
+28 個工程師裡，23 人有自己的 CLAUDE.md，但這 23 份檔案有 23 種不同的設定內容；剩下 5 人根本沒有 CLAUDE.md，直接用預設。有人在 CLAUDE.md 裡寫了「prefer functional programming style」，有人寫了「always use TypeScript strict mode」，有人完全沒有寫技術偏好，只寫了「you are a helpful assistant」。**所有人的 CLAUDE.md 都沒有記載 GridForge 的業務規則、架構決策或 API 約定**。
+
+差異不只是風格偏好。事後調查翻出了兩件具體事故：
+
+**事故 A（第三個月，PR #447）**：工程師 Marcus 的 CLAUDE.md 沒有任何架構規範，他請 AI 幫他實作「方案降級後更新訂閱狀態」的功能，AI 直接在 `SubscriptionService` 裡更新了 `subscriptions.plan_id`，沒有寫入 `plan_change_events`。Marcus review 時沒有發現（「看起來沒問題」），合入了。兩週後帳務對帳時才發現降級紀錄有缺口，rollback 加修復花了整整一天。同一週，工程師 Yuna 的 CLAUDE.md 有一條「方案升降必須先寫 plan_change_events，再更新 subscriptions.plan_id」，她請 AI 做類似功能，AI 正確地生成了雙步驟寫入。同一個需求、不同的 CLAUDE.md，產生了截然不同的結果。
+
+**事故 B（第五個月，code review 往返次數回升）**：無統一規範的情況下，AI 在不同人的對話裡給出了相互矛盾的架構建議——A 的 AI 說「應該用 Repository pattern 封裝 DB 存取」，B 的 AI 說「直接用 ORM 就好，過度抽象」。兩人爭論架構選擇，code review 往返從 2.6 次回升到 4.8 次，抵消了大半個月的效率增益。
 
 每個工程師每天早上打開 Cursor，都是在重新跟一個失憶的同事解釋這個專案是什麼。
 
@@ -108,7 +114,18 @@ flowchart TD
 
 ### 50.3.2 CLAUDE.md 最小有效設計
 
-一份有效的 CLAUDE.md 需要回答四個問題：
+一份有效的 CLAUDE.md 需要回答四個問題。在看範例之前，先理解一個關鍵區分：
+
+**CLAUDE.md 裡有兩種不同性質的內容，混淆它們是最常見的結構錯誤：**
+
+| 類型 | 定義 | 放在哪裡 | 放進 CLAUDE.md 的理由 |
+|---|---|---|---|
+| **架構規則** | 有意識選擇的技術決策（Clean Architecture、Repository pattern） | ADR，CLAUDE.md 引用摘要 | AI 的訓練資料裡有「通常做法」，會覆蓋你的歷史決策 |
+| **隱性業務語義** | 從未在標準文件裡出現、但系統賴以正確運作的業務邏輯 | **只存在於老員工腦袋裡** | AI 無從得知，標準文件也沒有，不寫進來就一定踩坑 |
+
+第二類才是 CLAUDE.md 最核心的價值。GridForge 的 `plan_change_events` 問題之所以反覆出現，不是因為沒有 ADR，而是因為「**升降方案時要先寫事件紀錄、再更新訂閱狀態，這個順序是有業務含義的**」這件事從來沒有被記錄在任何 AI 可讀的地方。它不像 Clean Architecture 那樣有書可查，它是 GridForge 自己跑通帳務審計之後才確立的規則。
+
+**隱性業務語義的判斷標準**：如果一個新進工程師第一週不問任何人、只看 spec 和 ADR 就能正確實作，那它不是隱性語義。如果他一定會在 code review 被打回來說「這邊邏輯不對，因為我們的業務是...」，那它就是隱性語義，應該在 CLAUDE.md 裡。
 
 ```markdown
 # [專案名] CLAUDE.md
@@ -124,24 +141,30 @@ GridForge 是一個 B2B SaaS 工作流自動化平台，服務對象是
 - Infra: Kubernetes 1.31, Istio 1.22, Kafka 3.7
 - AI: Claude Sonnet 4.6（內部工具）
 
-## 架構決策（不做哪些事）
-- 禁止：在 domain 層直接依賴 infrastructure（Clean Architecture）
-- 禁止：用 @Transactional 跨越 Bounded Context 邊界
+## 架構禁令（AI 的訓練資料有「通常做法」，這裡是 GridForge 的不同選擇）
+- 禁止：在 domain 層直接依賴 infrastructure（Clean Architecture，見 ADR-014）
+- 禁止：用 @Transactional 跨越 Bounded Context 邊界（見 ADR-017）
 - 禁止：在前端 component 直接呼叫 API，一律走 custom hook
-- 方案升降必須寫入 plan_change_events 表，再更新 subscriptions.plan_id
+
+## 隱性業務語義（這裡是標準文件不會記載、但新人一定踩坑的規則）
+- 方案升降流程：先寫入 plan_change_events（記錄升降前的 plan_id），
+  再更新 subscriptions.plan_id。順序不能對調——帳務審計依賴事件紀錄
+  重建歷史狀態，若先更新訂閱再補事件，重建結果會錯。
+- Workspace 之間資料完全隔離；任何跨 Workspace 的查詢都是業務錯誤，
+  不是技術選擇。
 
 ## 業務術語對照
-- Workspace = 多租戶的頂層隔離單位（不等於 Organization）
-- Rule = 業務規則的邏輯單元（不是 DB 層的 row-level security）
-- Trigger = 自動觸發規則執行的事件（不是資料庫 trigger）
+- Workspace = 多租戶的頂層隔離單位（≠ Organization，≠ K8s namespace）
+- Rule = 業務規則的邏輯單元（≠ DB row-level security）
+- Trigger = 自動觸發規則執行的事件（≠ DB trigger）
 
 ## 常見陷阱
-- `plan_id` 在 subscriptions 和 plan_change_events 的意義不同，
-  前者是當前生效方案，後者是升降前的方案 ID
-- 所有金額單位是分（cents），不是元
+- `plan_id` 在 subscriptions 是「當前生效方案」，在 plan_change_events
+  是「升降前的方案 ID」——兩個欄位同名但語義不同
+- 所有金額單位是分（cents），DB schema 與 API 一致；UI 才換算
 ```
 
-這份文件的目標不是完整描述整個系統——是讓 AI 在工作時不會踩進那幾個最常見的業務語義陷阱。
+這份文件的目標不是完整描述整個系統——是把那些「老員工知道、新人（和 AI）一定踩坑」的隱性語義從腦袋裡搬出來，讓每次 AI 互動都有機會避開它們。
 
 ### 50.3.3 委派設計：三個問題清單
 
@@ -299,7 +322,7 @@ GridForge 是一個 B2B SaaS 工作流自動化平台，服務對象是中型製
 
 ## Cross-References
 
-- **前置閱讀**：[Ch 37 Context-Driven Engineering](../part-07-ai-era/ch-38-context-driven-engineering.md)、[Ch 48 AI 能力地圖](./ch-49-ai-capability-map.md)
+- **前置閱讀**：[Ch 38 Context-Driven Engineering](../part-07-ai-era/ch-38-context-driven-engineering.md)、[Ch 48 AI 能力地圖](./ch-49-ai-capability-map.md)
 - **下游章節**：[Ch 50 人類不能外包的邊界](./ch-51-human-judgment-boundary.md)、[Ch 52 AI 程式碼的審計哲學](./ch-53-ai-code-audit.md)
 - **延伸補章**：[Ch 53 工程直覺保護手冊](./ch-54-engineering-intuition.md)
 

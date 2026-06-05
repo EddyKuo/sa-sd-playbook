@@ -37,6 +37,8 @@ word_count_target: 6500
 
 換句話說,**AisleNova 並沒有「導入 AI 工具」這件事,他們有的是「28 個各自摸索的 vibe coder」**。每個 prompt 都從零開始,每個對話結束 context 就消失,每個離職的工程師帶走一份只有他自己知道的 rules 檔。
 
+這裡值得停一下釐清:文件不齊、離職帶走知識,傳統工程團隊也會碰到。**AisleNova 的問題有一個傳統 codebase 沒有的特殊性**:AI 工具讓一個人可以在「完全孤立」的狀態下持續高速出貨很長一段時間。傳統 codebase 裡,若你不在 commit 裡交代決策脈絡,你很快就會撞牆 ⸺ build 壞掉、integration test 紅燈、review 被退、別人的 merge 把你的假設蓋掉。這些阻力會在幾天內強迫知識共享。但 Cursor + Claude Code 讓工程師 A 可以帶著 4,000 字私人 `.cursorrules` 在自己的分支上獨立高速工作三個月,story point 飆到 2x,**看起來完全沒有問題 ⸺ 直到他離職的那天**。AI 工具消除了孤立工作的短期摩擦,卻把知識斷層的代價推後到「人離開」的那一刻才爆發。這才是 CDE 要解決的組織行為問題:AI 工具讓「不共享脈絡」變成一種可以持續很久的選擇,而不再是一個會快速暴露的錯誤。
+
 ```mermaid
 flowchart LR
     subgraph T1[T+1 個月: 蜜月期]
@@ -225,7 +227,13 @@ flowchart LR
     class Orch,Sub1,Sub2,Sub3 cold
 ```
 
-這張圖的關鍵在左半邊到中間的虛線:**SA/SD 的 artifact 不是「另外給 AI 看的副本」,而是直接被 Skill 引用**。AisleNova 後來定的紀律是:每份 `Status: Accepted` 的 ADR 在 frontmatter 加 `cde-skill-binding: skill-name`,該 Skill 的 Knowledge Sources 自動包含此 ADR 的路徑。當 ADR 被 Supersede,對應 Skill 的 Knowledge Sources 自動更新,**Agent 就不會在新場景下再參考舊決策**。
+這張圖的關鍵在左半邊到中間的虛線:**SA/SD 的 artifact 不是「另外給 AI 看的副本」,而是直接被 Skill 引用**。AisleNova 後來定的紀律是:每份 `Status: Accepted` 的 ADR 在 frontmatter 加 `cde-skill-binding: skill-name`,該 Skill 的 Knowledge Sources 必須明確列出此 ADR 的路徑。當 ADR Status 改為 `Superseded`,CI 腳本自動掃所有 frontmatter 裡引用此 ADR 的 Skill,開 issue 提示人工 review。
+
+**這個機制有兩個必須明說的限制。**
+
+第一,**binding 是人宣告的,不是自動推斷的**。一份 Skill 可能對應 10 份 ADR,其中有些是強依賴(例如:Skill 的核心邏輯建立在 ADR-0024 的狀態機定義上),有些是弱依賴(例如:Skill 只引用 ADR-0031 的某一條格式規範)。如果 SA 在宣告 binding 時沒有說清楚依賴範圍,一份 ADR 被 Supersede 後,所有引用它的 Skill 都會被 flag ⸺ 包括那些其實完全不受影響的弱依賴 Skill。**建議在 `cde-skill-binding` 旁邊補一句 `binding-scope` 說明**:「僅引用 §3 狀態轉移表的部分」或「引用 §2 idempotency key 格式規則,不含 §4 失敗策略」,讓 reviewer 能判斷這份 Skill 是否真的需要隨 ADR 更新。
+
+第二,**自動化 issue 的價值取決於 review 機制有沒有跟上**。如果 CI 一旦有 ADR 被 Supersede 就開 issue、但工程師養成「自動 issue 習慣關掉」的行為,那這個機制把風險從「人忘記更新」換成「人忽略自動化警示」,本質上沒有改善。AisleNova 的做法是:自動 issue 的 body 必須包含具體的 binding-scope 文字,讓 reviewer 能在五秒內判斷這份 Skill 是否需要動;**自動化的目標是降低 review 的認知成本,不是讓人停止判斷**。
 
 ### 38.3.5 三層的決策樹:這次該寫在哪一層?
 
