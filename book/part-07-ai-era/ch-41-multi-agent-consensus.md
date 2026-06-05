@@ -8,13 +8,13 @@ skills_used:
   - sa/arch-event-driven
   - sa/arch-microservice
   - shared/domain-saas
-domain_case: CASE-SAS-009
+domain_case: CASE-SAS-014
 reviewers: [PM, QA, Orchestrator]
 status: migrated
 word_count_target: 6500
 ---
 
-# Ch 41｜Multi-Agent 共識、狀態與衝突解決
+# 第 41 章｜Multi-Agent 共識、狀態與衝突解決
 ## ⸺ Multi-Agent State Management & Consensus
 
 > **前置閱讀**:[Ch 22 微服務](../part-04-architecture/ch-22-microservices.md)、[Ch 23 EDA / CQRS / ES](../part-04-architecture/ch-23-event-driven-cqrs-es.md)、[Ch 40](./ch-40-multi-agent.md)
@@ -23,13 +23,19 @@ word_count_target: 6500
 
 ---
 
-## 41.1 冷觀察 ⸺ Ch 39 畫了拓樸,但沒談「他們不同意怎麼辦」
+## 41.1 冷觀察 ⸺ 兩個 Agent 同時寫同一筆訂單,沒有人知道誰對
 
-[Ch 40 Multi-Agent](./ch-40-multi-agent.md) 列出了 Multi-Agent 的五種模式(Augmented LLM、Prompt Chaining、Routing、Parallelization、Orchestrator-Workers、Evaluator-Optimizer)。[Ch 22 微服務](../part-04-architecture/ch-22-microservices.md) 與 [Ch 23 EDA](../part-04-architecture/ch-23-event-driven-cqrs-es.md) 談了傳統微服務的分散式交易(Saga、Outbox)。
+2026 年 Q1，虛構 B2B SaaS 訂單協作平台 **OrderBridge**（`CASE-SAS-014`）正在跑一次看似平常的週一上午尖峰。14 人團隊，後端以 Go 1.22 + gRPC 構建，兩個核心 Agent——**Fulfillment Agent**（負責確認出貨流程）與 **Inventory Agent**（負責庫存調撥與補貨觸發）——各自跑在獨立的 Kubernetes pod 上，以 Redis 7.2 作為各自的本地狀態快取，透過 Kafka 3.7 傳遞事件。
 
-**但兩者沒有交叉**。
+`09:47`，值班 SRE 林宜蓁的 PagerDuty 響了。監控板上出現 2,300 筆訂單狀態為 `FULFILLED`，但同一批訂單在庫存台帳裡的可用量已經降至零甚至負值。Fulfillment Agent 的決策日誌顯示：它在 `09:41:03` 讀到 SKU-8821 剩 5 件，隨即啟動五步驟出貨工作流（建立出貨單 → 鎖定揀料路線 → 通知倉庫 WMS → 更新 ERP → 回寫庫存）。Inventory Agent 的日誌則顯示：它在 `09:41:01` 讀到同一個 SKU 剩 5 件，決定保留 3 件應對緊急補貨請購，並在 `09:41:04` 異步寫入保留標記。兩個 Agent 各自的寫入在資料庫層面**都通過了樂觀鎖**，因為它們操作的是不同欄位、不同資料表，從 PostgreSQL 的角度看完全合法。
 
-先看一個真實會發生的場景:
+事故持續 23 分鐘才被人工介入終止，退款損失 NT$420 萬，客服票單在兩小時內堆到 847 張。覆盤會上，Tech Lead 鄭俊傑盯著兩份 Agent 日誌沉默了很久，然後說：
+
+> 「資料庫沒有報錯，兩個 Agent 的行為邏輯也都正確——問題是它們根本不知道對方的存在。我們設計了兩個很聰明的 Agent，卻沒有設計讓它們達成共識的協定。」
+
+這句話指出了 [Ch 40](./ch-40-multi-agent.md) 的盲區：拓樸畫好了、模式選好了，但沒有回答「兩個 Agent 對同一個世界狀態有不同看法時，誰說了算？」
+
+先看這個場景的精確時序：
 
 > **場景:Fulfillment Agent + Inventory Agent,同時搶同一批庫存**
 >

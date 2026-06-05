@@ -280,6 +280,20 @@ cases:
       標註),並在 Clinical 內把 Patient 重命名為 Encounter Aggregate Root。
       事故率從每月 27 件降至第 12 個月 1.4 件。展示「DDD 真正價值在語言邊界」。
 
+  - id: CASE-SAS-013
+    title: "VoiceLoft 語音點餐 + 視覺確認:BPMN 圖完成了、工程師看完是沉默"
+    domain: saas
+    chapters: [ch-17]
+    anonymized: true
+    summary: |
+      虛構消費級語音助理 SaaS VoiceLoft(42 人,台灣新創),主力產品為企業
+      客服 LINE OA / WhatsApp AI 語音機器人。2026 Q1 設計「語音點餐 + 即時
+      視覺確認」功能,SA 用 BPMN 2.0 + UML 活動圖完成分析,工程師看圖後發現
+      圖完全無法回答:噪音打斷時怎麼辦、視覺信心度 0.61 時要不要顯示卡片、
+      多人同時說話聽誰。三週後 Sprint Review 上語音打斷邏輯分散於四個服務
+      各自矛盾,P99 延遲 3.4 秒,18% 多人語音直接丟棄無降級。展示「對話式
+      / 多模態互動需要 SDC 模型而非離散流程圖」。
+
   # ========== Ch 18 ==========
   - id: CASE-SAS-004
     title: "RenewLane 訂閱續約 Event Storming 兩日工作坊 / 兩個月零產出事故"
@@ -729,6 +743,34 @@ cases:
       虛構 SaaS 分析平台,八年資深工程師完全轉向 AI 輔助開發。
       兩年後遭遇 AI 工具全線中斷(API outage),發現自己在六小時內
       無法獨立定位一個原本應該三十分鐘就能解決的記憶體洩漏問題。
+
+  # ========== Ch 46 ==========
+  - id: CASE-SAS-013
+    title: "ClauseGenie — AI 合約條款助手兩週後在生產環境靜默輸出錯誤條款"
+    domain: saas
+    chapters: [ch-46]
+    anonymized: true
+    summary: |
+      虛構 B2B SaaS 法律科技平台 ClauseGenie,八人工程團隊以
+      FastAPI + LangGraph 0.2 + Claude Sonnet 3.7 構建合約審查 Agent。
+      CI 全綠、手測通過後上線,兩週後生產環境開始對特定租戶靜默輸出
+      錯誤的免責條款版本,直到客戶律師在正式合約中發現才觸發緊急事故。
+      用於展示非確定性 AI 系統的 Drift 如何在傳統測試盲點中累積。
+
+  # ========== Ch 41 ==========
+  - id: CASE-SAS-014
+    title: "OrderBridge — Fulfillment Agent 與 Inventory Agent 雙寫衝突導致 2,300 筆超賣"
+    domain: saas
+    chapters: [ch-41]
+    anonymized: true
+    summary: |
+      虛構 B2B SaaS 訂單協作平台 OrderBridge，14 人團隊在 2026 年 Q1
+      將 Fulfillment 與 Inventory 兩個 Agent 從共享資料庫遷移至各自獨立
+      狀態快取（Redis 7.2），卻未實作跨 Agent 的共識協定。同一訂單狀態在
+      5 分鐘內被兩個 Agent 分別寫入不同值，導致 2,300 筆訂單超賣，
+      退款損失 NT$420 萬。事故暴露「資料庫鎖能防止物理雙寫，但無法防止
+      業務語意層的衝突」這個核心問題。用於展示 Multi-Agent 共識設計、
+      Event Log as Truth、Two-Phase Agreement 與 Bounded Negotiation 模式。
 
   # ========== PM Playbook Ch 8 ==========
   - id: CASE-SAS-104

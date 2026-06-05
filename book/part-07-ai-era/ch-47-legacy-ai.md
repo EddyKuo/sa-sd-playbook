@@ -15,7 +15,7 @@ status: migrated
 word_count_target: 6500
 ---
 
-# Ch 47｜遺留系統現代化與 AI 逆向工程
+# 第 47 章｜遺留系統現代化與 AI 逆向工程
 ## ⸺ Brownfield Modernization with Agent-Assisted Reverse Engineering
 
 > **前置閱讀**:[Ch 18 DDD](../part-04-architecture/ch-18-ddd-strategic-tactical.md)、[Ch 21 Modular Monolith](../part-04-architecture/ch-21-modular-monolith.md)、[Ch 38 CDE](./ch-38-context-driven-engineering.md)、[Ch 44 Coding Agent](./ch-44-coding-agent.md)
@@ -26,13 +26,23 @@ word_count_target: 6500
 
 ## 47.1 冷觀察 ⸺ 主大綱默認在 Greenfield,但你大概率不在
 
-打開主大綱重讀:[Ch 18](../part-04-architecture/ch-18-ddd-strategic-tactical.md) 談 DDD 從 Bounded Context 開始畫,[Ch 20](../part-04-architecture/ch-20-c4-model-visualization.md) C4 從 System Context 圖開始畫,[Ch 23](../part-04-architecture/ch-23-event-driven-cqrs-es.md) Event Sourcing 假設能重新設計事件流。
+2025 年 Q4，虛構銀行科技公司 **凌雲金融科技**（`CASE-FIN-011`）的架構重構專案走到第八個月，進入了沒有人預期的僵局。
 
-**這些都是 Greenfield 視角**。
+凌雲的核心放款系統已跑了十二年。後端是 WebLogic 14.1 + Java EE 8，資料層是 Oracle 19c，業務規則幾乎全藏在 PL/SQL stored procedure 裡，其中單一套件 `pkg_loan_rate` 就有 4 萬行。十六人的重構小組在第零個月拍板採用 DDD + Event Sourcing：Bounded Context 圖畫完、Spring Boot 3.3 的骨架起好、Kafka 叢集也在 AWS 上跑起來了。照計畫，第八個月應該要進入並行測試。
 
-但任何在現場待過 5 年以上的工程師都知道:接手的系統,大概率是一個 7 年前由某個離職資深工程師寫的 Java EE 應用,跑在 WebLogic 上,跟一個 PL/SQL 資料庫深度耦合,沒有單元測試,沒有文件,業務規則散落在 5,000 行的 stored procedure 裡(`CASE-FIN-011`)。
+然而，並行測試永遠沒有開始。
 
-[Ch 21](../part-04-architecture/ch-21-modular-monolith.md) 提到 Strangler Fig 模式 ⸺ 這是現代化的「目標形狀」,但不是「行動方案」。Strangler Fig 假設已經知道**舊系統做了什麼**。**現實是:不知道**。原作者離職了,文件不存在,使用者只知道「按這個鈕會觸發那個流程」。
+問題出在 COBOL 那側。凌雲早年有一批清算批次跑在 IBM z16 上，用 COBOL 寫就，總量約 40 萬行。這批程式直到重構啟動前都沒有人去碰，因為「它一直都在跑、從沒出事」。直到第七個月底，QA 工程師 Victor 在比對利息試算結果時，發現新服務算出的金額在某些分期情境下與主機相差最多 NT$184 元 ⸺ 不大，但在放款系統裡，這個數字每筆都要解釋清楚。
+
+Victor 把差異往上追，追進了 COBOL 的 `CALC-EFFECTIVE-RATE` 段落。沒有人能讀懂它。當年的程式碼作者早在 2019 年離職，留下的唯一文件是一份掃描版 Word 檔，上面的業務說明停在 2014 年的版本。重構小組翻遍 Git history，發現這批 COBOL 從未被 commit 進版控，只存在主機磁帶備份裡。
+
+架構師 Serena 在第八個月的 Steering Committee 上說了一句話，沉默了整個會議室：
+
+> 「我們畫了八個月的 To-Be，但我們根本不知道 As-Is 在做什麼。」
+
+這句話道出了 Greenfield 思維最致命的盲區：[Ch 18](../part-04-architecture/ch-18-ddd-strategic-tactical.md) 談 DDD 從 Bounded Context 開始畫，[Ch 20](../part-04-architecture/ch-20-c4-model-visualization.md) C4 從 System Context 圖開始畫，[Ch 23](../part-04-architecture/ch-23-event-driven-cqrs-es.md) Event Sourcing 假設能重新設計事件流。**這些都是 Greenfield 視角**。
+
+[Ch 21](../part-04-architecture/ch-21-modular-monolith.md) 提到 Strangler Fig 模式 ⸺ 這是現代化的「目標形狀」,但不是「行動方案」。Strangler Fig 假設已經知道**舊系統做了什麼**。**現實是:不知道**。原作者離職了，文件不存在，使用者只知道「按這個鈕會觸發那個流程」。
 
 這一章談的是:**在這種狀態下,如何用 AI Agent 逆向找回知識,然後設計現代化路徑**。
 

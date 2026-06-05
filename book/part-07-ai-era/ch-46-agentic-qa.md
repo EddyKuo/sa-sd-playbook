@@ -8,14 +8,14 @@ skills_used:
   - qa/strategy-bdd
   - qa/strategy-chaos-engineering
   - qa/strategy-security
-  - shared/domain-fintech
-domain_case: CASE-FIN-010
+  - shared/domain-saas
+domain_case: CASE-SAS-013
 reviewers: [PM, QA, Orchestrator]
 status: migrated
 word_count_target: 6500
 ---
 
-# Ch 46｜Agentic QA ⸺ 非確定性系統的品質保證
+# 第 46 章｜Agentic QA ⸺ 非確定性系統的品質保證
 ## ⸺ Quality Assurance for Non-Deterministic Systems
 
 > **前置閱讀**:[Ch 30 SRE / SLO / Chaos](../part-05-quality/ch-30-sre-slo-chaos.md)、[Ch 37 AI-Native](./ch-37-ai-native-architecture.md)、[Ch 45](./ch-45-ai-eval-drift-redteam.md)
@@ -25,9 +25,21 @@ word_count_target: 6500
 
 ## 46.1 冷觀察 ⸺「LGTM」不能再是一個動詞
 
-過去的軟體 QA 有一個隱含假設:**輸入相同 → 輸出相同**。所以才能寫單元測試、整合測試、E2E 測試,並期待它們在 CI 中綠燈通過。
+2025 年 Q4,虛構 B2B 法律科技公司 **ClauseGenie**(`CASE-SAS-013`)的 8 人工程團隊在凌晨兩點被一封客戶律師的電子郵件叫醒。
 
-LLM 系統打破了這個假設。同一個 prompt,溫度設成 0.7,跑 100 次會得到 100 個略有差異的輸出。把 prompt 加長一個 emoji,結果可能完全變掉。把使用者的對話歷史延長到第 15 輪,Agent 開始忽略系統提示。
+ClauseGenie 是一個多租戶 SaaS 合約審查平台,核心功能是「合約條款 AI 助手」:用戶上傳草稿合約,AI Agent 自動標記風險條款並建議替代措辭。技術棧是 FastAPI 0.115 + LangGraph 0.2.28 + Claude Sonnet 3.7,向量資料庫用 pgvector(PostgreSQL 17),部署在 AWS EKS 1.31。上線前,CI pipeline 共有 847 個測試,全數綠燈;PM 手測了 23 個真實合約場景,逐一確認無誤。
+
+上線後第 14 天,TitanCorp(ClauseGenie 最大的企業客戶之一,每月處理約 400 份合約)的首席法務顧問在一份正式簽署的採購合約中發現了問題:AI 建議的免責條款版本比 TitanCorp 內部法務核准的版本舊了兩個修訂版,關鍵的「重大過失排除」措辭已經被悄悄替換成更寬泛的表述——而這份合約已送出給對方律師。那封凌晨兩點的信要求 ClauseGenie 說明:過去兩週,TitanCorp 總共有幾份合約被這個 Agent 處理過?
+
+工程師 Rex 翻出監控儀表板,發現 CI 從未紅燈、P99 延遲正常維持在 1.2 秒以內、無任何 exception log。Drift 的跡象完全不在傳統監控的視野裡。當 Rex 把同一份合約丟回 staging 環境重跑,Agent 的回應是正確的。他把 staging 和 production 的 prompt 版本一一比對,沒有任何差異。
+
+事後查明的根因:模型供應商在上線後第 9 天悄悄推了一次 claude-sonnet-3-7 的 patch 版本更新,同時 pgvector 索引裡的一份「條款範本庫更新文件」被法務助理靜默追加,兩個變化疊加後讓 Agent 在特定租戶的長對話情境下開始偏向舊版措辭。任何一個單一變化都不足以觸發問題,組合起來才會。
+
+Rex 在事故覆盤會上說了一句話,事後被釘在工程 Slack 頻道的置頂訊息裡:
+
+> 「CI 全綠代表系統沒有 bug;但它完全不代表 Agent 今天的行為跟昨天一樣。這是兩件事。」
+
+LLM 系統打破了軟體 QA 最根本的隱含假設:**輸入相同 → 輸出相同**。同一個 prompt,溫度設成 0.7,跑 100 次會得到 100 個略有差異的輸出。對話歷史延長到第 15 輪,Agent 開始忽略系統提示。底層模型靜默更新一個 patch 版本,行為就可能飄移。
 
 如果工程文化是「Code Review 看一眼說 LGTM、CI 跑綠就 merge」,這套對 Agent 系統根本不夠用。**Agent 系統需要的不是測試,是治理**。
 

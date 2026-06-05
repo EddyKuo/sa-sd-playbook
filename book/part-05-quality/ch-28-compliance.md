@@ -15,7 +15,7 @@ status: migrated
 word_count_target: 6500
 ---
 
-# Ch 28|Compliance by Design ⸺ AI 合規架構
+# 第 28 章|Compliance by Design ⸺ AI 合規架構
 ## ⸺ Designing for Compliance from Day Zero
 
 > **前置閱讀**:[Ch 27](./ch-27-security-by-design.md)、[Ch 31 資料架構](./ch-31-data-architecture.md)
@@ -25,6 +25,20 @@ word_count_target: 6500
 ---
 
 ## 28.1 冷觀察 ⸺ 2026 年 8 月 2 日
+
+2026 年 Q1,虛構 B2B SaaS 公司 **Clariva AI**（`CASE-SAS-007`）正在最後衝刺。產品是一套多租戶企業知識管理平台,後端 Go 1.22 + FastAPI 0.110、向量資料庫 pgvector 0.7(PostgreSQL 17),RAG pipeline 用 LangGraph 0.1.x 串接,部署在 AWS EKS 1.30 上。付費客戶已有 23 家歐洲中型企業,合約總值逾 EUR 480 萬。
+
+上線計畫定在三週後。架構師 **Miriam** 在做例行的 Pre-GA checklist review 時,在 Jira 看到一張已被標記 `won't fix` 的舊 ticket:*RAG retriever does not enforce tenant_id filter in semantic search path*。她點開來,留言只有一行,是兩個月前 Sprint 4 的結單備注:「改為 metadata filter 方案,下版本再做。」
+
+Miriam 當場打開 staging 環境,用 Tenant A 的帳號提問。LangGraph trace log 回傳的 retrieved chunks 裡,有三段明顯屬於 Tenant B 的財務報告摘要。她複製下來截圖,發了一則 Slack 訊息給 CTO **David**:
+
+> 「David,我剛剛用 A 客戶身份拿到 B 客戶的資料。這不只是 bug。EU AI Act 全面執行日是 8/2。我們還有二十一天。」
+
+David 在三分鐘後回覆:「all hands war room,十五分鐘後。」
+
+那天晚上,Clariva 的工程團隊才第一次打開 EU AI Act Annex III 的條文,試圖搞清楚這個系統算不算「高風險 AI 系統」、違規的罰則上限是多少、距離執行日還剩多少個衝刺可以修。**沒有一個問題他們能在十分鐘內給出有信心的答案。**
+
+---
 
 這個日期不是隨便挑的。**2026/8/2 是 EU AI Act 高風險 AI 系統合規的全面執行日**(Annex III 系統)。這意味著到那天為止,高風險 AI 系統必須:
 

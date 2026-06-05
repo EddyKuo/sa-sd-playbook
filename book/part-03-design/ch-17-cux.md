@@ -13,7 +13,7 @@ status: migrated
 word_count_target: 6500
 ---
 
-# Ch 17|多模態與對話式互動的系統分析
+# 第 17 章|多模態與對話式互動的系統分析
 ## ⸺ Multimodal & Conversational UX (CUX) Systems Analysis
 
 > **前置閱讀**:[Ch 9 流程模型](../part-02-analysis/ch-09-process-modeling.md)、[Ch 16](./ch-16-uiux-system-view.md)
@@ -23,6 +23,18 @@ word_count_target: 6500
 ---
 
 ## 17.1 冷觀察 ⸺ 古典分析語彙的破口
+
+2026 年 Q1,虛構消費級語音助理 SaaS **VoiceLoft**(`CASE-SAS-013`)⸺ 一家 42 人的台灣新創,主力產品是讓企業客服團隊在 LINE OA 和 WhatsApp 上架設 AI 語音機器人 ⸺ 在設計新一版的「語音點餐 + 即時視覺確認」功能時陷入了僵局。技術棧:Python 3.12 + FastAPI 0.110 + PostgreSQL 17 + Redis 7 + Whisper large-v3 語音辨識 + GPT-4o Vision,部署在 GCP Cloud Run;前端為 React 19 搭 WebRTC 1.0 即時音視訊串流。
+
+功能需求看起來很直觀:使用者對著手機說「我要一個中杯抹茶拿鐵,不加糖」,系統即時語音辨識 + 顯示確認卡片;若拿起手機對著菜單拍一下,視覺模型自動填入項目。SA 林彥宗花了兩週畫出一份 BPMN 2.0 流程圖,加上 UML 活動圖:共 23 個活動框、7 個決策菱形、4 張狀態機。圖的確畫完了。工程師看圖後的反應是沉默。
+
+「這張圖告訴我使用者說話之後系統會辨識,辨識完之後系統會確認」⸺ 資深後端工程師陳俊佑把圖推回桌上⸺「可是它完全沒告訴我:使用者說到一半環境噪音蓋掉了怎麼辦?視覺辨識信心度 0.61 要不要顯示確認卡?使用者同時說話又比手勢,我聽哪個?這張圖等於沒有。」
+
+那場會議在 2026-02-17 下午四點散會。BPMN 圖被 pin 在 Confluence 頁面上,沒有人再打開它。三週後 Sprint Review 上,QA 發現語音打斷場景的處理邏輯出現在四個不同服務裡,各自的邏輯互相矛盾:ASR 模組等待 2 秒才重試,Intent Router 等待 0.5 秒就切斷,Vision 模組假設沒有超時情境。P99 端到端延遲 3.4 秒,測試場景中有 18% 的語音輸入在超過一人說話時被直接丟棄,沒有任何降級行為。
+
+根本原因不是工程師寫錯了。是 SA 交付物從一開始就用錯了工具。
+
+---
 
 [Ch 16 UI/UX](./ch-16-uiux-system-view.md) 談的 Information Architecture、Atomic Design、Generative UI,以及 [Ch 9 流程模型](../part-02-analysis/ch-09-process-modeling.md) 提到的 BPMN、活動圖、狀態機 ⸺ 這些工具的共同假設是:**互動是離散的、有先後的、可編號的**。使用者點一個按鈕、跳到下一個畫面、輸入欄位、按確定。
 

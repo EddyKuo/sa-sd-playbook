@@ -14,7 +14,7 @@ status: draft
 word_count_target: 6500
 ---
 
-# Ch 42｜Agent 設定語言 ⸺ SA 的新交付物
+# 第 42 章｜Agent 設定語言 ⸺ SA 的新交付物
 ## ⸺ CLAUDE.md、agent.md、skill.md 與跨廠商通用設計框架
 
 > **前置閱讀**：[Ch 40 Multi-Agent 系統設計](./ch-40-multi-agent.md)、[Ch 44 AI Coding Agent](./ch-44-coding-agent.md)、[Ch 41 Multi-Agent 共識](./ch-41-multi-agent-consensus.md)

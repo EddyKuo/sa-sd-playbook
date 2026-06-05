@@ -14,7 +14,7 @@ status: draft
 word_count_target: 8500
 ---
 
-# Ch 43｜Agent Harness 工程
+# 第 43 章｜Agent Harness 工程
 ## ⸺ 從模型到可用代理的執行層設計
 
 > **前置閱讀**：[Ch 39 RAG / Memory / Tool 設計](./ch-39-rag-memory-tool.md)、[Ch 40 Multi-Agent 系統設計](./ch-40-multi-agent.md)、[Ch 45 AI Eval / Drift / Red Team](./ch-45-ai-eval-drift-redteam.md)、[Ch 42 Agent 設定語言](./ch-42-agent-spec.md)

@@ -13,7 +13,7 @@ status: draft
 word_count_target: 7000
 ---
 
-# Ch 54｜工程直覺保護手冊
+# 第 54 章｜工程直覺保護手冊
 ## ⸺ 在 AI 加速下不讓判斷力退化
 
 > **前置閱讀**：[Ch 51 人類不能外包的邊界](./ch-51-human-judgment-boundary.md)、[Ch 53 AI 程式碼的審計哲學](./ch-53-ai-code-audit.md)

@@ -14,7 +14,7 @@ status: migrated
 word_count_target: 6500
 ---
 
-# Ch 26|邊緣計算與 OT/IT 融合的系統架構
+# 第 26 章|邊緣計算與 OT/IT 融合的系統架構
 ## ⸺ Edge Computing & OT/IT Convergence — 給有實體設備的系統
 
 > **前置閱讀**:[Ch 22 微服務](./ch-22-microservices.md)、[Ch 24 雲端原生 K8s](./ch-24-cloud-native-kubernetes.md)、[Ch 25](./ch-25-service-mesh-cell-based.md)
@@ -25,15 +25,15 @@ word_count_target: 6500
 
 ## 26.1 冷觀察 ⸺ 一個雲原生工程師遇到 200kW/400kWh 儲能櫃時會怎麼錯
 
-在現場看過一個典型情境(`CASE-ENR-005`)。一位雲端架構師被指派去設計一個結合儲能(ESS)、太陽能逆變器、與電網的能源管理系統。他畫了漂亮的微服務拓樸:Kafka 串流、PostgreSQL 主從、Kubernetes 叢集、Grafana 儀表板,一應俱全。
+2026 年 Q1，虛構能源科技公司**晟源智能**（`CASE-ENR-005`）正在替台灣中部一座 200kW／400kWh 工商業儲能案場做系統整合驗收。公司技術團隊共八人：三位雲端後端工程師（Spring Boot 3.2 / Go 1.22）、兩位資料工程師（Python 3.12 + Flink）、一位 DBA（PostgreSQL 16 + TimescaleDB 2.14）、一位 DevOps（GKE 1.29 + Helm 3.14），以及一位剛從金融科技轉過來的首席架構師陳彥廷。架構圖做得無懈可擊：Kafka 3.7 串流、PostgreSQL 主從熱備、Kubernetes 多副本、Grafana 儀表板即時呈現電量曲線。
 
-到了 PoC 現場,設備櫃旁的工程師問了一句:
+驗收當天上午九點整，現場整合工程師把網路交換器的 uplink 拔掉，模擬 WAN 斷線——這是電力工程師的標準驗收程序。三十一秒後，儲能系統的 BMS 因為收不到雲端 EMS 的充放電指令，自動切換到本地保護模式：輸出電流降為零、儲能櫃進入待機。整棟廠房的 UPS 備援時間從設計值 4 小時縮短到 0，生產線跳電。
 
-> 「網路斷了三十秒,你的系統會把電池放掉嗎?」
+陳彥廷盯著 Grafana 上一條筆直跌落到底的功率曲線，打開 Kubernetes 事件日誌：REST API Pod 健康檢查失敗、Kafka consumer lag 從 0 衝到 47,000、PostgreSQL 連線集區全部 timeout。整個系統正在雲端完整地記錄它自己的崩潰。
 
-他沒答上來。
+站在設備櫃旁的 OT 整合工程師沒有走過來，只是隔著空氣說了一句：
 
-這個問題揭穿了一個根本盲點:當系統包含**會傷人、會燒掉、會違反電力法規**的硬體時,不是在設計軟體系統,是在設計一個「軟體只是其中一層」的更大系統。儲能櫃的 BMS(電池管理系統)不會等 Kubernetes Pod 重新調度。電網調度單位的 EMS 不會接受「我們的 Kafka 集群正在重啟,請等三分鐘」這種理由。
+> 「你們雲端架構師設計的系統，離線三十秒就死了——那這塊電池放在這裡，要保護什麼？」
 
 [Ch 24](./ch-24-cloud-native-kubernetes.md) 與 [Ch 25](./ch-25-service-mesh-cell-based.md) 談雲原生與 K8s,前提是「網路是可靠的、計算資源是隨叫隨到的」。這個前提在 OT 世界**完全不成立**。
 
