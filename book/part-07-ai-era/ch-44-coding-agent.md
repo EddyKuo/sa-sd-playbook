@@ -82,13 +82,17 @@ GitHub Copilot 在 2021 年 6 月以 OpenAI Codex 為底進入 GA,定位是 IDE 
 
 把 CartMosaic 那次事故的真問題拆開來看,它不是「Cursor 不好用」也不是「拆微服務錯了」,而是 ⸺ **AI Coding Agent 的成功不在「Agent 多強」,在「Codebase 多 Agent-friendly」**。同一個 Cursor,在 spaghetti monolith 與 modular monolith(Ch 21)裡的表現差距不是因為 Agent 變了,是因為 codebase 為 Agent 提供的脈絡密度不同。
 
-換句話說,Codebase **就是** Agent 的 context。Cursor 一次能看 200k token、Claude Code 4.7 能看 1M token,但 codebase 隨便一個中型專案都是幾百萬行 ⸺ 任何 context window 都裝不下整個系統。Agent 看到的永遠是「片段」,**那個片段該裝什麼、用什麼形狀進來,由 codebase 自己提供的脈絡密度決定**。
+換句話說,Codebase **就是** Agent 的 context。Cursor 一次能看 200k token、Claude Code 4.7 能看 1M token,但 codebase 隨便一個中型專案都是幾百萬行 ⸺ 任何 context window 都裝不下整個系統。Agent 看到的永遠是「片段」。
+
+片段本身的品質,取決於這個片段周邊的脈絡結構有多密集。**高密度脈絡**意味著 Agent 看到的每一行程式碼都有清晰的前後文:命名一致、模組邊界清楚、相關決策都有 ADR 記錄 ⸺ Agent 只要讀這個片段,就能合理推論出它屬於哪個 domain、遵循什麼約定、不該碰什麼邊界。**低密度脈絡**則相反:命名漂移讓 Agent 不確定 `order_id` 與 `orderRef` 是不是同一個東西;沒有模組邊界讓 Agent 不知道邏輯該放哪個 service;沒有 ADR 讓 Agent 只能從程式碼反推決策,而那份決策可能早就被廢棄了。CartMosaic 拆分後的 24% 通過率,正是九個服務同時掉進低密度脈絡的結果。
+
+**那個片段該裝什麼、用什麼形狀進來,由 codebase 自己提供的脈絡密度決定**。
 
 ### 44.2.1 為什麼「換更貴的模型」幾乎沒救
 
 CartMosaic 的 RD lead 在覆盤中段問過一個問題:「我們把 Cursor 從 Sonnet 4.5 升到 Sonnet 4.7,是不是就好了?」答案是**收效甚微**。團隊做了 A/B 測試:同一批 50 個 PR,一半用 4.5、一半用 4.7,通過率分別是 23% 與 26%。3 個百分點的差距,在 50 PR 的樣本下無法排除隨機波動(要在 5% 顯著水準下確認 3% 差異,樣本量需要 n > 200)⸺ 這次測試的結論只能是**不確定**:模型升級在 codebase 沒整理的情況下,可能有幫助、也可能沒有,但無法從這批資料得出定論。更重要的是,即使這 3% 是真實改善,它跟後來補齊 CLAUDE.md 與 ADR 後 PR 通過率從 24% 回到 71% 的差距相比,量級不在同一個數量級。
 
-這個結果跟 SWE-Bench 的觀察一致 [^CIT-374]:同一支模型在 SWE-Bench Verified(高品質、有完整測試的開源專案)上的 pass rate 可以到 60–70%,但在「真實企業 codebase」(內部命名、內部約定、沒有完整測試)上常常掉到 20–30%。**差距不在模型,在 benchmark 用的 codebase 跟你的 codebase 不一樣**。
+這個結果跟 SWE-Bench 的觀察一致 [^CIT-374]:同一支模型在 SWE-Bench Verified(高品質、有完整測試的開源專案)上的 pass rate 可以到 60–70%,但在「真實企業 codebase」(內部命名、內部約定、沒有完整測試)上常常掉到 20–30%。**差距不在模型,在 benchmark 用的 codebase 跟你的 codebase 不一樣**。SWE-Bench Verified 收錄的開源專案都有完整的 maintainer 撰寫測試、清晰的模組邊界、一致的命名約定 ⸺ 換句話說,它們本身就滿足本章後述的「Agent-friendly」六項條件(§44.2.2、§44.3.3)。你的 codebase 如果缺其中任何一項,Agent 要從片段推論出正確行為就多費幾倍工夫 ⸺ 這正是為什麼同一個 Sonnet 4.7 在開源 benchmark 上 70%、在 CartMosaic 拆分後的 codebase 上只剩 26%。
 
 | 投資項 | 平均 ROI(現場觀察) | 投資門檻 | 適合時機 |
 |---|---|---|---|
@@ -169,7 +173,7 @@ flowchart TD
     class P1,P2,P5,P6,T2,T3,T4,T5 cold
 ```
 
-**Plan-Execute** 適合「目標清楚但步驟模糊」的任務。例:「把 OrderService 的 Stripe webhook 改用 idempotent retry」。Agent 先在 plan.md 寫「會動哪些檔案、會新增哪些測試、不會動哪些檔案」,讓工程師在開動前就攔截方向錯誤。CartMosaic 觀察到 Plan-Execute 模式的 PR 通過率比「直接讓 Agent 寫」高約 22 個百分點,主因是「方向錯」在 plan 階段就被退回,不會浪費 30 分鐘等 Agent 跑完才發現。
+**Plan-Execute** 適合「目標清楚但步驟模糊」的任務。例:「把 OrderService 的 Stripe webhook 改用 idempotent retry」。Agent 先在 plan.md 寫「會動哪些檔案、會新增哪些測試、不會動哪些檔案」,讓工程師在開動前就攔截方向錯誤。CartMosaic 觀察到 Plan-Execute 模式的 PR 通過率比「直接讓 Agent 寫」高約 22 個百分點 ⸺ 這個觀察基於重整後三個月的 90 個 PR 樣本:45 個使用 Plan-Execute(通過率 65%),45 個由 Agent 直接生成(通過率 43%)。主因是「方向錯」在 plan 階段就被退回,不會浪費 30 分鐘等 Agent 跑完才發現。
 
 **Test-Driven Generation(TDG)** 適合「驗收標準可被測試表達」的任務。例:「實作部分退款的金額累計上限規則」。工程師先寫失敗測試,Agent 拿到測試 + 相關 ADR + 既有實作,反覆迭代直到綠燈。TDG 的關鍵不是「AI 自己寫測試」⸺ 而是**人寫測試,Agent 寫實作**。前者是常見反模式(§44.4 反模式 4 會展開),後者是 TDG 的本意。
 
@@ -382,7 +386,9 @@ src/
 
 這是 Ch 38 §38.4 反模式 4 在 coding agent 場景的具體版。Skill 與 ADR 不連動,Agent 就會在新場景裡參考舊決策 ⸺ 而且**錯得很有自信**,因為 Skill 本身寫得很完整。
 
-> ✅ **修正方向**:Skill 與 ADR 走雙向連結(Ch 38 §38.3.4)。Skill 的 Knowledge Sources 必須列出所有對應 ADR 的路徑;ADR 的 frontmatter 加 `cde-skill-binding`(Ch 33 §33.5)。CI 加一條 fitness function:當 ADR Status 改為 `Superseded`,自動掃所有引用此 ADR 的 Skill 並開 issue。讓「Agent 與架構決策脫鉤」不再靠人的記憶維護,而靠 CI 的看守。
+> ✅ **修正方向**:Skill 與 ADR 走雙向連結(Ch 38 §38.3.4)。Skill 的 Knowledge Sources 必須列出所有對應 ADR 的路徑;ADR 的 frontmatter 加 `cde-skill-binding`(Ch 33 §33.5)。CI 加一條 fitness function:當 ADR Status 改為 `Superseded`,自動掃所有引用此 ADR 的 Skill 並開 issue。
+>
+> 這裡要靠 CI 而不是靠人工,有個具體原因:手工檢查容易出現通知漏洞 ⸺ ADR 更新了,寫 ADR 的人可能忘記通知 Skill 維護者,或者兩人在不同 sprint 工作,訊息沒有交到。但如果 CI 發現「某 Skill 的 Knowledge Sources 列了一份 ADR,但該 ADR 的 status 從 `Active` 變成 `Superseded`」,就會自動開 issue,這樣脫鉤就不會無聲地持續半年 ⸺ 正如 CartMosaic 那個 Stripe retry Skill 的案例。讓「Agent 與架構決策脫鉤」不再靠人的記憶維護,而靠 CI 的看守。
 
 ### 反模式 3:PR Review Bot 沒設 fail rule,comment 滿天飛無人理
 

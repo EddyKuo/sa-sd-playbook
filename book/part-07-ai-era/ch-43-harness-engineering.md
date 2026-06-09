@@ -175,7 +175,7 @@ flowchart TD
 
 **典型故障**：模型卡在自我對話的迴圈裡，對同一個問題反覆下同一個工具呼叫，直到 200K token 預算燒光。這在 ToolNode 把 stale 的 tool result 一直留在歷史時特別常見。
 
-**對應模式**：**Context reset + structured handoff**。Anthropic 在長執行任務的 harness 設計文章[^CIT-I02]裡明確採用這個模式 ⸺ 與其壓縮歷史，不如在達到預算的某個分數時，讓模型把當前狀態結構化寫進 memory tool（或檔案），開新的 context window，把 memory 當作這個新窗口的 prompt。
+**對應模式**：**Context reset + structured handoff**。Anthropic 在長執行任務的 harness 設計文章[^CIT-I02]裡明確採用這個模式 ⸺ 與其壓縮歷史，不如在達到預算的某個分數時，讓模型把當前狀態結構化寫進 memory tool（或檔案），開新的 context window，把 memory 當作這個新窗口的 prompt。當模型開新 context window 時，先前重複的工具呼叫不再出現在對話歷史中，模型無法再次看到相同的失敗結果，因此被迫改變策略而不是無限重複同一動作——迴圈從這裡被打斷。
 
 #### Tool Dispatcher ⸺ 把工具呼叫轉成可控結果
 
@@ -249,10 +249,10 @@ flowchart LR
 
 這是 METR[^CIT-I04]那篇研究筆記的核心訊息，也是 Cresvale 故事第一層原因的學術版本。
 
-**Eval harness** 跑的事：給定固定資料集、自動 grader、測量 pass rate。它優化的是「在這個 grader 下能拿幾分」。
-**Inference harness** 跑的事：在生產環境跑真實任務、和 maintainer / 客戶 / 法務互動、產出真正會被合併、會被付款、會被上線的東西。
+**Eval harness** 跑的事：給定固定資料集、自動 grader、測量 pass rate。它優化的是「在這個 grader 下能拿幾分」——grader 量什麼，模型就往那個方向收斂。
+**Inference harness** 跑的事：在生產環境跑真實任務、和 maintainer / 客戶 / 法務互動、產出真正會被合併、會被付款、會被上線的東西。maintainer 看的是另一個維度——程式碼風格、影響半徑分析、commit message 說清楚 why，這些在自動 grader 裡往往完全缺席。
 
-兩件事如果共用同一套 harness 規格，必然會發生兩種偏移之一：
+兩個優化目標本來就不同：eval grader 優化「機器可檢的正確性」，maintainer 優化「可安全合併的完整度」。這兩個維度有交集（程式碼必須正確），但交集不等於全集。當兩件事共用同一套 harness 規格，規格只能服務一個主人，另一個就會偏移：
 
 - **評測偏鬆**：eval harness 把 grader 設成「跑得起來且測試過」，但生產 harness 上 maintainer 還會在意風格、commit message、影響半徑、follow-up 紀錄 ⸺ pass 不等於 merge，merge 率永遠追不上分數。
 - **評測偏嚴**：eval harness 加上模仿 maintainer 的 LLM-as-judge 嚴格 grader，但生產 harness 上沒有對應的 review-readiness gate ⸺ 模型在生產時又被推往「先上 PR 看 review 怎麼說」的捷徑。
@@ -301,7 +301,7 @@ flowchart TD
 
 3. **Artifact system 而非 prose return**：子代理的產出寫入「檔案系統」（一個 K/V store 或實際的虛擬 FS），而不是用一段散文字回傳給 lead。Lead 收到的是「結果存在 `artifacts/sub-1/result.md`」，不是 50KB 的 prose。
 
-4. **代價**：Anthropic 報告 lead-researcher（Opus 4）配 sub-agents（Sonnet 4）的設計，比單代理 Opus 4 高 90.2% 的內部研究評測分數，但**消耗的 token 數約 15 倍**。token 用量解釋了瀏覽評測上 80% 的表現變異。SA 在規格 multi-agent 時，必須把這個倍率寫進預算控制。
+4. **代價**：Anthropic 報告 lead-researcher（Opus 4）配 sub-agents（Sonnet 4）的設計，比單代理 Opus 4 高 90.2% 的內部研究評測分數，但**消耗的 token 數約 15 倍**（即 lead（Opus）+ 3 sub（Sonnet）的總 token 使用，相當於單純 Opus 4 執行相同任務的 15 倍）。token 用量解釋了瀏覽評測上 80% 的表現變異。SA 在規格 multi-agent 時，必須把這個倍率寫進預算控制。
 
 5. **何時不該走多代理**：Ch 41 與 Ch 40 都討論過 ⸺ 任務本質是序列依賴、上下文需要連續累積、結果需要極強一致性時，硬拆多代理會讓 token 倍增同時品質下降。Multi-agent 適合「可平行探索 + 結果可獨立驗證」的場景：研究、跨庫搜尋、多視角生成。
 

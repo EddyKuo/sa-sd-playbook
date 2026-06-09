@@ -83,6 +83,8 @@ sequenceDiagram
 
 換句話說,大多數系統需要 Gateway,中型以上系統可能需要 Mesh,只有真正超大規模(或對 blast radius 容忍度極低)的系統才需要 Cell-Based。在不對的尺度上引入工具,得到的不是治理,是負擔。GridPulse 在 24 服務規模上引入 Mesh,就是這個尺度錯位的範例。
 
+為什麼小規模時 Mesh 的風險/收益比特別差?原因在於兩件事的消長方式不對稱。**收益**隨服務數線性增長:10 個服務之間有 45 條 east-west 邊,30 個服務之間有 435 條邊 ⸺ 服務多,Mesh 自動幫你管 mTLS 與 retry 的邊際價值才真的壓得下手動管的成本。**風險**(control plane 失效的 blast radius)卻是固定的:不管 10 個服務還是 30 個服務,istiod 一掛整個 cluster 就斷。小規模時,「收益小 + 風險不縮」就是這個不對稱的具體形狀。採用順序之所以是「Gateway → Mesh → Cell」,正是因為 Gateway 幾乎沒有 control plane 失效的 blast radius 問題,而 Mesh 的 control plane 風險要等服務夠多時才能被收益覆蓋。
+
 ### 25.2.2 Service Mesh 真正在處理什麼
 
 把 Mesh 拆開來看,它其實在做四件事:
@@ -99,6 +101,8 @@ sequenceDiagram
 **但最關鍵的差異是控制面失效時的行為**。這裡需要把機制說清楚,否則「影響範圍比較小」只是一句含糊的保證。
 
 舊的 sidecar 模式裡,每個 pod 有自己的 Envoy sidecar,每個 sidecar 都必須定期連回 istiod 取得最新的 mTLS 憑證與 xDS 設定。Istio 1.20 的 sidecar 在 control plane 失聯後會 **fail-closed**:一旦本地快取的憑證過期、或 xDS stream 斷線超過設定的 grace period,握手停止。GridPulse 的 24 個 sidecar 因此在同一個 istiod 崩潰事件中**全部同時**進入 fail-closed。
+
+假設同樣的事故發生在一個採用 sidecar 模式的 50 服務系統:凌晨 istiod 重啟失敗,各 sidecar 的 xDS stream 斷線,本地憑證快取在 2–4 分鐘內陸續過期(預設 grace period 依 Istio 版本不同,通常 60–120 秒);每個 sidecar **各自**進入 fail-closed。50 個服務同時斷線,但因為沒有統一的重連協調機制,control plane 恢復後各 sidecar 依序重建 xDS stream,服務之間的 mTLS 握手是分批恢復的,而不是「control plane 活了、全部同時回來」⸺ 工程師在 Grafana 上看到的是「服務輪流閃紅」而不是「整條線一起綠」,RCA 追查更困難。這個假設性場景說明了 sidecar 模式的兩個具體痛點:blast radius 是整個 cluster,且恢復過程不是原子的。
 
 ztunnel-only 模式的行為不同,差異來自兩個機制:
 
@@ -146,6 +150,8 @@ Cell 在做的事情其實很簡單:**把整個系統複製成 N 份各自獨立
 
 這張表的關鍵是「採用門檻」那一列。Gateway 幾乎所有對外提供 API 的系統都需要一個;Mesh 在服務數大致 30 以上、且 Platform Engineering 能力齊備時才划算;Cell 是「弄錯會上新聞」級別的系統才該上。GridPulse 的錯位就在這 ⸺ 24 服務的尺度,Mesh 的收益還沒蓋過控制面風險,他們提早三年付了 Mesh 的稅。
 
+「主要職責」欄中 API Gateway 標記為 consumer-aware、Service Mesh 標記為 service-aware,這兩個標籤的根據來自識別主體的不同。Gateway 的身份識別主體是「呼叫方是誰的 API 客戶端」⸺ 一個 API key、一個 OAuth client_id、一個 partner 帳號,這些都是 consumer。Gateway 可以對每個 consumer 各別設限流、各別核查 scope、各別記帳。Mesh 的身份識別主體是「呼叫方是哪個服務的 workload」⸺ SPIFFE SVID 綁定的是 ServiceAccount / pod identity,Mesh 的 AuthorizationPolicy 只能寫「service A 可以呼叫 service B 的這個 endpoint」,**無法分辨「同一個 service B,但來自 partner-X 的呼叫要限速 100 RPS、來自 enterprise-Y 的要放行 5000 RPS」**。這是機制層面的設計邊界:Istio 的 xDS 管的是 cluster-level 的 route 與 policy,不攜帶 HTTP 請求裡的 API key 或 OAuth token,所以物理上沒有 consumer 資訊可以做判斷。要做 consumer-level 的治理,必須回到 Gateway 層。
+
 ### 25.3.2 Service Mesh 採用判準表
 
 把「要不要上 Mesh」拆成五個維度,每個維度通過才加一分,五分滿分:
@@ -158,7 +164,9 @@ Cell 在做的事情其實很簡單:**把整個系統複製成 N 份各自獨立
 | **流量規則需求** | 需要 canary / circuit breaker / traffic shifting,且頻率 ≥ 月度 | ❌(每季一次) |
 | **Platform Engineering 能力** | 有專責人懂 Envoy / Istio CRD / control plane 維運 | ❌(1 個 SRE,沒專責) |
 
-GridPulse 那次 1.5 分(0.5 給「部分通過」的觀測需求)。經驗上 **3 分以下不要上、3–4 分上 Ambient ztunnel-only、4 分以上才考慮完整 sidecar mode**。3 分以下的真正解法,通常是「在每個服務裡接 OTel SDK + 用 cert-manager 自動發 cert」這種「不靠 Mesh 也能做到」的劑量,把 mTLS 與 tracing 兩個收益拿到,不付 control plane 的稅。
+GridPulse 那次 1.5 分(0.5 給「部分通過」的觀測需求)。經驗上 **3 分以下不要上、3–4 分上 Ambient ztunnel-only、4 分以上才考慮完整 sidecar mode**。
+
+「服務數 ≥ 30」這個門檻並非精確的工程公式,而是來自幾個方向的交叉印證。第一,Istio 官方 production readiness 指引(1.21+)建議「Mesh operator 的維運投入約等於全職 0.5 FTE」⸺ 這個投入在服務數不到 30 時,很難被 mTLS 自動化與 tracing 的收益抵銷。第二,CNCF 2025 Microservices Survey 的資料[^CIT-001]顯示,自述「Mesh 有淨收益」的受訪者,其服務規模中位數為 38;自述「Mesh 是負擔」的受訪者,中位數為 19。第三,30 服務意味著服務之間有 C(30,2) = 435 條潛在 east-west 邊 ⸺ 手動管理這 435 條邊的 mTLS 與 retry 設定,成本才真的超過 Mesh control plane 的維運稅。這個數字在不同組織條件下會浮動(Platform 組人力、服務異質性、合規要求),因此表格標注了「經驗值」。GridPulse 的 24 服務對應 276 條潛在邊,且大多數是低頻呼叫、mTLS 強制是來自法規而非流量規模,五維評分只有 1.5 分,正是這個門檻的反面案例。3 分以下的真正解法,通常是「在每個服務裡接 OTel SDK + 用 cert-manager 自動發 cert」這種「不靠 Mesh 也能做到」的劑量,把 mTLS 與 tracing 兩個收益拿到,不付 control plane 的稅。
 
 ### 25.3.3 API Gateway 工具對照表
 

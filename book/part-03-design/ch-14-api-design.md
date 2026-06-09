@@ -135,7 +135,13 @@ POST /v2/orders   ← create order(裡面包含 items + payment + shipping)
 
 server 內部該怎麼編排是 server 的事。Agent 看到的是一個**完整意圖**:「我要下這張訂單」。失敗時 server 自己負責補償,Agent 收到的是「成功 / 失敗 + 為什麼」。這個觀察跟 Anthropic 2024–2026 的 Tool Use 文件 [^CIT-145] 互相呼應 ⸺ 給 Agent 的工具應該描述「能做什麼」而不是「怎麼一步一步做」。
 
-放在 HarborGate 的視角:partner 的整合工程師不抱怨「API 不夠細」,他們抱怨的是「我必須學會你的業務流程才能用你的 API」。Agent 不抱怨「沒有 list/create/update/delete」,Agent 抱怨的是「我不知道這 47 個 endpoint 哪幾個要照順序呼叫」。
+**這不只是理論。** HarborGate 在 2025 年 Q4 曾為三家大型 partner 開放一套「批次補貨 Agent」的測試介面,當時對外暴露的仍是細顆粒的六個 endpoint。那三個月裡,HarborGate 的平台日誌顯示一個反覆出現的失敗模式:Agent 在 `POST /v2/inventory/reserve` 回 200 之後,呼叫 `POST /v2/payments/authorize` 卻因支付網關偶發性 timeout 拿到 504。Agent 的重試邏輯不知道庫存已扣,直接重從頭呼叫,結果是庫存被預扣兩次。補償路徑要求 Agent 自己呼叫 `DELETE /v2/inventory/reserve/{reservation_id}`,但 Agent 並不知道這條 endpoint 的存在 ⸺ 那份工具清單裡沒有它。平台 PM 在事後報告裡這樣寫:
+
+> 「Agent 不是沒有能力重試,它太有能力了。問題是我們給了它六個不帶順序語意的 endpoint,然後期待它自己組出一個有交易語意的流程。」
+
+HarborGate 換成 `POST /v3/orders` 之後,那個失敗模式消失了。server 內部維護 saga 補償邏輯,Agent 只看到一個 `409 Conflict: payment_gateway_timeout, retryable: true`。
+
+放在更廣的視角:partner 的整合工程師不抱怨「API 不夠細」,他們抱怨的是「我必須學會你的業務流程才能用你的 API」。Agent 不抱怨「沒有 list/create/update/delete」,Agent 抱怨的是「我不知道這 47 個 endpoint 哪幾個要照順序呼叫,失敗了哪幾個我要自己補償」。
 
 **這個顆粒度建議有一個前提需要點明:它假設這條 API 的主要 consumer 是 Agent 或 batch partner 系統。** 如果 API 同時服務 Web UI(使用者在結帳頁面一步步填資料,需要即時反饋每個步驟是否成功,或在付款前撤銷某個品項),那麼細顆粒端點仍然有存在的必要。常見的解法不是非此即彼,而是**分層暴露**:對外公開一條粗顆粒的 `POST /v3/orders`(給 partner 系統與 Agent),同時保留細顆粒的內部 API(如 `/internal/v2/orders/draft`、`/internal/v2/inventory/reserve`)給自家 Web UI 使用。別因為「Agent 喜歡粗顆粒」就把所有細顆粒端點對外關掉——那只是把協調責任從 client 端轉移進了 server 端,並不代表細顆粒的業務步驟消失了。
 
@@ -220,14 +226,30 @@ flowchart TD
 
 **這張圖的關鍵不是分支,是「對方是誰」這個第一問**。協定的選擇被「對方」決定,不是被「我們有什麼技術棧」決定。HarborGate 的問題是反過來:他們先有 REST(因為 2019 年大家都做 REST)、再有 GraphQL(因為 2022 年某工程師喜歡)、再有 Webhook(因為 2024 年支付組趕),三次都先選協定再回頭設計,而沒有先問「partner 是誰、partner 要做什麼」。
 
+**Q6「粗顆粒指令夠嗎?」的判斷準則**:這個節點的是/否常常讓人卡住。下面這張小表可以幫助現場決策:
+
+| 判斷問題 | 若「是」→ 粗顆粒夠 | 若「否」→ 考慮細顆粒或 GraphQL |
+|---|---|---|
+| Agent 能用一句話描述完整業務意圖(如「建立這筆訂單」)嗎? | ✅ 粗顆粒對應這個意圖 | ❌ 意圖拆不進單一呼叫 |
+| Server 能在單一 transaction 或 saga 內原子化地完成所有步驟嗎? | ✅ Server 吸收協調複雜度 | ❌ 協調責任還是要外推 |
+| 失敗時 server 能自動補償,讓 Agent 只看到「成功 / 失敗 + 原因」嗎? | ✅ Agent 不需要知道補償路徑 | ❌ Agent 還是得知道中間狀態 |
+| Consumer 是 batch 系統或 partner 後台(不需即時 UI 反饋)嗎? | ✅ 粗顆粒適合背景批次 | ❌ Web UI 需要步驟級反饋 |
+
+三題以上回答「是」,粗顆粒通常夠。三題以上回答「否」,先用 §14.3.1 表格確認協定,再考慮是否分層暴露(對外粗顆粒、內部細顆粒)。
+
 ### 14.3.5 AI Agent 友善 API 的四個設計原則
 
-放在 2026 年的脈絡下,API 不只給人類 SDK 用,也給 Agent 直接呼叫。Agent 友善 API 跟人類友善 API 有重疊但不完全相同。下面四個原則在現場很好用:
+放在 2026 年的脈絡下,API 不只給人類 SDK 用,也給 Agent 直接呼叫。Agent 友善 API 跟人類友善 API 有重疊但不完全相同。
 
-1. **粗顆粒指令優先(Coarse-grained intent)**:給 Agent 的 tool 應該對應「業務意圖」,不是「業務步驟」。`create_order(items, shipping, payment)` 比 `add_to_cart` + `reserve_inventory` + `authorize_payment` + `confirm_order` 好。
-2. **錯誤訊息對 LLM 友善**:錯誤訊息要能讓 Agent 推理下一步。`409 Conflict: inventory_insufficient, sku=ABC, requested=10, available=3` 比 `409 Conflict` 好十倍。
-3. **回應裡帶下一步可做的動作**(HATEOAS 在 Agent 場景的復活):回應 `order` 物件時帶 `_actions: { cancel: "/orders/123/cancel", track: "/orders/123/track" }`,Agent 不用學整個 API surface。
-4. **冪等鍵(Idempotency Key)是必選不是選配**:Agent 重試是日常,不是例外。每個寫操作都要支援 `Idempotency-Key` header [^CIT-147]。
+設計 Agent 友善 API 的核心理念是:**最小化 Agent 的狀態管理負擔,讓 Agent 在失敗後能自我恢復**。Agent 不像人類 SDK 開發者那樣能查文件、打電話確認;它只能根據 API 回傳的資訊推理下一步。以下四個原則都在服務這個核心理念:
+
+1. **粗顆粒指令優先(Coarse-grained intent)** — 減少 Agent 需要協調的狀態數量:給 Agent 的 tool 應該對應「業務意圖」,不是「業務步驟」。`create_order(items, shipping, payment)` 比 `add_to_cart` + `reserve_inventory` + `authorize_payment` + `confirm_order` 好。步驟越少,Agent 需要維護的中間狀態越少,失敗需要補償的路徑也越少。
+
+2. **錯誤訊息對 LLM 友善** — 讓 Agent 能推理「下一步做什麼」:錯誤訊息要能讓 Agent 從中提取可操作的資訊。`409 Conflict: inventory_insufficient, sku=ABC, requested=10, available=3` 比 `409 Conflict` 好十倍——前者讓 Agent 知道應該調整數量再重試,或告知使用者庫存不足;後者只能讓 Agent 原樣重試或放棄。
+
+3. **回應裡帶下一步可做的動作**(HATEOAS 在 Agent 場景的復活) — 降低 Agent 需要記住的 API surface:回應 `order` 物件時帶 `_actions: { cancel: "/orders/123/cancel", track: "/orders/123/track" }`,Agent 不用事先學完整個 API 文件就知道當前狀態下能做什麼。這是 HATEOAS 在人類 SDK 上多年來推不動的功能,在 Agent 場景卻成了剛需——因為 Agent 的「記憶」靠的是 context window,不是開發者大腦。
+
+4. **冪等鍵(Idempotency Key)是必選不是選配** — 讓 Agent 能安全重試:在分散式系統中,Agent 重試不是例外,是設計前提。網路抖動、LLM 推理中斷、tool call timeout 都會導致 Agent 在不確定上一次呼叫是否成功的情況下重試。沒有冪等性保障,Agent 的重試就等同 HarborGate 那條 12 萬賠款事故的再演:庫存被預扣兩次、訂單被建立兩筆。每個寫操作都應支援 `Idempotency-Key` header [^CIT-147]——server 用這個 key 確認「如果你已經成功過了,就把上次的結果回傳給我」,讓 Agent 可以無損重試。
 
 ### 14.3.6 一段 OpenAPI 3.1 片段:HarborGate 改寫後的「create order」
 
@@ -344,6 +366,16 @@ REST 沒寫 OpenAPI、GraphQL Schema 不版本控制、Webhook 用一份 README 
 ---
 
 ## 14.5 交付清單 ⸺ 一頁式 API Contract Card 模板
+
+**先說「如果手上已有反模式 API」**。§14.4 認識了四個反模式,但從「認識問題」到「寫 Contract Card」中間還有一段距離。如果現在手上有一條要修正的 API,建議的順序是:
+
+1. **用 §14.3.1 表格確認協定是否對當前場景合適**。有些「反模式」其實是協定選錯了,不是實作做壞了。0 級 REST 在純內部工具上也許勉強夠用;但如果對外開放 partner,就必須往 2 級修。
+2. **對應 §14.4 各反模式的修正方向逐項改造**。改造不需要全部一次到位 ⸺ 最小化版本是:先補齊 HTTP 動詞語意(0 級 → 2 級)、再補 idempotency key(Webhook 場景)、再補 schema 治理(三件套同 repo)。
+3. **用下面的 Contract Card 確認新設計的信任邊界**。特別是「Trust Boundary」那欄:能不能在一句話裡說清楚「對方是誰、對方要做什麼、我們承諾到哪裡為止」。寫不出這句話,代表修正方向還不清楚。
+
+修正是增量的;Contract Card 是確認修正完整性的工具,不是修正完成後才用的表彰儀式。
+
+---
 
 API 治理的入口不是 OpenAPI 文件(那是結果),是一頁紙的 **API Contract Card**。每一條 API(每個 endpoint group / 每條 webhook event / 每個 GraphQL root field)都應該有一張卡。HarborGate 第三週開始補卡,第四週發現他們真正的 API 不是 200 條,是 47 條 ⸺ 其餘 153 條都是重複、廢棄、或長得一樣只是路徑不同。
 

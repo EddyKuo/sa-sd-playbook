@@ -116,16 +116,18 @@ flowchart LR
 
 ### 11.2.2 AI Agent 寫程式,讓耦合度量比過去更值錢
 
+維護者的這個需求,在 AI 寫程式的時代反而變得更關鍵 ⸺ AI 對模組邊界清晰度的依賴甚至比人類更強。
+
 2026 年的事實是:在大多數中型服務裡,Cursor / Claude Code / GitHub Copilot Workspaces 寫的程式碼比例已經穩定在 40~70% 之間。這帶來兩個結構性變化:
 
-- **AI 寫得快,讀得也快**,但**它要驗證「我的改動有沒有破壞別處」必須讀更多程式**。耦合度高 = AI 要讀的範圍大 = context window 被佔滿 = 出錯率上升。
+- **AI 寫得快,但要驗證「我的改動有沒有破壞別處」時讀得慢**。快速出碼的代價是必須驗證邊界,而高耦合會讓驗證變得困難:耦合度高 = AI 要讀的範圍大 = context window 被佔滿 = 出錯率上升。
 - **人類已經跟不上 AI 的產出速度**,人不再是耦合度的第一線發現者。**得讓「耦合是否被控制好」變成一個可機器查驗的指標**,AI 自己才能在寫的當下就驗證。
 
 這正是 SOLID / Clean Architecture / 12-Factor 在 AI 時代反而更值錢的原因:它們是**可以被 fitness function 與 linter 自動量測的指標**(`Ch 34` 會展開)。同個方向的人有 Mark Richards / Neal Ford 在 *Building Evolutionary Architectures*[^CIT-118] 寫的 ⸺ 架構特性必須能被自動量測,否則無法防止退化。
 
 ### 11.2.3 這些原則之間有重疊,不需要全部都做滿
 
-SOLID 的 5 條 + 12-Factor 的 12 條 + Clean Architecture 的 4 環 + DRY/KISS/YAGNI 的 3 條,湊起來 24 條原則,沒有一個專案真的做得到全綠。**它們之間 60% 是重疊的**:DIP 跟 Clean Architecture 的「依賴指向圓心」是同一件事換個層次講;12-Factor 的「Config」跟 SRP 的「組態與邏輯分離」是同一件事換個視角講。
+SOLID 的 5 條 + 12-Factor 的 12 條 + Clean Architecture 的 4 環 + DRY/KISS/YAGNI 的 3 條,湊起來 24 條原則,沒有一個專案真的做得到全綠。**它們之間多數是重疊的**。舉幾個具體的對應:DIP 跟 Clean Architecture 的「依賴指向圓心」是同一件事換個層次講;12-Factor 的「Config」跟 SRP 的「組態與邏輯分離」是同一件事換個視角講;OCP 跟 Clean Architecture 的「Use Case 擴展靠新增、不靠修改舊 Entity」也是同一訴求;12-Factor 的「Backing Services 當資源」跟 DIP 的「核心不認得基礎設施」指向同一個邊界劃法;SRP 的「獨立變更理由」跟 12-Factor 的「Processes 無狀態、橫向擴展」都在逼你把狀態管理的職責移出核心。
 
 把這件事壓成可操作的標準:**原則的目的是幫你判斷「這次改動的成本」,不是讓你打勾**。同一個改動半徑問題,SOLID 算一次、Clean Arch 算一次、12-Factor 算一次,最後選最便宜的那條原則來說服 reviewer 就夠了。
 
@@ -155,10 +157,10 @@ SOLID 的 5 條 + 12-Factor 的 12 條 + Clean Architecture 的 4 環 + DRY/KISS
 | 原則 | 對應的決定 | 算成本的問句 | 違反時的味道 |
 |---|---|---|---|
 | **SRP** | 一個類別/服務該不該再拆 | 「這個類別有幾個會在不同節奏下變的需求?」 | 一個 PR 改了 OrderService,業務、稽核、metrics 三個 owner 都被 tag |
-| **OCP** | 該不該抽介面、該不該用策略模式 | 「下次同類需求來,要改舊程式還是加新檔案?」 | 每加一條規則就要改 switch / if-else 鏈 |
-| **LSP** | 該不該繼承、要不要改用組合 | 「子類在父類契約下行為一致嗎?能無痛替換嗎?」 | `if (instance instanceof X)` 這種味道出現在多處 |
-| **ISP** | 該不該把大介面拆小 | 「實作這個介面的類別,被迫實作多少自己用不到的方法?」 | 一堆 `throw new UnsupportedOperationException()` |
-| **DIP** | 該不該抽抽象、依賴指向哪邊 | 「核心業務邏輯認得 PostgreSQL / Kafka / Redis 嗎?」 | 領域層 import 了 `org.springframework.*`、`io.confluent.kafka.*` |
+| **OCP** | 該不該抽介面、該不該用策略模式 | 「下次同類需求來,要改舊程式還是加新檔案?」 | 每加一條風控規則就改一次 switch / if-else 鏈,導致每次 PR 都要動核心授權流程 |
+| **LSP** | 該不該繼承、要不要改用組合 | 「子類在父類契約下行為一致嗎?能無痛替換嗎?」 | `if (instance instanceof X)` 這種味道出現在多處;或 `CreditCardPayment` 繼承 `Payment` 後 `pay()` 的行為與父類契約不一致,呼叫端被迫加條件判斷 |
+| **ISP** | 該不該把大介面拆小 | 「實作這個介面的類別,被迫實作多少自己用不到的方法?」 | 實作 `PaymentProcessor` 介面的類別被迫實作 `refund()`,但它是純付款通道不支援退款 ⸺ 只好丟 `UnsupportedOperationException` |
+| **DIP** | 該不該抽抽象、依賴指向哪邊 | 「核心業務邏輯認得 PostgreSQL / Kafka / Redis 嗎?」 | 領域層 import 了 `org.springframework.*`、`io.confluent.kafka.*`;換個資料庫就得動業務邏輯程式 |
 
 **SRP 是最常被誤用的一條**。新手讀完會把每個方法都拆成獨立類別(反模式 1 會講),但 Robert Martin 在 *Clean Architecture*[^CIT-111] 重新定義 SRP 時用的詞是 "*A module should have one, and only one, reason to change*",關鍵是 **reason**(變更理由)⸺ 變更理由由「**誰會來要求改它**」決定,不是由「程式做幾件事」決定。
 
@@ -323,7 +325,7 @@ public class IsoAuthorizationAdapter {
 
 ## 11.4 踩坑清單
 
-下面這四個常見地雷,在不同公司反覆出現。它們的共同點是:**外觀上長得像在做架構原則,但實質上是把原則當成檢查清單在打勾**。每一個都附上修正方向,下次遇到可以這樣處理。
+下面這四個常見地雷對應 11.3 的四個決策點,請邊讀邊對照:反模式 1 對應 11.3.1 的 SRP 決策;反模式 2 對應 11.3.4 的「該不該抽介面」決策樹;反模式 3 對應 11.3.2 的 Clean Architecture 適用情境;反模式 4 對應 11.3.3 的 12-Factor 優先順序。它們在不同公司反覆出現,共同點是:**外觀上長得像在做架構原則,但實質上是把原則當成檢查清單在打勾**。每一個都附上修正方向,下次遇到可以這樣處理。
 
 ### 反模式 1:SRP 變成微類別(Micro-Class Hell)
 
@@ -380,7 +382,9 @@ public class IsoAuthorizationAdapter {
 
 ## 11.5 交付清單 ⸺ 一頁式 Coupling Audit Card
 
-每個關鍵模組都應該有一張卡,**寫不滿一頁就是設計沒拆乾淨**。這張卡是「給六個月後維護者(包含 AI Agent)的耦合說明書」。
+11.2.4 說的四項成本維度 ⸺ 改動半徑、回歸風險、理解成本、替換成本 ⸺ 需要在每次架構決策時量化記錄下來,才能讓「原則有沒有守到」成為可查的數字而不是記憶。下面這張卡就是把這些量化維度從抽象落到具體的模板:六個欄位分別對應「這個模組的職責邊界(SRP)」、「出去的依賴有多脆弱(替換成本)」、「進來的依賴有多穩定(回歸風險)」、「新增一條規則要動幾個檔案(改動半徑)」、「原則與 fitness function 宣告(可機器驗證)」、「哪些事情明確不做(Out of Scope,防止邊界蠕變)」。一頁的邊界不是美觀考量:**寫不滿一頁就是設計沒拆乾淨**。
+
+每個關鍵模組都應該有一張卡,這張卡是「給六個月後維護者(包含 AI Agent)的耦合說明書」。
 
 把它存在 `docs/coupling/{module_name}.md`,跟程式碼同 repo,跟模組目錄同層。
 

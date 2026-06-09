@@ -275,7 +275,11 @@ flowchart TD
 
 ### 31.3.6 Iceberg + Postgres 跨表查詢示例(2026 起手式)
 
+確定選用 Iceberg 後,下一個設計問題是:OLAP 查詢(歷史分析)與 OLTP 查詢(即時狀態)如何在同一個 SQL 裡共存?以下是 MedNexus 的實現方式:
+
 把 MedNexus 的場景縮成一個具體形狀:七家醫院的就診事件存 Iceberg(分析用),每家醫院的即時門診狀態存各院的 Postgres(OLTP),平台用 Trino / DuckDB / Spark 同時查 Iceberg + Postgres FDW。
+
+Iceberg 本身解決了 OLAP 場景——歷史分析、schema evolution、time travel——但它不存「現在這個病房有幾張床空著」這類即時操作型資料。各院的 Postgres 有這份即時狀態,但 Postgres 不適合跨七院做 30 天的 DRG 聚合分析。兩邊單獨跑都能跑,但 DRG 月報需要同時拿到「過去 30 天的就診歷史(Iceberg)」與「目前床位使用率(Postgres)」才能出完整的住院效率報表。Postgres FDW(Foreign Data Wrapper)讓 Trino 在同一個 SQL 句裡跨兩個 catalog 查詢,避免在應用層寫兩次查詢再手動 join。
 
 ```sql
 -- 1. Iceberg 表:跨院就診事件(每家醫院作為一個 partition)
@@ -310,22 +314,25 @@ FOR TIMESTAMP AS OF (current_timestamp - INTERVAL '3' DAY)
 WHERE hospital_id = 'HOSP-A' AND encounter_type = 'inpatient';
 
 -- 3. 跨表查詢:Iceberg(歷史就診)+ Postgres FDW(該院即時床位)
--- 在 Trino 上同一個 SQL 句跨 catalog
+-- 在 Trino 上同一個 SQL 句跨 catalog;不需要在應用層手動 join 兩次查詢
 SELECT
     e.hospital_id,
     e.drg_code,
     count(*) AS discharged_30d,
-    -- 從各院的 Postgres 即時抓床位數
+    -- FDW:透過 Postgres Foreign Data Wrapper 即時查各院床位系統;
+    -- 這是 OLAP(Iceberg 30 天歷史)與 OLTP(Postgres 即時狀態)在同一 SQL 共存的關鍵
     (SELECT current_occupancy
-     FROM postgres_hosp_a.public.bed_status
+     FROM postgres_hosp_a.public.bed_status   -- postgres_hosp_a 是 Trino 的 FDW catalog
      WHERE ward = e.ward) AS current_bed_occupancy
 FROM iceberg.mednexus_silver.encounter e
 WHERE e.discharge_at >= current_date - INTERVAL '30' DAY
   AND e.hospital_id = 'HOSP-A'
 GROUP BY e.hospital_id, e.drg_code, e.ward;
+-- 實際用途:MedNexus 月報需要同時呈現「過去 30 天 DRG 結構」與「目前床位壓力」
+-- 讓住院管理組一眼看出哪個 DRG 群體的出院流量與現有床位之間是否出現瓶頸
 ```
 
-這段 SQL 在 MedNexus 的真實量級(七家醫院,日均 12,000 筆 encounter)上,Trino 查 30 天聚合 P95 約 4–6 秒,加上 Postgres FDW 即時拉床位 +200ms。**沒有 Lakebase,沒有 Streaming,只是 Iceberg + Postgres FDW + dbt**,跑得起來。
+這段 SQL 在 MedNexus 的真實量級(七家醫院,日均 12,000 筆 encounter)上,Trino 查 30 天聚合 P95 約 4–6 秒,加上 Postgres FDW 即時拉床位 +200ms。這個延遲對 MedNexus 的 DRG 月報(T+1 day 出報)綽綽有餘;相比之前的 SFTP → PySpark 管線(P95 15–20 秒、月報延遲六週),效能沒有明顯退化,資料新鮮度卻從週級拉到了日級。**沒有 Lakebase,沒有 Streaming,只是 Iceberg + Postgres FDW + dbt**,跑得起來。
 
 ### 31.3.7 Data Contract YAML 範例(進 CI)
 
@@ -523,7 +530,9 @@ checks:
 
 ### 31.5.1 範例:MedNexus 第三年體檢後寫的那一頁
 
-MedNexus(`CASE-HCR-006`)第三年那場 retro 之後,聯盟 PM 把他們**真正該做但沒做**的決定寫成這張卡 ⸺ 結論不是「換 Iceberg」,是「組織層先走 14 個月、儲存層先不動」:
+MedNexus(`CASE-HCR-006`)第三年那場 retro 之後,聯盟 PM 把他們**真正該做但沒做**的決定寫成這張卡 ⸺ 結論不是「換 Iceberg」,是「組織層先走 14 個月、儲存層先不動」。
+
+這個結論之所以成立,是因為 MedNexus 同時滿足了兩個前提:Delta 基礎設施已有三年(儲存層工具不缺),七家醫院的 IT 主管已口頭同意指派 Data PO(組織層有人願意出來負責)。這兩個條件都具備,才能直接進 Mesh 四原則的體檢。如果 domain 沒有願意簽名的 PO——換句話說,決策樹 §31.3.5 的 Q2 分支走向「先培養 Domain Data PO」——這張卡的第 2 節(組織層決定)會是全部空著的 checkbox,此時應先走反模式 2 的修正路徑,而不是直接填這張卡。
 
 ````markdown
 # Data Architecture Decision Card — 七院 EMR 共享平台 v2

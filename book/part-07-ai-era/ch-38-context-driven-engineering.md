@@ -109,7 +109,7 @@ Context-Driven Engineering 不是 Anthropic 發明的口號。它是 2025 下半
 2. **把對話脈絡變成持久知識** ⸺ ADR(Ch 33)、System Charter(Ch 1)、C4 圖(Ch 20)不只給人看,還是 Skill 的 Knowledge Source。
 3. **把臨時 prompt 變成可調用能力** ⸺ Skill 是一個三要素契約:Description(何時用)+ Allowed Tools(能做什麼)+ Knowledge Sources(讀什麼脈絡)。
 
-換句話說,CDE 真正在處理的是「**讓 AI 從會話結束就消失的副駕駛,變成 repo 內可被傳遞的同事**」。這條路徑跟 SA/SD 三十年的演化邏輯一致:從個人經驗,走向可被傳遞的理解。差別只在 2026 的傳遞對象多了一類非人類讀者。
+換句話說,CDE 真正在處理的是「**讓 AI 從會話結束就消失的副駕駛,變成 repo 內可被傳遞的同事**」。這條路徑跟 SA/SD 三十年的演化邏輯一致:從個人經驗,走向可被傳遞的理解。例如:規格說明從口頭交接 → 文件化 System Charter → 機器可讀的 C4 圖表與 YAML ADR → CDE 三層——每一步的核心動作都是「把只有特定人才懂的脈絡,轉換成更多接收者能使用的格式」。差別只在 2026 的傳遞對象多了一類非人類讀者。
 
 ### 38.2.3 為什麼必須是「三層」而不是「一層」
 
@@ -134,6 +134,8 @@ Context-Driven Engineering 不是 Anthropic 發明的口號。它是 2025 下半
 | **Constitution**(法律) | `/CLAUDE.md`、`/agents.md` | 季 / 年 | 所有 Agent + 所有人類 | 「所有金流相關變更必須走 ADR」「禁止在 production 直接 SQL」「PII 必須 at-rest 加密」 |
 | **Role**(角色) | `.claude/agents/{role}.md` | 季 | 該角色的 Subagent | 「你是 SA Agent,任務是把模糊需求轉成 spec.md + ADR」「你是 QA Agent,只能讀不能寫 production 程式碼」 |
 | **Skill**(技能) | `.claude/skills/{skill}/SKILL.md` | 週 / 雙週 | 載入此 Skill 的 Agent | 「電商訂單狀態機重構」「Stripe webhook 簽章驗證」「PostgreSQL 遷移腳本生成」 |
+
+> **關於變動頻率的說明**:表中的「變動頻率」指的是「值得重新 review 的典型週期」,而非「實際改動的頻率」。實際改動通常更少——Constitution 一年 1–2 次、Role 每季 1 次——但為留出緊急修改的彈性(例如：合規要求臨時變動、角色職責邊界突然調整),標記為更短週期以確保定期有人主動確認它是否仍然正確。
 
 AisleNova 後來重整時,把原本那份 6,000 字的 `.cursorrules` 拆成:`CLAUDE.md`(420 字)+ 7 份 Role 檔(每份約 800 字)+ 32 份 Skill(每份 200–600 字)。**總字數變多,但每份的責任邊界變清楚**,新人 onboarding 時間從 12 週縮到 5 週。
 
@@ -172,6 +174,8 @@ flowchart TD
     class Inline cold
     class Risky hot
 ```
+
+邊界模糊時,Subagent 無法確定何時該「接受」vs「退回」來自其他 Subagent 的輸入,導致同一份產出物被多個 Subagent 反覆修改,最終脈絡散碎——每個 Subagent 各自保留了自己版本的片段,卻沒有一份能代表完整決策意圖的 context。
 
 **這張圖的關鍵在最後一個分支**。AisleNova 一開始把所有任務都開 Subagent,結果 Orchestrator 跟 SA Subagent 在同一個任務上互相覆寫對方的決定,最後產出的 spec.md 是兩個 Agent 妥協後的「平均值」⸺ 哪一邊的 context 都沒有完整保留。
 

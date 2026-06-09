@@ -43,6 +43,9 @@ word_count_target: 6000
 SELECT d.icd10_primary, e.bed_id, e.admit_at
 FROM discharge_summary d
 JOIN inpatient_episode e ON d.patient_id = e.patient_id  -- ← 這裡爆了
+-- ↑ d.patient_id 實際上是 MRN(跨次住院識別,如 9000042)
+-- ↑ e.patient_id 實際上是 episode_id(本次住院流水號,如 900000117)
+-- 兩個欄位名稱相同、型別相同(bigint),但語意完全不同,卻因相同命名被 join 在一起
 WHERE d.discharge_at::date = CURRENT_DATE - INTERVAL '1 day';
 ```
 
@@ -120,7 +123,7 @@ erDiagram
 - **信任邊界**:這個值是本院產的,還是他院塞進來的(PID-3 from HL7)
 - **可演進性**:三年後新增一種識別碼會不會炸掉現有 join
 
-這些都是 schema 健康度的真正內容,而 3NF 一個都管不到。Chris Date 在 *Database Design and Relational Theory*[^CIT-082] 講得很直白:正規化是工具,不是目標,**「資料庫設計的目標是模型正確,正規化只是達成模型正確的其中一條路徑」**。
+這四項漏掉任何一項,都會像 MedCanvas 一樣在實務中導致嚴重事故,因為 3NF 只能防止重複,無法防止誤解。這些都是 schema 健康度的真正內容,而 3NF 一個都管不到。Chris Date 在 *Database Design and Relational Theory*[^CIT-082] 講得很直白:正規化是工具,不是目標,**「資料庫設計的目標是模型正確,正規化只是達成模型正確的其中一條路徑」**。
 
 ### 8.2.3 一個健康 schema 的三個能力
 
@@ -135,6 +138,8 @@ erDiagram
 ---
 
 ## 8.3 決策框架 ⸺ 何時拆、何時併、用什麼鍵、怎麼分割
+
+現在回到正規化的視角,看看每一步拆耦合(1NF → 5NF)如何支撐 §8.2.3 定義的三個能力:1NF~3NF 確保「能支撐當前查詢」(原子值、無冗餘讓索引有效);3NF~BCNF 確保「能演進」(One Fact in One Place,改一次就夠);而命名紀律與信任邊界(正規化框架之外的規矩)確保「能被未來的人讀懂」。五個工具按此邏輯展開,**遇到具體 schema 問題時,建議先用 §8.3.5 的決策樹快速定位是正規化 / 反正規化 / 分割等哪個類別,再查對應的詳細表**。
 
 下面這幾張表跟流程圖,在現場相當好用。它們的共同前提是:**正規化是手段,模型正確才是目的**。
 
@@ -182,7 +187,7 @@ ERD 的兩種主流標記法 ⸺ Chen 1976 [^CIT-081] 的菱形/橢圓符號,以
 | **插入索引友好** | ★★★★★ | ★★(B-tree 隨機點插入) | ★★★★(時間遞增) | ★★★★ |
 | **跨服務生成** | ✗(需中央) | ✓ | ✓ | ✓ |
 | **資安/隱私** | 差(可推 N+1) | 好 | 好(時間外洩可接受) | 好 |
-| **可讀性** | 數字直觀 | 醜 | 醜 | 較友好(crockford base32) |
+| **可讀性** | 數字直觀 | 醜(例:`550e8400-e29b-41d4-a716-446655440000`) | 醜(例:`018fea2c-b4a1-7e3d-9f2b-1a3c5e7f9d0b`) | 較友好(例:`01ARZ3NDEKTSV4RRFFQ69G5FAV`,crockford base32,URL/日誌可讀) |
 | **RFC 規範** | 各 DB 廠商方言 | RFC 4122 | **RFC 9562 (2024)** | 社群規範,無 IETF RFC |
 | **2026 適用場景** | 小團隊內部表、查詢日誌 | 需要強隨機性的合規場景 | **多數新系統的預設值** | 偏好可讀 ID 的場景 |
 

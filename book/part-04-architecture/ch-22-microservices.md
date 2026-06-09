@@ -244,6 +244,8 @@ public class CheckoutSagaImpl implements CheckoutSaga {
 
 ### 22.3.5 同步 vs 非同步通訊取捨
 
+前面 §22.3.4 講的 Saga 解決的是「多步交易如何協調、出錯如何補償」的問題;接下來要討論的是「每一步 RPC 本身用同步還是非同步」的選擇 ⸺ **這兩個問題的答案是獨立的**。一條 Saga 裡的每一步可以是同步呼叫,也可以是非同步事件;要不要用 Orchestration 是流程協調的決策,要不要走非同步是時間耦合的決策。把這兩個混在一起討論,是現場常見的誤解來源。
+
 在討論 TideCart 怎麼改之前,先把一個常見誤解講清楚:**同步改非同步不是升級,是橫移**。兩種通訊模式的失敗都是真實的,只是形狀不同:
 
 - **同步呼叫鏈**:失敗快速且可見。inventory 掛,呼叫端立刻收到錯誤,使用者在幾秒內拿到 503。代價是 availability 耦合 ⸺ 任何一環慢,整條鏈就慢。
@@ -279,7 +281,7 @@ TideCart 後來把 checkout 路徑上 22 次同步呼叫砍到 4 次(都是讀),
 
 ### 22.3.6 Outbox Pattern 最小骨架
 
-非同步通訊最常見的問題是「DB 寫了,訊息沒發出去」或反過來。Outbox Pattern[^CIT-216] 把這件事用一張本地表解決:寫 DB 跟寫 outbox 在同一個 transaction,事件由獨立的 relay 程序從 outbox 讀出來丟到 broker。
+做了「寫操作的副作用走非同步」這個選擇之後,接下來的問題是:**如何保證那條非同步訊息一定被發出去?** 非同步通訊最常見的地雷,不是消費端慢,而是「DB 寫了,訊息沒發出去」或反過來 ⸺ 出現在 commit 與 publish 兩個動作之間存在一個不可原子化的間隙。Outbox Pattern[^CIT-216] 把這個間隙用一張本地表解決:寫 DB 跟寫 outbox 在同一個 transaction,事件由獨立的 relay 程序從 outbox 讀出來丟到 broker。
 
 ```sql
 -- order_schema.outbox

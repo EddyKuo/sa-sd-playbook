@@ -115,6 +115,8 @@ AI 系統把這個假設拆掉了三層:
 
 這三軸的另一個共通點:**它們的代價曲線都是「平常無感、爆發很貴」**。Eval 不做,demo 階段就會看到;Drift 與 Red Team 不做,通常要等事故才發現 ⸺ 而且這個事故在 fintech / healthcare / legal 領域,通常會以監理罰款或人命的形式送達。
 
+但「少做任何一個事故就來」這個陳述需要一個重要修正:**三軸的不可缺程度,與風險等級正相關**。在高風險場景(金融合規、醫療診斷、法律判讀),三軸確實都不能少 ⸺ AMLNavigator 就是典型 L 模式場景,少任何一軸的代價是監理罰款。但在中風險的外部產品(M 模式)某一軸可以弱化:Drift monitor 可以從 weekly PSI 降為 monthly 抽樣;Red Team 可以從全三層縮為 L1 Prompt 層。在低風險的內部工具(S 模式),只做 Eval 加輕量 RT 通常就夠。這個分級邏輯對應 §45.3.10 的決策樹:三軸「缺一不可」的說法成立於 L 模式,M / S 模式的工程師不必過度恐慌,但要清楚地說清楚「我選擇弱化哪一軸、我接受的風險是什麼」。
+
 ### 45.2.3 真正在處理的是「概率系統的可治理性」
 
 進一步把鏡頭拉遠,Eval / Drift / Red Team 三軸要處理的是同一件事的三個切面:**這個系統雖然行為是概率的,但它的「行為分布」可不可以被治理**。
@@ -140,6 +142,14 @@ SRE / SLO 方法論的前提是 **SLI 必須是客觀可量測的**:P95 latency 
 ---
 
 ## 45.3 決策框架 ⸺ Eval Set 四維、Drift 四種、Red Team 三層、Judge 校準
+
+§45.2.3 的三段式妥協不只是理論陳述,它直接對應本節的三個關鍵工具:
+
+- **human-labeled calibration set** → §45.3.4(LLM-as-Judge 校準)。主觀品質由人類 SME 定錨,judge 的偏誤要用這份 calibration set 計算 Kappa 才算「結構化」。
+- **代理指標監測** → §45.3.7(Drift monitor 的 PSI / embedding / banker dispute rate)。對於無法直接量測的「語氣退化」「措辭可信度」,用行為代理指標讓它變成可設警報的數字。
+- **人類攻擊者** → §45.3.8(Red Team 三層次的 manual cadence)。自動化工具覆蓋已知向量,人類紅隊員負責找自動化找不到的新攻擊路徑,這就是「把主觀的創意式攻擊週期化」的具體形式。
+
+換句話說,§45.2.3 講的「結構化、週期化」,在本節對應三個東西:一個校準集、一套監測指標、一條 cadence。理解這個對應關係,後面的工具就不只是「工具清單」,而是三段式妥協的實作形態。
 
 ### 45.3.1 三軸並行的整體框架
 
@@ -279,7 +289,13 @@ Online eval 的執行通常有三條路徑搭配使用:
 | **Self-Preference Bias** | GPT judge 偏好 GPT 寫的答案、Claude judge 偏好 Claude 寫的 | 用「跨家 judge」交叉驗證,或用人類校準集回測 |
 | **Domain Bias** | 對訓練資料分布偏好的領域(如加密貨幣寬鬆) | 在該領域用人類校準集驗證 judge 的 agreement |
 
-校準的具體做法是維護一份 **human-labeled calibration set**(50–100 筆,由 SME 標註),每次換 judge 模型 / 換 rubric 都跑這份校準集,計算 Cohen's Kappa(judge 與人類的一致性)。**Kappa < 0.6 不能上線**(經驗閾值)。AMLNavigator 缺的就是這一步 ⸺ 他們的 judge(GPT-4)在加密貨幣領域跟人類專家的 Kappa 只有 0.41,系統性把「應送 STR」評為「邊緣可放行」。
+校準的具體做法是維護一份 **human-labeled calibration set**(50–100 筆,由 SME 標註),每次換 judge 模型 / 換 rubric 都跑這份校準集,計算 Cohen's Kappa(judge 與人類的一致性)。**Kappa < 0.6 不能上線**是業界常用的經驗閾值,適用前提是「評分標準已足夠清晰,SME 之間能取得合理共識」。
+
+但這裡有一個臨界值本身無法處理的情況:如果某個領域的人類 SME 彼此之間的一致性也只有 0.5,表示**問題不在 judge,而在評分標準本身定義不清**。這時候「不能上線」應該翻譯成「先去 calibration set 裡挑出分歧最大的 case,跟 SME 開 30 分鐘的澄清會議,把模糊邊界寫進 rubric,重新標註後再測 Kappa」⸺ 而不是讓工程師以為 LLM judge 能力不夠、換一個更強的模型就能解決。Kappa 是診斷工具,不是終判。
+
+實際操作上,LLM-as-Judge 適用與否的判斷如下:當目標維度可以用 rubric 條文清楚描述(如「引用條號是否真實存在」「STR / review / pass 三分類」),且人類 SME 間 Kappa ≥ 0.6 時,LLM judge 加 calibration set 是合理替代人工的路徑。當維度本質上是情境判斷(如「這段措辭對這位 banker 是否具說服力」),人類 SME 間的 Kappa 可能本就低於 0.6,此時應強制人工標注、不嘗試用 judge 替代,或改拆分成更細粒度的客觀子指標再分別量。
+
+AMLNavigator 缺的就是這一步 ⸺ 他們的 judge(GPT-4)在加密貨幣領域跟人類專家的 Kappa 只有 0.41,系統性把「應送 STR」評為「邊緣可放行」。這裡的問題兩者兼有:rubric 在加密貨幣場景的邊界沒有寫清楚,加上 GPT-4 在這個領域有 Domain Bias。修正步驟應該是先澄清 rubric 再重測 Kappa,而不是直接換模型。
 
 LLM-as-Judge 的更深入處理(包括雙 Agent 對抗評估、自動 rubric 生成),會在 [Ch 46 Agentic QA](./ch-46-agentic-qa.md) 詳述。本章只強調一件事:**不校準的 judge,等於用一把沒校準的尺去量品質的退化 ⸺ 你會以為一切還好,直到監理機關來量**。
 
@@ -370,6 +386,17 @@ def detect_drift(baseline_queries, recent_queries, n_clusters=20):
 ```
 
 這份程式不複雜,但它把「我們不知道」變成了「PSI = 0.31,警報」⸺ 從「沒有訊號」變成「有訊號」的閾值,是治理的起點。AMLNavigator 後來把這份 monitor 接到 PagerDuty,Drift 警報跟 SLO burn rate 走同一條 on-call rotation。
+
+**Drift 觸發後的修復路徑**是工程師最常問的問題:「PSI 超了,然後呢?」不同類型的 drift 對應不同修復動作,不能一律「重訓模型」了事:
+
+| Drift 類型 | 觸發訊號 | 修復動作 |
+|---|---|---|
+| **Data drift**(輸入分布變) | PSI > 0.25 / surging_clusters 出現 | 找出飆升的 cluster → 補 eval set 該 slice → 確認系統在新分布下仍達標 |
+| **Concept drift**(世界規則變) | Online accuracy 下滑 + SME 重標後發現對錯標準本身變了 | 重新 prompt(若規則改變可在 prompt / RAG 知識庫更新反映)→ 重標 calibration data → 重校 judge |
+| **Model drift**(模型版本升級) | Provider deprecation 通知 / model_id 異動 | 鎖定版本 + 用完整 regression eval set 跑影子上線,確認 Kappa 與 accuracy 未退步才切換 |
+| **Prompt drift**(工程師改了 prompt) | CI eval 分數跌 > 3pp | 阻擋 merge → 找 diff 最大的 slice → 修 prompt 或接受退步並更新基準 |
+
+修復動作的優先原則:先確認 **drift 的根因是外部世界變了還是系統本身變了**。外部世界變(加密貨幣詐騙手法演化、法規更新)→ 優先更新 prompt / RAG 知識庫,代價小;系統本身變(模型升版、prompt 改動)→ 優先回滾到已知穩定版本,再計畫升級。只有在 drift 根因確認為「訓練資料與當前世界嚴重脫節」時,才考慮重訓模型 ⸺ 這是代價最高的一條路,不應該是預設動作。
 
 ### 45.3.8 Red Team 三層次
 

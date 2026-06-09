@@ -127,9 +127,13 @@ Anthropic 的原始文章甚至用更強烈的措辭:「Multi-Agent 架構帶來
 | **任務在一次 LLM call 裡塞太多步驟** | Prompt Chaining 或 Routing(Workflow) | 線性 Workflow 比 Multi-Agent 簡單 80%,通常已經夠用 |
 | **單次推理可信度不夠** | Evaluator-Optimizer Workflow | 用同一個 LLM 自己 evaluate 自己,不需要拆 Agent |
 
+> **「Prompt 不夠結構化」長什麼樣?** 非結構化 prompt 通常只有一句話:「請處理這個客戶工單」⸺ 沒有步驟指引、沒有輸出格式要求、沒有邊界條件。結構化 prompt 則包含明確的分析步驟(「先判斷意圖屬退款/合約/帳號合併哪一類,再依類型按以下規則…」)、輸出 schema(「回傳 JSON: `{intent, priority, summary}`」)、以及關鍵的條件判斷(「若同時涉及合約條款,`needs_escalation` 必須為 true」)。Helmsworth 當初的工單 Triage prompt 屬於前者:一句「分析這封工單的問題並給出回覆建議」,沒有意圖分類的枚舉、沒有優先級的定義、沒有結構化輸出要求。事故後他們把這一個 prompt 改成三個固定 step(分類意圖 → 評估優先級 → 產出回覆草稿)的 Prompt Chaining,並為每個 step 加了 Pydantic schema 約束輸出,**品質回到 0.78,沒有新增任何 Agent**。
+
 Helmsworth 的工單問題其實落在第三格 ⸺「混合退款 + 合併 + 合約」是三個獨立決策塞在一個 prompt 裡。**正確解法是 prompt chaining(三個 step 線性串接)或 routing(先分類再走專屬子流程),不是七個並行 Agent 互相溝通**。
 
 ### 40.2.2 真正在處理的是「責任邊界 + 上下文獨立性」
+
+回頭看上面那四種失敗成因,它們表面上各自獨立,但有一條共同的根線:**每一種都指向某個「Agent 邊界設計有缺陷」的問題** ⸺ prompt 不結構化是邊界太模糊(Agent 不知道自己該做什麼);context 不夠是邊界太封閉(Agent 缺乏應有的脈絡);任務塞太多步驟是邊界太寬(一個 Agent 承擔了本應是多步驟流程的責任);推理可信度不夠是邊界沒有自我校驗機制。既然問題的根源是邊界設計,那麼多拆幾個 Agent 並不會改善邊界 ⸺ 只會把設計錯誤的邊界複製 N 份。這就導出 Multi-Agent 真正的判準問題:**在什麼條件下,邊界拆分才是有效的?**
 
 進一步拆開來看,Multi-Agent 真正適用的時機,本質上跟 DDD 的 Bounded Context 是同一回事:**當「責任邊界」明確、且「上下文相互獨立」時,才值得拆分**。
 
