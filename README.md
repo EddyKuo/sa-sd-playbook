@@ -544,10 +544,11 @@ flowchart LR
 
 ## 授權
 
-© 2026 Eddy Kuo. All rights reserved.
+© 2026 Eddy Kuo
 
-本書內容（`book/` 目錄下所有 `.md` 檔案）著作權歸 Eddy Kuo 所有。<br/>
-未經書面授權，不得轉載、改作或商業使用。
+本書內容（`book/` 目錄下所有 `.md` 檔案）採用
+[創用 CC 姓名標示-非商業性-禁止改作 4.0 國際 (CC BY-NC-ND 4.0)](https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh-hant) 授權。<br/>
+您可自由分享（重製、散布）本著作，惟須標示作者、不得用於商業目的、且不得散布改作版本。詳見 [LICENSE](LICENSE)。
 
 ---
 
